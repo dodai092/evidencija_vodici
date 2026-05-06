@@ -1,6 +1,7 @@
 const PageCmp = {
     activeCity: 'all',
     activeLang: 'all',
+    activeMonths: [],
     mergedGuides: [],
     cityChartInstance: null,
     monthlyChartInstance: null,
@@ -10,10 +11,11 @@ const PageCmp = {
     _el(id) { return document.getElementById(id + '-cmp'); },
     _scope(sel) { return document.querySelectorAll('#page-cmp ' + sel); },
 
-    ytd(stats) {
+    ytd(stats, months) {
         if (!stats || !stats.byMonth) return { freeTours: 0, freePax: 0, paidTours: 0, paidPax: 0 };
+        const ms = (months && months.length > 0) ? months : [1, 2, 3, 4, 5];
         let ft = 0, fp = 0, pt = 0, pp = 0;
-        for (let m = 1; m <= 5; m++) {
+        ms.forEach(m => {
             const mo = stats.byMonth[String(m)];
             if (mo) {
                 ft += mo.free.tours || 0;
@@ -21,7 +23,7 @@ const PageCmp = {
                 pt += mo.paid.tours || 0;
                 pp += mo.paid.pax || 0;
             }
-        }
+        });
         return { freeTours: ft, freePax: fp, paidTours: pt, paidPax: pp };
     },
 
@@ -60,13 +62,13 @@ const PageCmp = {
         const result = Object.values(map);
         result.sort((a, b) => {
             if (a.city !== b.city) return CITIES.indexOf(a.city) - CITIES.indexOf(b.city);
-            const a26 = a.g26 ? this.ytd(a.g26.stats[this.activeLang]).freeTours : -1;
-            const b26 = b.g26 ? this.ytd(b.g26.stats[this.activeLang]).freeTours : -1;
+            const a26 = a.g26 ? this.ytd(a.g26.stats[this.activeLang], this.activeMonths).freeTours : -1;
+            const b26 = b.g26 ? this.ytd(b.g26.stats[this.activeLang], this.activeMonths).freeTours : -1;
             if (a26 >= 0 && b26 < 0) return -1;
             if (a26 < 0 && b26 >= 0) return 1;
             if (a26 >= 0 && b26 >= 0) return b26 - a26;
-            const a25 = a.g25 ? this.ytd(a.g25.stats[this.activeLang]).freeTours : -1;
-            const b25 = b.g25 ? this.ytd(b.g25.stats[this.activeLang]).freeTours : -1;
+            const a25 = a.g25 ? this.ytd(a.g25.stats[this.activeLang], this.activeMonths).freeTours : -1;
+            const b25 = b.g25 ? this.ytd(b.g25.stats[this.activeLang], this.activeMonths).freeTours : -1;
             return b25 - a25;
         });
         return result;
@@ -75,8 +77,8 @@ const PageCmp = {
     renderCard(m) {
         const st25 = m.g25 ? m.g25.stats[this.activeLang] : null;
         const st26 = m.g26 ? m.g26.stats[this.activeLang] : null;
-        const ytd25 = st25 ? this.ytd(st25) : null;
-        const ytd26 = st26 ? this.ytd(st26) : null;
+        const ytd25 = st25 ? this.ytd(st25, this.activeMonths) : null;
+        const ytd26 = st26 ? this.ytd(st26, this.activeMonths) : null;
         const col = CITY_COLS[m.city] || '#999';
         const init = m.name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
         const inactive = !m.g26;
@@ -128,12 +130,12 @@ const PageCmp = {
         fc.forEach(m => {
             if (m.g25) {
                 g25++;
-                const s25 = this.ytd(m.g25.stats[this.activeLang]);
+                const s25 = this.ytd(m.g25.stats[this.activeLang], this.activeMonths);
                 ft25 += s25.freeTours; fp25 += s25.freePax; pt25 += s25.paidTours; pp25 += s25.paidPax;
             }
             if (m.g26) {
                 g26++;
-                const s26 = this.ytd(m.g26.stats[this.activeLang]);
+                const s26 = this.ytd(m.g26.stats[this.activeLang], this.activeMonths);
                 ft26 += s26.freeTours; fp26 += s26.freePax; pt26 += s26.paidTours; pp26 += s26.paidPax;
             }
         });
@@ -178,9 +180,36 @@ const PageCmp = {
         const cityData25 = { Zagreb: 0, Dubrovnik: 0, Split: 0, Zadar: 0 };
         const cityData26 = { Zagreb: 0, Dubrovnik: 0, Split: 0, Zadar: 0 };
         fc.forEach(m => {
-            if (m.g25) cityData25[m.city] += this.ytd(m.g25.stats[this.activeLang]).freePax;
-            if (m.g26) cityData26[m.city] += this.ytd(m.g26.stats[this.activeLang]).freePax;
+            if (m.g25) cityData25[m.city] += this.ytd(m.g25.stats[this.activeLang], this.activeMonths).freePax;
+            if (m.g26) cityData26[m.city] += this.ytd(m.g26.stats[this.activeLang], this.activeMonths).freePax;
         });
+
+        const cityDeltaPlugin = {
+            id: 'cityDelta',
+            afterDraw(chart) {
+                const ctx = chart.ctx;
+                const xAxis = chart.scales.x;
+                const ds0 = chart.data.datasets[0].data;
+                const ds1 = chart.data.datasets[1].data;
+                ctx.save();
+                chart.data.labels.forEach((_, i) => {
+                    const v25 = ds0[i] || 0, v26 = ds1[i] || 0;
+                    const d = v26 - v25;
+                    const pct = v25 > 0 ? ((d/v25)*100).toFixed(0) : '∞';
+                    const sign = d >= 0 ? '+' : '';
+                    const arrow = d > 0 ? '▲' : d < 0 ? '▼' : '=';
+                    const color = d > 0 ? '#1D9E75' : d < 0 ? '#D4545A' : '#999';
+                    const x = xAxis.getPixelForValue(i);
+                    const y = chart.chartArea.bottom + 28;
+                    ctx.fillStyle = color;
+                    ctx.font = "bold 10px 'Montserrat',sans-serif";
+                    ctx.textAlign = 'center';
+                    ctx.fillText(`${arrow} ${Math.abs(d)}`, x, y);
+                    ctx.fillText(`(${sign}${pct}%)`, x, y + 13);
+                });
+                ctx.restore();
+            }
+        };
 
         if (this.cityChartInstance) this.cityChartInstance.destroy();
         const cityCtx = this._el('cityChart').getContext('2d');
@@ -195,7 +224,8 @@ const PageCmp = {
             },
             options: {
                 responsive: true, maintainAspectRatio: false,
-                plugins: { legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } } },
+                layout: { padding: { bottom: 32 } },
+                plugins: { legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }, cityDelta: cityDeltaPlugin },
                 scales: {
                     x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
                     y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
@@ -203,28 +233,27 @@ const PageCmp = {
             }
         });
 
-        const months = ['Sij', 'Velj', 'Ožu', 'Tra'];
-        const monthData25 = [0, 0, 0, 0], monthData26 = [0, 0, 0, 0];
-        const paidMonthData25 = [0, 0, 0, 0], paidMonthData26 = [0, 0, 0, 0];
-        fc.forEach(m => {
-            if (m.g25 && m.g25.stats[this.activeLang] && m.g25.stats[this.activeLang].byMonth) {
-                for (let i = 1; i <= 4; i++) {
+        const MONTH_NAMES = {1:'Sij',2:'Velj',3:'Ožu',4:'Tra',5:'Svi'};
+        const selectedMonths = this.activeMonths.length > 0 ? [...this.activeMonths].sort((a,b) => a-b) : [1, 2, 3, 4, 5];
+        const months = selectedMonths.map(m => MONTH_NAMES[m]);
+        const monthData25 = [], monthData26 = [];
+        const paidMonthData25 = [], paidMonthData26 = [];
+        selectedMonths.forEach(i => {
+            let fd25 = 0, fd26 = 0, pd25 = 0, pd26 = 0;
+            fc.forEach(m => {
+                if (m.g25 && m.g25.stats[this.activeLang] && m.g25.stats[this.activeLang].byMonth) {
                     const mo = m.g25.stats[this.activeLang].byMonth[String(i)];
-                    if (mo) {
-                        monthData25[i - 1] += mo.free.pax || 0;
-                        paidMonthData25[i - 1] += mo.paid.tours || 0;
-                    }
+                    if (mo) { fd25 += mo.free.pax || 0; pd25 += mo.paid.tours || 0; }
                 }
-            }
-            if (m.g26 && m.g26.stats[this.activeLang] && m.g26.stats[this.activeLang].byMonth) {
-                for (let i = 1; i <= 4; i++) {
+                if (m.g26 && m.g26.stats[this.activeLang] && m.g26.stats[this.activeLang].byMonth) {
                     const mo = m.g26.stats[this.activeLang].byMonth[String(i)];
-                    if (mo) {
-                        monthData26[i - 1] += mo.free.pax || 0;
-                        paidMonthData26[i - 1] += mo.paid.tours || 0;
-                    }
+                    if (mo) { fd26 += mo.free.pax || 0; pd26 += mo.paid.tours || 0; }
                 }
-            }
+            });
+            monthData25.push(fd25);
+            monthData26.push(fd26);
+            paidMonthData25.push(pd25);
+            paidMonthData26.push(pd26);
         });
 
         const cumulative = (arr) => arr.reduce((acc, val, i) => { acc[i] = (acc[i - 1] || 0) + val; return acc; }, []);
@@ -232,6 +261,30 @@ const PageCmp = {
         const cumMonthData26 = cumulative(monthData26);
         const cumPaidMonthData25 = cumulative(paidMonthData25);
         const cumPaidMonthData26 = cumulative(paidMonthData26);
+
+        const deltaOverlay = {
+            id: 'deltaOverlay',
+            afterDraw(chart) {
+                const ctx = chart.ctx;
+                const { right, top } = chart.chartArea;
+                const ds0 = chart.data.datasets[0].data;
+                const ds1 = chart.data.datasets[1].data;
+                const last0 = ds0[ds0.length - 1] || 0;
+                const last1 = ds1[ds1.length - 1] || 0;
+                if (last0 === 0 && last1 === 0) return;
+                const d = last1 - last0;
+                const pct = last0 > 0 ? ((d/last0)*100).toFixed(0) : '∞';
+                const sign = d >= 0 ? '+' : '';
+                const arrow = d > 0 ? '▲' : d < 0 ? '▼' : '=';
+                const color = d > 0 ? '#1D9E75' : d < 0 ? '#D4545A' : '#999';
+                ctx.save();
+                ctx.fillStyle = color;
+                ctx.font = "bold 11px 'Montserrat',sans-serif";
+                ctx.textAlign = 'right';
+                ctx.fillText(`${arrow} ${Math.abs(d)} (${sign}${pct}%)`, right - 8, top + 18);
+                ctx.restore();
+            }
+        };
 
         if (this.monthlyChartInstance) this.monthlyChartInstance.destroy();
         const monthCtx = this._el('monthlyChart').getContext('2d');
@@ -246,7 +299,7 @@ const PageCmp = {
             },
             options: {
                 responsive: true, maintainAspectRatio: false,
-                plugins: { legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } } },
+                plugins: { legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }, deltaOverlay },
                 scales: {
                     x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
                     y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
@@ -267,7 +320,7 @@ const PageCmp = {
             },
             options: {
                 responsive: true, maintainAspectRatio: false,
-                plugins: { legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } } },
+                plugins: { legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }, deltaOverlay },
                 scales: {
                     x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
                     y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
@@ -287,6 +340,28 @@ const PageCmp = {
         this.activeLang = lang;
         this._scope('[data-lang].filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        this.mergedGuides = this.buildMerged();
+        this.renderAll();
+    },
+
+    filterMonth(m, btn) {
+        const allBtn = this._scope('[data-month="all"]')[0];
+        if (m === 'all') {
+            this.activeMonths = [];
+            this._scope('[data-month].filter-btn').forEach(b => b.classList.remove('active'));
+            if (allBtn) allBtn.classList.add('active');
+        } else {
+            if (allBtn) allBtn.classList.remove('active');
+            const idx = this.activeMonths.indexOf(m);
+            if (idx >= 0) {
+                this.activeMonths.splice(idx, 1);
+                btn.classList.remove('active');
+            } else {
+                this.activeMonths.push(m);
+                btn.classList.add('active');
+            }
+            if (this.activeMonths.length === 0 && allBtn) allBtn.classList.add('active');
+        }
         this.mergedGuides = this.buildMerged();
         this.renderAll();
     },

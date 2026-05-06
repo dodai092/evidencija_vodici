@@ -588,7 +588,7 @@ body.dark-mode .nav img { filter: invert(1) brightness(2); }
 .charts-area { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
 .chart-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; }
 .chart-card-title { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 16px; }
-.chart-container { position: relative; height: 240px; }
+.chart-container { position: relative; height: 280px; }
 
 /* ── SCROLLABLE GUIDE CONTAINER (cmp tab only) ───── */
 #page-cmp #guide-sections-cmp { max-height: 70vh; overflow-y: auto; padding-right: 8px; }

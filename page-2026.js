@@ -1,6 +1,7 @@
 const Page26 = {
     activeCity: 'all',
     activeLang: 'all',
+    activeMonths: [],
     _initialized: false,
 
     _el(id) { return document.getElementById(id + '-26'); },
@@ -8,6 +9,7 @@ const Page26 = {
 
     renderCard(g) {
         const st = g.stats[this.activeLang];
+        const fs = filteredStats(st, this.activeMonths);
         const sid = 'p26_' + safeName(g.name);
         const col = CITY_COLS[g.city] || '#999';
         const init = g.name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
@@ -48,14 +50,14 @@ const Page26 = {
             `<div class="gc-stats">` +
             `<div class="gc-half">` +
             `<div class="gc-stat-label">Free ture</div>` +
-            `<div class="gc-stat-num" style="color:var(--green)">${st.free.tours}</div>` +
-            `<div class="gc-stat-sub">${st.free.pax} pax</div>` +
+            `<div class="gc-stat-num" style="color:var(--green)">${fs.freeTours}</div>` +
+            `<div class="gc-stat-sub">${fs.freePax} pax</div>` +
             `</div>` +
             `<div class="gc-divider"></div>` +
             `<div class="gc-half" style="text-align:right">` +
             `<div class="gc-stat-label">$ Ture</div>` +
-            `<div class="gc-stat-num" style="color:${col}">${st.paid.tours}</div>` +
-            `<div class="gc-stat-sub">${st.paid.pax} pax</div>` +
+            `<div class="gc-stat-num" style="color:${col}">${fs.paidTours}</div>` +
+            `<div class="gc-stat-sub">${fs.paidPax} pax</div>` +
             `</div>` +
             `</div>` +
             `</div>` +
@@ -75,10 +77,10 @@ const Page26 = {
             `<tbody>${monthRowsHtml}</tbody>` +
             `<tfoot><tr>` +
             `<td>Ukup.</td>` +
-            `<td class="num free-col">${st.free.tours}</td>` +
-            `<td class="num">${st.free.pax}</td>` +
-            `<td class="num paid-col">${st.paid.tours}</td>` +
-            `<td class="num">${st.paid.pax}</td>` +
+            `<td class="num free-col">${fs.freeTours}</td>` +
+            `<td class="num">${fs.freePax}</td>` +
+            `<td class="num paid-col">${fs.paidTours}</td>` +
+            `<td class="num">${fs.paidPax}</td>` +
             `</tr></tfoot>` +
             `</table>` +
             `</div>` +
@@ -106,10 +108,14 @@ const Page26 = {
     updateKPIs() {
         const filtered = guideStats26.filter(g => this.activeCity === 'all' || g.city === this.activeCity);
         const k = this.activeLang;
-        const freeTours = filtered.reduce((s, g) => s + g.stats[k].free.tours, 0);
-        const paidTours = filtered.reduce((s, g) => s + g.stats[k].paid.tours, 0);
-        const freePax   = filtered.reduce((s, g) => s + g.stats[k].free.pax, 0);
-        const paidPax   = filtered.reduce((s, g) => s + g.stats[k].paid.pax, 0);
+        let freeTours = 0, paidTours = 0, freePax = 0, paidPax = 0;
+        filtered.forEach(g => {
+            const fs = filteredStats(g.stats[k], this.activeMonths);
+            freeTours += fs.freeTours;
+            paidTours += fs.paidTours;
+            freePax   += fs.freePax;
+            paidPax   += fs.paidPax;
+        });
         this._el('kv-guides').textContent   = filtered.length;
         this._el('kv-free').textContent     = fmtN(freePax);
         this._el('kv-free-pax').textContent = freeTours + ' t';
@@ -129,6 +135,27 @@ const Page26 = {
         this.activeLang = lang;
         this._scope('[data-lang].filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        this.renderAll();
+    },
+
+    filterMonth(m, btn) {
+        const allBtn = this._scope('[data-month="all"]')[0];
+        if (m === 'all') {
+            this.activeMonths = [];
+            this._scope('[data-month].filter-btn').forEach(b => b.classList.remove('active'));
+            if (allBtn) allBtn.classList.add('active');
+        } else {
+            if (allBtn) allBtn.classList.remove('active');
+            const idx = this.activeMonths.indexOf(m);
+            if (idx >= 0) {
+                this.activeMonths.splice(idx, 1);
+                btn.classList.remove('active');
+            } else {
+                this.activeMonths.push(m);
+                btn.classList.add('active');
+            }
+            if (this.activeMonths.length === 0 && allBtn) allBtn.classList.add('active');
+        }
         this.renderAll();
     },
 

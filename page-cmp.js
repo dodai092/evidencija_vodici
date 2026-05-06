@@ -191,21 +191,28 @@ const PageCmp = {
                 const xAxis = chart.scales.x;
                 const ds0 = chart.data.datasets[0].data;
                 const ds1 = chart.data.datasets[1].data;
+                const colors = PageCmp.getChartColors();
                 ctx.save();
                 chart.data.labels.forEach((_, i) => {
                     const v25 = ds0[i] || 0, v26 = ds1[i] || 0;
                     const d = v26 - v25;
-                    const pct = v25 > 0 ? ((d/v25)*100).toFixed(0) : '∞';
-                    const sign = d >= 0 ? '+' : '';
+                    const pct = v25 > 0 ? ((d/v25)*100).toFixed(0) : (v26 > 0 ? '∞' : '0');
+                    const sign = d > 0 ? '+' : '';
                     const arrow = d > 0 ? '▲' : d < 0 ? '▼' : '=';
                     const color = d > 0 ? '#1D9E75' : d < 0 ? '#D4545A' : '#999';
                     const x = xAxis.getPixelForValue(i);
-                    const y = chart.chartArea.bottom + 28;
+                    const y = xAxis.bottom + 12;
+
+                    // Values 2025 / 2026
+                    ctx.fillStyle = colors.text3;
+                    ctx.font = "500 10px 'Montserrat',sans-serif";
+                    ctx.textAlign = 'center';
+                    ctx.fillText(`${fmtN(v25)} / ${fmtN(v26)}`, x, y);
+
+                    // Delta arrow and %
                     ctx.fillStyle = color;
                     ctx.font = "bold 10px 'Montserrat',sans-serif";
-                    ctx.textAlign = 'center';
-                    ctx.fillText(`${arrow} ${Math.abs(d)}`, x, y);
-                    ctx.fillText(`(${sign}${pct}%)`, x, y + 13);
+                    ctx.fillText(`${arrow} ${fmtN(Math.abs(d))} (${sign}${pct}%)`, x, y + 13);
                 });
                 ctx.restore();
             }
@@ -224,13 +231,16 @@ const PageCmp = {
             },
             options: {
                 responsive: true, maintainAspectRatio: false,
-                layout: { padding: { bottom: 32 } },
-                plugins: { legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }, cityDelta: cityDeltaPlugin },
+                layout: { padding: { bottom: 45 } },
+                plugins: { 
+                    legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+                },
                 scales: {
                     x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
                     y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
                 }
-            }
+            },
+            plugins: [cityDeltaPlugin]
         });
 
         const MONTH_NAMES = {1:'Sij',2:'Velj',3:'Ožu',4:'Tra',5:'Svi'};
@@ -273,7 +283,7 @@ const PageCmp = {
                 const last1 = ds1[ds1.length - 1] || 0;
                 if (last0 === 0 && last1 === 0) return;
                 const d = last1 - last0;
-                const pct = last0 > 0 ? ((d/last0)*100).toFixed(0) : '∞';
+                const pct = last0 > 0 ? ((d/last0)*100).toFixed(0) : (last1 > 0 ? '∞' : '0');
                 const sign = d >= 0 ? '+' : '';
                 const arrow = d > 0 ? '▲' : d < 0 ? '▼' : '=';
                 const color = d > 0 ? '#1D9E75' : d < 0 ? '#D4545A' : '#999';
@@ -281,7 +291,41 @@ const PageCmp = {
                 ctx.fillStyle = color;
                 ctx.font = "bold 11px 'Montserrat',sans-serif";
                 ctx.textAlign = 'right';
-                ctx.fillText(`${arrow} ${Math.abs(d)} (${sign}${pct}%)`, right - 8, top + 18);
+                ctx.fillText(`${arrow} ${fmtN(Math.abs(d))} (${sign}${pct}%)`, right - 8, top + 18);
+                ctx.restore();
+            }
+        };
+
+        const monthDeltaPlugin = {
+            id: 'monthDelta',
+            afterDraw(chart) {
+                const ctx = chart.ctx;
+                const xAxis = chart.scales.x;
+                const ds0 = chart.data.datasets[0].data;
+                const ds1 = chart.data.datasets[1].data;
+                const colors = PageCmp.getChartColors();
+                ctx.save();
+                chart.data.labels.forEach((_, i) => {
+                    const v25 = ds0[i] || 0, v26 = ds1[i] || 0;
+                    const d = v26 - v25;
+                    const pct = v25 > 0 ? ((d/v25)*100).toFixed(0) : (v26 > 0 ? '∞' : '0');
+                    const sign = d > 0 ? '+' : '';
+                    const arrow = d > 0 ? '▲' : d < 0 ? '▼' : '=';
+                    const color = d > 0 ? '#1D9E75' : d < 0 ? '#D4545A' : '#999';
+                    const x = xAxis.getPixelForValue(i);
+                    const y = xAxis.bottom + 12;
+
+                    // Cumulative values 2025 / 2026
+                    ctx.fillStyle = colors.text3;
+                    ctx.font = "500 10px 'Montserrat',sans-serif";
+                    ctx.textAlign = 'center';
+                    ctx.fillText(`${fmtN(v25)} / ${fmtN(v26)}`, x, y);
+
+                    // Delta arrow and %
+                    ctx.fillStyle = color;
+                    ctx.font = "bold 10px 'Montserrat',sans-serif";
+                    ctx.fillText(`${arrow} ${fmtN(Math.abs(d))} (${sign}${pct}%)`, x, y + 13);
+                });
                 ctx.restore();
             }
         };
@@ -299,12 +343,16 @@ const PageCmp = {
             },
             options: {
                 responsive: true, maintainAspectRatio: false,
-                plugins: { legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }, deltaOverlay },
+                layout: { padding: { bottom: 45 } },
+                plugins: { 
+                    legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+                },
                 scales: {
                     x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
                     y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
                 }
-            }
+            },
+            plugins: [deltaOverlay, monthDeltaPlugin]
         });
 
         if (this.paidChartInstance) this.paidChartInstance.destroy();
@@ -320,12 +368,16 @@ const PageCmp = {
             },
             options: {
                 responsive: true, maintainAspectRatio: false,
-                plugins: { legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }, deltaOverlay },
+                layout: { padding: { bottom: 45 } },
+                plugins: { 
+                    legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+                },
                 scales: {
                     x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
                     y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
                 }
-            }
+            },
+            plugins: [deltaOverlay, monthDeltaPlugin]
         });
     },
 

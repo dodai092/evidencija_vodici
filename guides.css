@@ -550,11 +550,25 @@ body.dark-mode .nav img { filter: invert(1) brightness(2); }
 /* RESPONSIVE */
 @media (max-width: 768px) {
     :root { --pad: 16px; }
+
+    /* Nav — wrap into two rows: logo+actions on top, tabs below */
+    .nav { flex-wrap: wrap; padding: 0; }
+    .nav > div:first-child { padding: 10px var(--pad); flex: 1; min-width: 0; }
+    .nav-actions { padding: 8px var(--pad) 8px 0; gap: 8px; flex-shrink: 0; }
+    .print-btn { display: none; }
+    .theme-toggle { font-size: 10px; padding: 5px 8px; }
+    .date-picker-ui { font-size: 10px; padding: 5px 8px; }
+    .nav-tabs { order: 3; width: 100%; border-top: 1px solid var(--border-dark); overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .nav-tabs::-webkit-scrollbar { display: none; }
+    .nav-tab { white-space: nowrap; padding: 12px 16px; font-size: 11px; }
+
     .header { flex-direction: column; align-items: flex-start; gap: 12px; padding: 24px var(--pad) 20px; }
-    .header-left h1 { font-size: 32px; }
-    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-    .main { padding: 20px var(--pad); }
-    .filter-area { gap: 12px; }
+    .header-left h1 { font-size: 28px; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 8px; }
+    .kpi { padding: 16px; }
+    .kpi-value { font-size: 28px; }
+    .main { padding: 16px var(--pad); }
+    .filter-area { gap: 10px; flex-wrap: wrap; }
     .guide-grid { grid-template-columns: 1fr; }
 }
 
@@ -614,9 +628,20 @@ body.dark-mode .nav img { filter: invert(1) brightness(2); }
 
 /* ── RESPONSIVE (additions for multi-tab) ───────── */
 @media (max-width: 768px) {
-    .charts-area { grid-template-columns: 1fr; }
-    .nav-tabs { overflow-x: auto; }
-    .nav-tab { white-space: nowrap; padding: 14px 14px; }
+    .charts-area { grid-template-columns: 1fr; gap: 12px; }
+    .chart-container { height: 220px; }
+    .kpi-2y-val { font-size: 15px; }
+    .gc-cmp-table { font-size: 12px; }
+    .gc-cmp-table .label { width: 56px; font-size: 10px; }
+}
+
+/* ── RESPONSIVE (very small mobile) ────────────────── */
+@media (max-width: 480px) {
+    .kpi-grid { grid-template-columns: 1fr; gap: 6px; padding: 6px; }
+    .kpi { padding: 12px; }
+    .kpi-value { font-size: 24px; }
+    .header-left h1 { font-size: 24px; }
+    .chart-container { height: 180px; }
 }
 
 /* ── PRINT (tab-aware) ───────────────────────────── */

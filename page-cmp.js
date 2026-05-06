@@ -191,25 +191,23 @@ const PageCmp = {
                 const xAxis = chart.scales.x;
                 const ds0 = chart.data.datasets[0].data;
                 const ds1 = chart.data.datasets[1].data;
-                const colors = PageCmp.getChartColors();
+                const chartColors = PageCmp.getChartColors();
                 ctx.save();
                 chart.data.labels.forEach((_, i) => {
                     const v25 = ds0[i] || 0, v26 = ds1[i] || 0;
                     const d = v26 - v25;
-                    const pct = v25 > 0 ? ((d/v25)*100).toFixed(0) : (v26 > 0 ? '∞' : '0');
+                    const pct = v25 > 0 ? ((d/v25)*100).toFixed(0) : (v26 > 0 ? '\u221E' : '0');
                     const sign = d > 0 ? '+' : '';
-                    const arrow = d > 0 ? '▲' : d < 0 ? '▼' : '=';
+                    const arrow = d > 0 ? '\u25B2' : d < 0 ? '\u25BC' : '=';
                     const color = d > 0 ? '#1D9E75' : d < 0 ? '#D4545A' : '#999';
                     const x = xAxis.getPixelForValue(i);
                     const y = xAxis.bottom + 12;
 
-                    // Values 2025 / 2026
-                    ctx.fillStyle = colors.text3;
+                    ctx.fillStyle = chartColors.text3;
                     ctx.font = "500 10px 'Montserrat',sans-serif";
                     ctx.textAlign = 'center';
                     ctx.fillText(`${fmtN(v25)} / ${fmtN(v26)}`, x, y);
 
-                    // Delta arrow and %
                     ctx.fillStyle = color;
                     ctx.font = "bold 10px 'Montserrat',sans-serif";
                     ctx.fillText(`${arrow} ${fmtN(Math.abs(d))} (${sign}${pct}%)`, x, y + 13);
@@ -218,30 +216,32 @@ const PageCmp = {
             }
         };
 
-        if (this.cityChartInstance) this.cityChartInstance.destroy();
-        const cityCtx = this._el('cityChart').getContext('2d');
-        this.cityChartInstance = new Chart(cityCtx, {
-            type: 'bar',
-            data: {
-                labels: CITIES,
-                datasets: [
-                    { label: 'Sij–Svi 2025', data: CITIES.map(c => cityData25[c]), backgroundColor: colors.y25, borderRadius: 4 },
-                    { label: 'Sij–Svi 2026', data: CITIES.map(c => cityData26[c]), backgroundColor: colors.y26, borderRadius: 4 }
-                ]
-            },
-            options: {
-                responsive: true, maintainAspectRatio: false,
-                layout: { padding: { bottom: 45 } },
-                plugins: { 
-                    legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+        try {
+            if (this.cityChartInstance) this.cityChartInstance.destroy();
+            const cityCtx = this._el('cityChart').getContext('2d');
+            this.cityChartInstance = new Chart(cityCtx, {
+                type: 'bar',
+                data: {
+                    labels: CITIES,
+                    datasets: [
+                        { label: 'Sij–Svi 2025', data: CITIES.map(c => cityData25[c]), backgroundColor: colors.y25, borderRadius: 4 },
+                        { label: 'Sij–Svi 2026', data: CITIES.map(c => cityData26[c]), backgroundColor: colors.y26, borderRadius: 4 }
+                    ]
                 },
-                scales: {
-                    x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
-                    y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
-                }
-            },
-            plugins: [cityDeltaPlugin]
-        });
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    layout: { padding: { bottom: 45 } },
+                    plugins: { 
+                        legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+                    },
+                    scales: {
+                        x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
+                        y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
+                    }
+                },
+                plugins: [cityDeltaPlugin]
+            });
+        } catch(e) { console.error("City Chart Error:", e); }
 
         const MONTH_NAMES = {1:'Sij',2:'Velj',3:'Ožu',4:'Tra',5:'Svi'};
         const selectedMonths = this.activeMonths.length > 0 ? [...this.activeMonths].sort((a,b) => a-b) : [1, 2, 3, 4, 5];
@@ -283,9 +283,9 @@ const PageCmp = {
                 const last1 = ds1[ds1.length - 1] || 0;
                 if (last0 === 0 && last1 === 0) return;
                 const d = last1 - last0;
-                const pct = last0 > 0 ? ((d/last0)*100).toFixed(0) : (last1 > 0 ? '∞' : '0');
+                const pct = last0 > 0 ? ((d/last0)*100).toFixed(0) : (last1 > 0 ? '\u221E' : '0');
                 const sign = d >= 0 ? '+' : '';
-                const arrow = d > 0 ? '▲' : d < 0 ? '▼' : '=';
+                const arrow = d > 0 ? '\u25B2' : d < 0 ? '\u25BC' : '=';
                 const color = d > 0 ? '#1D9E75' : d < 0 ? '#D4545A' : '#999';
                 ctx.save();
                 ctx.fillStyle = color;
@@ -303,25 +303,23 @@ const PageCmp = {
                 const xAxis = chart.scales.x;
                 const ds0 = chart.data.datasets[0].data;
                 const ds1 = chart.data.datasets[1].data;
-                const colors = PageCmp.getChartColors();
+                const chartColors = PageCmp.getChartColors();
                 ctx.save();
                 chart.data.labels.forEach((_, i) => {
                     const v25 = ds0[i] || 0, v26 = ds1[i] || 0;
                     const d = v26 - v25;
-                    const pct = v25 > 0 ? ((d/v25)*100).toFixed(0) : (v26 > 0 ? '∞' : '0');
+                    const pct = v25 > 0 ? ((d/v25)*100).toFixed(0) : (v26 > 0 ? '\u221E' : '0');
                     const sign = d > 0 ? '+' : '';
-                    const arrow = d > 0 ? '▲' : d < 0 ? '▼' : '=';
+                    const arrow = d > 0 ? '\u25B2' : d < 0 ? '\u25BC' : '=';
                     const color = d > 0 ? '#1D9E75' : d < 0 ? '#D4545A' : '#999';
                     const x = xAxis.getPixelForValue(i);
                     const y = xAxis.bottom + 12;
 
-                    // Cumulative values 2025 / 2026
-                    ctx.fillStyle = colors.text3;
+                    ctx.fillStyle = chartColors.text3;
                     ctx.font = "500 10px 'Montserrat',sans-serif";
                     ctx.textAlign = 'center';
                     ctx.fillText(`${fmtN(v25)} / ${fmtN(v26)}`, x, y);
 
-                    // Delta arrow and %
                     ctx.fillStyle = color;
                     ctx.font = "bold 10px 'Montserrat',sans-serif";
                     ctx.fillText(`${arrow} ${fmtN(Math.abs(d))} (${sign}${pct}%)`, x, y + 13);
@@ -330,55 +328,59 @@ const PageCmp = {
             }
         };
 
-        if (this.monthlyChartInstance) this.monthlyChartInstance.destroy();
-        const monthCtx = this._el('monthlyChart').getContext('2d');
-        this.monthlyChartInstance = new Chart(monthCtx, {
-            type: 'line',
-            data: {
-                labels: months,
-                datasets: [
-                    { label: 'Sij–Svi 2025', data: cumMonthData25, borderColor: colors.y25, backgroundColor: colors.y25 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 },
-                    { label: 'Sij–Svi 2026', data: cumMonthData26, borderColor: colors.y26, backgroundColor: colors.y26 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 }
-                ]
-            },
-            options: {
-                responsive: true, maintainAspectRatio: false,
-                layout: { padding: { bottom: 45 } },
-                plugins: { 
-                    legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+        try {
+            if (this.monthlyChartInstance) this.monthlyChartInstance.destroy();
+            const monthCtx = this._el('monthlyChart').getContext('2d');
+            this.monthlyChartInstance = new Chart(monthCtx, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [
+                        { label: 'Sij–Svi 2025', data: cumMonthData25, borderColor: colors.y25, backgroundColor: colors.y25 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 },
+                        { label: 'Sij–Svi 2026', data: cumMonthData26, borderColor: colors.y26, backgroundColor: colors.y26 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 }
+                    ]
                 },
-                scales: {
-                    x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
-                    y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
-                }
-            },
-            plugins: [deltaOverlay, monthDeltaPlugin]
-        });
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    layout: { padding: { bottom: 45 } },
+                    plugins: { 
+                        legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+                    },
+                    scales: {
+                        x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
+                        y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
+                    }
+                },
+                plugins: [deltaOverlay, monthDeltaPlugin]
+            });
+        } catch(e) { console.error("Monthly Chart Error:", e); }
 
-        if (this.paidChartInstance) this.paidChartInstance.destroy();
-        const paidCtx = this._el('paidChart').getContext('2d');
-        this.paidChartInstance = new Chart(paidCtx, {
-            type: 'line',
-            data: {
-                labels: months,
-                datasets: [
-                    { label: 'Sij–Svi 2025', data: cumPaidMonthData25, borderColor: colors.y25, backgroundColor: colors.y25 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 },
-                    { label: 'Sij–Svi 2026', data: cumPaidMonthData26, borderColor: colors.y26, backgroundColor: colors.y26 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 }
-                ]
-            },
-            options: {
-                responsive: true, maintainAspectRatio: false,
-                layout: { padding: { bottom: 45 } },
-                plugins: { 
-                    legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+        try {
+            if (this.paidChartInstance) this.paidChartInstance.destroy();
+            const paidCtx = this._el('paidChart').getContext('2d');
+            this.paidChartInstance = new Chart(paidCtx, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [
+                        { label: 'Sij–Svi 2025', data: cumPaidMonthData25, borderColor: colors.y25, backgroundColor: colors.y25 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 },
+                        { label: 'Sij–Svi 2026', data: cumPaidMonthData26, borderColor: colors.y26, backgroundColor: colors.y26 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 }
+                    ]
                 },
-                scales: {
-                    x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
-                    y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
-                }
-            },
-            plugins: [deltaOverlay, monthDeltaPlugin]
-        });
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    layout: { padding: { bottom: 45 } },
+                    plugins: { 
+                        legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+                    },
+                    scales: {
+                        x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
+                        y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
+                    }
+                },
+                plugins: [deltaOverlay, monthDeltaPlugin]
+            });
+        } catch(e) { console.error("Paid Chart Error:", e); }
     },
 
     filterCity(city, btn) {

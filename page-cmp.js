@@ -6,6 +6,7 @@ const PageCmp = {
     cityChartInstance: null,
     monthlyChartInstance: null,
     paidChartInstance: null,
+    cityMonthlyChartInstance: null,
     _initialized: false,
 
     _el(id) { return document.getElementById(id + '-cmp'); },
@@ -420,6 +421,74 @@ const PageCmp = {
                 plugins: [deltaOverlay, monthDeltaPlugin]
             });
         } catch(e) { console.error("Paid Chart Error:", e); }
+
+        try {
+            const cutoffDay = parseInt(GLOBAL_DATE.split('-')[2]);
+            const cityMonthly25 = {};
+            const cityMonthly26 = {};
+            CITIES.forEach(c => { cityMonthly25[c] = []; cityMonthly26[c] = []; });
+
+            selectedMonths.forEach(i => {
+                CITIES.forEach(city => {
+                    let pax25 = 0, pax26 = 0;
+                    fc.filter(m => m.city === city).forEach(m => {
+                        if (i < cutoffMonth) {
+                            const b25 = m.g25 && m.g25.stats[this.activeLang].byMonth[String(i)];
+                            const b26 = m.g26 && m.g26.stats[this.activeLang].byMonth[String(i)];
+                            if (b25) pax25 += (b25.free?.pax || 0);
+                            if (b26) pax26 += (b26.free?.pax || 0);
+                        } else {
+                            for (let d = 1; d <= cutoffDay; d++) {
+                                const key = `${i}-${d}`;
+                                const d25 = m.g25 && m.g25.stats[this.activeLang].byDay?.[key];
+                                const d26 = m.g26 && m.g26.stats[this.activeLang].byDay?.[key];
+                                if (d25) pax25 += (d25.free?.pax || 0);
+                                if (d26) pax26 += (d26.free?.pax || 0);
+                            }
+                        }
+                    });
+                    cityMonthly25[city].push(pax25);
+                    cityMonthly26[city].push(pax26);
+                });
+            });
+
+            const cityColors = { Zagreb:'#0277BA', Dubrovnik:'#D4545A', Split:'#8B5CF6', Zadar:'#F59E0B' };
+            const datasets = [];
+            CITIES.forEach(city => {
+                const col = cityColors[city];
+                datasets.push({
+                    label: `${city} 2025`,
+                    data: cumulative(cityMonthly25[city]),
+                    borderColor: col, backgroundColor: col + '20',
+                    borderDash: [5, 5], borderWidth: 1.5,
+                    tension: 0.3, fill: false, pointRadius: 3
+                });
+                datasets.push({
+                    label: `${city} 2026`,
+                    data: cumulative(cityMonthly26[city]),
+                    borderColor: col, backgroundColor: col + '40',
+                    borderWidth: 2,
+                    tension: 0.3, fill: false, pointRadius: 3
+                });
+            });
+
+            if (this.cityMonthlyChartInstance) this.cityMonthlyChartInstance.destroy();
+            const cmCtx = this._el('cityMonthlyChart').getContext('2d');
+            this.cityMonthlyChartInstance = new Chart(cmCtx, {
+                type: 'line',
+                data: { labels: months, datasets },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: true, labels: { color: colors.text, font: { size: 10, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 10 } }
+                    },
+                    scales: {
+                        x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
+                        y: { ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
+                    }
+                }
+            });
+        } catch(e) { console.error("City Monthly Chart Error:", e); }
     },
 
     filterCity(city, btn) {

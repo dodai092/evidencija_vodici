@@ -367,6 +367,15 @@ body.dark-mode .nav img { filter: invert(1) brightness(2); }
     white-space: nowrap;
 }
 
+.badge-ext {
+    font-size: 0.65rem;
+    background: #888;
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 10px;
+    margin-left: 6px;
+}
+
 /* STATS */
 .gc-stats {
     display: grid;

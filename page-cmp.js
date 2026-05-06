@@ -4,6 +4,7 @@ const PageCmp = {
     mergedGuides: [],
     cityChartInstance: null,
     monthlyChartInstance: null,
+    paidChartInstance: null,
     _initialized: false,
 
     _el(id) { return document.getElementById(id + '-cmp'); },
@@ -26,13 +27,13 @@ const PageCmp = {
 
     fmtDelta(v25, v26) {
         if (v25 === 0 && v26 === 0) return '<span class="dash">—</span>';
-        if (v25 === 0) return '<span class="pos">NEW</span>';
+        if (v25 === 0) return '<span class="delta pos">NEW</span>';
         const d = v26 - v25;
         const p = ((d / v25) * 100).toFixed(0);
         const sym = d > 0 ? '▲' : d < 0 ? '▼' : '=';
         const cls = d > 0 ? 'pos' : d < 0 ? 'neg' : 'neu';
         const sign = d > 0 ? '+' : '';
-        return `<span class="${cls}">${sym}${Math.abs(d)} (${sign}${p}%)</span>`;
+        return `<span class="delta ${cls}">${sym}${Math.abs(d)} (${sign}${p}%)</span>`;
     },
 
     pctChange(v25, v26) {
@@ -41,7 +42,7 @@ const PageCmp = {
         const p = ((v26 - v25) / v25 * 100).toFixed(0);
         const cls = v26 > v25 ? 'pos' : v26 < v25 ? 'neg' : 'neu';
         const sign = v26 >= v25 ? '+' : '';
-        return `<span class="${cls}">${sign}${p}%</span>`;
+        return `<span class="kpi-pct ${cls}">${sign}${p}%</span>`;
     },
 
     buildMerged() {
@@ -95,10 +96,10 @@ const PageCmp = {
             `<tr><td class="label">Free p</td><td class="v25">${ytd25 ? ytd25.freePax : '—'}</td>` +
             `<td class="v26">${ytd26 ? ytd26.freePax : '—'}</td>` +
             `<td class="delta">${ytd25 && ytd26 ? this.fmtDelta(ytd25.freePax, ytd26.freePax) : '—'}</td></tr>` +
-            `<tr><td class="label">Napl. t</td><td class="v25">${ytd25 ? ytd25.paidTours : '—'}</td>` +
+            `<tr><td class="label">$ t</td><td class="v25">${ytd25 ? ytd25.paidTours : '—'}</td>` +
             `<td class="v26">${ytd26 ? ytd26.paidTours : '—'}</td>` +
             `<td class="delta">${ytd25 && ytd26 ? this.fmtDelta(ytd25.paidTours, ytd26.paidTours) : '—'}</td></tr>` +
-            `<tr><td class="label">Napl. p</td><td class="v25">${ytd25 ? ytd25.paidPax : '—'}</td>` +
+            `<tr><td class="label">$ p</td><td class="v25">${ytd25 ? ytd25.paidPax : '—'}</td>` +
             `<td class="v26">${ytd26 ? ytd26.paidPax : '—'}</td>` +
             `<td class="delta">${ytd25 && ytd26 ? this.fmtDelta(ytd25.paidPax, ytd26.paidPax) : '—'}</td></tr>` +
             `</tbody></table>` +
@@ -145,19 +146,18 @@ const PageCmp = {
         this._el('kv-guides25').textContent = g25;
         this._el('kv-guides26').textContent = g26;
         this._el('kp-guides26').innerHTML  = this.pctChange(g25, g26);
-        this._el('kv-free').textContent    = Math.max(ft25, ft26);
-        this._el('kv-free25').textContent  = ft25;
-        this._el('kv-free26').textContent  = ft26;
-        this._el('kp-free26').innerHTML    = this.pctChange(ft25, ft26);
+        this._el('kv-free').textContent    = fmtN(Math.max(fp25, fp26));
+        this._el('kv-free25').textContent  = fmtN(fp25);
+        this._el('kv-free26').textContent  = fmtN(fp26);
+        this._el('kp-free26').innerHTML    = this.pctChange(fp25, fp26);
         this._el('kv-paid').textContent    = Math.max(pt25, pt26);
         this._el('kv-paid25').textContent  = pt25;
         this._el('kv-paid26').textContent  = pt26;
         this._el('kp-paid26').innerHTML    = this.pctChange(pt25, pt26);
-        const tpax25 = fp25 + pp25, tpax26 = fp26 + pp26;
-        this._el('kv-pax').textContent     = fmtN(tpax25 + tpax26);
-        this._el('kv-pax25').textContent   = fmtN(tpax25);
-        this._el('kv-pax26').textContent   = fmtN(tpax26);
-        this._el('kp-pax26').innerHTML     = this.pctChange(tpax25, tpax26);
+        this._el('kv-pax').textContent     = fmtN(Math.max(fp25, fp26));
+        this._el('kv-pax25').textContent   = fmtN(fp25);
+        this._el('kv-pax26').textContent   = fmtN(fp26);
+        this._el('kp-pax26').innerHTML     = this.pctChange(fp25, fp26);
     },
 
     getChartColors() {
@@ -178,8 +178,8 @@ const PageCmp = {
         const cityData25 = { Zagreb: 0, Dubrovnik: 0, Split: 0, Zadar: 0 };
         const cityData26 = { Zagreb: 0, Dubrovnik: 0, Split: 0, Zadar: 0 };
         fc.forEach(m => {
-            if (m.g25) cityData25[m.city] += this.ytd(m.g25.stats[this.activeLang]).freeTours;
-            if (m.g26) cityData26[m.city] += this.ytd(m.g26.stats[this.activeLang]).freeTours;
+            if (m.g25) cityData25[m.city] += this.ytd(m.g25.stats[this.activeLang]).freePax;
+            if (m.g26) cityData26[m.city] += this.ytd(m.g26.stats[this.activeLang]).freePax;
         });
 
         if (this.cityChartInstance) this.cityChartInstance.destroy();
@@ -205,20 +205,33 @@ const PageCmp = {
 
         const months = ['Sij', 'Velj', 'Ožu', 'Tra'];
         const monthData25 = [0, 0, 0, 0], monthData26 = [0, 0, 0, 0];
+        const paidMonthData25 = [0, 0, 0, 0], paidMonthData26 = [0, 0, 0, 0];
         fc.forEach(m => {
             if (m.g25 && m.g25.stats[this.activeLang] && m.g25.stats[this.activeLang].byMonth) {
                 for (let i = 1; i <= 4; i++) {
                     const mo = m.g25.stats[this.activeLang].byMonth[String(i)];
-                    if (mo) monthData25[i - 1] += mo.free.tours || 0;
+                    if (mo) {
+                        monthData25[i - 1] += mo.free.pax || 0;
+                        paidMonthData25[i - 1] += mo.paid.tours || 0;
+                    }
                 }
             }
             if (m.g26 && m.g26.stats[this.activeLang] && m.g26.stats[this.activeLang].byMonth) {
                 for (let i = 1; i <= 4; i++) {
                     const mo = m.g26.stats[this.activeLang].byMonth[String(i)];
-                    if (mo) monthData26[i - 1] += mo.free.tours || 0;
+                    if (mo) {
+                        monthData26[i - 1] += mo.free.pax || 0;
+                        paidMonthData26[i - 1] += mo.paid.tours || 0;
+                    }
                 }
             }
         });
+
+        const cumulative = (arr) => arr.reduce((acc, val, i) => { acc[i] = (acc[i - 1] || 0) + val; return acc; }, []);
+        const cumMonthData25 = cumulative(monthData25);
+        const cumMonthData26 = cumulative(monthData26);
+        const cumPaidMonthData25 = cumulative(paidMonthData25);
+        const cumPaidMonthData26 = cumulative(paidMonthData26);
 
         if (this.monthlyChartInstance) this.monthlyChartInstance.destroy();
         const monthCtx = this._el('monthlyChart').getContext('2d');
@@ -227,8 +240,29 @@ const PageCmp = {
             data: {
                 labels: months,
                 datasets: [
-                    { label: 'Sij–Svi 2025', data: monthData25, borderColor: colors.y25, backgroundColor: colors.y25 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 },
-                    { label: 'Sij–Svi 2026', data: monthData26, borderColor: colors.y26, backgroundColor: colors.y26 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 }
+                    { label: 'Sij–Svi 2025', data: cumMonthData25, borderColor: colors.y25, backgroundColor: colors.y25 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 },
+                    { label: 'Sij–Svi 2026', data: cumMonthData26, borderColor: colors.y26, backgroundColor: colors.y26 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } } },
+                scales: {
+                    x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
+                    y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
+                }
+            }
+        });
+
+        if (this.paidChartInstance) this.paidChartInstance.destroy();
+        const paidCtx = this._el('paidChart').getContext('2d');
+        this.paidChartInstance = new Chart(paidCtx, {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: [
+                    { label: 'Sij–Svi 2025', data: cumPaidMonthData25, borderColor: colors.y25, backgroundColor: colors.y25 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 },
+                    { label: 'Sij–Svi 2026', data: cumPaidMonthData26, borderColor: colors.y26, backgroundColor: colors.y26 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 }
                 ]
             },
             options: {

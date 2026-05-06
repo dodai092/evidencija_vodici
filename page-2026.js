@@ -53,7 +53,7 @@ const Page26 = {
             `</div>` +
             `<div class="gc-divider"></div>` +
             `<div class="gc-half" style="text-align:right">` +
-            `<div class="gc-stat-label">Napla&#263;ene ture</div>` +
+            `<div class="gc-stat-label">$ Ture</div>` +
             `<div class="gc-stat-num" style="color:${col}">${st.paid.tours}</div>` +
             `<div class="gc-stat-sub">${st.paid.pax} pax</div>` +
             `</div>` +
@@ -69,8 +69,8 @@ const Page26 = {
             `<th>Mj.</th>` +
             `<th class="num" style="color:var(--green)">Free t</th>` +
             `<th class="num">Free p</th>` +
-            `<th class="num" style="color:var(--teal)">Napl t</th>` +
-            `<th class="num">Napl p</th>` +
+            `<th class="num" style="color:var(--teal)">$ t</th>` +
+            `<th class="num">$ p</th>` +
             `</tr></thead>` +
             `<tbody>${monthRowsHtml}</tbody>` +
             `<tfoot><tr>` +
@@ -111,11 +111,11 @@ const Page26 = {
         const freePax   = filtered.reduce((s, g) => s + g.stats[k].free.pax, 0);
         const paidPax   = filtered.reduce((s, g) => s + g.stats[k].paid.pax, 0);
         this._el('kv-guides').textContent   = filtered.length;
-        this._el('kv-free').textContent     = freeTours;
-        this._el('kv-free-pax').textContent = fmtN(freePax) + ' pax';
+        this._el('kv-free').textContent     = fmtN(freePax);
+        this._el('kv-free-pax').textContent = freeTours + ' t';
         this._el('kv-paid').textContent     = paidTours;
         this._el('kv-paid-pax').textContent = fmtN(paidPax) + ' pax';
-        this._el('kv-pax').textContent      = fmtN(freePax + paidPax);
+        this._el('kv-pax').textContent      = fmtN(freePax);
     },
 
     filterCity(city, btn) {

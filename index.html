@@ -58,14 +58,14 @@
             <div class="kpi-sub" id="kv-free-pax-25">— pax</div>
         </div>
         <div class="kpi hl-blue">
-            <div class="kpi-label">Naplaćene ture</div>
+            <div class="kpi-label">$ Ture</div>
             <div class="kpi-value" id="kv-paid-25">—</div>
             <div class="kpi-sub" id="kv-paid-pax-25">— pax</div>
         </div>
         <div class="kpi" style="border-top:3px solid var(--text3)">
-            <div class="kpi-label">Ukupni PAX</div>
+            <div class="kpi-label">Free PAX</div>
             <div class="kpi-value" id="kv-pax-25" style="color:var(--text)">—</div>
-            <div class="kpi-sub">free + naplaćeno</div>
+            <div class="kpi-sub">free ture</div>
         </div>
     </div>
 
@@ -119,14 +119,14 @@
             <div class="kpi-sub" id="kv-free-pax-26">— pax</div>
         </div>
         <div class="kpi hl-blue">
-            <div class="kpi-label">Naplaćene ture</div>
+            <div class="kpi-label">$ Ture</div>
             <div class="kpi-value" id="kv-paid-26">—</div>
             <div class="kpi-sub" id="kv-paid-pax-26">— pax</div>
         </div>
         <div class="kpi" style="border-top:3px solid var(--text3)">
-            <div class="kpi-label">Ukupni PAX</div>
+            <div class="kpi-label">Free PAX</div>
             <div class="kpi-value" id="kv-pax-26" style="color:var(--text)">—</div>
-            <div class="kpi-sub">free + naplaćeno</div>
+            <div class="kpi-sub">free ture</div>
         </div>
     </div>
 
@@ -198,7 +198,7 @@
             </div>
         </div>
         <div class="kpi hl-blue">
-            <div class="kpi-label">Naplaćene ture</div>
+            <div class="kpi-label">$ Ture</div>
             <div class="kpi-value" id="kv-paid-cmp">—</div>
             <div class="kpi-2y">
                 <div>
@@ -212,7 +212,7 @@
             </div>
         </div>
         <div class="kpi" style="border-top:3px solid var(--text3)">
-            <div class="kpi-label">Ukupni PAX</div>
+            <div class="kpi-label">Free PAX</div>
             <div class="kpi-value" id="kv-pax-cmp" style="color:var(--text)">—</div>
             <div class="kpi-2y">
                 <div>
@@ -229,15 +229,21 @@
 
     <div class="charts-area">
         <div class="chart-card">
-            <div class="chart-card-title">Produkcija po gradu</div>
+            <div class="chart-card-title">Free PAX po gradu</div>
             <div class="chart-container">
                 <canvas id="cityChart-cmp"></canvas>
             </div>
         </div>
         <div class="chart-card">
-            <div class="chart-card-title">Trend mjesečno (Sij&ndash;Tra)</div>
+            <div class="chart-card-title">Kumulativni Free PAX trend (Sij–Tra)</div>
             <div class="chart-container">
                 <canvas id="monthlyChart-cmp"></canvas>
+            </div>
+        </div>
+        <div class="chart-card">
+            <div class="chart-card-title">Kumulativni $ Ture trend (Sij–Tra)</div>
+            <div class="chart-container">
+                <canvas id="paidChart-cmp"></canvas>
             </div>
         </div>
     </div>

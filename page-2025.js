@@ -11,6 +11,7 @@ const Page25 = {
         const sid = 'p25_' + safeName(g.name);
         const col = CITY_COLS[g.city] || '#999';
         const init = g.name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+        const isExternal = g.city === 'Unknown';
 
         const typeEntries = Object.entries(st.byType).sort((a, b) => b[1].tours - a[1].tours);
         const maxT = typeEntries.length > 0 ? typeEntries[0][1].tours : 1;
@@ -37,13 +38,15 @@ const Page25 = {
                 `</tr>`;
         }).join('');
 
+        const cityDisplay = isExternal ? 'Vanjski' : g.city;
+
         return `<div class="guide-card" data-city="${g.city}" data-name="${g.name}">` +
             `<div class="gc-stripe" style="background:${col}"></div>` +
             `<div class="gc-body">` +
             `<div class="gc-header">` +
             `<div class="avatar" style="background:${col}18;color:${col};border:1px solid ${col}40">${init}</div>` +
             `<span class="gc-name">${g.name}</span>` +
-            `<span class="city-pill" style="background:${col}18;color:${col}">${g.city}</span>` +
+            (isExternal ? `<span class="badge-ext">Vanjski</span>` : `<span class="city-pill" style="background:${col}18;color:${col}">${cityDisplay}</span>`) +
             `</div>` +
             `<div class="gc-stats">` +
             `<div class="gc-half">` +
@@ -53,7 +56,7 @@ const Page25 = {
             `</div>` +
             `<div class="gc-divider"></div>` +
             `<div class="gc-half" style="text-align:right">` +
-            `<div class="gc-stat-label">Napla&#263;ene ture</div>` +
+            `<div class="gc-stat-label">$ Ture</div>` +
             `<div class="gc-stat-num" style="color:${col}">${st.paid.tours}</div>` +
             `<div class="gc-stat-sub">${st.paid.pax} pax</div>` +
             `</div>` +
@@ -69,8 +72,8 @@ const Page25 = {
             `<th>Mj.</th>` +
             `<th class="num" style="color:var(--green)">Free t</th>` +
             `<th class="num">Free p</th>` +
-            `<th class="num" style="color:var(--teal)">Napl t</th>` +
-            `<th class="num">Napl p</th>` +
+            `<th class="num" style="color:var(--teal)">$ t</th>` +
+            `<th class="num">$ p</th>` +
             `</tr></thead>` +
             `<tbody>${monthRowsHtml}</tbody>` +
             `<tfoot><tr>` +
@@ -111,11 +114,11 @@ const Page25 = {
         const freePax   = filtered.reduce((s, g) => s + g.stats[k].free.pax, 0);
         const paidPax   = filtered.reduce((s, g) => s + g.stats[k].paid.pax, 0);
         this._el('kv-guides').textContent   = filtered.length;
-        this._el('kv-free').textContent     = freeTours;
-        this._el('kv-free-pax').textContent = fmtN(freePax) + ' pax';
+        this._el('kv-free').textContent     = fmtN(freePax);
+        this._el('kv-free-pax').textContent = freeTours + ' t';
         this._el('kv-paid').textContent     = paidTours;
         this._el('kv-paid-pax').textContent = fmtN(paidPax) + ' pax';
-        this._el('kv-pax').textContent      = fmtN(freePax + paidPax);
+        this._el('kv-pax').textContent      = fmtN(freePax);
     },
 
     filterCity(city, btn) {

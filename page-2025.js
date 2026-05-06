@@ -173,9 +173,10 @@ const Page25 = {
     init() {
         if (this._initialized) return;
         this._initialized = true;
-        const now = new Date().toLocaleDateString('hr-HR', { day: 'numeric', month: 'long', year: 'numeric' });
+        const d = new Date(GLOBAL_DATE);
+        const fmt = d.toLocaleDateString('hr-HR', { day: 'numeric', month: 'long', year: 'numeric' });
         const datePov = this._el('date-pov');
-        if (datePov) datePov.textContent = now;
+        if (datePov) datePov.textContent = fmt;
         this.renderAll();
     }
 };

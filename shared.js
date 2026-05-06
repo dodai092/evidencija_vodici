@@ -1,15 +1,48 @@
 const CITY_COLS = { Zagreb:'#0277BA', Dubrovnik:'#D4545A', Split:'#8B5CF6', Zadar:'#F59E0B', Unknown:'#999999' };
 const CITY_CLS  = { Zagreb:'zagreb', Dubrovnik:'dubrovnik', Split:'split', Zadar:'zadar', Unknown:'' };
 const CITIES    = ['Zagreb','Dubrovnik','Split','Zadar'];
+const MONTH_NAMES_HR = {1:'Sij',2:'Velj',3:'Ožu',4:'Tra',5:'Svi',6:'Lip',7:'Srp',8:'Kol',9:'Ruj',10:'Lis',11:'Stu',12:'Pro'};
+
+let GLOBAL_DATE = '2026-05-06'; // Default
 
 function safeName(n) { return n.replace(/[^a-zA-Z0-9]/g,'_'); }
 function fmtN(v) { return Math.round(v).toLocaleString('hr-HR'); }
 
-function filteredStats(st, months) {
-    if (!months || months.length === 0) {
-        return { freeTours: st.free.tours, freePax: st.free.pax, paidTours: st.paid.tours, paidPax: st.paid.pax };
+function getCutoffMonth() {
+    return parseInt(GLOBAL_DATE.split('-')[1]);
+}
+
+function getRangeLabel() {
+    const m = getCutoffMonth();
+    if (m === 1) return 'Sij';
+    return `Sij\u2013${MONTH_NAMES_HR[m]}`;
+}
+
+function updateDateAsOf(val) {
+    GLOBAL_DATE = val;
+    const d = new Date(val);
+    const fmt = d.toLocaleDateString('hr-HR', { day: 'numeric', month: 'long', year: 'numeric' });
+    
+    // Update all headers
+    document.querySelectorAll('[id^="date-pov-"]').forEach(el => el.textContent = fmt);
+    document.querySelectorAll('.ytd-range-label').forEach(el => el.textContent = getRangeLabel());
+    
+    // Refresh active page
+    const activePage = document.querySelector('.page.active');
+    if (activePage) {
+        const id = activePage.id;
+        if (id === 'page-25') Page25.renderAll();
+        if (id === 'page-26') Page26.renderAll();
+        if (id === 'page-cmp') {
+            PageCmp.mergedGuides = PageCmp.buildMerged();
+            PageCmp.renderAll();
+        }
     }
-    return months.reduce((acc, m) => {
+}
+
+function filteredStats(st, months) {
+    const activeMonths = (months && months.length > 0) ? months : Array.from({length: getCutoffMonth()}, (_, i) => i + 1);
+    return activeMonths.reduce((acc, m) => {
         const mo = st.byMonth[String(m)];
         if (mo) {
             acc.freeTours += mo.free.tours || 0;

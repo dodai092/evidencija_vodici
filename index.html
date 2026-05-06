@@ -27,6 +27,7 @@
         </div>
     </div>
     <div class="nav-actions">
+        <input type="date" id="cutoff-picker" value="2026-05-06" onchange="updateDateAsOf(this.value)" class="date-picker-ui">
         <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">Dark Mode</button>
         <button class="print-btn" onclick="window.print()">&#8595; Print / Save PDF</button>
     </div>
@@ -37,7 +38,7 @@
 <div class="header">
     <div class="header-left">
         <h1>Vodiči <span class="accent">2025</span></h1>
-        <p>Produkcija tura po vodiču &middot; Free vs. Naplaćeno</p>
+        <p>Produkcija tura po vodiču &middot; Free vs. Naplaćeno &middot; <span class="ytd-range-label">Sij–Svi</span></p>
     </div>
     <div class="header-right">
         <div id="date-pov-25" style="margin-bottom:6px"></div>
@@ -115,7 +116,7 @@
 <div class="header">
     <div class="header-left">
         <h1>Vodiči <span class="accent">2026</span></h1>
-        <p>Produkcija tura po vodiču &middot; Free vs. Naplaćeno</p>
+        <p>Produkcija tura po vodiču &middot; Free vs. Naplaćeno &middot; <span class="ytd-range-label">Sij–Svi</span></p>
     </div>
     <div class="header-right">
         <div id="date-pov-26" style="margin-bottom:6px"></div>
@@ -186,7 +187,7 @@
 <div class="header">
     <div class="header-left">
         <h1>Usporedba Vodiča</h1>
-        <p>Sij&ndash;Svi 2025 vs. 2026 &middot; Produkcija po vodiču</p>
+        <p><span class="ytd-range-label">Sij–Svi</span> 2025 vs. 2026 &middot; Produkcija po vodiču</p>
     </div>
     <div class="header-right">
         <div id="date-pov-cmp" style="margin-bottom:6px"></div>
@@ -262,13 +263,19 @@
             </div>
         </div>
         <div class="chart-card">
-            <div class="chart-card-title">Kumulativni Free PAX trend (Sij–Tra)</div>
+            <div class="chart-card-title">$ Ture po gradu</div>
+            <div class="chart-container">
+                <canvas id="paidCityChart-cmp"></canvas>
+            </div>
+        </div>
+        <div class="chart-card">
+            <div class="chart-card-title">Kumulativni Free PAX trend (<span class="ytd-range-label">Sij–Svi</span>)</div>
             <div class="chart-container">
                 <canvas id="monthlyChart-cmp"></canvas>
             </div>
         </div>
         <div class="chart-card">
-            <div class="chart-card-title">Kumulativni $ Ture trend (Sij–Tra)</div>
+            <div class="chart-card-title">Kumulativni $ Ture trend (<span class="ytd-range-label">Sij–Svi</span>)</div>
             <div class="chart-container">
                 <canvas id="paidChart-cmp"></canvas>
             </div>
@@ -328,9 +335,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('dark-mode');
     }
     updateThemeButton();
-    const now = new Date().toLocaleDateString('hr-HR', {day:'numeric', month:'long', year:'numeric'});
-    const fd = document.getElementById('footer-date');
-    if (fd) fd.textContent = now;
+    const picker = document.getElementById('cutoff-picker');
+    if (picker) {
+        picker.value = GLOBAL_DATE;
+        updateDateAsOf(picker.value);
+    }
     Page25.init();
 });
 </script>

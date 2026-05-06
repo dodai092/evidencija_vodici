@@ -13,7 +13,7 @@ const PageCmp = {
 
     ytd(stats, months) {
         if (!stats || !stats.byMonth) return { freeTours: 0, freePax: 0, paidTours: 0, paidPax: 0 };
-        const ms = (months && months.length > 0) ? months : [1, 2, 3, 4, 5];
+        const ms = (months && months.length > 0) ? months : Array.from({length: getCutoffMonth()}, (_, i) => i + 1);
         let ft = 0, fp = 0, pt = 0, pp = 0;
         ms.forEach(m => {
             const mo = stats.byMonth[String(m)];
@@ -176,12 +176,24 @@ const PageCmp = {
     updateCharts() {
         const fc = this.mergedGuides.filter(m => this.activeCity === 'all' || m.city === this.activeCity);
         const colors = this.getChartColors();
+        const rangeLabel = getRangeLabel();
 
         const cityData25 = { Zagreb: 0, Dubrovnik: 0, Split: 0, Zadar: 0 };
         const cityData26 = { Zagreb: 0, Dubrovnik: 0, Split: 0, Zadar: 0 };
+        const paidCityData25 = { Zagreb: 0, Dubrovnik: 0, Split: 0, Zadar: 0 };
+        const paidCityData26 = { Zagreb: 0, Dubrovnik: 0, Split: 0, Zadar: 0 };
+
         fc.forEach(m => {
-            if (m.g25) cityData25[m.city] += this.ytd(m.g25.stats[this.activeLang], this.activeMonths).freePax;
-            if (m.g26) cityData26[m.city] += this.ytd(m.g26.stats[this.activeLang], this.activeMonths).freePax;
+            const s25 = m.g25 ? this.ytd(m.g25.stats[this.activeLang], this.activeMonths) : null;
+            const s26 = m.g26 ? this.ytd(m.g26.stats[this.activeLang], this.activeMonths) : null;
+            if (s25) { 
+                cityData25[m.city] += s25.freePax; 
+                paidCityData25[m.city] += s25.paidTours; 
+            }
+            if (s26) { 
+                cityData26[m.city] += s26.freePax; 
+                paidCityData26[m.city] += s26.paidTours; 
+            }
         });
 
         const cityDeltaPlugin = {
@@ -224,8 +236,8 @@ const PageCmp = {
                 data: {
                     labels: CITIES,
                     datasets: [
-                        { label: 'Sij–Svi 2025', data: CITIES.map(c => cityData25[c]), backgroundColor: colors.y25, borderRadius: 4 },
-                        { label: 'Sij–Svi 2026', data: CITIES.map(c => cityData26[c]), backgroundColor: colors.y26, borderRadius: 4 }
+                        { label: `${rangeLabel} 2025`, data: CITIES.map(c => cityData25[c]), backgroundColor: colors.y25, borderRadius: 4 },
+                        { label: `${rangeLabel} 2026`, data: CITIES.map(c => cityData26[c]), backgroundColor: colors.y26, borderRadius: 4 }
                     ]
                 },
                 options: {
@@ -243,8 +255,35 @@ const PageCmp = {
             });
         } catch(e) { console.error("City Chart Error:", e); }
 
-        const MONTH_NAMES = {1:'Sij',2:'Velj',3:'Ožu',4:'Tra',5:'Svi'};
-        const selectedMonths = this.activeMonths.length > 0 ? [...this.activeMonths].sort((a,b) => a-b) : [1, 2, 3, 4, 5];
+        try {
+            if (this.paidCityChartInstance) this.paidCityChartInstance.destroy();
+            const paidCityCtx = this._el('paidCityChart').getContext('2d');
+            this.paidCityChartInstance = new Chart(paidCityCtx, {
+                type: 'bar',
+                data: {
+                    labels: CITIES,
+                    datasets: [
+                        { label: `${rangeLabel} 2025`, data: CITIES.map(c => paidCityData25[c]), backgroundColor: colors.y25, borderRadius: 4 },
+                        { label: `${rangeLabel} 2026`, data: CITIES.map(c => paidCityData26[c]), backgroundColor: colors.y26, borderRadius: 4 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    layout: { padding: { bottom: 45 } },
+                    plugins: { 
+                        legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+                    },
+                    scales: {
+                        x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
+                        y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
+                    }
+                },
+                plugins: [cityDeltaPlugin]
+            });
+        } catch(e) { console.error("Paid City Chart Error:", e); }
+
+        const MONTH_NAMES = {1:'Sij',2:'Velj',3:'Ožu',4:'Tra',5:'Svi',6:'Lip',7:'Srp',8:'Kol',9:'Ruj',10:'Lis',11:'Stu',12:'Pro'};
+        const selectedMonths = this.activeMonths.length > 0 ? [...this.activeMonths].sort((a,b) => a-b) : Array.from({length: getCutoffMonth()}, (_, i) => i + 1);
         const months = selectedMonths.map(m => MONTH_NAMES[m]);
         const monthData25 = [], monthData26 = [];
         const paidMonthData25 = [], paidMonthData26 = [];
@@ -336,8 +375,8 @@ const PageCmp = {
                 data: {
                     labels: months,
                     datasets: [
-                        { label: 'Sij–Svi 2025', data: cumMonthData25, borderColor: colors.y25, backgroundColor: colors.y25 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 },
-                        { label: 'Sij–Svi 2026', data: cumMonthData26, borderColor: colors.y26, backgroundColor: colors.y26 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 }
+                        { label: `${rangeLabel} 2025`, data: cumMonthData25, borderColor: colors.y25, backgroundColor: colors.y25 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 },
+                        { label: `${rangeLabel} 2026`, data: cumMonthData26, borderColor: colors.y26, backgroundColor: colors.y26 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 }
                     ]
                 },
                 options: {
@@ -363,8 +402,8 @@ const PageCmp = {
                 data: {
                     labels: months,
                     datasets: [
-                        { label: 'Sij–Svi 2025', data: cumPaidMonthData25, borderColor: colors.y25, backgroundColor: colors.y25 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 },
-                        { label: 'Sij–Svi 2026', data: cumPaidMonthData26, borderColor: colors.y26, backgroundColor: colors.y26 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 }
+                        { label: `${rangeLabel} 2025`, data: cumPaidMonthData25, borderColor: colors.y25, backgroundColor: colors.y25 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 },
+                        { label: `${rangeLabel} 2026`, data: cumPaidMonthData26, borderColor: colors.y26, backgroundColor: colors.y26 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 }
                     ]
                 },
                 options: {

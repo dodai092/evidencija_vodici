@@ -83,6 +83,21 @@ body {
     align-items: center;
     gap: 12px;
 }
+.date-picker-ui {
+    background: var(--smoke);
+    border: 1px solid var(--border-dark);
+    color: var(--text2);
+    padding: 5px 10px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.date-picker-ui:hover { border-color: var(--text3); }
+body.dark-mode .date-picker-ui { color-scheme: dark; }
+
 .theme-toggle {
     background: none;
     border: 1px solid var(--border-dark);

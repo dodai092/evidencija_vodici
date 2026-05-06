@@ -72,9 +72,13 @@ def empty_stats():
             'free': {'tours': 0, 'pax': 0},
             'paid': {'tours': 0, 'pax': 0},
         }),
+        'byDay': defaultdict(lambda: {
+            'free': {'tours': 0, 'pax': 0},
+            'paid': {'tours': 0, 'pax': 0},
+        }),
     }
 
-def add_row(stats, is_free, tour_type, month, pax):
+def add_row(stats, is_free, tour_type, month, pax, day=None):
     kind = 'free' if is_free else 'paid'
     stats[kind]['tours'] += 1
     stats[kind]['pax'] += pax
@@ -83,6 +87,10 @@ def add_row(stats, is_free, tour_type, month, pax):
         stats['byType'][tour_type]['pax'] += pax
     stats['byMonth'][month][kind]['tours'] += 1
     stats['byMonth'][month][kind]['pax'] += pax
+    if day is not None:
+        key = f"{month}-{day}"
+        stats['byDay'][key][kind]['tours'] += 1
+        stats['byDay'][key][kind]['pax'] += pax
 
 def merge_stats(all_stats, lang_stats):
     """Merge lang_stats into all_stats (for 'all' lang accumulation)."""
@@ -96,6 +104,10 @@ def merge_stats(all_stats, lang_stats):
         for kind in ('free', 'paid'):
             all_stats['byMonth'][m][kind]['tours'] += mv[kind]['tours']
             all_stats['byMonth'][m][kind]['pax'] += mv[kind]['pax']
+    for d, dv in lang_stats['byDay'].items():
+        for kind in ('free', 'paid'):
+            all_stats['byDay'][d][kind]['tours'] += dv[kind]['tours']
+            all_stats['byDay'][d][kind]['pax'] += dv[kind]['pax']
 
 def to_plain(stats):
     """Convert defaultdicts to plain dicts for JSON serialisation."""
@@ -111,6 +123,10 @@ def to_plain(stats):
                 'paid': dict(stats['byMonth'][m]['paid']),
             }
             for m in months_present
+        },
+        'byDay': {
+            k: {'free': dict(v['free']), 'paid': dict(v['paid'])}
+            for k, v in stats['byDay'].items()
         },
     }
 
@@ -131,6 +147,7 @@ def main():
     C_VENDOR  = col('Vendor')
     C_MONTH   = col('Month')
     C_PAX     = col('Total guide pax')
+    C_DATE    = col('Date') if 'Date' in headers else None
     C_YEAR    = col('Year') if 'Year' in headers else None
 
     # raw[vendor][lang] = stats
@@ -160,8 +177,21 @@ def main():
         if month is None:
             continue
 
+        day = None
+        if C_DATE is not None:
+            date_val = row[C_DATE]
+            if date_val is not None:
+                if hasattr(date_val, 'day'):
+                    day = date_val.day
+                elif isinstance(date_val, str):
+                    try:
+                        from datetime import datetime
+                        day = datetime.strptime(date_val[:10], '%Y-%m-%d').day
+                    except Exception:
+                        pass
+
         is_free = (tour == 'free')
-        add_row(raw[vendor][lang], is_free, tour, month, pax)
+        add_row(raw[vendor][lang], is_free, tour, month, pax, day)
 
     # Build output list following canonical order
     result = []
@@ -217,9 +247,10 @@ def main():
     def js(obj):
         return json.dumps(obj, ensure_ascii=False, indent=2)
 
-    print(f'const kpiTotals = {js(kpi)};')
+    suffix = str(YEAR)[-2:] if YEAR else ''
+    print(f'const kpiTotals{suffix} = {js(kpi)};')
     print()
-    print(f'const guideStats = {js(result)};')
+    print(f'const guideStats{suffix} = {js(result)};')
 
 if __name__ == '__main__':
     main()

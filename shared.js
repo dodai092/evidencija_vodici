@@ -22,33 +22,57 @@ function updateDateAsOf(val) {
     GLOBAL_DATE = val;
     const d = new Date(val);
     const fmt = d.toLocaleDateString('hr-HR', { day: 'numeric', month: 'long', year: 'numeric' });
-    
+
     // Update all headers
     document.querySelectorAll('[id^="date-pov-"]').forEach(el => el.textContent = fmt);
     document.querySelectorAll('.ytd-range-label').forEach(el => el.textContent = getRangeLabel());
-    
-    // Refresh active page
-    const activePage = document.querySelector('.page.active');
-    if (activePage) {
-        const id = activePage.id;
-        if (id === 'page-25') Page25.renderAll();
-        if (id === 'page-26') Page26.renderAll();
-        if (id === 'page-cmp') {
-            PageCmp.mergedGuides = PageCmp.buildMerged();
-            PageCmp.renderAll();
-        }
+
+    // Refresh ALL initialized pages (not just active)
+    if (Page25._initialized)  Page25.renderAll();
+    if (Page26._initialized)  Page26.renderAll();
+    if (PageCmp._initialized) {
+        PageCmp.mergedGuides = PageCmp.buildMerged();
+        PageCmp.renderAll();
     }
 }
 
 function filteredStats(st, months) {
-    const activeMonths = (months && months.length > 0) ? months : Array.from({length: getCutoffMonth()}, (_, i) => i + 1);
+    const cutoffMonth = getCutoffMonth();
+    const cutoffDay   = parseInt(GLOBAL_DATE.split('-')[2]);
+    const activeMonths = (months && months.length > 0)
+        ? months
+        : Array.from({length: cutoffMonth}, (_, i) => i + 1);
+
     return activeMonths.reduce((acc, m) => {
-        const mo = st.byMonth[String(m)];
-        if (mo) {
-            acc.freeTours += mo.free.tours || 0;
-            acc.freePax   += mo.free.pax   || 0;
-            acc.paidTours += mo.paid.tours || 0;
-            acc.paidPax   += mo.paid.pax   || 0;
+        if (m < cutoffMonth) {
+            // Complete months — use byMonth aggregate
+            const mo = st.byMonth[String(m)];
+            if (mo) {
+                acc.freeTours += mo.free.tours || 0;
+                acc.freePax   += mo.free.pax   || 0;
+                acc.paidTours += mo.paid.tours || 0;
+                acc.paidPax   += mo.paid.pax   || 0;
+            }
+        } else if (m === cutoffMonth && st.byDay) {
+            // Partial month — sum individual days up to cutoffDay
+            for (let d = 1; d <= cutoffDay; d++) {
+                const dy = st.byDay[`${m}-${d}`];
+                if (dy) {
+                    acc.freeTours += dy.free.tours || 0;
+                    acc.freePax   += dy.free.pax   || 0;
+                    acc.paidTours += dy.paid.tours || 0;
+                    acc.paidPax   += dy.paid.pax   || 0;
+                }
+            }
+        } else if (m === cutoffMonth) {
+            // Fallback: byDay absent (old data) — use full month
+            const mo = st.byMonth[String(m)];
+            if (mo) {
+                acc.freeTours += mo.free.tours || 0;
+                acc.freePax   += mo.free.pax   || 0;
+                acc.paidTours += mo.paid.tours || 0;
+                acc.paidPax   += mo.paid.pax   || 0;
+            }
         }
         return acc;
     }, { freeTours: 0, freePax: 0, paidTours: 0, paidPax: 0 });

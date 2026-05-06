@@ -5,6 +5,22 @@ const CITIES    = ['Zagreb','Dubrovnik','Split','Zadar'];
 function safeName(n) { return n.replace(/[^a-zA-Z0-9]/g,'_'); }
 function fmtN(v) { return Math.round(v).toLocaleString('hr-HR'); }
 
+function filteredStats(st, months) {
+    if (!months || months.length === 0) {
+        return { freeTours: st.free.tours, freePax: st.free.pax, paidTours: st.paid.tours, paidPax: st.paid.pax };
+    }
+    return months.reduce((acc, m) => {
+        const mo = st.byMonth[String(m)];
+        if (mo) {
+            acc.freeTours += mo.free.tours || 0;
+            acc.freePax   += mo.free.pax   || 0;
+            acc.paidTours += mo.paid.tours || 0;
+            acc.paidPax   += mo.paid.pax   || 0;
+        }
+        return acc;
+    }, { freeTours: 0, freePax: 0, paidTours: 0, paidPax: 0 });
+}
+
 function toggleTheme() {
     const isDark = document.body.classList.toggle('dark-mode');
     localStorage.setItem('theme', isDark ? 'dark' : 'light');

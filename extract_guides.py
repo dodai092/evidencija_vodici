@@ -2,20 +2,26 @@
 Extract per-guide stats and print JS data for guides.html.
 
 Usage:
-  python3 extract_guides.py                          # 2026 data (helper_2026 sheet)
-  python3 extract_guides.py --year 2025              # 2025 data (Evidencija sheet, rows 2-7022)
-  python3 extract_guides.py --sheet helper_2026      # explicit sheet name
-  python3 extract_guides.py --sheet Evidencija --year 2025
-  python3 extract_guides.py --year 2026 > guides_data_2026.js
-  python3 extract_guides.py --year 2025 > guides_data_2025.js
+  python3 extract_guides.py                          # 2026 data (Google Sheets or local Excel)
+  python3 extract_guides.py --year 2025              # 2025 data (local Excel only)
+  python3 extract_guides.py --year 2026 > data-2026.js
+  python3 extract_guides.py --year 2025 > data-2025.js
+
+Data source priority:
+  1. SHEET_URL env var — CSV export URL from Google Sheets (used in CI and recommended locally)
+  2. Local Excel fallback — requires openpyxl and the .xlsx file present
+
 Column positions are detected automatically from the header row.
 """
 
 import sys
 import json
-import openpyxl
+import os
+import csv
+import io
 from collections import defaultdict
 
+SHEET_URL  = os.environ.get('SHEET_URL')
 EXCEL_FILE = 'Copy of 1.1 Evidencija prodaje 26.xlsx'
 
 # Parse CLI args
@@ -130,15 +136,41 @@ def to_plain(stats):
         },
     }
 
+def _load_rows_from_url(url):
+    import urllib.request
+    with urllib.request.urlopen(url) as resp:
+        content = resp.read().decode('utf-8')
+    rows = list(csv.reader(io.StringIO(content)))
+    return rows[0], rows[1:]
+
+def _load_rows_from_excel(path, sheet_name):
+    import openpyxl
+    wb = openpyxl.load_workbook(path, data_only=True)
+    ws = wb[sheet_name]
+    all_rows = list(ws.iter_rows(min_row=1, values_only=True))
+    return list(all_rows[0]), [list(r) for r in all_rows[1:]]
+
+def _val(v):
+    """Normalise a cell value to a stripped string, or None if empty."""
+    if v is None: return None
+    s = str(v).strip()
+    return s if s else None
+
+def _int(v):
+    if v is None: return None
+    try: return int(float(str(v).strip()))
+    except (ValueError, TypeError): return None
+
 def main():
-    wb = openpyxl.load_workbook(EXCEL_FILE, data_only=True)
-    ws = wb[SHEET]
+    if SHEET_URL:
+        headers, data_rows = _load_rows_from_url(SHEET_URL)
+    else:
+        headers, data_rows = _load_rows_from_excel(EXCEL_FILE, SHEET)
 
     # Detect column positions from header row
-    headers = [c.value for c in next(ws.iter_rows(min_row=1, max_row=1))]
     def col(name):
         try: return headers.index(name)
-        except ValueError: raise ValueError(f'Column "{name}" not found in sheet "{SHEET}". Headers: {headers}')
+        except ValueError: raise ValueError(f'Column "{name}" not found. Headers: {headers}')
 
     C_TOUR    = col('Tour')
     C_CITY    = col('City')
@@ -153,24 +185,24 @@ def main():
     # raw[vendor][lang] = stats
     raw = defaultdict(lambda: {lang: empty_stats() for lang in ('eng', 'esp', 'fra')})
 
-    for row in ws.iter_rows(min_row=2, values_only=True):
-        vendor = row[C_VENDOR]
+    for row in data_rows:
+        vendor = _val(row[C_VENDOR])
         if not vendor or vendor == 'vanjski vodič':
             continue
-        tour_no = row[C_TOUR_NO]
-        if tour_no != 1.0:
+        tour_no = _int(row[C_TOUR_NO])
+        if tour_no != 1:
             continue
 
         # Year filter: skip rows not matching the target year (when column exists)
         if C_YEAR is not None and YEAR is not None:
-            row_year = row[C_YEAR]
-            if row_year and int(row_year) != YEAR:
+            row_year = _int(row[C_YEAR])
+            if row_year and row_year != YEAR:
                 continue
 
-        tour = row[C_TOUR]
-        lang = row[C_LANG]
-        month = int(row[C_MONTH]) if row[C_MONTH] else None
-        pax = int(row[C_PAX]) if row[C_PAX] else 0
+        tour  = _val(row[C_TOUR])
+        lang  = _val(row[C_LANG])
+        month = _int(row[C_MONTH])
+        pax   = _int(row[C_PAX]) or 0
 
         if lang not in ('eng', 'esp', 'fra'):
             lang = 'eng'  # fallback
@@ -183,12 +215,13 @@ def main():
             if date_val is not None:
                 if hasattr(date_val, 'day'):
                     day = date_val.day
-                elif isinstance(date_val, str):
-                    try:
+                else:
+                    s = str(date_val).strip()
+                    if s:
                         from datetime import datetime
-                        day = datetime.strptime(date_val[:10], '%Y-%m-%d').day
-                    except Exception:
-                        pass
+                        for fmt in ('%Y-%m-%d', '%d.%m.%Y', '%m/%d/%Y', '%d/%b/%y', '%d/%b/%Y'):
+                            try: day = datetime.strptime(s, fmt).day; break
+                            except ValueError: pass
 
         is_free = (tour == 'free')
         add_row(raw[vendor][lang], is_free, tour, month, pax, day)

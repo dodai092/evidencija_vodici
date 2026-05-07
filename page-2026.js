@@ -124,38 +124,18 @@ const Page26 = {
         this._el('kv-pax').textContent      = fmtN(freePax);
     },
 
-    filterCity(city, btn) {
+    filterCity(city) {
         this.activeCity = city;
-        this._scope('[data-city].filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
         this.renderAll();
     },
 
-    filterLang(lang, btn) {
+    filterLang(lang) {
         this.activeLang = lang;
-        this._scope('[data-lang].filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
         this.renderAll();
     },
 
-    filterMonth(m, btn) {
-        const allBtn = this._scope('[data-month="all"]')[0];
-        if (m === 'all') {
-            this.activeMonths = [];
-            this._scope('[data-month].filter-btn').forEach(b => b.classList.remove('active'));
-            if (allBtn) allBtn.classList.add('active');
-        } else {
-            if (allBtn) allBtn.classList.remove('active');
-            const idx = this.activeMonths.indexOf(m);
-            if (idx >= 0) {
-                this.activeMonths.splice(idx, 1);
-                btn.classList.remove('active');
-            } else {
-                this.activeMonths.push(m);
-                btn.classList.add('active');
-            }
-            if (this.activeMonths.length === 0 && allBtn) allBtn.classList.add('active');
-        }
+    filterMonth(m) {
+        this.activeMonths = m === 'all' ? [] : [parseInt(m)];
         this.renderAll();
     },
 

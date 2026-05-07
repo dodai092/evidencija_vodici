@@ -1,0 +1,34 @@
+name: Update guide data
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # Every Monday at 6am UTC
+  workflow_dispatch:       # Manual trigger from GitHub UI
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Regenerate data-2026.js
+        run: python3 extract_guides.py --year 2026 > data-2026.js
+        env:
+          SHEET_URL: ${{ secrets.SHEET_URL }}
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data-2026.js
+          git diff --cached --quiet && echo "No changes." || (
+            git commit -m "Update: guides data $(date +%Y-%m-%d)"
+            git push
+          )

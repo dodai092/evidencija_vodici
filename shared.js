@@ -27,6 +27,12 @@ function updateDateAsOf(val) {
     document.querySelectorAll('[id^="date-pov-"]').forEach(el => el.textContent = fmt);
     document.querySelectorAll('.ytd-range-label').forEach(el => el.textContent = getRangeLabel());
 
+    // Reset month dropdowns and filter state
+    document.querySelectorAll('select[id^="month-filter-"]').forEach(sel => sel.value = 'all');
+    Page25.activeMonths = [];
+    Page26.activeMonths = [];
+    if (typeof PageCmp !== 'undefined') PageCmp.activeMonths = [];
+
     // Refresh ALL initialized pages (not just active)
     if (Page25._initialized)  Page25.renderAll();
     if (Page26._initialized)  Page26.renderAll();
@@ -89,7 +95,7 @@ function toggleTheme() {
 
 function updateThemeButton() {
     const btn = document.getElementById('theme-toggle');
-    if (btn) btn.textContent = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
+    if (btn) btn.setAttribute('title', document.body.classList.contains('dark-mode') ? 'Switch to light mode' : 'Switch to dark mode');
 }
 
 function showPage(id, tab) {

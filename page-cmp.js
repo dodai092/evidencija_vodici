@@ -268,8 +268,13 @@ const PageCmp = {
         } catch(e) { console.error("Paid City Chart Error:", e); }
 
         const MONTH_NAMES = {1:'Sij',2:'Velj',3:'Ožu',4:'Tra',5:'Svi',6:'Lip',7:'Srp',8:'Kol',9:'Ruj',10:'Lis',11:'Stu',12:'Pro'};
-        const selectedMonths = this.activeMonths.length > 0 ? [...this.activeMonths].sort((a,b) => a-b) : Array.from({length: getCutoffMonth()}, (_, i) => i + 1);
+        const maxMonth = this.activeMonths.length > 0 ? Math.max(...this.activeMonths) : getCutoffMonth();
+        const selectedMonths = Array.from({length: maxMonth}, (_, i) => i + 1);
         const months = selectedMonths.map(m => MONTH_NAMES[m]);
+
+        // Update chart title labels to reflect effective range
+        const effectiveLabel = maxMonth === 1 ? MONTH_NAMES[1] : `Sij–${MONTH_NAMES[maxMonth]}`;
+        document.querySelectorAll('#page-cmp .ytd-range-label').forEach(el => el.textContent = effectiveLabel);
         const monthData25 = [], monthData26 = [];
         const paidMonthData25 = [], paidMonthData26 = [];
 
@@ -491,39 +496,19 @@ const PageCmp = {
         } catch(e) { console.error("City Monthly Chart Error:", e); }
     },
 
-    filterCity(city, btn) {
+    filterCity(city) {
         this.activeCity = city;
-        this._scope('[data-city].filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
         this.renderAll();
     },
 
-    filterLang(lang, btn) {
+    filterLang(lang) {
         this.activeLang = lang;
-        this._scope('[data-lang].filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
         this.mergedGuides = this.buildMerged();
         this.renderAll();
     },
 
-    filterMonth(m, btn) {
-        const allBtn = this._scope('[data-month="all"]')[0];
-        if (m === 'all') {
-            this.activeMonths = [];
-            this._scope('[data-month].filter-btn').forEach(b => b.classList.remove('active'));
-            if (allBtn) allBtn.classList.add('active');
-        } else {
-            if (allBtn) allBtn.classList.remove('active');
-            const idx = this.activeMonths.indexOf(m);
-            if (idx >= 0) {
-                this.activeMonths.splice(idx, 1);
-                btn.classList.remove('active');
-            } else {
-                this.activeMonths.push(m);
-                btn.classList.add('active');
-            }
-            if (this.activeMonths.length === 0 && allBtn) allBtn.classList.add('active');
-        }
+    filterMonth(m) {
+        this.activeMonths = m === 'all' ? [] : [parseInt(m)];
         this.mergedGuides = this.buildMerged();
         this.renderAll();
     },

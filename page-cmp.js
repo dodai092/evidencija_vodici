@@ -456,25 +456,47 @@ const PageCmp = {
                 });
             });
 
-            const cityColors = { Zagreb:'#0277BA', Dubrovnik:'#D4545A', Split:'#8B5CF6', Zadar:'#F59E0B' };
+            const cityColors = { Zagreb:'#8FA8BC', Dubrovnik:'#C49A8A', Split:'#9BB09B', Zadar:'#C4B48A' };
             const datasets = [];
             CITIES.forEach(city => {
                 const col = cityColors[city];
                 datasets.push({
                     label: `${city} 2025`,
                     data: cumulative(cityMonthly25[city]),
-                    borderColor: col, backgroundColor: col + '20',
+                    borderColor: col + '80', backgroundColor: 'transparent',
                     borderDash: [5, 5], borderWidth: 1.5,
-                    tension: 0.3, fill: false, pointRadius: 3
+                    tension: 0.3, fill: false, pointRadius: 3,
+                    pointBackgroundColor: col + '80'
                 });
                 datasets.push({
-                    label: `${city} 2026`,
+                    label: city,
                     data: cumulative(cityMonthly26[city]),
-                    borderColor: col, backgroundColor: col + '40',
+                    borderColor: col, backgroundColor: 'transparent',
                     borderWidth: 2,
-                    tension: 0.3, fill: false, pointRadius: 3
+                    tension: 0.3, fill: false, pointRadius: 3,
+                    pointBackgroundColor: col
                 });
             });
+
+            // Build summary badges
+            const badgesEl = document.getElementById('city-monthly-badges-cmp');
+            if (badgesEl) {
+                badgesEl.innerHTML = CITIES.map(city => {
+                    const last25 = cumulative(cityMonthly25[city]).slice(-1)[0] || 0;
+                    const last26 = cumulative(cityMonthly26[city]).slice(-1)[0] || 0;
+                    const diff = last26 - last25;
+                    const pct = last25 > 0 ? Math.round((diff / last25) * 100) : (last26 > 0 ? Infinity : 0);
+                    const cls  = diff > 0 ? 'pos' : diff < 0 ? 'neg' : 'neu';
+                    const arrow = diff > 0 ? '▲' : diff < 0 ? '▼' : '=';
+                    const sign  = diff >= 0 ? '+' : '';
+                    const pctStr = pct === Infinity ? '+∞%' : `${sign}${pct}%`;
+                    const col = cityColors[city];
+                    return `<span class="city-monthly-badge" style="border-color:${col}">` +
+                        `<span class="cmb-name" style="color:${col}">${city}</span>` +
+                        `<span class="cmb-delta ${cls}">${arrow} ${pctStr}</span>` +
+                        `</span>`;
+                }).join('');
+            }
 
             if (this.cityMonthlyChartInstance) this.cityMonthlyChartInstance.destroy();
             const cmCtx = this._el('cityMonthlyChart').getContext('2d');
@@ -484,7 +506,15 @@ const PageCmp = {
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     plugins: {
-                        legend: { display: true, labels: { color: colors.text, font: { size: 10, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 10 } }
+                        legend: {
+                            display: true,
+                            labels: {
+                                color: colors.text,
+                                font: { size: 10, family: "'Montserrat',sans-serif" },
+                                boxWidth: 12, padding: 12,
+                                filter: item => !item.text.includes('2025')
+                            }
+                        }
                     },
                     scales: {
                         x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },

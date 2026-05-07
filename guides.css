@@ -20,10 +20,10 @@
     --blue-light: #85B7EB;
     --pink: #D4537E;
     --teal: #0E7C7B;
-    --zagreb: #0277BA;
-    --dubrovnik: #D4545A;
-    --split: #8B5CF6;
-    --zadar: #F59E0B;
+    --zagreb: #8FA8BC;
+    --dubrovnik: #C49A8A;
+    --split: #9BB09B;
+    --zadar: #C4B48A;
 
     --y25: #6366F1;
     --y26: #1D9E75;
@@ -1114,6 +1114,32 @@ body.dark-mode .filter-select {
 #page-cmp #guide-sections-cmp::-webkit-scrollbar-thumb:hover {
     background: var(--text3);
 }
+
+/* ── CITY MONTHLY CHART BADGES ──────────────────── */
+.city-monthly-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+}
+
+.city-monthly-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 11px;
+    border: 1.5px solid;
+    border-radius: 20px;
+    font-size: 11px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.cmb-name { font-weight: 700; }
+
+.cmb-delta { font-weight: 600; }
+.cmb-delta.pos { color: var(--delta-pos); }
+.cmb-delta.neg { color: var(--delta-neg); }
+.cmb-delta.neu { color: var(--text3); }
 
 /* ── MONTHLY PAX TABLE ──────────────────────────── */
 .mpax-wrap {

@@ -124,7 +124,6 @@ const Page25 = {
         this._el('kv-free-pax').textContent = freeTours + ' t';
         this._el('kv-paid').textContent     = paidTours;
         this._el('kv-paid-pax').textContent = fmtN(paidPax) + ' pax';
-        this._el('kv-pax').textContent      = fmtN(freePax);
     },
 
     filterCity(city) {

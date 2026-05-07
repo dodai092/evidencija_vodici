@@ -106,45 +106,44 @@ const PageCmp = {
         });
         this._el('guide-sections').innerHTML = html;
         this.updateKPIs();
+        this.renderMonthlyTable();
         setTimeout(() => this.updateCharts(), 100);
     },
 
     updateKPIs() {
         const fc = this.mergedGuides.filter(m => this.activeCity === 'all' || m.city === this.activeCity);
-        let g25 = 0, g26 = 0, ft25 = 0, ft26 = 0, pt25 = 0, pt26 = 0, fp25 = 0, fp26 = 0, pp25 = 0, pp26 = 0;
+        let g25 = 0, g26 = 0, pt25 = 0, pt26 = 0, fp25 = 0, fp26 = 0;
         fc.forEach(m => {
             if (m.g25) {
                 g25++;
                 const s25 = filteredStats(m.g25.stats[this.activeLang], this.activeMonths);
-                ft25 += s25.freeTours; fp25 += s25.freePax; pt25 += s25.paidTours; pp25 += s25.paidPax;
+                fp25 += s25.freePax; pt25 += s25.paidTours;
             }
             if (m.g26) {
                 g26++;
                 const s26 = filteredStats(m.g26.stats[this.activeLang], this.activeMonths);
-                ft26 += s26.freeTours; fp26 += s26.freePax; pt26 += s26.paidTours; pp26 += s26.paidPax;
+                fp26 += s26.freePax; pt26 += s26.paidTours;
             }
         });
-        const allGuides = new Set([
-            ...fc.filter(m => m.g25).map(m => m.name),
-            ...fc.filter(m => m.g26).map(m => m.name)
-        ]).size;
 
-        this._el('kv-guides').textContent  = allGuides;
+        const setDelta = (absId, pctId, v25, v26, fmt) => {
+            const diff = v26 - v25;
+            const cls = diff >= 0 ? 'pos' : 'neg';
+            const pct = v25 === 0 ? '—' : (diff >= 0 ? '+' : '-') + Math.abs(Math.round((diff / v25) * 100)) + '%';
+            this._el(absId).innerHTML = `<span class="${cls}">${fmt(Math.abs(diff))}</span>`;
+            this._el(pctId).innerHTML = `<span class="${cls}">${pct}</span>`;
+        };
+
+        setDelta('kd-free-abs', 'kd-free-pct', fp25, fp26, fmtN);
+        setDelta('kd-paid-abs', 'kd-paid-pct', pt25, pt26, v => v);
+        setDelta('kd-guides-abs', 'kd-guides-pct', g25, g26, v => v);
+
+        this._el('kv-free25').textContent   = fmtN(fp25);
+        this._el('kv-free26').textContent   = fmtN(fp26);
+        this._el('kv-paid25').textContent   = pt25;
+        this._el('kv-paid26').textContent   = pt26;
         this._el('kv-guides25').textContent = g25;
         this._el('kv-guides26').textContent = g26;
-        this._el('kp-guides26').innerHTML  = this.pctChange(g25, g26);
-        this._el('kv-free').textContent    = fmtN(Math.max(fp25, fp26));
-        this._el('kv-free25').textContent  = fmtN(fp25);
-        this._el('kv-free26').textContent  = fmtN(fp26);
-        this._el('kp-free26').innerHTML    = this.pctChange(fp25, fp26);
-        this._el('kv-paid').textContent    = Math.max(pt25, pt26);
-        this._el('kv-paid25').textContent  = pt25;
-        this._el('kv-paid26').textContent  = pt26;
-        this._el('kp-paid26').innerHTML    = this.pctChange(pt25, pt26);
-        this._el('kv-pax').textContent     = fmtN(Math.max(fp25, fp26));
-        this._el('kv-pax25').textContent   = fmtN(fp25);
-        this._el('kv-pax26').textContent   = fmtN(fp26);
-        this._el('kp-pax26').innerHTML     = this.pctChange(fp25, fp26);
     },
 
     getChartColors() {
@@ -494,6 +493,111 @@ const PageCmp = {
                 }
             });
         } catch(e) { console.error("City Monthly Chart Error:", e); }
+    },
+
+    renderMonthlyTable() {
+        const cutoffMonth = getCutoffMonth();
+        const cutoffDay   = parseInt(GLOBAL_DATE.split('-')[2]);
+        const MONTH_NAMES = {1:'Sij',2:'Velj',3:'Ožu',4:'Tra',5:'Svi',6:'Lip',7:'Srp',8:'Kol',9:'Ruj',10:'Lis',11:'Stu',12:'Pro'};
+
+        const months = this.activeMonths.length > 0
+            ? this.activeMonths
+            : Array.from({length: cutoffMonth}, (_, i) => i + 1);
+
+        const getPax = (guide, lang, m) => {
+            const st = guide?.stats?.[lang];
+            if (!st) return 0;
+            if (m < cutoffMonth) {
+                return st.byMonth?.[String(m)]?.free?.pax || 0;
+            } else if (m === cutoffMonth) {
+                if (st.byDay) {
+                    let t = 0;
+                    for (let d = 1; d <= cutoffDay; d++) {
+                        const dy = st.byDay[`${m}-${d}`];
+                        if (dy) t += dy.free?.pax || 0;
+                    }
+                    return t;
+                }
+                return st.byMonth?.[String(m)]?.free?.pax || 0;
+            }
+            return 0;
+        };
+
+        const data = months.map(m => {
+            const isPartial = m === cutoffMonth && this.activeMonths.length === 0;
+            const row = { m, isPartial };
+            CITIES.forEach(city => {
+                let p25 = 0, p26 = 0;
+                this.mergedGuides.filter(g => g.city === city).forEach(mg => {
+                    if (mg.g25) p25 += getPax(mg.g25, this.activeLang, m);
+                    if (mg.g26) p26 += getPax(mg.g26, this.activeLang, m);
+                });
+                row[city] = { p25, p26 };
+            });
+            return row;
+        });
+
+        const totals = {};
+        CITIES.forEach(city => {
+            totals[city] = data.reduce((acc, r) => ({ p25: acc.p25 + r[city].p25, p26: acc.p26 + r[city].p26 }), { p25: 0, p26: 0 });
+        });
+
+        const fmtDelta = (p25, p26) => {
+            const diff = p26 - p25;
+            if (p25 === 0 && p26 === 0) return { d: '<span class="neu">—</span>', p: '<span class="neu">—</span>' };
+            const cls  = diff > 0 ? 'pos' : diff < 0 ? 'neg' : 'neu';
+            const sign = diff > 0 ? '+' : '';
+            const pct  = p25 > 0 ? Math.round((diff / p25) * 100) : (diff > 0 ? '∞' : 0);
+            return {
+                d: `<span class="${cls}">${sign}${fmtN(diff)}</span>`,
+                p: `<span class="${cls}">${sign}${pct}%</span>`,
+            };
+        };
+
+        const cityHeaders = CITIES.map(c =>
+            `<th colspan="4" class="mpax-city-head ${CITY_CLS[c]}">${c}</th>`
+        ).join('');
+
+        const subHeaders = CITIES.map(() =>
+            `<th class="mpax-sub-head">'25</th><th class="mpax-sub-head">'26</th><th class="mpax-sub-head">±</th><th class="mpax-sub-head">±%</th>`
+        ).join('');
+
+        const bodyRows = data.map(row => {
+            const cells = CITIES.map(city => {
+                const { p25, p26 } = row[city];
+                const { d, p } = fmtDelta(p25, p26);
+                return `<td>${p25 ? fmtN(p25) : '—'}</td><td>${p26 ? fmtN(p26) : '—'}</td><td>${d}</td><td>${p}</td>`;
+            }).join('');
+            return `<tr><td class="mpax-month">${MONTH_NAMES[row.m]}${row.isPartial ? '<sup>*</sup>' : ''}</td>${cells}</tr>`;
+        }).join('');
+
+        const totalCells = CITIES.map(city => {
+            const { p25, p26 } = totals[city];
+            const { d, p } = fmtDelta(p25, p26);
+            return `<td>${fmtN(p25)}</td><td>${fmtN(p26)}</td><td>${d}</td><td>${p}</td>`;
+        }).join('');
+
+        const hasPartial = data.some(r => r.isPartial);
+
+        const html = `<div class="chart-card" style="margin-bottom:24px">
+            <div class="chart-card-title">Free PAX po Mjesecu i Gradu — <span class="ytd-range-label">${getRangeLabel()}</span> 2025 vs. 2026</div>
+            <div class="mpax-wrap">
+            <table class="mpax-table">
+                <thead>
+                    <tr><th class="mpax-month-head" rowspan="2">Mj.</th>${cityHeaders}</tr>
+                    <tr>${subHeaders}</tr>
+                </thead>
+                <tbody>
+                    ${bodyRows}
+                    <tr class="mpax-total"><td class="mpax-month">Ukupno</td>${totalCells}</tr>
+                </tbody>
+            </table>
+            </div>
+            ${hasPartial ? `<div class="mpax-note">* Djelomičan mjesec — podaci do ${GLOBAL_DATE}</div>` : ''}
+        </div>`;
+
+        const el = document.getElementById('monthly-pax-table-cmp');
+        if (el) el.innerHTML = html;
     },
 
     filterCity(city) {

@@ -84495,7 +84495,7 @@ const guideStats25 = [
   },
   {
     "name": "Maja Baranović Ordulj",
-    "city": "Unknown",
+    "city": "Split",
     "stats": {
       "eng": {
         "free": {

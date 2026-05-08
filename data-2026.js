@@ -1,9 +1,9 @@
 const kpiTotals26 = {
   "guides": 28,
-  "freeTours": 555,
-  "paidTours": 186,
-  "freePax": 6925,
-  "paidPax": 957
+  "freeTours": 584,
+  "paidTours": 197,
+  "freePax": 7373,
+  "paidPax": 1012
 };
 
 const guideStats26 = [
@@ -13,17 +13,17 @@ const guideStats26 = [
     "stats": {
       "eng": {
         "free": {
-          "tours": 35,
-          "pax": 471
+          "tours": 38,
+          "pax": 514
         },
         "paid": {
-          "tours": 30,
-          "pax": 157
+          "tours": 31,
+          "pax": 174
         },
         "byType": {
           "war": {
-            "tours": 20,
-            "pax": 106
+            "tours": 21,
+            "pax": 123
           },
           "best": {
             "tours": 2,
@@ -90,12 +90,12 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 5,
-              "pax": 103
+              "tours": 8,
+              "pax": 146
             },
             "paid": {
-              "tours": 3,
-              "pax": 28
+              "tours": 4,
+              "pax": 45
             }
           }
         },
@@ -547,7 +547,27 @@ const guideStats26 = [
             },
             "paid": {
               "tours": 1,
-              "pax": 6
+              "pax": 8
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 2,
+              "pax": 32
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 1,
+              "pax": 11
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 15
             }
           }
         }
@@ -580,17 +600,17 @@ const guideStats26 = [
       },
       "all": {
         "free": {
-          "tours": 35,
-          "pax": 471
+          "tours": 38,
+          "pax": 514
         },
         "paid": {
-          "tours": 30,
-          "pax": 157
+          "tours": 31,
+          "pax": 174
         },
         "byType": {
           "war": {
-            "tours": 20,
-            "pax": 106
+            "tours": 21,
+            "pax": 123
           },
           "best": {
             "tours": 2,
@@ -657,12 +677,12 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 5,
-              "pax": 103
+              "tours": 8,
+              "pax": 146
             },
             "paid": {
-              "tours": 3,
-              "pax": 28
+              "tours": 4,
+              "pax": 45
             }
           }
         },
@@ -1114,7 +1134,27 @@ const guideStats26 = [
             },
             "paid": {
               "tours": 1,
-              "pax": 6
+              "pax": 8
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 2,
+              "pax": 32
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 1,
+              "pax": 11
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 15
             }
           }
         }
@@ -2014,11 +2054,11 @@ const guideStats26 = [
       "eng": {
         "free": {
           "tours": 26,
-          "pax": 229
+          "pax": 238
         },
         "paid": {
-          "tours": 22,
-          "pax": 121
+          "tours": 23,
+          "pax": 123
         },
         "byType": {
           "war": {
@@ -2026,8 +2066,8 @@ const guideStats26 = [
             "pax": 57
           },
           "food": {
-            "tours": 4,
-            "pax": 10
+            "tours": 5,
+            "pax": 12
           },
           "best": {
             "tours": 5,
@@ -2091,11 +2131,11 @@ const guideStats26 = [
             "name": "Svi",
             "free": {
               "tours": 3,
-              "pax": 19
+              "pax": 28
             },
             "paid": {
-              "tours": 1,
-              "pax": 8
+              "tours": 2,
+              "pax": 10
             }
           }
         },
@@ -2453,11 +2493,21 @@ const guideStats26 = [
           "5-5": {
             "free": {
               "tours": 2,
-              "pax": 10
+              "pax": 19
             },
             "paid": {
               "tours": 0,
               "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 2
             }
           }
         }
@@ -2491,11 +2541,11 @@ const guideStats26 = [
       "all": {
         "free": {
           "tours": 26,
-          "pax": 229
+          "pax": 238
         },
         "paid": {
-          "tours": 22,
-          "pax": 121
+          "tours": 23,
+          "pax": 123
         },
         "byType": {
           "war": {
@@ -2503,8 +2553,8 @@ const guideStats26 = [
             "pax": 57
           },
           "food": {
-            "tours": 4,
-            "pax": 10
+            "tours": 5,
+            "pax": 12
           },
           "best": {
             "tours": 5,
@@ -2568,11 +2618,11 @@ const guideStats26 = [
             "name": "Svi",
             "free": {
               "tours": 3,
-              "pax": 19
+              "pax": 28
             },
             "paid": {
-              "tours": 1,
-              "pax": 8
+              "tours": 2,
+              "pax": 10
             }
           }
         },
@@ -2930,11 +2980,21 @@ const guideStats26 = [
           "5-5": {
             "free": {
               "tours": 2,
-              "pax": 10
+              "pax": 19
             },
             "paid": {
               "tours": 0,
               "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 2
             }
           }
         }
@@ -2947,17 +3007,17 @@ const guideStats26 = [
     "stats": {
       "eng": {
         "free": {
-          "tours": 40,
-          "pax": 495
+          "tours": 43,
+          "pax": 528
         },
         "paid": {
-          "tours": 35,
-          "pax": 186
+          "tours": 36,
+          "pax": 190
         },
         "byType": {
           "war": {
-            "tours": 16,
-            "pax": 95
+            "tours": 17,
+            "pax": 99
           },
           "food": {
             "tours": 9,
@@ -3024,12 +3084,12 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 6,
-              "pax": 85
+              "tours": 9,
+              "pax": 118
             },
             "paid": {
-              "tours": 1,
-              "pax": 3
+              "tours": 2,
+              "pax": 7
             }
           }
         },
@@ -3588,6 +3648,26 @@ const guideStats26 = [
             "free": {
               "tours": 2,
               "pax": 10
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 15
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 2,
+              "pax": 18
             },
             "paid": {
               "tours": 0,
@@ -3624,17 +3704,17 @@ const guideStats26 = [
       },
       "all": {
         "free": {
-          "tours": 40,
-          "pax": 495
+          "tours": 43,
+          "pax": 528
         },
         "paid": {
-          "tours": 35,
-          "pax": 186
+          "tours": 36,
+          "pax": 190
         },
         "byType": {
           "war": {
-            "tours": 16,
-            "pax": 95
+            "tours": 17,
+            "pax": 99
           },
           "food": {
             "tours": 9,
@@ -3701,12 +3781,12 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 6,
-              "pax": 85
+              "tours": 9,
+              "pax": 118
             },
             "paid": {
-              "tours": 1,
-              "pax": 3
+              "tours": 2,
+              "pax": 7
             }
           }
         },
@@ -4270,6 +4350,26 @@ const guideStats26 = [
               "tours": 0,
               "pax": 0
             }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 15
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 2,
+              "pax": 18
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
           }
         }
       }
@@ -4285,8 +4385,8 @@ const guideStats26 = [
           "pax": 0
         },
         "paid": {
-          "tours": 3,
-          "pax": 18
+          "tours": 4,
+          "pax": 26
         },
         "byType": {
           "war": {
@@ -4300,6 +4400,10 @@ const guideStats26 = [
           "old": {
             "tours": 1,
             "pax": 2
+          },
+          "best": {
+            "tours": 1,
+            "pax": 8
           }
         },
         "byMonth": {
@@ -4312,6 +4416,17 @@ const guideStats26 = [
             "paid": {
               "tours": 3,
               "pax": 18
+            }
+          },
+          "5": {
+            "name": "Svi",
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 8
             }
           }
         },
@@ -4345,13 +4460,23 @@ const guideStats26 = [
               "tours": 1,
               "pax": 2
             }
+          },
+          "5-6": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 8
+            }
           }
         }
       },
       "esp": {
         "free": {
-          "tours": 37,
-          "pax": 600
+          "tours": 38,
+          "pax": 602
         },
         "paid": {
           "tours": 4,
@@ -4419,8 +4544,8 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 5,
-              "pax": 90
+              "tours": 6,
+              "pax": 92
             },
             "paid": {
               "tours": 0,
@@ -4808,6 +4933,16 @@ const guideStats26 = [
               "tours": 0,
               "pax": 0
             }
+          },
+          "5-7": {
+            "free": {
+              "tours": 1,
+              "pax": 2
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
           }
         }
       },
@@ -4826,12 +4961,12 @@ const guideStats26 = [
       },
       "all": {
         "free": {
-          "tours": 37,
-          "pax": 600
+          "tours": 38,
+          "pax": 602
         },
         "paid": {
-          "tours": 7,
-          "pax": 28
+          "tours": 8,
+          "pax": 36
         },
         "byType": {
           "war": {
@@ -4847,8 +4982,8 @@ const guideStats26 = [
             "pax": 2
           },
           "best": {
-            "tours": 2,
-            "pax": 6
+            "tours": 3,
+            "pax": 14
           },
           "big": {
             "tours": 1,
@@ -4903,12 +5038,12 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 5,
-              "pax": 90
+              "tours": 6,
+              "pax": 92
             },
             "paid": {
-              "tours": 0,
-              "pax": 0
+              "tours": 1,
+              "pax": 8
             }
           }
         },
@@ -4941,6 +5076,16 @@ const guideStats26 = [
             "paid": {
               "tours": 1,
               "pax": 2
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 8
             }
           },
           "1-4": {
@@ -5322,6 +5467,16 @@ const guideStats26 = [
               "tours": 0,
               "pax": 0
             }
+          },
+          "5-7": {
+            "free": {
+              "tours": 1,
+              "pax": 2
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
           }
         }
       }
@@ -5337,8 +5492,8 @@ const guideStats26 = [
           "pax": 20
         },
         "paid": {
-          "tours": 9,
-          "pax": 48
+          "tours": 10,
+          "pax": 51
         },
         "byType": {
           "best": {
@@ -5350,8 +5505,8 @@ const guideStats26 = [
             "pax": 28
           },
           "food": {
-            "tours": 4,
-            "pax": 14
+            "tours": 5,
+            "pax": 17
           }
         },
         "byMonth": {
@@ -5395,8 +5550,8 @@ const guideStats26 = [
               "pax": 0
             },
             "paid": {
-              "tours": 2,
-              "pax": 10
+              "tours": 3,
+              "pax": 13
             }
           }
         },
@@ -5500,17 +5655,27 @@ const guideStats26 = [
               "tours": 1,
               "pax": 8
             }
+          },
+          "5-7": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 3
+            }
           }
         }
       },
       "esp": {
         "free": {
-          "tours": 24,
-          "pax": 414
+          "tours": 25,
+          "pax": 426
         },
         "paid": {
-          "tours": 11,
-          "pax": 58
+          "tours": 12,
+          "pax": 62
         },
         "byType": {
           "best": {
@@ -5520,6 +5685,10 @@ const guideStats26 = [
           "big": {
             "tours": 2,
             "pax": 25
+          },
+          "war": {
+            "tours": 1,
+            "pax": 4
           }
         },
         "byMonth": {
@@ -5570,12 +5739,12 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 1,
-              "pax": 6
+              "tours": 2,
+              "pax": 18
             },
             "paid": {
-              "tours": 2,
-              "pax": 4
+              "tours": 3,
+              "pax": 8
             }
           }
         },
@@ -5929,6 +6098,16 @@ const guideStats26 = [
               "tours": 0,
               "pax": 0
             }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 12
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 4
+            }
           }
         }
       },
@@ -5947,12 +6126,12 @@ const guideStats26 = [
       },
       "all": {
         "free": {
-          "tours": 25,
-          "pax": 434
+          "tours": 26,
+          "pax": 446
         },
         "paid": {
-          "tours": 20,
-          "pax": 106
+          "tours": 22,
+          "pax": 113
         },
         "byType": {
           "best": {
@@ -5964,12 +6143,16 @@ const guideStats26 = [
             "pax": 28
           },
           "food": {
-            "tours": 4,
-            "pax": 14
+            "tours": 5,
+            "pax": 17
           },
           "big": {
             "tours": 2,
             "pax": 25
+          },
+          "war": {
+            "tours": 1,
+            "pax": 4
           }
         },
         "byMonth": {
@@ -6020,12 +6203,12 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 1,
-              "pax": 6
+              "tours": 2,
+              "pax": 18
             },
             "paid": {
-              "tours": 4,
-              "pax": 14
+              "tours": 6,
+              "pax": 21
             }
           }
         },
@@ -6130,6 +6313,16 @@ const guideStats26 = [
               "pax": 8
             }
           },
+          "5-7": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
           "1-2": {
             "free": {
               "tours": 1,
@@ -6468,6 +6661,16 @@ const guideStats26 = [
             "paid": {
               "tours": 0,
               "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 12
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 4
             }
           }
         }
@@ -6586,8 +6789,8 @@ const guideStats26 = [
       },
       "esp": {
         "free": {
-          "tours": 29,
-          "pax": 325
+          "tours": 31,
+          "pax": 343
         },
         "paid": {
           "tours": 13,
@@ -6659,8 +6862,8 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 2,
-              "pax": 13
+              "tours": 4,
+              "pax": 31
             },
             "paid": {
               "tours": 1,
@@ -7088,6 +7291,26 @@ const guideStats26 = [
               "tours": 1,
               "pax": 3
             }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 6
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 1,
+              "pax": 12
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
           }
         }
       },
@@ -7106,8 +7329,8 @@ const guideStats26 = [
       },
       "all": {
         "free": {
-          "tours": 29,
-          "pax": 325
+          "tours": 31,
+          "pax": 343
         },
         "paid": {
           "tours": 19,
@@ -7183,8 +7406,8 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 2,
-              "pax": 13
+              "tours": 4,
+              "pax": 31
             },
             "paid": {
               "tours": 3,
@@ -7662,6 +7885,26 @@ const guideStats26 = [
               "tours": 1,
               "pax": 3
             }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 6
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 1,
+              "pax": 12
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
           }
         }
       }
@@ -7686,8 +7929,8 @@ const guideStats26 = [
       },
       "esp": {
         "free": {
-          "tours": 30,
-          "pax": 486
+          "tours": 31,
+          "pax": 505
         },
         "paid": {
           "tours": 7,
@@ -7751,8 +7994,8 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 3,
-              "pax": 39
+              "tours": 4,
+              "pax": 58
             },
             "paid": {
               "tours": 1,
@@ -8105,6 +8348,16 @@ const guideStats26 = [
             "free": {
               "tours": 1,
               "pax": 17
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 1,
+              "pax": 19
             },
             "paid": {
               "tours": 0,
@@ -8128,8 +8381,8 @@ const guideStats26 = [
       },
       "all": {
         "free": {
-          "tours": 30,
-          "pax": 486
+          "tours": 31,
+          "pax": 505
         },
         "paid": {
           "tours": 7,
@@ -8193,8 +8446,8 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 3,
-              "pax": 39
+              "tours": 4,
+              "pax": 58
             },
             "paid": {
               "tours": 1,
@@ -8547,6 +8800,16 @@ const guideStats26 = [
             "free": {
               "tours": 1,
               "pax": 17
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 1,
+              "pax": 19
             },
             "paid": {
               "tours": 0,
@@ -8839,17 +9102,17 @@ const guideStats26 = [
       },
       "esp": {
         "free": {
-          "tours": 11,
-          "pax": 122
+          "tours": 12,
+          "pax": 132
         },
         "paid": {
-          "tours": 10,
-          "pax": 60
+          "tours": 11,
+          "pax": 62
         },
         "byType": {
           "best": {
-            "tours": 8,
-            "pax": 41
+            "tours": 9,
+            "pax": 43
           },
           "big": {
             "tours": 2,
@@ -8882,12 +9145,12 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 4,
-              "pax": 31
+              "tours": 5,
+              "pax": 41
             },
             "paid": {
-              "tours": 1,
-              "pax": 17
+              "tours": 2,
+              "pax": 19
             }
           }
         },
@@ -9075,11 +9338,21 @@ const guideStats26 = [
           "5-5": {
             "free": {
               "tours": 1,
-              "pax": 0
+              "pax": 2
             },
             "paid": {
               "tours": 0,
               "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 8
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 2
             }
           }
         }
@@ -9099,17 +9372,17 @@ const guideStats26 = [
       },
       "all": {
         "free": {
-          "tours": 11,
-          "pax": 122
+          "tours": 12,
+          "pax": 132
         },
         "paid": {
-          "tours": 10,
-          "pax": 60
+          "tours": 11,
+          "pax": 62
         },
         "byType": {
           "best": {
-            "tours": 8,
-            "pax": 41
+            "tours": 9,
+            "pax": 43
           },
           "big": {
             "tours": 2,
@@ -9142,12 +9415,12 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 4,
-              "pax": 31
+              "tours": 5,
+              "pax": 41
             },
             "paid": {
-              "tours": 1,
-              "pax": 17
+              "tours": 2,
+              "pax": 19
             }
           }
         },
@@ -9335,11 +9608,21 @@ const guideStats26 = [
           "5-5": {
             "free": {
               "tours": 1,
-              "pax": 0
+              "pax": 2
             },
             "paid": {
               "tours": 0,
               "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 8
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 2
             }
           }
         }
@@ -9352,8 +9635,8 @@ const guideStats26 = [
     "stats": {
       "eng": {
         "free": {
-          "tours": 20,
-          "pax": 219
+          "tours": 23,
+          "pax": 256
         },
         "paid": {
           "tours": 0,
@@ -9375,8 +9658,8 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 3,
-              "pax": 37
+              "tours": 6,
+              "pax": 74
             },
             "paid": {
               "tours": 0,
@@ -9579,6 +9862,26 @@ const guideStats26 = [
             "free": {
               "tours": 1,
               "pax": 8
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 19
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 2,
+              "pax": 18
             },
             "paid": {
               "tours": 0,
@@ -9615,8 +9918,8 @@ const guideStats26 = [
       },
       "all": {
         "free": {
-          "tours": 20,
-          "pax": 219
+          "tours": 23,
+          "pax": 256
         },
         "paid": {
           "tours": 0,
@@ -9638,8 +9941,8 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 3,
-              "pax": 37
+              "tours": 6,
+              "pax": 74
             },
             "paid": {
               "tours": 0,
@@ -9842,6 +10145,26 @@ const guideStats26 = [
             "free": {
               "tours": 1,
               "pax": 8
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 19
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 2,
+              "pax": 18
             },
             "paid": {
               "tours": 0,
@@ -9859,16 +10182,20 @@ const guideStats26 = [
       "eng": {
         "free": {
           "tours": 27,
-          "pax": 219
+          "pax": 229
         },
         "paid": {
-          "tours": 1,
-          "pax": 20
+          "tours": 2,
+          "pax": 21
         },
         "byType": {
           "big": {
             "tours": 1,
             "pax": 20
+          },
+          "food PR": {
+            "tours": 1,
+            "pax": 1
           }
         },
         "byMonth": {
@@ -9898,11 +10225,11 @@ const guideStats26 = [
             "name": "Svi",
             "free": {
               "tours": 3,
-              "pax": 12
+              "pax": 22
             },
             "paid": {
-              "tours": 0,
-              "pax": 0
+              "tours": 1,
+              "pax": 1
             }
           }
         },
@@ -10150,11 +10477,21 @@ const guideStats26 = [
           "5-5": {
             "free": {
               "tours": 1,
-              "pax": 0
+              "pax": 10
             },
             "paid": {
               "tours": 0,
               "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 1
             }
           }
         }
@@ -10188,16 +10525,20 @@ const guideStats26 = [
       "all": {
         "free": {
           "tours": 27,
-          "pax": 219
+          "pax": 229
         },
         "paid": {
-          "tours": 1,
-          "pax": 20
+          "tours": 2,
+          "pax": 21
         },
         "byType": {
           "big": {
             "tours": 1,
             "pax": 20
+          },
+          "food PR": {
+            "tours": 1,
+            "pax": 1
           }
         },
         "byMonth": {
@@ -10227,11 +10568,11 @@ const guideStats26 = [
             "name": "Svi",
             "free": {
               "tours": 3,
-              "pax": 12
+              "pax": 22
             },
             "paid": {
-              "tours": 0,
-              "pax": 0
+              "tours": 1,
+              "pax": 1
             }
           }
         },
@@ -10479,11 +10820,21 @@ const guideStats26 = [
           "5-5": {
             "free": {
               "tours": 1,
-              "pax": 0
+              "pax": 10
             },
             "paid": {
               "tours": 0,
               "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 1
             }
           }
         }
@@ -10496,8 +10847,8 @@ const guideStats26 = [
     "stats": {
       "eng": {
         "free": {
-          "tours": 18,
-          "pax": 239
+          "tours": 20,
+          "pax": 271
         },
         "paid": {
           "tours": 2,
@@ -10524,8 +10875,8 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 4,
-              "pax": 73
+              "tours": 6,
+              "pax": 105
             },
             "paid": {
               "tours": 1,
@@ -10712,6 +11063,26 @@ const guideStats26 = [
             "paid": {
               "tours": 1,
               "pax": 2
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 20
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 1,
+              "pax": 12
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
             }
           }
         }
@@ -10744,8 +11115,8 @@ const guideStats26 = [
       },
       "all": {
         "free": {
-          "tours": 18,
-          "pax": 239
+          "tours": 20,
+          "pax": 271
         },
         "paid": {
           "tours": 2,
@@ -10772,8 +11143,8 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 4,
-              "pax": 73
+              "tours": 6,
+              "pax": 105
             },
             "paid": {
               "tours": 1,
@@ -10960,6 +11331,26 @@ const guideStats26 = [
             "paid": {
               "tours": 1,
               "pax": 2
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 20
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 1,
+              "pax": 12
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
             }
           }
         }
@@ -10985,8 +11376,8 @@ const guideStats26 = [
       },
       "esp": {
         "free": {
-          "tours": 23,
-          "pax": 385
+          "tours": 25,
+          "pax": 433
         },
         "paid": {
           "tours": 0,
@@ -11008,8 +11399,8 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 5,
-              "pax": 92
+              "tours": 7,
+              "pax": 140
             },
             "paid": {
               "tours": 0,
@@ -11202,6 +11593,26 @@ const guideStats26 = [
             "free": {
               "tours": 1,
               "pax": 22
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 20
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 1,
+              "pax": 28
             },
             "paid": {
               "tours": 0,
@@ -11225,8 +11636,8 @@ const guideStats26 = [
       },
       "all": {
         "free": {
-          "tours": 23,
-          "pax": 385
+          "tours": 25,
+          "pax": 433
         },
         "paid": {
           "tours": 0,
@@ -11248,8 +11659,8 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 5,
-              "pax": 92
+              "tours": 7,
+              "pax": 140
             },
             "paid": {
               "tours": 0,
@@ -11442,6 +11853,26 @@ const guideStats26 = [
             "free": {
               "tours": 1,
               "pax": 22
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 20
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 1,
+              "pax": 28
             },
             "paid": {
               "tours": 0,
@@ -11499,8 +11930,8 @@ const guideStats26 = [
       },
       "esp": {
         "free": {
-          "tours": 33,
-          "pax": 406
+          "tours": 34,
+          "pax": 445
         },
         "paid": {
           "tours": 0,
@@ -11533,8 +11964,8 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 6,
-              "pax": 50
+              "tours": 7,
+              "pax": 89
             },
             "paid": {
               "tours": 0,
@@ -11836,7 +12267,17 @@ const guideStats26 = [
           "5-5": {
             "free": {
               "tours": 1,
+              "pax": 22
+            },
+            "paid": {
+              "tours": 0,
               "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 17
             },
             "paid": {
               "tours": 0,
@@ -11860,8 +12301,8 @@ const guideStats26 = [
       },
       "all": {
         "free": {
-          "tours": 33,
-          "pax": 406
+          "tours": 34,
+          "pax": 445
         },
         "paid": {
           "tours": 1,
@@ -11899,8 +12340,8 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 6,
-              "pax": 50
+              "tours": 7,
+              "pax": 89
             },
             "paid": {
               "tours": 1,
@@ -12212,7 +12653,563 @@ const guideStats26 = [
           "5-5": {
             "free": {
               "tours": 1,
+              "pax": 22
+            },
+            "paid": {
+              "tours": 0,
               "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 17
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "Nikolina Vidojević",
+    "city": "Dubrovnik",
+    "stats": {
+      "eng": {
+        "free": {
+          "tours": 0,
+          "pax": 0
+        },
+        "paid": {
+          "tours": 0,
+          "pax": 0
+        },
+        "byType": {},
+        "byMonth": {},
+        "byDay": {}
+      },
+      "esp": {
+        "free": {
+          "tours": 23,
+          "pax": 344
+        },
+        "paid": {
+          "tours": 0,
+          "pax": 0
+        },
+        "byType": {},
+        "byMonth": {
+          "4": {
+            "name": "Tra",
+            "free": {
+              "tours": 18,
+              "pax": 264
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5": {
+            "name": "Svi",
+            "free": {
+              "tours": 5,
+              "pax": 80
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          }
+        },
+        "byDay": {
+          "4-3": {
+            "free": {
+              "tours": 1,
+              "pax": 18
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-4": {
+            "free": {
+              "tours": 1,
+              "pax": 7
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-6": {
+            "free": {
+              "tours": 1,
+              "pax": 16
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-7": {
+            "free": {
+              "tours": 1,
+              "pax": 26
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-8": {
+            "free": {
+              "tours": 1,
+              "pax": 18
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-10": {
+            "free": {
+              "tours": 1,
+              "pax": 9
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-11": {
+            "free": {
+              "tours": 1,
+              "pax": 8
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-13": {
+            "free": {
+              "tours": 1,
+              "pax": 16
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-14": {
+            "free": {
+              "tours": 1,
+              "pax": 6
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-19": {
+            "free": {
+              "tours": 1,
+              "pax": 17
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-21": {
+            "free": {
+              "tours": 1,
+              "pax": 19
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-22": {
+            "free": {
+              "tours": 1,
+              "pax": 14
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-24": {
+            "free": {
+              "tours": 1,
+              "pax": 17
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-26": {
+            "free": {
+              "tours": 1,
+              "pax": 19
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-27": {
+            "free": {
+              "tours": 2,
+              "pax": 28
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-28": {
+            "free": {
+              "tours": 1,
+              "pax": 8
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-30": {
+            "free": {
+              "tours": 1,
+              "pax": 18
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-1": {
+            "free": {
+              "tours": 1,
+              "pax": 25
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-3": {
+            "free": {
+              "tours": 1,
+              "pax": 17
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-4": {
+            "free": {
+              "tours": 1,
+              "pax": 14
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-5": {
+            "free": {
+              "tours": 1,
+              "pax": 8
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 1,
+              "pax": 16
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          }
+        }
+      },
+      "fra": {
+        "free": {
+          "tours": 0,
+          "pax": 0
+        },
+        "paid": {
+          "tours": 0,
+          "pax": 0
+        },
+        "byType": {},
+        "byMonth": {},
+        "byDay": {}
+      },
+      "all": {
+        "free": {
+          "tours": 23,
+          "pax": 344
+        },
+        "paid": {
+          "tours": 0,
+          "pax": 0
+        },
+        "byType": {},
+        "byMonth": {
+          "4": {
+            "name": "Tra",
+            "free": {
+              "tours": 18,
+              "pax": 264
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5": {
+            "name": "Svi",
+            "free": {
+              "tours": 5,
+              "pax": 80
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          }
+        },
+        "byDay": {
+          "4-3": {
+            "free": {
+              "tours": 1,
+              "pax": 18
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-4": {
+            "free": {
+              "tours": 1,
+              "pax": 7
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-6": {
+            "free": {
+              "tours": 1,
+              "pax": 16
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-7": {
+            "free": {
+              "tours": 1,
+              "pax": 26
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-8": {
+            "free": {
+              "tours": 1,
+              "pax": 18
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-10": {
+            "free": {
+              "tours": 1,
+              "pax": 9
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-11": {
+            "free": {
+              "tours": 1,
+              "pax": 8
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-13": {
+            "free": {
+              "tours": 1,
+              "pax": 16
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-14": {
+            "free": {
+              "tours": 1,
+              "pax": 6
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-19": {
+            "free": {
+              "tours": 1,
+              "pax": 17
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-21": {
+            "free": {
+              "tours": 1,
+              "pax": 19
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-22": {
+            "free": {
+              "tours": 1,
+              "pax": 14
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-24": {
+            "free": {
+              "tours": 1,
+              "pax": 17
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-26": {
+            "free": {
+              "tours": 1,
+              "pax": 19
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-27": {
+            "free": {
+              "tours": 2,
+              "pax": 28
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-28": {
+            "free": {
+              "tours": 1,
+              "pax": 8
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "4-30": {
+            "free": {
+              "tours": 1,
+              "pax": 18
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-1": {
+            "free": {
+              "tours": 1,
+              "pax": 25
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-3": {
+            "free": {
+              "tours": 1,
+              "pax": 17
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-4": {
+            "free": {
+              "tours": 1,
+              "pax": 14
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-5": {
+            "free": {
+              "tours": 1,
+              "pax": 8
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 1,
+              "pax": 16
             },
             "paid": {
               "tours": 0,
@@ -12233,13 +13230,17 @@ const guideStats26 = [
           "pax": 27
         },
         "paid": {
-          "tours": 1,
-          "pax": 2
+          "tours": 2,
+          "pax": 9
         },
         "byType": {
           "old": {
             "tours": 1,
             "pax": 2
+          },
+          "big": {
+            "tours": 1,
+            "pax": 7
           }
         },
         "byMonth": {
@@ -12261,8 +13262,8 @@ const guideStats26 = [
               "pax": 10
             },
             "paid": {
-              "tours": 1,
-              "pax": 2
+              "tours": 2,
+              "pax": 9
             }
           }
         },
@@ -12295,6 +13296,16 @@ const guideStats26 = [
             "paid": {
               "tours": 1,
               "pax": 2
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 7
             }
           }
         }
@@ -12384,13 +13395,17 @@ const guideStats26 = [
           "pax": 106
         },
         "paid": {
-          "tours": 1,
-          "pax": 2
+          "tours": 2,
+          "pax": 9
         },
         "byType": {
           "old": {
             "tours": 1,
             "pax": 2
+          },
+          "big": {
+            "tours": 1,
+            "pax": 7
           }
         },
         "byMonth": {
@@ -12412,8 +13427,8 @@ const guideStats26 = [
               "pax": 10
             },
             "paid": {
-              "tours": 1,
-              "pax": 2
+              "tours": 2,
+              "pax": 9
             }
           }
         },
@@ -12446,6 +13461,16 @@ const guideStats26 = [
             "paid": {
               "tours": 1,
               "pax": 2
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 7
             }
           },
           "4-1": {
@@ -12617,547 +13642,59 @@ const guideStats26 = [
     }
   },
   {
-    "name": "Nikolina Vukanović",
-    "city": "Dubrovnik",
-    "stats": {
-      "eng": {
-        "free": {
-          "tours": 0,
-          "pax": 0
-        },
-        "paid": {
-          "tours": 0,
-          "pax": 0
-        },
-        "byType": {},
-        "byMonth": {},
-        "byDay": {}
-      },
-      "esp": {
-        "free": {
-          "tours": 22,
-          "pax": 328
-        },
-        "paid": {
-          "tours": 0,
-          "pax": 0
-        },
-        "byType": {},
-        "byMonth": {
-          "4": {
-            "name": "Tra",
-            "free": {
-              "tours": 18,
-              "pax": 264
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "5": {
-            "name": "Svi",
-            "free": {
-              "tours": 4,
-              "pax": 64
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          }
-        },
-        "byDay": {
-          "4-3": {
-            "free": {
-              "tours": 1,
-              "pax": 18
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-4": {
-            "free": {
-              "tours": 1,
-              "pax": 7
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-6": {
-            "free": {
-              "tours": 1,
-              "pax": 16
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-7": {
-            "free": {
-              "tours": 1,
-              "pax": 26
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-8": {
-            "free": {
-              "tours": 1,
-              "pax": 18
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-10": {
-            "free": {
-              "tours": 1,
-              "pax": 9
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-11": {
-            "free": {
-              "tours": 1,
-              "pax": 8
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-13": {
-            "free": {
-              "tours": 1,
-              "pax": 16
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-14": {
-            "free": {
-              "tours": 1,
-              "pax": 6
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-19": {
-            "free": {
-              "tours": 1,
-              "pax": 17
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-21": {
-            "free": {
-              "tours": 1,
-              "pax": 19
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-22": {
-            "free": {
-              "tours": 1,
-              "pax": 14
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-24": {
-            "free": {
-              "tours": 1,
-              "pax": 17
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-26": {
-            "free": {
-              "tours": 1,
-              "pax": 19
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-27": {
-            "free": {
-              "tours": 2,
-              "pax": 28
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-28": {
-            "free": {
-              "tours": 1,
-              "pax": 8
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-30": {
-            "free": {
-              "tours": 1,
-              "pax": 18
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "5-1": {
-            "free": {
-              "tours": 1,
-              "pax": 25
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "5-3": {
-            "free": {
-              "tours": 1,
-              "pax": 17
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "5-4": {
-            "free": {
-              "tours": 1,
-              "pax": 14
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "5-5": {
-            "free": {
-              "tours": 1,
-              "pax": 8
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          }
-        }
-      },
-      "fra": {
-        "free": {
-          "tours": 0,
-          "pax": 0
-        },
-        "paid": {
-          "tours": 0,
-          "pax": 0
-        },
-        "byType": {},
-        "byMonth": {},
-        "byDay": {}
-      },
-      "all": {
-        "free": {
-          "tours": 22,
-          "pax": 328
-        },
-        "paid": {
-          "tours": 0,
-          "pax": 0
-        },
-        "byType": {},
-        "byMonth": {
-          "4": {
-            "name": "Tra",
-            "free": {
-              "tours": 18,
-              "pax": 264
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "5": {
-            "name": "Svi",
-            "free": {
-              "tours": 4,
-              "pax": 64
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          }
-        },
-        "byDay": {
-          "4-3": {
-            "free": {
-              "tours": 1,
-              "pax": 18
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-4": {
-            "free": {
-              "tours": 1,
-              "pax": 7
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-6": {
-            "free": {
-              "tours": 1,
-              "pax": 16
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-7": {
-            "free": {
-              "tours": 1,
-              "pax": 26
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-8": {
-            "free": {
-              "tours": 1,
-              "pax": 18
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-10": {
-            "free": {
-              "tours": 1,
-              "pax": 9
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-11": {
-            "free": {
-              "tours": 1,
-              "pax": 8
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-13": {
-            "free": {
-              "tours": 1,
-              "pax": 16
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-14": {
-            "free": {
-              "tours": 1,
-              "pax": 6
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-19": {
-            "free": {
-              "tours": 1,
-              "pax": 17
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-21": {
-            "free": {
-              "tours": 1,
-              "pax": 19
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-22": {
-            "free": {
-              "tours": 1,
-              "pax": 14
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-24": {
-            "free": {
-              "tours": 1,
-              "pax": 17
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-26": {
-            "free": {
-              "tours": 1,
-              "pax": 19
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-27": {
-            "free": {
-              "tours": 2,
-              "pax": 28
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-28": {
-            "free": {
-              "tours": 1,
-              "pax": 8
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "4-30": {
-            "free": {
-              "tours": 1,
-              "pax": 18
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "5-1": {
-            "free": {
-              "tours": 1,
-              "pax": 25
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "5-3": {
-            "free": {
-              "tours": 1,
-              "pax": 17
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "5-4": {
-            "free": {
-              "tours": 1,
-              "pax": 14
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "5-5": {
-            "free": {
-              "tours": 1,
-              "pax": 8
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          }
-        }
-      }
-    }
-  },
-  {
     "name": "Bruno Beara",
     "city": "Split",
     "stats": {
       "eng": {
         "free": {
-          "tours": 0,
-          "pax": 0
+          "tours": 1,
+          "pax": 14
         },
         "paid": {
-          "tours": 0,
-          "pax": 0
+          "tours": 1,
+          "pax": 4
         },
-        "byType": {},
-        "byMonth": {},
-        "byDay": {}
+        "byType": {
+          "old": {
+            "tours": 1,
+            "pax": 4
+          }
+        },
+        "byMonth": {
+          "5": {
+            "name": "Svi",
+            "free": {
+              "tours": 1,
+              "pax": 14
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
+        },
+        "byDay": {
+          "5-5": {
+            "free": {
+              "tours": 1,
+              "pax": 14
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
+        }
       },
       "esp": {
         "free": {
@@ -13246,17 +13783,17 @@ const guideStats26 = [
       },
       "all": {
         "free": {
-          "tours": 3,
-          "pax": 31
+          "tours": 4,
+          "pax": 45
         },
         "paid": {
-          "tours": 1,
-          "pax": 2
+          "tours": 2,
+          "pax": 6
         },
         "byType": {
           "old": {
-            "tours": 1,
-            "pax": 2
+            "tours": 2,
+            "pax": 6
           }
         },
         "byMonth": {
@@ -13274,16 +13811,36 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 2,
-              "pax": 15
+              "tours": 3,
+              "pax": 29
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
+        },
+        "byDay": {
+          "5-5": {
+            "free": {
+              "tours": 1,
+              "pax": 14
             },
             "paid": {
               "tours": 0,
               "pax": 0
             }
-          }
-        },
-        "byDay": {
+          },
+          "5-6": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
           "4-21": {
             "free": {
               "tours": 0,
@@ -13337,8 +13894,8 @@ const guideStats26 = [
       },
       "esp": {
         "free": {
-          "tours": 23,
-          "pax": 320
+          "tours": 24,
+          "pax": 361
         },
         "paid": {
           "tours": 0,
@@ -13360,8 +13917,8 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 3,
-              "pax": 43
+              "tours": 4,
+              "pax": 84
             },
             "paid": {
               "tours": 0,
@@ -13573,7 +14130,17 @@ const guideStats26 = [
           "5-5": {
             "free": {
               "tours": 2,
-              "pax": 23
+              "pax": 46
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 18
             },
             "paid": {
               "tours": 0,
@@ -13597,8 +14164,8 @@ const guideStats26 = [
       },
       "all": {
         "free": {
-          "tours": 23,
-          "pax": 320
+          "tours": 24,
+          "pax": 361
         },
         "paid": {
           "tours": 0,
@@ -13620,8 +14187,8 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 3,
-              "pax": 43
+              "tours": 4,
+              "pax": 84
             },
             "paid": {
               "tours": 0,
@@ -13833,7 +14400,17 @@ const guideStats26 = [
           "5-5": {
             "free": {
               "tours": 2,
-              "pax": 23
+              "pax": 46
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 18
             },
             "paid": {
               "tours": 0,
@@ -14515,8 +15092,8 @@ const guideStats26 = [
       },
       "esp": {
         "free": {
-          "tours": 22,
-          "pax": 314
+          "tours": 25,
+          "pax": 357
         },
         "paid": {
           "tours": 0,
@@ -14538,8 +15115,8 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 2,
-              "pax": 10
+              "tours": 5,
+              "pax": 53
             },
             "paid": {
               "tours": 0,
@@ -14742,6 +15319,26 @@ const guideStats26 = [
             "free": {
               "tours": 1,
               "pax": 2
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 2,
+              "pax": 37
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 1,
+              "pax": 6
             },
             "paid": {
               "tours": 0,
@@ -14765,8 +15362,8 @@ const guideStats26 = [
       },
       "all": {
         "free": {
-          "tours": 22,
-          "pax": 314
+          "tours": 25,
+          "pax": 357
         },
         "paid": {
           "tours": 0,
@@ -14788,8 +15385,8 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 2,
-              "pax": 10
+              "tours": 5,
+              "pax": 53
             },
             "paid": {
               "tours": 0,
@@ -14992,6 +15589,26 @@ const guideStats26 = [
             "free": {
               "tours": 1,
               "pax": 2
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 2,
+              "pax": 37
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 1,
+              "pax": 6
             },
             "paid": {
               "tours": 0,
@@ -15386,8 +16003,8 @@ const guideStats26 = [
     "stats": {
       "eng": {
         "free": {
-          "tours": 18,
-          "pax": 99
+          "tours": 20,
+          "pax": 115
         },
         "paid": {
           "tours": 2,
@@ -15425,8 +16042,8 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 3,
-              "pax": 20
+              "tours": 5,
+              "pax": 36
             },
             "paid": {
               "tours": 0,
@@ -15629,6 +16246,26 @@ const guideStats26 = [
             "free": {
               "tours": 1,
               "pax": 3
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 12
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 1,
+              "pax": 4
             },
             "paid": {
               "tours": 0,
@@ -15665,8 +16302,8 @@ const guideStats26 = [
       },
       "all": {
         "free": {
-          "tours": 18,
-          "pax": 99
+          "tours": 20,
+          "pax": 115
         },
         "paid": {
           "tours": 2,
@@ -15704,8 +16341,8 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 3,
-              "pax": 20
+              "tours": 5,
+              "pax": 36
             },
             "paid": {
               "tours": 0,
@@ -15913,6 +16550,26 @@ const guideStats26 = [
               "tours": 0,
               "pax": 0
             }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 12
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-7": {
+            "free": {
+              "tours": 1,
+              "pax": 4
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
           }
         }
       }
@@ -15928,10 +16585,15 @@ const guideStats26 = [
           "pax": 87
         },
         "paid": {
-          "tours": 0,
-          "pax": 0
+          "tours": 1,
+          "pax": 3
         },
-        "byType": {},
+        "byType": {
+          "old": {
+            "tours": 1,
+            "pax": 3
+          }
+        },
         "byMonth": {
           "4": {
             "name": "Tra",
@@ -15951,8 +16613,8 @@ const guideStats26 = [
               "pax": 7
             },
             "paid": {
-              "tours": 0,
-              "pax": 0
+              "tours": 1,
+              "pax": 3
             }
           }
         },
@@ -16076,13 +16738,23 @@ const guideStats26 = [
               "tours": 0,
               "pax": 0
             }
+          },
+          "5-6": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 3
+            }
           }
         }
       },
       "esp": {
         "free": {
-          "tours": 12,
-          "pax": 84
+          "tours": 13,
+          "pax": 90
         },
         "paid": {
           "tours": 0,
@@ -16104,8 +16776,8 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 2,
-              "pax": 13
+              "tours": 3,
+              "pax": 19
             },
             "paid": {
               "tours": 0,
@@ -16233,6 +16905,16 @@ const guideStats26 = [
               "tours": 0,
               "pax": 0
             }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 6
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
           }
         }
       },
@@ -16251,14 +16933,19 @@ const guideStats26 = [
       },
       "all": {
         "free": {
-          "tours": 24,
-          "pax": 171
+          "tours": 25,
+          "pax": 177
         },
         "paid": {
-          "tours": 0,
-          "pax": 0
+          "tours": 1,
+          "pax": 3
         },
-        "byType": {},
+        "byType": {
+          "old": {
+            "tours": 1,
+            "pax": 3
+          }
+        },
         "byMonth": {
           "4": {
             "name": "Tra",
@@ -16274,12 +16961,12 @@ const guideStats26 = [
           "5": {
             "name": "Svi",
             "free": {
-              "tours": 3,
-              "pax": 20
+              "tours": 4,
+              "pax": 26
             },
             "paid": {
-              "tours": 0,
-              "pax": 0
+              "tours": 1,
+              "pax": 3
             }
           }
         },
@@ -16402,6 +17089,16 @@ const guideStats26 = [
             "paid": {
               "tours": 0,
               "pax": 0
+            }
+          },
+          "5-6": {
+            "free": {
+              "tours": 1,
+              "pax": 6
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 3
             }
           },
           "4-2": {

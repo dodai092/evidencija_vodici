@@ -1,12 +1,12 @@
 const CITY_COLS = { Zagreb:'#8FA8BC', Dubrovnik:'#C49A8A', Split:'#9BB09B', Zadar:'#C4B48A', Unknown:'#999999' };
 const CITY_CLS  = { Zagreb:'zagreb', Dubrovnik:'dubrovnik', Split:'split', Zadar:'zadar', Unknown:'' };
 const CITIES    = ['Zagreb','Dubrovnik','Split','Zadar'];
-const MONTH_NAMES_HR = {1:'Sij',2:'Velj',3:'Ožu',4:'Tra',5:'Svi',6:'Lip',7:'Srp',8:'Kol',9:'Ruj',10:'Lis',11:'Stu',12:'Pro'};
+const MONTH_NAMES_HR = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
 
 let GLOBAL_DATE = '2026-05-06'; // Default
 
 function safeName(n) { return n.replace(/[^a-zA-Z0-9]/g,'_'); }
-function fmtN(v) { return Math.round(v).toLocaleString('hr-HR'); }
+function fmtN(v) { return Math.round(v).toLocaleString('en-GB'); }
 
 function getCutoffMonth() {
     return parseInt(GLOBAL_DATE.split('-')[1]);
@@ -14,14 +14,14 @@ function getCutoffMonth() {
 
 function getRangeLabel() {
     const m = getCutoffMonth();
-    if (m === 1) return 'Sij';
-    return `Sij\u2013${MONTH_NAMES_HR[m]}`;
+    if (m === 1) return 'Jan';
+    return `Jan\u2013${MONTH_NAMES_HR[m]}`;
 }
 
 function updateDateAsOf(val) {
     GLOBAL_DATE = val;
     const d = new Date(val);
-    const fmt = d.toLocaleDateString('hr-HR', { day: 'numeric', month: 'long', year: 'numeric' });
+    const fmt = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
     // Update all headers
     document.querySelectorAll('[id^="date-pov-"]').forEach(el => el.textContent = fmt);

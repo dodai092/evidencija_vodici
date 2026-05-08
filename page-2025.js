@@ -41,7 +41,7 @@ const Page25 = {
                 `</tr>`;
         }).join('');
 
-        const cityDisplay = isExternal ? 'Vanjski' : g.city;
+        const cityDisplay = isExternal ? 'External' : g.city;
 
         return `<div class="guide-card" data-city="${g.city}" data-name="${g.name}">` +
             `<div class="gc-stripe" style="background:${col}"></div>` +
@@ -49,17 +49,17 @@ const Page25 = {
             `<div class="gc-header">` +
             `<div class="avatar" style="background:${col}18;color:${col};border:1px solid ${col}40">${init}</div>` +
             `<span class="gc-name">${g.name}</span>` +
-            (isExternal ? `<span class="badge-ext">Vanjski</span>` : `<span class="city-pill" style="background:${col}18;color:${col}">${cityDisplay}</span>`) +
+            (isExternal ? `<span class="badge-ext">External</span>` : `<span class="city-pill" style="background:${col}18;color:${col}">${cityDisplay}</span>`) +
             `</div>` +
             `<div class="gc-stats">` +
             `<div class="gc-half">` +
-            `<div class="gc-stat-label">Free ture</div>` +
+            `<div class="gc-stat-label">Free Tours</div>` +
             `<div class="gc-stat-num" style="color:var(--green)">${fs.freeTours}</div>` +
             `<div class="gc-stat-sub">${fs.freePax} pax</div>` +
             `</div>` +
             `<div class="gc-divider"></div>` +
             `<div class="gc-half" style="text-align:right">` +
-            `<div class="gc-stat-label">$ Ture</div>` +
+            `<div class="gc-stat-label">Paid Tours</div>` +
             `<div class="gc-stat-num" style="color:${col}">${fs.paidTours}</div>` +
             `<div class="gc-stat-sub">${fs.paidPax} pax</div>` +
             `</div>` +
@@ -67,12 +67,12 @@ const Page25 = {
             `</div>` +
             `${typeBarsHtml}` +
             `<div class="monthly-toggle" onclick="Page25.toggleMonthly('${sid}')">` +
-            `<span class="mt-arrow" id="mta-${sid}">&#9660;</span> Mjese&#269;no` +
+            `<span class="mt-arrow" id="mta-${sid}">&#9660;</span> Monthly` +
             `</div>` +
             `<div class="monthly-table" id="mt-${sid}">` +
             `<table>` +
             `<thead><tr>` +
-            `<th>Mj.</th>` +
+            `<th>Mo.</th>` +
             `<th class="num" style="color:var(--green)">Free t</th>` +
             `<th class="num">Free p</th>` +
             `<th class="num" style="color:var(--teal)">$ t</th>` +
@@ -80,7 +80,7 @@ const Page25 = {
             `</tr></thead>` +
             `<tbody>${monthRowsHtml}</tbody>` +
             `<tfoot><tr>` +
-            `<td>Ukup.</td>` +
+            `<td>Total</td>` +
             `<td class="num free-col">${fs.freeTours}</td>` +
             `<td class="num">${fs.freePax}</td>` +
             `<td class="num paid-col">${fs.paidTours}</td>` +
@@ -144,7 +144,7 @@ const Page25 = {
                 responsive: true, maintainAspectRatio: false,
                 plugins: {
                     legend: { display: true, labels: { color: textColor, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 12 } },
-                    tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} PAX/tura` } }
+                    tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} PAX/tour` } }
                 },
                 scales: {
                     x: { ticks: { color: text3 }, grid: { color: border } },
@@ -200,7 +200,7 @@ const Page25 = {
         if (this._initialized) return;
         this._initialized = true;
         const d = new Date(GLOBAL_DATE);
-        const fmt = d.toLocaleDateString('hr-HR', { day: 'numeric', month: 'long', year: 'numeric' });
+        const fmt = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
         const datePov = this._el('date-pov');
         if (datePov) datePov.textContent = fmt;
         this.renderAll();

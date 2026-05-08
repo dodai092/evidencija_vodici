@@ -290,13 +290,13 @@ const PageCmp = {
             });
         } catch(e) { console.error("Paid City Chart Error:", e); }
 
-        const MONTH_NAMES = {1:'Sij',2:'Velj',3:'Ožu',4:'Tra',5:'Svi',6:'Lip',7:'Srp',8:'Kol',9:'Ruj',10:'Lis',11:'Stu',12:'Pro'};
+        const MONTH_NAMES = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
         const maxMonth = this.activeMonths.length > 0 ? Math.max(...this.activeMonths) : getCutoffMonth();
         const selectedMonths = Array.from({length: maxMonth}, (_, i) => i + 1);
         const months = selectedMonths.map(m => MONTH_NAMES[m]);
 
         // Update chart title labels to reflect effective range
-        const effectiveLabel = maxMonth === 1 ? MONTH_NAMES[1] : `Sij–${MONTH_NAMES[maxMonth]}`;
+        const effectiveLabel = maxMonth === 1 ? MONTH_NAMES[1] : `${MONTH_NAMES[1]}–${MONTH_NAMES[maxMonth]}`;
         document.querySelectorAll('#page-cmp .ytd-range-label').forEach(el => el.textContent = effectiveLabel);
         const monthData25 = [], monthData26 = [];
         const paidMonthData25 = [], paidMonthData26 = [];
@@ -591,7 +591,7 @@ const PageCmp = {
                         responsive: true, maintainAspectRatio: false,
                         plugins: {
                             legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } },
-                            tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} PAX/tura` } }
+                            tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} PAX/tour` } }
                         },
                         scales: {
                             x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
@@ -608,7 +608,7 @@ const PageCmp = {
     renderMonthlyTable() {
         const cutoffMonth = getCutoffMonth();
         const cutoffDay   = parseInt(GLOBAL_DATE.split('-')[2]);
-        const MONTH_NAMES = {1:'Sij',2:'Velj',3:'Ožu',4:'Tra',5:'Svi',6:'Lip',7:'Srp',8:'Kol',9:'Ruj',10:'Lis',11:'Stu',12:'Pro'};
+        const MONTH_NAMES = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
 
         const months = this.activeMonths.length > 0
             ? this.activeMonths
@@ -690,20 +690,20 @@ const PageCmp = {
         const hasPartial = data.some(r => r.isPartial);
 
         const html = `<div class="chart-card" style="margin-bottom:24px">
-            <div class="chart-card-title">Free PAX po Mjesecu i Gradu — <span class="ytd-range-label">${getRangeLabel()}</span> 2025 vs. 2026</div>
+            <div class="chart-card-title">Free PAX by Month and City — <span class="ytd-range-label">${getRangeLabel()}</span> 2025 vs. 2026</div>
             <div class="mpax-wrap">
             <table class="mpax-table">
                 <thead>
-                    <tr><th class="mpax-month-head" rowspan="2">Mj.</th>${cityHeaders}</tr>
+                    <tr><th class="mpax-month-head" rowspan="2">Mo.</th>${cityHeaders}</tr>
                     <tr>${subHeaders}</tr>
                 </thead>
                 <tbody>
                     ${bodyRows}
-                    <tr class="mpax-total"><td class="mpax-month">Ukupno</td>${totalCells}</tr>
+                    <tr class="mpax-total"><td class="mpax-month">Total</td>${totalCells}</tr>
                 </tbody>
             </table>
             </div>
-            ${hasPartial ? `<div class="mpax-note">* Djelomičan mjesec — podaci do ${GLOBAL_DATE}</div>` : ''}
+            ${hasPartial ? `<div class="mpax-note">* Partial month — data through ${GLOBAL_DATE}</div>` : ''}
         </div>`;
 
         const el = document.getElementById('monthly-pax-table-cmp');
@@ -789,7 +789,7 @@ const PageCmp = {
 
     updatePaidTypeCharts() {
         const colors   = this.getChartColors();
-        const MONTH_NAMES = {1:'Sij',2:'Velj',3:'Ožu',4:'Tra',5:'Svi',6:'Lip',7:'Srp',8:'Kol',9:'Ruj',10:'Lis',11:'Stu',12:'Pro'};
+        const MONTH_NAMES = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
         const cutoffMonth = getCutoffMonth();
         const maxMonth = this.activeMonths.length > 0 ? Math.max(...this.activeMonths) : cutoffMonth;
         const months   = Array.from({length: maxMonth}, (_, i) => MONTH_NAMES[i + 1]);
@@ -843,7 +843,7 @@ const PageCmp = {
                 borderRadius: 4,
             };
 
-            const yLabel = primaryKey === 'tours' ? 'Ture' : 'PAX';
+            const yLabel = primaryKey === 'tours' ? 'Tours' : 'PAX';
 
             try {
                 if (this[instanceKey]) this[instanceKey].destroy();
@@ -863,7 +863,7 @@ const PageCmp = {
                                         const sec = item.datasetIndex === 0
                                             ? ds25._secondaryData[item.dataIndex]
                                             : ds26._secondaryData[item.dataIndex];
-                                        return sec ? `${secondaryKey === 'pax' ? 'PAX' : 'Ture'}: ${sec}` : '';
+                                        return sec ? `${secondaryKey === 'pax' ? 'PAX' : 'Tours'}: ${sec}` : '';
                                     }
                                 }
                             }
@@ -925,7 +925,7 @@ const PageCmp = {
                         responsive: true, maintainAspectRatio: false,
                         plugins: {
                             legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } },
-                            tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} PAX/tura` } }
+                            tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} PAX/tour` } }
                         },
                         scales: {
                             x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
@@ -957,7 +957,7 @@ const PageCmp = {
     init() {
         if (this._initialized) return;
         this._initialized = true;
-        const now = new Date().toLocaleDateString('hr-HR', { day: 'numeric', month: 'long', year: 'numeric' });
+        const now = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
         const datePov = this._el('date-pov');
         if (datePov) datePov.textContent = now;
         this.mergedGuides = this.buildMerged();

@@ -570,6 +570,242 @@ const guideStats26 = [
               "pax": 15
             }
           }
+        },
+        "byMonthType": {
+          "1": {
+            "war": {
+              "tours": 5,
+              "pax": 18
+            }
+          },
+          "2": {
+            "war": {
+              "tours": 3,
+              "pax": 8
+            },
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3": {
+            "food": {
+              "tours": 2,
+              "pax": 5
+            },
+            "war": {
+              "tours": 1,
+              "pax": 7
+            }
+          },
+          "4": {
+            "war": {
+              "tours": 8,
+              "pax": 45
+            },
+            "food PR": {
+              "tours": 2,
+              "pax": 16
+            },
+            "food": {
+              "tours": 2,
+              "pax": 4
+            },
+            "old": {
+              "tours": 2,
+              "pax": 17
+            },
+            "best": {
+              "tours": 1,
+              "pax": 7
+            }
+          },
+          "5": {
+            "war": {
+              "tours": 4,
+              "pax": 45
+            }
+          }
+        },
+        "byDayType": {
+          "1-3": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "1-11": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "1-12": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "1-24": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "1-28": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "2-1": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "2-9": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "2-17": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "2-20": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-10": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-23": {
+            "war": {
+              "tours": 1,
+              "pax": 7
+            }
+          },
+          "3-28": {
+            "food": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "4-1": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-4": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-7": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "4-9": {
+            "food PR": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4-10": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-11": {
+            "war": {
+              "tours": 1,
+              "pax": 16
+            }
+          },
+          "4-15": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-17": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-19": {
+            "food PR": {
+              "tours": 1,
+              "pax": 12
+            }
+          },
+          "4-20": {
+            "old": {
+              "tours": 2,
+              "pax": 17
+            }
+          },
+          "4-24": {
+            "best": {
+              "tours": 1,
+              "pax": 7
+            },
+            "war": {
+              "tours": 1,
+              "pax": 13
+            }
+          },
+          "4-28": {
+            "war": {
+              "tours": 1,
+              "pax": 5
+            }
+          },
+          "4-29": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5-1": {
+            "war": {
+              "tours": 1,
+              "pax": 16
+            }
+          },
+          "5-2": {
+            "war": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "5-5": {
+            "war": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "5-7": {
+            "war": {
+              "tours": 1,
+              "pax": 15
+            }
+          }
         }
       },
       "esp": {
@@ -583,7 +819,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -596,7 +834,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -1157,6 +1397,242 @@ const guideStats26 = [
               "pax": 15
             }
           }
+        },
+        "byMonthType": {
+          "1": {
+            "war": {
+              "tours": 5,
+              "pax": 18
+            }
+          },
+          "2": {
+            "war": {
+              "tours": 3,
+              "pax": 8
+            },
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3": {
+            "food": {
+              "tours": 2,
+              "pax": 5
+            },
+            "war": {
+              "tours": 1,
+              "pax": 7
+            }
+          },
+          "4": {
+            "war": {
+              "tours": 8,
+              "pax": 45
+            },
+            "food PR": {
+              "tours": 2,
+              "pax": 16
+            },
+            "food": {
+              "tours": 2,
+              "pax": 4
+            },
+            "old": {
+              "tours": 2,
+              "pax": 17
+            },
+            "best": {
+              "tours": 1,
+              "pax": 7
+            }
+          },
+          "5": {
+            "war": {
+              "tours": 4,
+              "pax": 45
+            }
+          }
+        },
+        "byDayType": {
+          "1-3": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "1-11": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "1-12": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "1-24": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "1-28": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "2-1": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "2-9": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "2-17": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "2-20": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-10": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-23": {
+            "war": {
+              "tours": 1,
+              "pax": 7
+            }
+          },
+          "3-28": {
+            "food": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "4-1": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-4": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-7": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "4-9": {
+            "food PR": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4-10": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-11": {
+            "war": {
+              "tours": 1,
+              "pax": 16
+            }
+          },
+          "4-15": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-17": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-19": {
+            "food PR": {
+              "tours": 1,
+              "pax": 12
+            }
+          },
+          "4-20": {
+            "old": {
+              "tours": 2,
+              "pax": 17
+            }
+          },
+          "4-24": {
+            "best": {
+              "tours": 1,
+              "pax": 7
+            },
+            "war": {
+              "tours": 1,
+              "pax": 13
+            }
+          },
+          "4-28": {
+            "war": {
+              "tours": 1,
+              "pax": 5
+            }
+          },
+          "4-29": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5-1": {
+            "war": {
+              "tours": 1,
+              "pax": 16
+            }
+          },
+          "5-2": {
+            "war": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "5-5": {
+            "war": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "5-7": {
+            "war": {
+              "tours": 1,
+              "pax": 15
+            }
+          }
         }
       }
     }
@@ -1296,6 +1772,34 @@ const guideStats26 = [
               "pax": 0
             }
           }
+        },
+        "byMonthType": {
+          "2": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4": {
+            "war": {
+              "tours": 1,
+              "pax": 8
+            }
+          }
+        },
+        "byDayType": {
+          "2-15": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-19": {
+            "war": {
+              "tours": 1,
+              "pax": 8
+            }
+          }
         }
       },
       "esp": {
@@ -1309,7 +1813,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -1322,7 +1828,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -1453,6 +1961,34 @@ const guideStats26 = [
             "paid": {
               "tours": 0,
               "pax": 0
+            }
+          }
+        },
+        "byMonthType": {
+          "2": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4": {
+            "war": {
+              "tours": 1,
+              "pax": 8
+            }
+          }
+        },
+        "byDayType": {
+          "2-15": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-19": {
+            "war": {
+              "tours": 1,
+              "pax": 8
             }
           }
         }
@@ -1739,6 +2275,146 @@ const guideStats26 = [
               "pax": 2
             }
           }
+        },
+        "byMonthType": {
+          "1": {
+            "war": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "2": {
+            "war": {
+              "tours": 2,
+              "pax": 11
+            }
+          },
+          "3": {
+            "war": {
+              "tours": 11,
+              "pax": 52
+            }
+          },
+          "4": {
+            "war": {
+              "tours": 3,
+              "pax": 22
+            },
+            "food PR": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
+        },
+        "byDayType": {
+          "1-17": {
+            "war": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "2-19": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "2-23": {
+            "war": {
+              "tours": 1,
+              "pax": 7
+            }
+          },
+          "3-2": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "3-5": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "3-9": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "3-14": {
+            "war": {
+              "tours": 1,
+              "pax": 5
+            }
+          },
+          "3-17": {
+            "war": {
+              "tours": 1,
+              "pax": 5
+            }
+          },
+          "3-20": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-21": {
+            "war": {
+              "tours": 1,
+              "pax": 5
+            }
+          },
+          "3-25": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-28": {
+            "war": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "3-30": {
+            "war": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "3-31": {
+            "war": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "4-12": {
+            "war": {
+              "tours": 1,
+              "pax": 9
+            }
+          },
+          "4-13": {
+            "war": {
+              "tours": 1,
+              "pax": 7
+            }
+          },
+          "4-14": {
+            "war": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "4-28": {
+            "food PR": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
         }
       },
       "esp": {
@@ -1752,7 +2428,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -1765,7 +2443,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -2039,6 +2719,146 @@ const guideStats26 = [
               "pax": 20
             },
             "paid": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
+        },
+        "byMonthType": {
+          "1": {
+            "war": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "2": {
+            "war": {
+              "tours": 2,
+              "pax": 11
+            }
+          },
+          "3": {
+            "war": {
+              "tours": 11,
+              "pax": 52
+            }
+          },
+          "4": {
+            "war": {
+              "tours": 3,
+              "pax": 22
+            },
+            "food PR": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
+        },
+        "byDayType": {
+          "1-17": {
+            "war": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "2-19": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "2-23": {
+            "war": {
+              "tours": 1,
+              "pax": 7
+            }
+          },
+          "3-2": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "3-5": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "3-9": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "3-14": {
+            "war": {
+              "tours": 1,
+              "pax": 5
+            }
+          },
+          "3-17": {
+            "war": {
+              "tours": 1,
+              "pax": 5
+            }
+          },
+          "3-20": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-21": {
+            "war": {
+              "tours": 1,
+              "pax": 5
+            }
+          },
+          "3-25": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-28": {
+            "war": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "3-30": {
+            "war": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "3-31": {
+            "war": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "4-12": {
+            "war": {
+              "tours": 1,
+              "pax": 9
+            }
+          },
+          "4-13": {
+            "war": {
+              "tours": 1,
+              "pax": 7
+            }
+          },
+          "4-14": {
+            "war": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "4-28": {
+            "food PR": {
               "tours": 1,
               "pax": 2
             }
@@ -2510,6 +3330,198 @@ const guideStats26 = [
               "pax": 2
             }
           }
+        },
+        "byMonthType": {
+          "2": {
+            "war": {
+              "tours": 3,
+              "pax": 9
+            },
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3": {
+            "war": {
+              "tours": 4,
+              "pax": 17
+            },
+            "best": {
+              "tours": 2,
+              "pax": 6
+            },
+            "food PR": {
+              "tours": 1,
+              "pax": 10
+            }
+          },
+          "4": {
+            "best": {
+              "tours": 3,
+              "pax": 10
+            },
+            "war": {
+              "tours": 3,
+              "pax": 23
+            },
+            "old": {
+              "tours": 1,
+              "pax": 28
+            },
+            "food": {
+              "tours": 3,
+              "pax": 8
+            }
+          },
+          "5": {
+            "war": {
+              "tours": 1,
+              "pax": 8
+            },
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
+        },
+        "byDayType": {
+          "2-10": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "2-13": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "2-20": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "2-28": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-8": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "3-11": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-13": {
+            "war": {
+              "tours": 1,
+              "pax": 7
+            }
+          },
+          "3-16": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "3-17": {
+            "food PR": {
+              "tours": 1,
+              "pax": 10
+            }
+          },
+          "3-19": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "3-21": {
+            "best": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4-2": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-3": {
+            "war": {
+              "tours": 1,
+              "pax": 14
+            }
+          },
+          "4-8": {
+            "war": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "4-11": {
+            "old": {
+              "tours": 1,
+              "pax": 28
+            }
+          },
+          "4-16": {
+            "best": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "4-18": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            },
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "4-20": {
+            "food": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4-21": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-23": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5-4": {
+            "war": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "5-6": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
         }
       },
       "esp": {
@@ -2523,7 +3535,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -2536,7 +3550,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -2993,6 +4009,198 @@ const guideStats26 = [
               "pax": 0
             },
             "paid": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
+        },
+        "byMonthType": {
+          "2": {
+            "war": {
+              "tours": 3,
+              "pax": 9
+            },
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3": {
+            "war": {
+              "tours": 4,
+              "pax": 17
+            },
+            "best": {
+              "tours": 2,
+              "pax": 6
+            },
+            "food PR": {
+              "tours": 1,
+              "pax": 10
+            }
+          },
+          "4": {
+            "best": {
+              "tours": 3,
+              "pax": 10
+            },
+            "war": {
+              "tours": 3,
+              "pax": 23
+            },
+            "old": {
+              "tours": 1,
+              "pax": 28
+            },
+            "food": {
+              "tours": 3,
+              "pax": 8
+            }
+          },
+          "5": {
+            "war": {
+              "tours": 1,
+              "pax": 8
+            },
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
+        },
+        "byDayType": {
+          "2-10": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "2-13": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "2-20": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "2-28": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-8": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "3-11": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-13": {
+            "war": {
+              "tours": 1,
+              "pax": 7
+            }
+          },
+          "3-16": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "3-17": {
+            "food PR": {
+              "tours": 1,
+              "pax": 10
+            }
+          },
+          "3-19": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "3-21": {
+            "best": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4-2": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-3": {
+            "war": {
+              "tours": 1,
+              "pax": 14
+            }
+          },
+          "4-8": {
+            "war": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "4-11": {
+            "old": {
+              "tours": 1,
+              "pax": 28
+            }
+          },
+          "4-16": {
+            "best": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "4-18": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            },
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "4-20": {
+            "food": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4-21": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-23": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5-4": {
+            "war": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "5-6": {
+            "food": {
               "tours": 1,
               "pax": 2
             }
@@ -3674,6 +4882,292 @@ const guideStats26 = [
               "pax": 0
             }
           }
+        },
+        "byMonthType": {
+          "1": {
+            "war": {
+              "tours": 4,
+              "pax": 31
+            },
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "2": {
+            "war": {
+              "tours": 3,
+              "pax": 17
+            },
+            "old": {
+              "tours": 1,
+              "pax": 20
+            },
+            "food PR": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3": {
+            "food": {
+              "tours": 3,
+              "pax": 9
+            },
+            "war": {
+              "tours": 2,
+              "pax": 10
+            },
+            "food PR": {
+              "tours": 1,
+              "pax": 10
+            },
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4": {
+            "food": {
+              "tours": 5,
+              "pax": 16
+            },
+            "war": {
+              "tours": 6,
+              "pax": 34
+            },
+            "best": {
+              "tours": 3,
+              "pax": 14
+            },
+            "food PR": {
+              "tours": 2,
+              "pax": 14
+            },
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5": {
+            "war": {
+              "tours": 2,
+              "pax": 7
+            }
+          }
+        },
+        "byDayType": {
+          "1-2": {
+            "war": {
+              "tours": 1,
+              "pax": 5
+            }
+          },
+          "1-4": {
+            "war": {
+              "tours": 1,
+              "pax": 11
+            }
+          },
+          "1-5": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "1-20": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "1-30": {
+            "war": {
+              "tours": 1,
+              "pax": 12
+            }
+          },
+          "2-14": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "2-15": {
+            "old": {
+              "tours": 1,
+              "pax": 20
+            }
+          },
+          "2-16": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "2-20": {
+            "food PR": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "2-21": {
+            "war": {
+              "tours": 1,
+              "pax": 12
+            }
+          },
+          "3-8": {
+            "food": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "3-15": {
+            "war": {
+              "tours": 1,
+              "pax": 7
+            }
+          },
+          "3-17": {
+            "food PR": {
+              "tours": 1,
+              "pax": 10
+            }
+          },
+          "3-19": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-22": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "3-28": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-29": {
+            "food": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "4-4": {
+            "food": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4-6": {
+            "war": {
+              "tours": 1,
+              "pax": 7
+            }
+          },
+          "4-7": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-8": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-9": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "4-16": {
+            "war": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "4-18": {
+            "best": {
+              "tours": 1,
+              "pax": 10
+            }
+          },
+          "4-19": {
+            "food": {
+              "tours": 1,
+              "pax": 4
+            },
+            "food PR": {
+              "tours": 1,
+              "pax": 12
+            }
+          },
+          "4-22": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-23": {
+            "food PR": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-24": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-25": {
+            "war": {
+              "tours": 1,
+              "pax": 11
+            }
+          },
+          "4-28": {
+            "food": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4-29": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4-30": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            },
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "5-3": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "5-6": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
         }
       },
       "esp": {
@@ -3687,7 +5181,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -3700,7 +5196,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -4371,6 +5869,292 @@ const guideStats26 = [
               "pax": 0
             }
           }
+        },
+        "byMonthType": {
+          "1": {
+            "war": {
+              "tours": 4,
+              "pax": 31
+            },
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "2": {
+            "war": {
+              "tours": 3,
+              "pax": 17
+            },
+            "old": {
+              "tours": 1,
+              "pax": 20
+            },
+            "food PR": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3": {
+            "food": {
+              "tours": 3,
+              "pax": 9
+            },
+            "war": {
+              "tours": 2,
+              "pax": 10
+            },
+            "food PR": {
+              "tours": 1,
+              "pax": 10
+            },
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4": {
+            "food": {
+              "tours": 5,
+              "pax": 16
+            },
+            "war": {
+              "tours": 6,
+              "pax": 34
+            },
+            "best": {
+              "tours": 3,
+              "pax": 14
+            },
+            "food PR": {
+              "tours": 2,
+              "pax": 14
+            },
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5": {
+            "war": {
+              "tours": 2,
+              "pax": 7
+            }
+          }
+        },
+        "byDayType": {
+          "1-2": {
+            "war": {
+              "tours": 1,
+              "pax": 5
+            }
+          },
+          "1-4": {
+            "war": {
+              "tours": 1,
+              "pax": 11
+            }
+          },
+          "1-5": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "1-20": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "1-30": {
+            "war": {
+              "tours": 1,
+              "pax": 12
+            }
+          },
+          "2-14": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "2-15": {
+            "old": {
+              "tours": 1,
+              "pax": 20
+            }
+          },
+          "2-16": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "2-20": {
+            "food PR": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "2-21": {
+            "war": {
+              "tours": 1,
+              "pax": 12
+            }
+          },
+          "3-8": {
+            "food": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "3-15": {
+            "war": {
+              "tours": 1,
+              "pax": 7
+            }
+          },
+          "3-17": {
+            "food PR": {
+              "tours": 1,
+              "pax": 10
+            }
+          },
+          "3-19": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-22": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "3-28": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-29": {
+            "food": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "4-4": {
+            "food": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4-6": {
+            "war": {
+              "tours": 1,
+              "pax": 7
+            }
+          },
+          "4-7": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-8": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-9": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "4-16": {
+            "war": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "4-18": {
+            "best": {
+              "tours": 1,
+              "pax": 10
+            }
+          },
+          "4-19": {
+            "food": {
+              "tours": 1,
+              "pax": 4
+            },
+            "food PR": {
+              "tours": 1,
+              "pax": 12
+            }
+          },
+          "4-22": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-23": {
+            "food PR": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-24": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-25": {
+            "war": {
+              "tours": 1,
+              "pax": 11
+            }
+          },
+          "4-28": {
+            "food": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4-29": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4-30": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            },
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "5-3": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "5-6": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
         }
       }
     }
@@ -4467,6 +6251,54 @@ const guideStats26 = [
               "pax": 0
             },
             "paid": {
+              "tours": 1,
+              "pax": 8
+            }
+          }
+        },
+        "byMonthType": {
+          "4": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            },
+            "war PR": {
+              "tours": 1,
+              "pax": 12
+            },
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          }
+        },
+        "byDayType": {
+          "4-10": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4-19": {
+            "war PR": {
+              "tours": 1,
+              "pax": 12
+            }
+          },
+          "4-30": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5-6": {
+            "best": {
               "tours": 1,
               "pax": 8
             }
@@ -4944,6 +6776,54 @@ const guideStats26 = [
               "pax": 0
             }
           }
+        },
+        "byMonthType": {
+          "3": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            },
+            "big": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            },
+            "best": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
+        },
+        "byDayType": {
+          "3-11": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-31": {
+            "big": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-2": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-15": {
+            "best": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
         }
       },
       "fra": {
@@ -4957,7 +6837,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -5478,6 +7360,92 @@ const guideStats26 = [
               "pax": 0
             }
           }
+        },
+        "byMonthType": {
+          "4": {
+            "war": {
+              "tours": 2,
+              "pax": 6
+            },
+            "war PR": {
+              "tours": 1,
+              "pax": 12
+            },
+            "old": {
+              "tours": 1,
+              "pax": 2
+            },
+            "best": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "5": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "3": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            },
+            "big": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
+        },
+        "byDayType": {
+          "4-10": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4-19": {
+            "war PR": {
+              "tours": 1,
+              "pax": 12
+            }
+          },
+          "4-30": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5-6": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "3-11": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-31": {
+            "big": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-2": {
+            "war": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-15": {
+            "best": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
         }
       }
     }
@@ -5662,6 +7630,102 @@ const guideStats26 = [
               "pax": 0
             },
             "paid": {
+              "tours": 1,
+              "pax": 3
+            }
+          }
+        },
+        "byMonthType": {
+          "1": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "2": {
+            "old": {
+              "tours": 1,
+              "pax": 20
+            }
+          },
+          "4": {
+            "best": {
+              "tours": 2,
+              "pax": 4
+            },
+            "food": {
+              "tours": 3,
+              "pax": 12
+            }
+          },
+          "5": {
+            "food": {
+              "tours": 2,
+              "pax": 5
+            },
+            "old": {
+              "tours": 1,
+              "pax": 8
+            }
+          }
+        },
+        "byDayType": {
+          "1-31": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "2-15": {
+            "old": {
+              "tours": 1,
+              "pax": 20
+            }
+          },
+          "4-9": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-11": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-16": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-24": {
+            "food": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "4-25": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5-3": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5-4": {
+            "old": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "5-7": {
+            "food": {
               "tours": 1,
               "pax": 3
             }
@@ -6109,6 +8173,120 @@ const guideStats26 = [
               "pax": 4
             }
           }
+        },
+        "byMonthType": {
+          "1": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "2": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "3": {
+            "best": {
+              "tours": 2,
+              "pax": 5
+            }
+          },
+          "4": {
+            "best": {
+              "tours": 3,
+              "pax": 14
+            },
+            "big": {
+              "tours": 2,
+              "pax": 25
+            }
+          },
+          "5": {
+            "best": {
+              "tours": 2,
+              "pax": 4
+            },
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
+        },
+        "byDayType": {
+          "1-16": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "2-14": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "3-1": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-5": {
+            "best": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "4-1": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "4-13": {
+            "best": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4-18": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-21": {
+            "big": {
+              "tours": 1,
+              "pax": 12
+            }
+          },
+          "4-25": {
+            "big": {
+              "tours": 1,
+              "pax": 13
+            }
+          },
+          "5-1": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5-2": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5-6": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
         }
       },
       "fra": {
@@ -6122,7 +8300,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -6673,6 +8853,194 @@ const guideStats26 = [
               "pax": 4
             }
           }
+        },
+        "byMonthType": {
+          "1": {
+            "best": {
+              "tours": 2,
+              "pax": 4
+            }
+          },
+          "2": {
+            "old": {
+              "tours": 1,
+              "pax": 20
+            },
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "4": {
+            "best": {
+              "tours": 5,
+              "pax": 18
+            },
+            "food": {
+              "tours": 3,
+              "pax": 12
+            },
+            "big": {
+              "tours": 2,
+              "pax": 25
+            }
+          },
+          "5": {
+            "food": {
+              "tours": 2,
+              "pax": 5
+            },
+            "old": {
+              "tours": 1,
+              "pax": 8
+            },
+            "best": {
+              "tours": 2,
+              "pax": 4
+            },
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "3": {
+            "best": {
+              "tours": 2,
+              "pax": 5
+            }
+          }
+        },
+        "byDayType": {
+          "1-31": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "2-15": {
+            "old": {
+              "tours": 1,
+              "pax": 20
+            }
+          },
+          "4-9": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-11": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-16": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-24": {
+            "food": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "4-25": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            },
+            "big": {
+              "tours": 1,
+              "pax": 13
+            }
+          },
+          "5-3": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5-4": {
+            "old": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "5-7": {
+            "food": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "1-16": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "2-14": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "3-1": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-5": {
+            "best": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "4-1": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "4-13": {
+            "best": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4-18": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-21": {
+            "big": {
+              "tours": 1,
+              "pax": 12
+            }
+          },
+          "5-1": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5-2": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5-6": {
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
         }
       }
     }
@@ -6781,6 +9149,62 @@ const guideStats26 = [
               "pax": 0
             },
             "paid": {
+              "tours": 1,
+              "pax": 8
+            }
+          }
+        },
+        "byMonthType": {
+          "4": {
+            "best": {
+              "tours": 3,
+              "pax": 12
+            },
+            "food PR": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5": {
+            "best": {
+              "tours": 2,
+              "pax": 19
+            }
+          }
+        },
+        "byDayType": {
+          "4-12": {
+            "best": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "4-23": {
+            "food PR": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-26": {
+            "best": {
+              "tours": 1,
+              "pax": 5
+            }
+          },
+          "4-28": {
+            "best": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "5-1": {
+            "best": {
+              "tours": 1,
+              "pax": 11
+            }
+          },
+          "5-3": {
+            "best": {
               "tours": 1,
               "pax": 8
             }
@@ -7312,6 +9736,126 @@ const guideStats26 = [
               "pax": 0
             }
           }
+        },
+        "byMonthType": {
+          "1": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "2": {
+            "best": {
+              "tours": 3,
+              "pax": 12
+            }
+          },
+          "3": {
+            "best": {
+              "tours": 2,
+              "pax": 6
+            },
+            "big": {
+              "tours": 1,
+              "pax": 2
+            },
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4": {
+            "best": {
+              "tours": 4,
+              "pax": 17
+            }
+          },
+          "5": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          }
+        },
+        "byDayType": {
+          "1-29": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "2-10": {
+            "best": {
+              "tours": 1,
+              "pax": 5
+            }
+          },
+          "2-17": {
+            "best": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "2-20": {
+            "best": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "3-21": {
+            "best": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "3-23": {
+            "big": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-25": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-31": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-4": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "4-6": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-21": {
+            "best": {
+              "tours": 1,
+              "pax": 5
+            }
+          },
+          "4-29": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5-4": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          }
         }
       },
       "fra": {
@@ -7325,7 +9869,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -7906,6 +10452,170 @@ const guideStats26 = [
               "pax": 0
             }
           }
+        },
+        "byMonthType": {
+          "4": {
+            "best": {
+              "tours": 7,
+              "pax": 29
+            },
+            "food PR": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5": {
+            "best": {
+              "tours": 2,
+              "pax": 19
+            },
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "1": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "2": {
+            "best": {
+              "tours": 3,
+              "pax": 12
+            }
+          },
+          "3": {
+            "best": {
+              "tours": 2,
+              "pax": 6
+            },
+            "big": {
+              "tours": 1,
+              "pax": 2
+            },
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
+        },
+        "byDayType": {
+          "4-12": {
+            "best": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "4-23": {
+            "food PR": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-26": {
+            "best": {
+              "tours": 1,
+              "pax": 5
+            }
+          },
+          "4-28": {
+            "best": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "5-1": {
+            "best": {
+              "tours": 1,
+              "pax": 11
+            }
+          },
+          "5-3": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "1-29": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "2-10": {
+            "best": {
+              "tours": 1,
+              "pax": 5
+            }
+          },
+          "2-17": {
+            "best": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "2-20": {
+            "best": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "3-21": {
+            "best": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "3-23": {
+            "big": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-25": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-31": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-4": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "4-6": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-21": {
+            "best": {
+              "tours": 1,
+              "pax": 5
+            }
+          },
+          "4-29": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5-4": {
+            "war": {
+              "tours": 1,
+              "pax": 3
+            }
+          }
         }
       }
     }
@@ -7925,7 +10635,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "esp": {
         "free": {
@@ -8364,6 +11076,84 @@ const guideStats26 = [
               "pax": 0
             }
           }
+        },
+        "byMonthType": {
+          "1": {
+            "best": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "2": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "3": {
+            "best": {
+              "tours": 2,
+              "pax": 6
+            },
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "5": {
+            "war": {
+              "tours": 1,
+              "pax": 7
+            }
+          }
+        },
+        "byDayType": {
+          "1-2": {
+            "best": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "2-21": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "3-7": {
+            "best": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "3-29": {
+            "best": {
+              "tours": 1,
+              "pax": 3
+            },
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4-25": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "5-1": {
+            "war": {
+              "tours": 1,
+              "pax": 7
+            }
+          }
         }
       },
       "fra": {
@@ -8377,7 +11167,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -8816,6 +11608,84 @@ const guideStats26 = [
               "pax": 0
             }
           }
+        },
+        "byMonthType": {
+          "1": {
+            "best": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "2": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "3": {
+            "best": {
+              "tours": 2,
+              "pax": 6
+            },
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "5": {
+            "war": {
+              "tours": 1,
+              "pax": 7
+            }
+          }
+        },
+        "byDayType": {
+          "1-2": {
+            "best": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "2-21": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "3-7": {
+            "best": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "3-29": {
+            "best": {
+              "tours": 1,
+              "pax": 3
+            },
+            "war": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4-25": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "5-1": {
+            "war": {
+              "tours": 1,
+              "pax": 7
+            }
+          }
         }
       }
     }
@@ -8911,6 +11781,52 @@ const guideStats26 = [
               "pax": 0
             }
           }
+        },
+        "byMonthType": {
+          "4": {
+            "food": {
+              "tours": 2,
+              "pax": 4
+            },
+            "war": {
+              "tours": 2,
+              "pax": 17
+            },
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
+        },
+        "byDayType": {
+          "4-15": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-26": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            },
+            "war": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "4-27": {
+            "war": {
+              "tours": 1,
+              "pax": 11
+            }
+          },
+          "4-28": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
         }
       },
       "esp": {
@@ -8924,7 +11840,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -8961,6 +11879,22 @@ const guideStats26 = [
               "pax": 0
             },
             "paid": {
+              "tours": 1,
+              "pax": 3
+            }
+          }
+        },
+        "byMonthType": {
+          "3": {
+            "big": {
+              "tours": 1,
+              "pax": 3
+            }
+          }
+        },
+        "byDayType": {
+          "3-28": {
+            "big": {
               "tours": 1,
               "pax": 3
             }
@@ -9079,6 +12013,64 @@ const guideStats26 = [
               "pax": 3
             }
           }
+        },
+        "byMonthType": {
+          "4": {
+            "food": {
+              "tours": 2,
+              "pax": 4
+            },
+            "war": {
+              "tours": 2,
+              "pax": 17
+            },
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3": {
+            "big": {
+              "tours": 1,
+              "pax": 3
+            }
+          }
+        },
+        "byDayType": {
+          "4-15": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-26": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            },
+            "war": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "4-27": {
+            "war": {
+              "tours": 1,
+              "pax": 11
+            }
+          },
+          "4-28": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "3-28": {
+            "big": {
+              "tours": 1,
+              "pax": 3
+            }
+          }
         }
       }
     }
@@ -9098,7 +12090,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "esp": {
         "free": {
@@ -9355,6 +12349,100 @@ const guideStats26 = [
               "pax": 2
             }
           }
+        },
+        "byMonthType": {
+          "3": {
+            "best": {
+              "tours": 3,
+              "pax": 16
+            },
+            "big": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4": {
+            "best": {
+              "tours": 5,
+              "pax": 25
+            }
+          },
+          "5": {
+            "big": {
+              "tours": 1,
+              "pax": 17
+            },
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
+        },
+        "byDayType": {
+          "3-26": {
+            "best": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "3-30": {
+            "best": {
+              "tours": 1,
+              "pax": 11
+            }
+          },
+          "3-31": {
+            "big": {
+              "tours": 1,
+              "pax": 2
+            },
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-2": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-3": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "4-24": {
+            "best": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "4-26": {
+            "best": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "4-28": {
+            "best": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "5-2": {
+            "big": {
+              "tours": 1,
+              "pax": 17
+            }
+          },
+          "5-6": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
         }
       },
       "fra": {
@@ -9368,7 +12456,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -9621,6 +12711,100 @@ const guideStats26 = [
               "pax": 8
             },
             "paid": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
+        },
+        "byMonthType": {
+          "3": {
+            "best": {
+              "tours": 3,
+              "pax": 16
+            },
+            "big": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4": {
+            "best": {
+              "tours": 5,
+              "pax": 25
+            }
+          },
+          "5": {
+            "big": {
+              "tours": 1,
+              "pax": 17
+            },
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
+        },
+        "byDayType": {
+          "3-26": {
+            "best": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "3-30": {
+            "best": {
+              "tours": 1,
+              "pax": 11
+            }
+          },
+          "3-31": {
+            "big": {
+              "tours": 1,
+              "pax": 2
+            },
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-2": {
+            "best": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-3": {
+            "best": {
+              "tours": 1,
+              "pax": 8
+            }
+          },
+          "4-24": {
+            "best": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "4-26": {
+            "best": {
+              "tours": 1,
+              "pax": 6
+            }
+          },
+          "4-28": {
+            "best": {
+              "tours": 1,
+              "pax": 3
+            }
+          },
+          "5-2": {
+            "big": {
+              "tours": 1,
+              "pax": 17
+            }
+          },
+          "5-6": {
+            "best": {
               "tours": 1,
               "pax": 2
             }
@@ -9888,7 +13072,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       },
       "esp": {
         "free": {
@@ -9901,7 +13087,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -9914,7 +13102,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -10171,7 +13361,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       }
     }
   },
@@ -10494,6 +13686,34 @@ const guideStats26 = [
               "pax": 1
             }
           }
+        },
+        "byMonthType": {
+          "3": {
+            "big": {
+              "tours": 1,
+              "pax": 20
+            }
+          },
+          "5": {
+            "food PR": {
+              "tours": 1,
+              "pax": 1
+            }
+          }
+        },
+        "byDayType": {
+          "3-19": {
+            "big": {
+              "tours": 1,
+              "pax": 20
+            }
+          },
+          "5-6": {
+            "food PR": {
+              "tours": 1,
+              "pax": 1
+            }
+          }
         }
       },
       "esp": {
@@ -10507,7 +13727,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -10520,7 +13742,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -10837,6 +14061,34 @@ const guideStats26 = [
               "pax": 1
             }
           }
+        },
+        "byMonthType": {
+          "3": {
+            "big": {
+              "tours": 1,
+              "pax": 20
+            }
+          },
+          "5": {
+            "food PR": {
+              "tours": 1,
+              "pax": 1
+            }
+          }
+        },
+        "byDayType": {
+          "3-19": {
+            "big": {
+              "tours": 1,
+              "pax": 20
+            }
+          },
+          "5-6": {
+            "food PR": {
+              "tours": 1,
+              "pax": 1
+            }
+          }
         }
       }
     }
@@ -11085,6 +14337,34 @@ const guideStats26 = [
               "pax": 0
             }
           }
+        },
+        "byMonthType": {
+          "4": {
+            "big": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "5": {
+            "big": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
+        },
+        "byDayType": {
+          "4-30": {
+            "big": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "5-5": {
+            "big": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
         }
       },
       "esp": {
@@ -11098,7 +14378,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -11111,7 +14393,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -11353,6 +14637,34 @@ const guideStats26 = [
               "pax": 0
             }
           }
+        },
+        "byMonthType": {
+          "4": {
+            "big": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "5": {
+            "big": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
+        },
+        "byDayType": {
+          "4-30": {
+            "big": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "5-5": {
+            "big": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
         }
       }
     }
@@ -11372,7 +14684,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "esp": {
         "free": {
@@ -11619,7 +14933,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -11632,7 +14948,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -11879,7 +15197,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       }
     }
   },
@@ -11926,6 +15246,22 @@ const guideStats26 = [
               "pax": 4
             }
           }
+        },
+        "byMonthType": {
+          "5": {
+            "old": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
+        },
+        "byDayType": {
+          "5-3": {
+            "old": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
         }
       },
       "esp": {
@@ -12284,7 +15620,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -12297,7 +15635,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -12670,6 +16010,22 @@ const guideStats26 = [
               "pax": 0
             }
           }
+        },
+        "byMonthType": {
+          "5": {
+            "old": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
+        },
+        "byDayType": {
+          "5-3": {
+            "old": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
         }
       }
     }
@@ -12689,7 +16045,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "esp": {
         "free": {
@@ -12946,7 +16304,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -12959,7 +16319,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -13216,7 +16578,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       }
     }
   },
@@ -13308,6 +16672,32 @@ const guideStats26 = [
               "pax": 7
             }
           }
+        },
+        "byMonthType": {
+          "5": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            },
+            "big": {
+              "tours": 1,
+              "pax": 7
+            }
+          }
+        },
+        "byDayType": {
+          "5-2": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5-7": {
+            "big": {
+              "tours": 1,
+              "pax": 7
+            }
+          }
         }
       },
       "esp": {
@@ -13374,7 +16764,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -13387,7 +16779,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -13513,6 +16907,32 @@ const guideStats26 = [
               "pax": 0
             }
           }
+        },
+        "byMonthType": {
+          "5": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            },
+            "big": {
+              "tours": 1,
+              "pax": 7
+            }
+          }
+        },
+        "byDayType": {
+          "5-2": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "5-7": {
+            "big": {
+              "tours": 1,
+              "pax": 7
+            }
+          }
         }
       }
     }
@@ -13532,7 +16952,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "esp": {
         "free": {
@@ -13578,7 +17000,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -13591,7 +17015,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -13637,7 +17063,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       }
     }
   },
@@ -13690,6 +17118,22 @@ const guideStats26 = [
               "pax": 0
             },
             "paid": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
+        },
+        "byMonthType": {
+          "5": {
+            "old": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
+        },
+        "byDayType": {
+          "5-6": {
+            "old": {
               "tours": 1,
               "pax": 4
             }
@@ -13766,6 +17210,22 @@ const guideStats26 = [
               "pax": 0
             }
           }
+        },
+        "byMonthType": {
+          "4": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
+        },
+        "byDayType": {
+          "4-21": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
         }
       },
       "fra": {
@@ -13779,7 +17239,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -13871,6 +17333,34 @@ const guideStats26 = [
               "pax": 0
             }
           }
+        },
+        "byMonthType": {
+          "5": {
+            "old": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
+        },
+        "byDayType": {
+          "5-6": {
+            "old": {
+              "tours": 1,
+              "pax": 4
+            }
+          },
+          "4-21": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
         }
       }
     }
@@ -13890,7 +17380,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "esp": {
         "free": {
@@ -14147,7 +17639,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -14160,7 +17654,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -14417,7 +17913,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       }
     }
   },
@@ -14630,7 +18128,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       },
       "esp": {
         "free": {
@@ -14643,7 +18143,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -14656,7 +18158,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -14863,7 +18367,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       }
     }
   },
@@ -14956,7 +18462,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       },
       "esp": {
         "free": {
@@ -14969,7 +18477,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -14982,7 +18492,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -15069,7 +18581,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       }
     }
   },
@@ -15088,7 +18602,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "esp": {
         "free": {
@@ -15345,7 +18861,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -15358,7 +18876,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -15615,7 +19135,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       }
     }
   },
@@ -15634,7 +19156,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "esp": {
         "free": {
@@ -15807,6 +19331,34 @@ const guideStats26 = [
               "pax": 0
             }
           }
+        },
+        "byMonthType": {
+          "3": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4": {
+            "old": {
+              "tours": 1,
+              "pax": 6
+            }
+          }
+        },
+        "byDayType": {
+          "3-28": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-13": {
+            "old": {
+              "tours": 1,
+              "pax": 6
+            }
+          }
         }
       },
       "fra": {
@@ -15820,7 +19372,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -15991,6 +19545,34 @@ const guideStats26 = [
             "paid": {
               "tours": 0,
               "pax": 0
+            }
+          }
+        },
+        "byMonthType": {
+          "3": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4": {
+            "old": {
+              "tours": 1,
+              "pax": 6
+            }
+          }
+        },
+        "byDayType": {
+          "3-28": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-13": {
+            "old": {
+              "tours": 1,
+              "pax": 6
             }
           }
         }
@@ -16272,6 +19854,28 @@ const guideStats26 = [
               "pax": 0
             }
           }
+        },
+        "byMonthType": {
+          "4": {
+            "food": {
+              "tours": 2,
+              "pax": 10
+            }
+          }
+        },
+        "byDayType": {
+          "4-14": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-25": {
+            "food": {
+              "tours": 1,
+              "pax": 8
+            }
+          }
         }
       },
       "esp": {
@@ -16285,7 +19889,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -16298,7 +19904,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -16571,6 +20179,28 @@ const guideStats26 = [
               "pax": 0
             }
           }
+        },
+        "byMonthType": {
+          "4": {
+            "food": {
+              "tours": 2,
+              "pax": 10
+            }
+          }
+        },
+        "byDayType": {
+          "4-14": {
+            "food": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "4-25": {
+            "food": {
+              "tours": 1,
+              "pax": 8
+            }
+          }
         }
       }
     }
@@ -16749,6 +20379,22 @@ const guideStats26 = [
               "pax": 3
             }
           }
+        },
+        "byMonthType": {
+          "5": {
+            "old": {
+              "tours": 1,
+              "pax": 3
+            }
+          }
+        },
+        "byDayType": {
+          "5-6": {
+            "old": {
+              "tours": 1,
+              "pax": 3
+            }
+          }
         }
       },
       "esp": {
@@ -16916,7 +20562,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -16929,7 +20577,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -17221,6 +20871,22 @@ const guideStats26 = [
               "pax": 0
             }
           }
+        },
+        "byMonthType": {
+          "5": {
+            "old": {
+              "tours": 1,
+              "pax": 3
+            }
+          }
+        },
+        "byDayType": {
+          "5-6": {
+            "old": {
+              "tours": 1,
+              "pax": 3
+            }
+          }
         }
       }
     }
@@ -17263,7 +20929,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       },
       "esp": {
         "free": {
@@ -17430,7 +21098,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       },
       "fra": {
         "free": {
@@ -17443,7 +21113,9 @@ const guideStats26 = [
         },
         "byType": {},
         "byMonth": {},
-        "byDay": {}
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
       },
       "all": {
         "free": {
@@ -17620,7 +21292,9 @@ const guideStats26 = [
               "pax": 0
             }
           }
-        }
+        },
+        "byMonthType": {},
+        "byDayType": {}
       }
     }
   }

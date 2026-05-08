@@ -7,6 +7,14 @@ const PageCmp = {
     monthlyChartInstance: null,
     paidChartInstance: null,
     cityMonthlyChartInstance: null,
+    privatePaidChartInstance: null,
+    sharedPaidChartInstance: null,
+    activePrivateCity: 'all',
+    activePrivateType: 'all',
+    activeSharedCity: 'all',
+    activeSharedType: 'all',
+    PRIVATE_TYPES: ['war PR', 'food PR', 'best', 'old', 'big'],
+    SHARED_TYPES: ['war', 'food', 'best'],
     _initialized: false,
 
     _el(id) { return document.getElementById(id + '-cmp'); },
@@ -523,6 +531,8 @@ const PageCmp = {
                 }
             });
         } catch(e) { console.error("City Monthly Chart Error:", e); }
+
+        this.updatePaidTypeCharts();
     },
 
     renderMonthlyTable() {
@@ -628,6 +638,170 @@ const PageCmp = {
 
         const el = document.getElementById('monthly-pax-table-cmp');
         if (el) el.innerHTML = html;
+    },
+
+    filterPrivateCity(city, btn) {
+        this.activePrivateCity = city;
+        this._setActivePill('private-city-pills-cmp', btn);
+        this.updatePaidTypeCharts();
+    },
+
+    filterPrivateType(type, btn) {
+        this.activePrivateType = type;
+        this._setActivePill('private-type-pills-cmp', btn);
+        this.updatePaidTypeCharts();
+    },
+
+    filterSharedCity(city, btn) {
+        this.activeSharedCity = city;
+        this._setActivePill('shared-city-pills-cmp', btn);
+        this.updatePaidTypeCharts();
+    },
+
+    filterSharedType(type, btn) {
+        this.activeSharedType = type;
+        this._setActivePill('shared-type-pills-cmp', btn);
+        this.updatePaidTypeCharts();
+    },
+
+    _setActivePill(groupId, activeBtn) {
+        const group = document.getElementById(groupId);
+        if (!group) return;
+        group.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+        if (activeBtn) activeBtn.classList.add('active');
+    },
+
+    _getTypeMonthData(city, types, primaryKey, year) {
+        const cutoffMonth = getCutoffMonth();
+        const cutoffDay   = parseInt(GLOBAL_DATE.split('-')[2]);
+        const maxMonth    = this.activeMonths.length > 0 ? Math.max(...this.activeMonths) : cutoffMonth;
+        const fc = this.mergedGuides.filter(m => city === 'all' || m.city === city);
+
+        return Array.from({length: maxMonth}, (_, i) => i + 1).map(mo => {
+            let primary = 0, secondary = 0;
+            const secondaryKey = primaryKey === 'tours' ? 'pax' : 'tours';
+
+            if (mo < cutoffMonth) {
+                fc.forEach(m => {
+                    const g = year === 25 ? m.g25 : m.g26;
+                    if (!g) return;
+                    const bmt = g.stats[this.activeLang]?.byMonthType?.[String(mo)];
+                    if (!bmt) return;
+                    types.forEach(t => {
+                        const td = bmt[t];
+                        if (td) { primary += td[primaryKey] || 0; secondary += td[secondaryKey] || 0; }
+                    });
+                });
+            } else if (mo === cutoffMonth) {
+                for (let d = 1; d <= cutoffDay; d++) {
+                    const key = `${mo}-${d}`;
+                    fc.forEach(m => {
+                        const g = year === 25 ? m.g25 : m.g26;
+                        if (!g) return;
+                        const bdt = g.stats[this.activeLang]?.byDayType?.[key];
+                        if (!bdt) return;
+                        types.forEach(t => {
+                            const td = bdt[t];
+                            if (td) { primary += td[primaryKey] || 0; secondary += td[secondaryKey] || 0; }
+                        });
+                    });
+                }
+            }
+            return { primary, secondary };
+        });
+    },
+
+    updatePaidTypeCharts() {
+        const colors   = this.getChartColors();
+        const MONTH_NAMES = {1:'Sij',2:'Velj',3:'Ožu',4:'Tra',5:'Svi',6:'Lip',7:'Srp',8:'Kol',9:'Ruj',10:'Lis',11:'Stu',12:'Pro'};
+        const cutoffMonth = getCutoffMonth();
+        const maxMonth = this.activeMonths.length > 0 ? Math.max(...this.activeMonths) : cutoffMonth;
+        const months   = Array.from({length: maxMonth}, (_, i) => MONTH_NAMES[i + 1]);
+
+        const secondaryLabelPlugin = (secondaryKey) => ({
+            id: 'secondaryLabel',
+            afterDraw(chart) {
+                const ctx = chart.ctx;
+                const meta0 = chart.getDatasetMeta(0);
+                const meta1 = chart.getDatasetMeta(1);
+                ctx.save();
+                ctx.font = "500 9px 'Montserrat',sans-serif";
+                ctx.textAlign = 'center';
+                const secData25 = chart.data.datasets[0]._secondaryData || [];
+                const secData26 = chart.data.datasets[1]._secondaryData || [];
+                [meta0.data, meta1.data].forEach((bars, di) => {
+                    const secArr = di === 0 ? secData25 : secData26;
+                    bars.forEach((bar, i) => {
+                        const val = secArr[i] || 0;
+                        if (val === 0) return;
+                        const label = secondaryKey === 'pax' ? `${val}p` : `${val}t`;
+                        ctx.fillStyle = PageCmp.getChartColors().text3;
+                        ctx.fillText(label, bar.x, bar.y - 4);
+                    });
+                });
+                ctx.restore();
+            }
+        });
+
+        const buildTypeChart = (canvasId, instanceKey, city, typeFilter, allTypes, primaryKey) => {
+            const types = typeFilter === 'all' ? allTypes : [typeFilter];
+            const d25 = this._getTypeMonthData(city, types, primaryKey, 25);
+            const d26 = this._getTypeMonthData(city, types, primaryKey, 26);
+            const secondaryKey = primaryKey === 'tours' ? 'pax' : 'tours';
+            const rangeLabel = getRangeLabel();
+
+            const ds25 = {
+                label: `${rangeLabel} 2025`,
+                data: d25.map(d => d.primary),
+                _secondaryData: d25.map(d => d.secondary),
+                backgroundColor: colors.y25,
+                borderRadius: 4,
+            };
+            const ds26 = {
+                label: `${rangeLabel} 2026`,
+                data: d26.map(d => d.primary),
+                _secondaryData: d26.map(d => d.secondary),
+                backgroundColor: colors.y26,
+                borderRadius: 4,
+            };
+
+            const yLabel = primaryKey === 'tours' ? 'Ture' : 'PAX';
+
+            try {
+                if (this[instanceKey]) this[instanceKey].destroy();
+                const ctx = document.getElementById(canvasId)?.getContext('2d');
+                if (!ctx) return;
+                this[instanceKey] = new Chart(ctx, {
+                    type: 'bar',
+                    data: { labels: months, datasets: [ds25, ds26] },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        layout: { padding: { top: 20, bottom: 30 } },
+                        plugins: {
+                            legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } },
+                            tooltip: {
+                                callbacks: {
+                                    afterLabel: (item) => {
+                                        const sec = item.datasetIndex === 0
+                                            ? ds25._secondaryData[item.dataIndex]
+                                            : ds26._secondaryData[item.dataIndex];
+                                        return sec ? `${secondaryKey === 'pax' ? 'PAX' : 'Ture'}: ${sec}` : '';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: { ticks: { color: colors.text3, font: { size: 11 } }, grid: { color: colors.border } },
+                            y: { title: { display: true, text: yLabel, color: colors.text3, font: { size: 10 } }, ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
+                        }
+                    },
+                    plugins: [secondaryLabelPlugin(secondaryKey)]
+                });
+            } catch(e) { console.error('Type chart error:', e); }
+        };
+
+        buildTypeChart('privatePaidChart-cmp', 'privatePaidChartInstance', this.activePrivateCity, this.activePrivateType, this.PRIVATE_TYPES, 'tours');
+        buildTypeChart('sharedPaidChart-cmp', 'sharedPaidChartInstance', this.activeSharedCity, this.activeSharedType, this.SHARED_TYPES, 'pax');
     },
 
     filterCity(city) {

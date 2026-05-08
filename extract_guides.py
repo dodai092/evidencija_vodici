@@ -82,6 +82,8 @@ def empty_stats():
             'free': {'tours': 0, 'pax': 0},
             'paid': {'tours': 0, 'pax': 0},
         }),
+        'byMonthType': defaultdict(lambda: defaultdict(lambda: {'tours': 0, 'pax': 0})),
+        'byDayType':   defaultdict(lambda: defaultdict(lambda: {'tours': 0, 'pax': 0})),
     }
 
 def add_row(stats, is_free, tour_type, month, pax, day=None):
@@ -91,12 +93,17 @@ def add_row(stats, is_free, tour_type, month, pax, day=None):
     if not is_free:
         stats['byType'][tour_type]['tours'] += 1
         stats['byType'][tour_type]['pax'] += pax
+        stats['byMonthType'][month][tour_type]['tours'] += 1
+        stats['byMonthType'][month][tour_type]['pax'] += pax
     stats['byMonth'][month][kind]['tours'] += 1
     stats['byMonth'][month][kind]['pax'] += pax
     if day is not None:
         key = f"{month}-{day}"
         stats['byDay'][key][kind]['tours'] += 1
         stats['byDay'][key][kind]['pax'] += pax
+        if not is_free:
+            stats['byDayType'][key][tour_type]['tours'] += 1
+            stats['byDayType'][key][tour_type]['pax'] += pax
 
 def merge_stats(all_stats, lang_stats):
     """Merge lang_stats into all_stats (for 'all' lang accumulation)."""
@@ -114,6 +121,14 @@ def merge_stats(all_stats, lang_stats):
         for kind in ('free', 'paid'):
             all_stats['byDay'][d][kind]['tours'] += dv[kind]['tours']
             all_stats['byDay'][d][kind]['pax'] += dv[kind]['pax']
+    for m, tv in lang_stats['byMonthType'].items():
+        for t, v in tv.items():
+            all_stats['byMonthType'][m][t]['tours'] += v['tours']
+            all_stats['byMonthType'][m][t]['pax'] += v['pax']
+    for d, tv in lang_stats['byDayType'].items():
+        for t, v in tv.items():
+            all_stats['byDayType'][d][t]['tours'] += v['tours']
+            all_stats['byDayType'][d][t]['pax'] += v['pax']
 
 def to_plain(stats):
     """Convert defaultdicts to plain dicts for JSON serialisation."""
@@ -133,6 +148,14 @@ def to_plain(stats):
         'byDay': {
             k: {'free': dict(v['free']), 'paid': dict(v['paid'])}
             for k, v in stats['byDay'].items()
+        },
+        'byMonthType': {
+            str(m): {t: dict(v) for t, v in tv.items()}
+            for m, tv in stats['byMonthType'].items()
+        },
+        'byDayType': {
+            k: {t: dict(v) for t, v in tv.items()}
+            for k, tv in stats['byDayType'].items()
         },
     }
 

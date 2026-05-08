@@ -304,38 +304,98 @@
             </div>
 
             <div class="charts-area">
-                <div class="chart-card">
-                    <div class="chart-card-title">Free PAX po gradu</div>
-                    <div class="chart-container">
-                        <canvas id="cityChart-cmp"></canvas>
+                <div class="charts-col">
+                    <div class="chart-card">
+                        <div class="chart-card-title">Free PAX po gradu</div>
+                        <div class="chart-container">
+                            <canvas id="cityChart-cmp"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-card-title">Kumulativni Free PAX trend (<span
+                                class="ytd-range-label">Sij–Svi</span>)</div>
+                        <div class="chart-container">
+                            <canvas id="monthlyChart-cmp"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-card-title">Free PAX po gradu — kumulativno (<span
+                                class="ytd-range-label">Sij–Svi</span>)</div>
+                        <div id="city-monthly-badges-cmp" class="city-monthly-badges"></div>
+                        <div class="chart-container">
+                            <canvas id="cityMonthlyChart-cmp"></canvas>
+                        </div>
                     </div>
                 </div>
-                <div class="chart-card">
-                    <div class="chart-card-title">$ Ture po gradu</div>
-                    <div class="chart-container">
-                        <canvas id="paidCityChart-cmp"></canvas>
+                <div class="charts-col">
+                    <div class="chart-card">
+                        <div class="chart-card-title">$ Ture po gradu</div>
+                        <div class="chart-container">
+                            <canvas id="paidCityChart-cmp"></canvas>
+                        </div>
                     </div>
-                </div>
-                <div class="chart-card">
-                    <div class="chart-card-title">Kumulativni Free PAX trend (<span
-                            class="ytd-range-label">Sij–Svi</span>)</div>
-                    <div class="chart-container">
-                        <canvas id="monthlyChart-cmp"></canvas>
+                    <div class="chart-card">
+                        <div class="chart-card-title">Kumulativni $ Ture trend (<span
+                                class="ytd-range-label">Sij–Svi</span>)</div>
+                        <div class="chart-container">
+                            <canvas id="paidChart-cmp"></canvas>
+                        </div>
                     </div>
-                </div>
-                <div class="chart-card">
-                    <div class="chart-card-title">Kumulativni $ Ture trend (<span
-                            class="ytd-range-label">Sij–Svi</span>)</div>
-                    <div class="chart-container">
-                        <canvas id="paidChart-cmp"></canvas>
+                    <div class="chart-card type-chart-card">
+                        <div class="chart-card-title">$ Privatne Ture po tipu — <span class="ytd-range-label">Sij–Svi</span> 2025 vs. 2026</div>
+                        <div class="type-chart-filters">
+                            <div class="type-filter-row">
+                                <span class="type-filter-label">Grad</span>
+                                <div id="private-city-pills-cmp" class="pill-group">
+                                    <button class="pill active" onclick="PageCmp.filterPrivateCity('all',this)">Svi</button>
+                                    <button class="pill" onclick="PageCmp.filterPrivateCity('Zagreb',this)">Zagreb</button>
+                                    <button class="pill" onclick="PageCmp.filterPrivateCity('Dubrovnik',this)">Dubrovnik</button>
+                                    <button class="pill" onclick="PageCmp.filterPrivateCity('Split',this)">Split</button>
+                                    <button class="pill" onclick="PageCmp.filterPrivateCity('Zadar',this)">Zadar</button>
+                                </div>
+                            </div>
+                            <div class="type-filter-row">
+                                <span class="type-filter-label">Tip</span>
+                                <div id="private-type-pills-cmp" class="pill-group">
+                                    <button class="pill active" onclick="PageCmp.filterPrivateType('all',this)">Svi</button>
+                                    <button class="pill" onclick="PageCmp.filterPrivateType('war PR',this)">war PR</button>
+                                    <button class="pill" onclick="PageCmp.filterPrivateType('food PR',this)">food PR</button>
+                                    <button class="pill" onclick="PageCmp.filterPrivateType('best',this)">best</button>
+                                    <button class="pill" onclick="PageCmp.filterPrivateType('old',this)">old</button>
+                                    <button class="pill" onclick="PageCmp.filterPrivateType('big',this)">big</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="privatePaidChart-cmp"></canvas>
+                        </div>
                     </div>
-                </div>
-                <div class="chart-card">
-                    <div class="chart-card-title">Free PAX po gradu — kumulativno (<span
-                            class="ytd-range-label">Sij–Svi</span>)</div>
-                    <div id="city-monthly-badges-cmp" class="city-monthly-badges"></div>
-                    <div class="chart-container">
-                        <canvas id="cityMonthlyChart-cmp"></canvas>
+                    <div class="chart-card type-chart-card">
+                        <div class="chart-card-title">$ Grupne Ture po tipu — <span class="ytd-range-label">Sij–Svi</span> 2025 vs. 2026</div>
+                        <div class="type-chart-filters">
+                            <div class="type-filter-row">
+                                <span class="type-filter-label">Grad</span>
+                                <div id="shared-city-pills-cmp" class="pill-group">
+                                    <button class="pill active" onclick="PageCmp.filterSharedCity('all',this)">Svi</button>
+                                    <button class="pill" onclick="PageCmp.filterSharedCity('Zagreb',this)">Zagreb</button>
+                                    <button class="pill" onclick="PageCmp.filterSharedCity('Dubrovnik',this)">Dubrovnik</button>
+                                    <button class="pill" onclick="PageCmp.filterSharedCity('Split',this)">Split</button>
+                                    <button class="pill" onclick="PageCmp.filterSharedCity('Zadar',this)">Zadar</button>
+                                </div>
+                            </div>
+                            <div class="type-filter-row">
+                                <span class="type-filter-label">Tip</span>
+                                <div id="shared-type-pills-cmp" class="pill-group">
+                                    <button class="pill active" onclick="PageCmp.filterSharedType('all',this)">Svi</button>
+                                    <button class="pill" onclick="PageCmp.filterSharedType('war',this)">war</button>
+                                    <button class="pill" onclick="PageCmp.filterSharedType('food',this)">food</button>
+                                    <button class="pill" onclick="PageCmp.filterSharedType('best',this)">best</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="sharedPaidChart-cmp"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>

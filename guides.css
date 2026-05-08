@@ -476,6 +476,61 @@ body.dark-mode .filter-select {
     color-scheme: dark;
 }
 
+/* PILL FILTERS (type charts) */
+.type-chart-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.type-filter-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.type-filter-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text3);
+    min-width: 28px;
+}
+
+.pill-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.pill {
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text3);
+    font-size: 11px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    line-height: 1.6;
+}
+
+.pill:hover {
+    border-color: var(--text3);
+    color: var(--text);
+}
+
+.pill.active {
+    background: var(--accent, #1D9E75);
+    border-color: var(--accent, #1D9E75);
+    color: #fff;
+}
+
 /* GUIDE GRID */
 .city-section {
     margin-bottom: 36px;
@@ -1067,6 +1122,13 @@ body.dark-mode .filter-select {
     grid-template-columns: 1fr 1fr;
     gap: 16px;
     margin-bottom: 32px;
+    align-items: start;
+}
+
+.charts-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .chart-card {

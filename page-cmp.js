@@ -250,7 +250,7 @@ const PageCmp = {
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
-                    layout: { padding: { bottom: 45 } },
+                    layout: { padding: { bottom: 45, right: 55 } },
                     plugins: { 
                         legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
                     },
@@ -277,7 +277,7 @@ const PageCmp = {
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
-                    layout: { padding: { bottom: 45 } },
+                    layout: { padding: { bottom: 45, right: 55 } },
                     plugins: { 
                         legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
                     },
@@ -410,7 +410,7 @@ const PageCmp = {
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
-                    layout: { padding: { bottom: 45 } },
+                    layout: { padding: { bottom: 45, right: 55 } },
                     plugins: { 
                         legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
                     },
@@ -437,7 +437,7 @@ const PageCmp = {
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
-                    layout: { padding: { bottom: 45 } },
+                    layout: { padding: { bottom: 45, right: 55 } },
                     plugins: { 
                         legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
                     },

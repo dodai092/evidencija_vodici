@@ -9,6 +9,9 @@ const PageCmp = {
     cityMonthlyChartInstance: null,
     privatePaidChartInstance: null,
     sharedPaidChartInstance: null,
+    warAvgChartInstance: null,
+    activeAvgType: 'all',
+    ALL_PAID_TYPES: ['war', 'food', 'best', 'war PR', 'food PR', 'old', 'big'],
     activePrivateCity: 'all',
     activePrivateType: 'all',
     activeSharedCity: 'all',
@@ -664,6 +667,12 @@ const PageCmp = {
         this.updatePaidTypeCharts();
     },
 
+    filterAvgType(type, btn) {
+        this.activeAvgType = type;
+        this._setActivePill('avg-type-pills-cmp', btn);
+        this.updatePaidTypeCharts();
+    },
+
     _setActivePill(groupId, activeBtn) {
         const group = document.getElementById(groupId);
         if (!group) return;
@@ -802,6 +811,61 @@ const PageCmp = {
 
         buildTypeChart('privatePaidChart-cmp', 'privatePaidChartInstance', this.activePrivateCity, this.activePrivateType, this.PRIVATE_TYPES, 'tours');
         buildTypeChart('sharedPaidChart-cmp', 'sharedPaidChartInstance', this.activeSharedCity, this.activeSharedType, this.SHARED_TYPES, 'pax');
+
+        // Average PAX per paid tour type by month (2025 vs 2026)
+        const fc = this.mergedGuides.filter(m => this.activeCity === 'all' || m.city === this.activeCity);
+        const typesToShow = this.activeAvgType === 'all' ? this.ALL_PAID_TYPES : [this.activeAvgType];
+
+        const getTypeAvg = (year, types) => Array.from({length: maxMonth}, (_, i) => i + 1).map(mo => {
+            let pax = 0, tours = 0;
+            if (mo < cutoffMonth) {
+                fc.forEach(m => {
+                    const g = year === 25 ? m.g25 : m.g26;
+                    const bmt = g?.stats[this.activeLang]?.byMonthType?.[String(mo)];
+                    if (!bmt) return;
+                    types.forEach(t => { const d = bmt[t]; if (d) { pax += d.pax || 0; tours += d.tours || 0; } });
+                });
+            } else if (mo === cutoffMonth) {
+                for (let d = 1; d <= cutoffDay; d++) {
+                    const key = `${mo}-${d}`;
+                    fc.forEach(m => {
+                        const g = year === 25 ? m.g25 : m.g26;
+                        const bdt = g?.stats[this.activeLang]?.byDayType?.[key];
+                        if (!bdt) return;
+                        types.forEach(t => { const td = bdt[t]; if (td) { pax += td.pax || 0; tours += td.tours || 0; } });
+                    });
+                }
+            }
+            return tours > 0 ? +(pax / tours).toFixed(1) : null;
+        });
+
+        try {
+            if (this.warAvgChartInstance) this.warAvgChartInstance.destroy();
+            const warCtx = document.getElementById('warAvgChart-cmp')?.getContext('2d');
+            if (warCtx) {
+                this.warAvgChartInstance = new Chart(warCtx, {
+                    type: 'line',
+                    data: {
+                        labels: months,
+                        datasets: [
+                            { label: `${rangeLabel} 2025`, data: getTypeAvg(25, typesToShow), borderColor: colors.y25, backgroundColor: colors.y25 + '22', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4, spanGaps: false },
+                            { label: `${rangeLabel} 2026`, data: getTypeAvg(26, typesToShow), borderColor: colors.y26, backgroundColor: colors.y26 + '22', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4, spanGaps: false },
+                        ]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } },
+                            tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} PAX/tura` } }
+                        },
+                        scales: {
+                            x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
+                            y: { ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
+                        }
+                    }
+                });
+            }
+        } catch(e) { console.error('Avg type chart error:', e); }
     },
 
     filterCity(city) {

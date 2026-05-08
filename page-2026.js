@@ -2,6 +2,7 @@ const Page26 = {
     activeCity: 'all',
     activeLang: 'all',
     activeMonths: [],
+    chartInstance: null,
     _initialized: false,
 
     _el(id) { return document.getElementById(id + '-26'); },
@@ -103,6 +104,63 @@ const Page26 = {
         });
         container.innerHTML = html;
         this.updateKPIs();
+        this.updateChart();
+    },
+
+    updateChart() {
+        const isDark = document.body.classList.contains('dark-mode');
+        const text3  = isDark ? '#888888' : '#999999';
+        const border = isDark ? '#333333' : '#e8e8e8';
+        const textColor = isDark ? '#eeeeee' : '#111111';
+
+        const cutoffMonth = getCutoffMonth();
+        const cutoffDay   = parseInt(GLOBAL_DATE.split('-')[2]);
+        const lang = this.activeLang;
+        const months = Array.from({length: cutoffMonth}, (_, i) => i + 1);
+
+        const citiesToShow = this.activeCity === 'all' ? CITIES : [this.activeCity];
+        const datasets = citiesToShow.map(city => {
+            const guides = guideStats26.filter(g => g.city === city);
+            const data = months.map(m => {
+                let pax = 0, tours = 0;
+                if (m < cutoffMonth) {
+                    guides.forEach(g => {
+                        const bm = g.stats[lang]?.byMonth?.[String(m)];
+                        if (bm) { pax += bm.free.pax || 0; tours += bm.free.tours || 0; }
+                    });
+                } else {
+                    for (let d = 1; d <= cutoffDay; d++) {
+                        const key = `${m}-${d}`;
+                        guides.forEach(g => {
+                            const bd = g.stats[lang]?.byDay?.[key];
+                            if (bd) { pax += bd.free.pax || 0; tours += bd.free.tours || 0; }
+                        });
+                    }
+                }
+                return tours > 0 ? +(pax / tours).toFixed(1) : null;
+            });
+            const col = CITY_COLS[city];
+            return { label: city, data, borderColor: col, backgroundColor: col + '18', borderWidth: 2, fill: false, tension: 0.3, pointRadius: 4, spanGaps: false };
+        });
+
+        const ctx = document.getElementById('avgFreePaxChart-26')?.getContext('2d');
+        if (!ctx) return;
+        if (this.chartInstance) this.chartInstance.destroy();
+        this.chartInstance = new Chart(ctx, {
+            type: 'line',
+            data: { labels: months.map(m => MONTH_NAMES_HR[m]), datasets },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: true, labels: { color: textColor, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 12 } },
+                    tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} PAX/tura` } }
+                },
+                scales: {
+                    x: { ticks: { color: text3 }, grid: { color: border } },
+                    y: { ticks: { color: text3 }, grid: { color: border }, beginAtZero: true }
+                }
+            }
+        });
     },
 
     updateKPIs() {

@@ -128,6 +128,13 @@
                 </div>
             </div>
 
+            <div class="chart-card" style="margin-bottom:24px">
+                <div class="chart-card-title">Prosjek PAX po Free turi — po mjesecu 2025</div>
+                <div class="chart-container">
+                    <canvas id="avgFreePaxChart-25"></canvas>
+                </div>
+            </div>
+
             <div id="guide-sections-25"></div>
         </div>
     </div><!-- /page-25 -->
@@ -195,6 +202,13 @@
                     <div class="kpi-label">Aktivni vodiči</div>
                     <div class="kpi-value" id="kv-guides-26">—</div>
                     <div class="kpi-sub">u 2026.</div>
+                </div>
+            </div>
+
+            <div class="chart-card" style="margin-bottom:24px">
+                <div class="chart-card-title">Prosjek PAX po Free turi — po mjesecu 2026</div>
+                <div class="chart-container">
+                    <canvas id="avgFreePaxChart-26"></canvas>
                 </div>
             </div>
 
@@ -368,6 +382,27 @@
                         </div>
                         <div class="chart-container">
                             <canvas id="privatePaidChart-cmp"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card type-chart-card">
+                        <div class="chart-card-title">Prosjek PAX po tipu $ ture — <span class="ytd-range-label">Sij–Svi</span> 2025 vs. 2026</div>
+                        <div class="type-chart-filters">
+                            <div class="type-filter-row">
+                                <span class="type-filter-label">Tip</span>
+                                <div id="avg-type-pills-cmp" class="pill-group">
+                                    <button class="pill active" onclick="PageCmp.filterAvgType('all',this)">Svi</button>
+                                    <button class="pill" onclick="PageCmp.filterAvgType('war',this)">war</button>
+                                    <button class="pill" onclick="PageCmp.filterAvgType('food',this)">food</button>
+                                    <button class="pill" onclick="PageCmp.filterAvgType('best',this)">best</button>
+                                    <button class="pill" onclick="PageCmp.filterAvgType('war PR',this)">war PR</button>
+                                    <button class="pill" onclick="PageCmp.filterAvgType('food PR',this)">food PR</button>
+                                    <button class="pill" onclick="PageCmp.filterAvgType('old',this)">old</button>
+                                    <button class="pill" onclick="PageCmp.filterAvgType('big',this)">big</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="warAvgChart-cmp"></canvas>
                         </div>
                     </div>
                     <div class="chart-card type-chart-card">

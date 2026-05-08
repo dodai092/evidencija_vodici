@@ -165,11 +165,12 @@ const Page25 = {
             freePax   += fs.freePax;
             paidPax   += fs.paidPax;
         });
-        this._el('kv-guides').textContent   = filtered.length;
-        this._el('kv-free').textContent     = fmtN(freePax);
-        this._el('kv-free-pax').textContent = freeTours + ' t';
-        this._el('kv-paid').textContent     = paidTours;
-        this._el('kv-paid-pax').textContent = fmtN(paidPax) + ' pax';
+        this._el('kv-guides').textContent    = filtered.length;
+        this._el('kv-free').textContent      = fmtN(freePax);
+        this._el('kv-free-pax').textContent  = freeTours + ' t';
+        this._el('kv-avg-pax').textContent   = freeTours > 0 ? (freePax / freeTours).toFixed(1) : '—';
+        this._el('kv-paid').textContent      = paidTours;
+        this._el('kv-paid-pax').textContent  = fmtN(paidPax) + ' pax';
     },
 
     filterCity(city) {

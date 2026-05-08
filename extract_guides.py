@@ -62,7 +62,7 @@ GUIDE_ORDER = [
     ]),
     ('Split', [
         'Bruno Beara', 'Ivana Čagalj', 'Lorena Ćelić', 'Marija Močić',
-        'Marina Krolo', 'Petra Lučev', 'Boris Čerina',
+        'Marina Krolo', 'Petra Lučev', 'Boris Čerina', 'Maja Baranović Ordulj',
     ]),
     ('Zadar', [
         'Andrija Grubić', 'Iva Zaplatić', 'Matea Duka', 'Tonka Baričević',

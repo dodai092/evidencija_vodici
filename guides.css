@@ -279,6 +279,9 @@ body.dark-mode .nav img {
 .kpi-grid-3 {
     grid-template-columns: repeat(3, 1fr);
 }
+.kpi-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
 .kpi-delta {
     display: flex;
     align-items: baseline;

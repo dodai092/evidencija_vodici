@@ -110,11 +110,16 @@
                 </div>
             </div>
 
-            <div class="kpi-grid kpi-grid-3">
+            <div class="kpi-grid kpi-grid-4">
                 <div class="kpi hl-green">
                     <div class="kpi-label">Free ture – Broj PAX</div>
                     <div class="kpi-value" id="kv-free-25">—</div>
                     <div class="kpi-sub" id="kv-free-pax-25">— t</div>
+                </div>
+                <div class="kpi hl-green">
+                    <div class="kpi-label">Prosjek PAX / Free tura</div>
+                    <div class="kpi-value" id="kv-avg-pax-25">—</div>
+                    <div class="kpi-sub">pax po turi</div>
                 </div>
                 <div class="kpi hl-blue">
                     <div class="kpi-label">$ Ture – Broj ture</div>
@@ -187,11 +192,16 @@
                 </div>
             </div>
 
-            <div class="kpi-grid kpi-grid-3">
+            <div class="kpi-grid kpi-grid-4">
                 <div class="kpi hl-green">
                     <div class="kpi-label">Free ture – Broj PAX YTD</div>
                     <div class="kpi-value" id="kv-free-26">—</div>
                     <div class="kpi-sub" id="kv-free-pax-26">— t</div>
+                </div>
+                <div class="kpi hl-green">
+                    <div class="kpi-label">Prosjek PAX / Free tura</div>
+                    <div class="kpi-value" id="kv-avg-pax-26">—</div>
+                    <div class="kpi-sub">pax po turi</div>
                 </div>
                 <div class="kpi hl-blue">
                     <div class="kpi-label">$ Ture – Broj ture YTD</div>
@@ -230,7 +240,7 @@
         </div>
 
         <div class="main">
-            <div class="kpi-grid kpi-grid-3">
+            <div class="kpi-grid kpi-grid-4">
                 <div class="kpi hl-green">
                     <div class="kpi-label">Free ture – Broj PAX YTD</div>
                     <div class="kpi-delta">
@@ -245,6 +255,23 @@
                         <div>
                             <div class="kpi-2y-label">2026</div>
                             <div class="kpi-2y-val" id="kv-free26-cmp">—</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kpi hl-green">
+                    <div class="kpi-label">Prosjek PAX / Free tura</div>
+                    <div class="kpi-delta">
+                        <span class="kpi-delta-abs" id="kd-avg-pax-abs-cmp">—</span>
+                        <span class="kpi-delta-pct" id="kd-avg-pax-pct-cmp">—</span>
+                    </div>
+                    <div class="kpi-2y">
+                        <div>
+                            <div class="kpi-2y-label">2025</div>
+                            <div class="kpi-2y-val" id="kv-avg-pax25-cmp">—</div>
+                        </div>
+                        <div>
+                            <div class="kpi-2y-label">2026</div>
+                            <div class="kpi-2y-val" id="kv-avg-pax26-cmp">—</div>
                         </div>
                     </div>
                 </div>
@@ -340,6 +367,12 @@
                             <canvas id="cityMonthlyChart-cmp"></canvas>
                         </div>
                     </div>
+                    <div class="chart-card">
+                        <div class="chart-card-title">Prosjek PAX po Free turi — <span class="ytd-range-label">Sij–Svi</span> 2025 vs. 2026</div>
+                        <div class="chart-container">
+                            <canvas id="avgFreePaxCmpChart-cmp"></canvas>
+                        </div>
+                    </div>
                 </div>
                 <div class="charts-col">
                     <div class="chart-card">
@@ -406,7 +439,7 @@
                         </div>
                     </div>
                     <div class="chart-card type-chart-card">
-                        <div class="chart-card-title">$ Grupne Ture po tipu — <span class="ytd-range-label">Sij–Svi</span> 2025 vs. 2026</div>
+                        <div class="chart-card-title">$ Shared Ture po tipu — <span class="ytd-range-label">Sij–Svi</span> 2025 vs. 2026</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
                                 <span class="type-filter-label">Grad</span>

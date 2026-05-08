@@ -10,6 +10,7 @@ const PageCmp = {
     privatePaidChartInstance: null,
     sharedPaidChartInstance: null,
     warAvgChartInstance: null,
+    avgFreePaxCmpChartInstance: null,
     activeAvgType: 'all',
     ALL_PAID_TYPES: ['war', 'food', 'best', 'war PR', 'food PR', 'old', 'big'],
     activePrivateCity: 'all',
@@ -155,6 +156,18 @@ const PageCmp = {
         this._el('kv-paid26').textContent   = pt26;
         this._el('kv-guides25').textContent = g25;
         this._el('kv-guides26').textContent = g26;
+
+        // Avg PAX per free tour KPI
+        let ft25 = 0, ft26 = 0;
+        fc.forEach(m => {
+            if (m.g25) { const s = filteredStats(m.g25.stats[this.activeLang], this.activeMonths); ft25 += s.freeTours; }
+            if (m.g26) { const s = filteredStats(m.g26.stats[this.activeLang], this.activeMonths); ft26 += s.freeTours; }
+        });
+        const avg25 = ft25 > 0 ? (fp25 / ft25).toFixed(1) : '—';
+        const avg26 = ft26 > 0 ? (fp26 / ft26).toFixed(1) : '—';
+        this._el('kv-avg-pax25').textContent = avg25;
+        this._el('kv-avg-pax26').textContent = avg26;
+        setDelta('kd-avg-pax-abs', 'kd-avg-pax-pct', ft25 > 0 ? fp25/ft25 : 0, ft26 > 0 ? fp26/ft26 : 0, v => v.toFixed(1));
     },
 
     getChartColors() {
@@ -534,6 +547,60 @@ const PageCmp = {
                 }
             });
         } catch(e) { console.error("City Monthly Chart Error:", e); }
+
+        // Avg PAX per free tour by month: 2025 vs 2026
+        try {
+            const avgFree25 = [], avgFree26 = [];
+            selectedMonths.forEach(i => {
+                let pax25 = 0, t25 = 0, pax26 = 0, t26 = 0;
+                if (i < cutoffMonth) {
+                    fc.forEach(m => {
+                        const b25 = m.g25?.stats[this.activeLang]?.byMonth?.[String(i)];
+                        if (b25) { pax25 += b25.free.pax || 0; t25 += b25.free.tours || 0; }
+                        const b26 = m.g26?.stats[this.activeLang]?.byMonth?.[String(i)];
+                        if (b26) { pax26 += b26.free.pax || 0; t26 += b26.free.tours || 0; }
+                    });
+                } else if (i === cutoffMonth) {
+                    for (let d = 1; d <= cutoffDay; d++) {
+                        const key = `${i}-${d}`;
+                        fc.forEach(m => {
+                            const d25 = m.g25?.stats[this.activeLang]?.byDay?.[key];
+                            if (d25) { pax25 += d25.free.pax || 0; t25 += d25.free.tours || 0; }
+                            const d26 = m.g26?.stats[this.activeLang]?.byDay?.[key];
+                            if (d26) { pax26 += d26.free.pax || 0; t26 += d26.free.tours || 0; }
+                        });
+                    }
+                }
+                avgFree25.push(t25 > 0 ? +(pax25 / t25).toFixed(1) : null);
+                avgFree26.push(t26 > 0 ? +(pax26 / t26).toFixed(1) : null);
+            });
+
+            if (this.avgFreePaxCmpChartInstance) this.avgFreePaxCmpChartInstance.destroy();
+            const afCtx = document.getElementById('avgFreePaxCmpChart-cmp')?.getContext('2d');
+            if (afCtx) {
+                this.avgFreePaxCmpChartInstance = new Chart(afCtx, {
+                    type: 'line',
+                    data: {
+                        labels: months,
+                        datasets: [
+                            { label: `${rangeLabel} 2025`, data: avgFree25, borderColor: colors.y25, backgroundColor: colors.y25 + '22', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4, spanGaps: false },
+                            { label: `${rangeLabel} 2026`, data: avgFree26, borderColor: colors.y26, backgroundColor: colors.y26 + '22', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4, spanGaps: false },
+                        ]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } },
+                            tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} PAX/tura` } }
+                        },
+                        scales: {
+                            x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
+                            y: { ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
+                        }
+                    }
+                });
+            }
+        } catch(e) { console.error('Avg free PAX cmp chart error:', e); }
 
         this.updatePaidTypeCharts();
     },

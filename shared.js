@@ -3,7 +3,8 @@ const CITY_CLS  = { Zagreb:'zagreb', Dubrovnik:'dubrovnik', Split:'split', Zadar
 const CITIES    = ['Zagreb','Dubrovnik','Split','Zadar'];
 const MONTH_NAMES_HR = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
 
-let GLOBAL_DATE = '2026-05-06'; // Default
+const _today = new Date();
+let GLOBAL_DATE = `${_today.getFullYear()}-${String(_today.getMonth()+1).padStart(2,'0')}-${String(_today.getDate()).padStart(2,'0')}`;
 
 function safeName(n) { return n.replace(/[^a-zA-Z0-9]/g,'_'); }
 function fmtN(v) { return Math.round(v).toLocaleString('en-GB'); }
@@ -96,6 +97,14 @@ function toggleTheme() {
 function updateThemeButton() {
     const btn = document.getElementById('theme-toggle');
     if (btn) btn.setAttribute('title', document.body.classList.contains('dark-mode') ? 'Switch to light mode' : 'Switch to dark mode');
+}
+
+function toggleSection(id) {
+    const body = document.getElementById(id);
+    if (!body) return;
+    const collapsed = body.classList.toggle('collapsed');
+    const chevron = body.previousElementSibling?.querySelector('.section-chevron');
+    if (chevron) chevron.textContent = collapsed ? '▸' : '▾';
 }
 
 function showPage(id, tab) {

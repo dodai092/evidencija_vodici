@@ -689,7 +689,7 @@ const PageCmp = {
 
         const hasPartial = data.some(r => r.isPartial);
 
-        const html = `<div class="chart-card" style="margin-bottom:24px">
+        const html = `<div class="chart-card">
             <div class="chart-card-title">Free PAX by Month and City — <span class="ytd-range-label">${getRangeLabel()}</span> 2025 vs. 2026</div>
             <div class="mpax-wrap">
             <table class="mpax-table">
@@ -787,6 +787,88 @@ const PageCmp = {
         });
     },
 
+    renderPaidTypeTable(containerId, city, typeFilter, allTypes, primaryMetric) {
+        const cutoffMonth = getCutoffMonth();
+        const maxMonth = this.activeMonths.length > 0 ? Math.max(...this.activeMonths) : cutoffMonth;
+        const MONTH_NAMES = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
+
+        const types = typeFilter === 'all' ? allTypes : [typeFilter];
+        const d25 = this._getTypeMonthData(city, types, 'tours', 25);
+        const d26 = this._getTypeMonthData(city, types, 'tours', 26);
+        const months = Array.from({length: maxMonth}, (_, i) => i + 1);
+
+        const fmtDelta = (v25, v26, isAvg) => {
+            const diff = v26 - v25;
+            if (v25 === 0 && v26 === 0) return { d: '<span class="neu">—</span>', p: '<span class="neu">—</span>' };
+            const cls  = diff > 0 ? 'pos' : diff < 0 ? 'neg' : 'neu';
+            const sign = diff > 0 ? '+' : '';
+            const pct  = v25 > 0 ? Math.round((diff / v25) * 100) : (diff > 0 ? '∞' : 0);
+            return isAvg
+                ? { d: `<span class="${cls}">${sign}${diff.toFixed(1)}</span>`, p: `<span class="${cls}">${sign}${pct}%</span>` }
+                : { d: `<span class="${cls}">${sign}${fmtN(diff)}</span>`,       p: `<span class="${cls}">${sign}${pct}%</span>` };
+        };
+
+        const rows = months.map(m => {
+            const isPartial = m === cutoffMonth && this.activeMonths.length === 0;
+            const t25 = d25[m - 1].primary,  t26 = d26[m - 1].primary;
+            const p25 = d25[m - 1].secondary, p26 = d26[m - 1].secondary;
+            return { m, isPartial, t25, t26, p25, p26,
+                avg25: t25 > 0 ? p25 / t25 : 0,
+                avg26: t26 > 0 ? p26 / t26 : 0 };
+        });
+
+        const totT25 = rows.reduce((s, r) => s + r.t25, 0);
+        const totT26 = rows.reduce((s, r) => s + r.t26, 0);
+        const totP25 = rows.reduce((s, r) => s + r.p25, 0);
+        const totP26 = rows.reduce((s, r) => s + r.p26, 0);
+        const totAvg25 = totT25 > 0 ? totP25 / totT25 : 0;
+        const totAvg26 = totT26 > 0 ? totP26 / totT26 : 0;
+
+        const toursPrimary = primaryMetric === 'tours';
+        const paxPrimary   = primaryMetric === 'pax';
+
+        const groupHeaders = [
+            `<th colspan="4" class="mpax-metric-head${toursPrimary ? ' mpax-metric-primary' : ''}">Tours</th>`,
+            `<th colspan="4" class="mpax-metric-head${paxPrimary   ? ' mpax-metric-primary' : ''}">PAX</th>`,
+            `<th colspan="4" class="mpax-metric-head">Avg PAX</th>`,
+        ].join('');
+
+        const subRow = `<th class="mpax-sub-head">'25</th><th class="mpax-sub-head">'26</th><th class="mpax-sub-head">±</th><th class="mpax-sub-head">±%</th>`;
+        const subHeaders = subRow + subRow + subRow;
+
+        const makeRow = (label, t25, t26, p25, p26, avg25, avg26, isPartial, isTotal) => {
+            const td = fmtDelta(t25, t26, false);
+            const pd = fmtDelta(p25, p26, false);
+            const ad = fmtDelta(avg25, avg26, true);
+            const cls = isTotal ? ' class="mpax-total"' : '';
+            const mLabel = isPartial ? `${label}<sup>*</sup>` : label;
+            return `<tr${cls}>
+                <td class="mpax-month">${mLabel}</td>
+                <td>${t25 || '—'}</td><td>${t26 || '—'}</td><td>${td.d}</td><td>${td.p}</td>
+                <td>${p25 || '—'}</td><td>${p26 || '—'}</td><td>${pd.d}</td><td>${pd.p}</td>
+                <td>${avg25 > 0 ? avg25.toFixed(1) : '—'}</td><td>${avg26 > 0 ? avg26.toFixed(1) : '—'}</td><td>${ad.d}</td><td>${ad.p}</td>
+            </tr>`;
+        };
+
+        const bodyRows = rows.map(r => makeRow(MONTH_NAMES[r.m], r.t25, r.t26, r.p25, r.p26, r.avg25, r.avg26, r.isPartial, false)).join('');
+        const totalRow = makeRow('Total', totT25, totT26, totP25, totP26, totAvg25, totAvg26, false, true);
+        const hasPartial = rows.some(r => r.isPartial);
+
+        const html = `<div class="mpax-wrap" style="margin-top:16px">
+            <table class="mpax-table">
+                <thead>
+                    <tr><th class="mpax-month-head" rowspan="2">Mo.</th>${groupHeaders}</tr>
+                    <tr>${subHeaders}</tr>
+                </thead>
+                <tbody>${bodyRows}${totalRow}</tbody>
+            </table>
+            ${hasPartial ? `<div class="mpax-note">* Partial month — data through ${GLOBAL_DATE}</div>` : ''}
+        </div>`;
+
+        const el = document.getElementById(containerId);
+        if (el) el.innerHTML = html;
+    },
+
     updatePaidTypeCharts() {
         const colors   = this.getChartColors();
         const MONTH_NAMES = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
@@ -879,7 +961,10 @@ const PageCmp = {
         };
 
         buildTypeChart('privatePaidChart-cmp', 'privatePaidChartInstance', this.activePrivateCity, this.activePrivateType, this.PRIVATE_TYPES, 'tours');
-        buildTypeChart('sharedPaidChart-cmp', 'sharedPaidChartInstance', this.activeSharedCity, this.activeSharedType, this.SHARED_TYPES, 'pax');
+        this.renderPaidTypeTable('private-type-table-cmp', this.activePrivateCity, this.activePrivateType, this.PRIVATE_TYPES, 'tours');
+
+        buildTypeChart('sharedPaidChart-cmp', 'sharedPaidChartInstance', this.activeSharedCity, this.activeSharedType, this.SHARED_TYPES, 'tours');
+        this.renderPaidTypeTable('shared-type-table-cmp', this.activeSharedCity, this.activeSharedType, this.SHARED_TYPES, 'pax');
 
         // Average PAX per paid tour type by month (2025 vs 2026)
         const fc = this.mergedGuides.filter(m => this.activeCity === 'all' || m.city === this.activeCity);

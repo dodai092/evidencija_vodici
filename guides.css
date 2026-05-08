@@ -9,6 +9,8 @@
     --text3: #999999;
     --card-bg: #fafafa;
     --nav-bg: var(--white);
+    --nav-h: 60px;
+    --filter-bar-h: 49px;
 
     --green: #1D9E75;
     --green-light: #5DCAA5;
@@ -1120,18 +1122,55 @@ body.dark-mode .filter-select {
 }
 
 /* ── CHARTS SECTION (comparison tab) ────────────── */
-.charts-area {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 32px;
-    align-items: start;
+.section-divider {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text3);
+    border-bottom: 2px solid var(--border-dark);
+    padding: 8px 0 6px;
+    margin: 16px 0 16px;
+    cursor: pointer;
+    user-select: none;
+    position: sticky;
+    top: calc(var(--nav-h) + var(--filter-bar-h));
+    background: var(--nav-bg);
+    z-index: 10;
 }
 
-.charts-col {
+.section-divider:first-of-type {
+    margin-top: 8px;
+}
+
+.section-divider:hover {
+    color: var(--text2);
+}
+
+.section-chevron {
+    font-size: 13px;
+    color: var(--text3);
+}
+
+.section-body {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    margin-bottom: 8px;
+}
+
+.section-body.collapsed {
+    display: none;
+}
+
+.charts-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    gap: 16px;
+    align-items: start;
 }
 
 .chart-card {
@@ -1292,9 +1331,26 @@ body.dark-mode .filter-select {
     color: var(--text3);
 }
 
+.mpax-metric-head {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text2);
+    background: var(--smoke);
+    padding: 7px 10px;
+    border-bottom: 2px solid var(--border-dark);
+}
+
+.mpax-metric-head.mpax-metric-primary {
+    color: var(--white);
+    background: var(--text2);
+}
+
 /* ── RESPONSIVE (additions for multi-tab) ───────── */
 @media (max-width: 768px) {
-    .charts-area {
+    .charts-row {
         grid-template-columns: 1fr;
         gap: 12px;
     }

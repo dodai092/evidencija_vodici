@@ -794,6 +794,9 @@ const PageCmp = {
         const maxMonth = this.activeMonths.length > 0 ? Math.max(...this.activeMonths) : cutoffMonth;
         const months   = Array.from({length: maxMonth}, (_, i) => MONTH_NAMES[i + 1]);
 
+        const rangeLabel = getRangeLabel();
+        const cutoffDay  = parseInt(GLOBAL_DATE.split('-')[2]);
+
         const secondaryLabelPlugin = (secondaryKey) => ({
             id: 'secondaryLabel',
             afterDraw(chart) {
@@ -824,7 +827,6 @@ const PageCmp = {
             const d25 = this._getTypeMonthData(city, types, primaryKey, 25);
             const d26 = this._getTypeMonthData(city, types, primaryKey, 26);
             const secondaryKey = primaryKey === 'tours' ? 'pax' : 'tours';
-            const rangeLabel = getRangeLabel();
 
             const ds25 = {
                 label: `${rangeLabel} 2025`,

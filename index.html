@@ -133,65 +133,86 @@
                 </div>
             </div>
 
-            <div class="charts-row">
-                <div class="chart-card">
-                    <div class="chart-card-title">Free PAX by City — 2025</div>
-                    <div class="chart-container"><canvas id="cityChart-25"></canvas></div>
-                </div>
-                <div class="chart-card">
-                    <div class="chart-card-title">Paid Tours by City — 2025</div>
-                    <div class="chart-container"><canvas id="paidCityChart-25"></canvas></div>
-                </div>
+            <!-- ── FREE TOURS SECTION ─────────────────────────────── -->
+            <div class="section-divider" onclick="toggleSection('free-section-body-25')">
+                <span>Free Tours</span>
+                <span class="section-chevron">▾</span>
             </div>
-            <div class="charts-row">
-                <div class="chart-card">
-                    <div class="chart-card-title">Avg PAX per Free Tour — by month 2025</div>
-                    <div class="chart-container"><canvas id="avgFreePaxChart-25"></canvas></div>
-                </div>
-            </div>
-            <div class="charts-row">
-                <div id="monthly-pax-table-25"></div>
-            </div>
-            <div class="charts-row">
-                <div class="chart-card type-chart-card">
-                    <div class="chart-card-title">Private Paid Tours by Type — 2025</div>
-                    <div class="type-chart-filters">
-                        <div class="type-filter-row">
-                            <span class="type-filter-label">Type</span>
-                            <div id="private-type-pills-25" class="pill-group">
-                                <button class="pill active" onclick="Page25.filterPrivateType('all',this)">All</button>
-                                <button class="pill" onclick="Page25.filterPrivateType('war PR',this)">war PR</button>
-                                <button class="pill" onclick="Page25.filterPrivateType('food PR',this)">food PR</button>
-                                <button class="pill" onclick="Page25.filterPrivateType('best',this)">best</button>
-                                <button class="pill" onclick="Page25.filterPrivateType('old',this)">old</button>
-                                <button class="pill" onclick="Page25.filterPrivateType('big',this)">big</button>
-                            </div>
-                        </div>
+            <div id="free-section-body-25" class="section-body">
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="chart-card-title">Free PAX by City — 2025</div>
+                        <div class="chart-container"><canvas id="cityChart-25"></canvas></div>
                     </div>
-                    <div class="chart-container"><canvas id="privatePaidChart-25"></canvas></div>
-                    <div id="private-type-table-25"></div>
-                </div>
-            </div>
-            <div class="charts-row">
-                <div class="chart-card type-chart-card">
-                    <div class="chart-card-title">Shared Paid Tours by Type — 2025</div>
-                    <div class="type-chart-filters">
-                        <div class="type-filter-row">
-                            <span class="type-filter-label">Type</span>
-                            <div id="shared-type-pills-25" class="pill-group">
-                                <button class="pill active" onclick="Page25.filterSharedType('all',this)">All</button>
-                                <button class="pill" onclick="Page25.filterSharedType('war',this)">war</button>
-                                <button class="pill" onclick="Page25.filterSharedType('food',this)">food</button>
-                                <button class="pill" onclick="Page25.filterSharedType('best',this)">best</button>
-                            </div>
-                        </div>
+                    <div class="chart-card">
+                        <div class="chart-card-title">Avg PAX per Free Tour — by month 2025</div>
+                        <div class="chart-container"><canvas id="avgFreePaxChart-25"></canvas></div>
                     </div>
-                    <div class="chart-container"><canvas id="sharedPaidChart-25"></canvas></div>
-                    <div id="shared-type-table-25"></div>
+                </div>
+                <div class="charts-row">
+                    <div id="monthly-pax-table-25"></div>
                 </div>
             </div>
 
-            <div id="guide-sections-25"></div>
+            <!-- ── PAID TOURS SECTION ─────────────────────────────── -->
+            <div class="section-divider" onclick="toggleSection('paid-section-body-25')">
+                <span>Paid Tours</span>
+                <span class="section-chevron">▾</span>
+            </div>
+            <div id="paid-section-body-25" class="section-body">
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="chart-card-title">Paid Tours by City — 2025</div>
+                        <div class="chart-container"><canvas id="paidCityChart-25"></canvas></div>
+                    </div>
+                </div>
+                <div class="charts-row">
+                    <div class="chart-card type-chart-card">
+                        <div class="chart-card-title">Private Paid Tours by Type — 2025</div>
+                        <div class="type-chart-filters">
+                            <div class="type-filter-row">
+                                <span class="type-filter-label">Type</span>
+                                <div id="private-type-pills-25" class="pill-group">
+                                    <button class="pill active" onclick="Page25.filterPrivateType('all',this)">All</button>
+                                    <button class="pill" onclick="Page25.filterPrivateType('war PR',this)">war PR</button>
+                                    <button class="pill" onclick="Page25.filterPrivateType('food PR',this)">food PR</button>
+                                    <button class="pill" onclick="Page25.filterPrivateType('best',this)">best</button>
+                                    <button class="pill" onclick="Page25.filterPrivateType('old',this)">old</button>
+                                    <button class="pill" onclick="Page25.filterPrivateType('big',this)">big</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-container"><canvas id="privatePaidChart-25"></canvas></div>
+                        <div id="private-type-table-25"></div>
+                    </div>
+                </div>
+                <div class="charts-row">
+                    <div class="chart-card type-chart-card">
+                        <div class="chart-card-title">Shared Paid Tours by Type — 2025</div>
+                        <div class="type-chart-filters">
+                            <div class="type-filter-row">
+                                <span class="type-filter-label">Type</span>
+                                <div id="shared-type-pills-25" class="pill-group">
+                                    <button class="pill active" onclick="Page25.filterSharedType('all',this)">All</button>
+                                    <button class="pill" onclick="Page25.filterSharedType('war',this)">war</button>
+                                    <button class="pill" onclick="Page25.filterSharedType('food',this)">food</button>
+                                    <button class="pill" onclick="Page25.filterSharedType('best',this)">best</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-container"><canvas id="sharedPaidChart-25"></canvas></div>
+                        <div id="shared-type-table-25"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider" onclick="toggleSection('guides-body-25')">
+                <span>Guides</span>
+                <span class="section-chevron">▾</span>
+            </div>
+            <div id="guides-body-25" class="section-body">
+                <div id="guide-sections-25"></div>
+            </div>
         </div>
     </div><!-- /page-25 -->
 
@@ -266,65 +287,86 @@
                 </div>
             </div>
 
-            <div class="charts-row">
-                <div class="chart-card">
-                    <div class="chart-card-title">Free PAX by City — 2026</div>
-                    <div class="chart-container"><canvas id="cityChart-26"></canvas></div>
-                </div>
-                <div class="chart-card">
-                    <div class="chart-card-title">Paid Tours by City — 2026</div>
-                    <div class="chart-container"><canvas id="paidCityChart-26"></canvas></div>
-                </div>
+            <!-- ── FREE TOURS SECTION ─────────────────────────────── -->
+            <div class="section-divider" onclick="toggleSection('free-section-body-26')">
+                <span>Free Tours</span>
+                <span class="section-chevron">▾</span>
             </div>
-            <div class="charts-row">
-                <div class="chart-card">
-                    <div class="chart-card-title">Avg PAX per Free Tour — by month 2026</div>
-                    <div class="chart-container"><canvas id="avgFreePaxChart-26"></canvas></div>
-                </div>
-            </div>
-            <div class="charts-row">
-                <div id="monthly-pax-table-26"></div>
-            </div>
-            <div class="charts-row">
-                <div class="chart-card type-chart-card">
-                    <div class="chart-card-title">Private Paid Tours by Type — 2026</div>
-                    <div class="type-chart-filters">
-                        <div class="type-filter-row">
-                            <span class="type-filter-label">Type</span>
-                            <div id="private-type-pills-26" class="pill-group">
-                                <button class="pill active" onclick="Page26.filterPrivateType('all',this)">All</button>
-                                <button class="pill" onclick="Page26.filterPrivateType('war PR',this)">war PR</button>
-                                <button class="pill" onclick="Page26.filterPrivateType('food PR',this)">food PR</button>
-                                <button class="pill" onclick="Page26.filterPrivateType('best',this)">best</button>
-                                <button class="pill" onclick="Page26.filterPrivateType('old',this)">old</button>
-                                <button class="pill" onclick="Page26.filterPrivateType('big',this)">big</button>
-                            </div>
-                        </div>
+            <div id="free-section-body-26" class="section-body">
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="chart-card-title">Free PAX by City — 2026</div>
+                        <div class="chart-container"><canvas id="cityChart-26"></canvas></div>
                     </div>
-                    <div class="chart-container"><canvas id="privatePaidChart-26"></canvas></div>
-                    <div id="private-type-table-26"></div>
-                </div>
-            </div>
-            <div class="charts-row">
-                <div class="chart-card type-chart-card">
-                    <div class="chart-card-title">Shared Paid Tours by Type — 2026</div>
-                    <div class="type-chart-filters">
-                        <div class="type-filter-row">
-                            <span class="type-filter-label">Type</span>
-                            <div id="shared-type-pills-26" class="pill-group">
-                                <button class="pill active" onclick="Page26.filterSharedType('all',this)">All</button>
-                                <button class="pill" onclick="Page26.filterSharedType('war',this)">war</button>
-                                <button class="pill" onclick="Page26.filterSharedType('food',this)">food</button>
-                                <button class="pill" onclick="Page26.filterSharedType('best',this)">best</button>
-                            </div>
-                        </div>
+                    <div class="chart-card">
+                        <div class="chart-card-title">Avg PAX per Free Tour — by month 2026</div>
+                        <div class="chart-container"><canvas id="avgFreePaxChart-26"></canvas></div>
                     </div>
-                    <div class="chart-container"><canvas id="sharedPaidChart-26"></canvas></div>
-                    <div id="shared-type-table-26"></div>
+                </div>
+                <div class="charts-row">
+                    <div id="monthly-pax-table-26"></div>
                 </div>
             </div>
 
-            <div id="guide-sections-26"></div>
+            <!-- ── PAID TOURS SECTION ─────────────────────────────── -->
+            <div class="section-divider" onclick="toggleSection('paid-section-body-26')">
+                <span>Paid Tours</span>
+                <span class="section-chevron">▾</span>
+            </div>
+            <div id="paid-section-body-26" class="section-body">
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="chart-card-title">Paid Tours by City — 2026</div>
+                        <div class="chart-container"><canvas id="paidCityChart-26"></canvas></div>
+                    </div>
+                </div>
+                <div class="charts-row">
+                    <div class="chart-card type-chart-card">
+                        <div class="chart-card-title">Private Paid Tours by Type — 2026</div>
+                        <div class="type-chart-filters">
+                            <div class="type-filter-row">
+                                <span class="type-filter-label">Type</span>
+                                <div id="private-type-pills-26" class="pill-group">
+                                    <button class="pill active" onclick="Page26.filterPrivateType('all',this)">All</button>
+                                    <button class="pill" onclick="Page26.filterPrivateType('war PR',this)">war PR</button>
+                                    <button class="pill" onclick="Page26.filterPrivateType('food PR',this)">food PR</button>
+                                    <button class="pill" onclick="Page26.filterPrivateType('best',this)">best</button>
+                                    <button class="pill" onclick="Page26.filterPrivateType('old',this)">old</button>
+                                    <button class="pill" onclick="Page26.filterPrivateType('big',this)">big</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-container"><canvas id="privatePaidChart-26"></canvas></div>
+                        <div id="private-type-table-26"></div>
+                    </div>
+                </div>
+                <div class="charts-row">
+                    <div class="chart-card type-chart-card">
+                        <div class="chart-card-title">Shared Paid Tours by Type — 2026</div>
+                        <div class="type-chart-filters">
+                            <div class="type-filter-row">
+                                <span class="type-filter-label">Type</span>
+                                <div id="shared-type-pills-26" class="pill-group">
+                                    <button class="pill active" onclick="Page26.filterSharedType('all',this)">All</button>
+                                    <button class="pill" onclick="Page26.filterSharedType('war',this)">war</button>
+                                    <button class="pill" onclick="Page26.filterSharedType('food',this)">food</button>
+                                    <button class="pill" onclick="Page26.filterSharedType('best',this)">best</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-container"><canvas id="sharedPaidChart-26"></canvas></div>
+                        <div id="shared-type-table-26"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider" onclick="toggleSection('guides-body-26')">
+                <span>Guides</span>
+                <span class="section-chevron">▾</span>
+            </div>
+            <div id="guides-body-26" class="section-body">
+                <div id="guide-sections-26"></div>
+            </div>
         </div>
     </div><!-- /page-26 -->
 
@@ -595,7 +637,13 @@
                 </div>
             </div>
 
-            <div id="guide-sections-cmp"></div>
+            <div class="section-divider" onclick="toggleSection('guides-body-cmp')">
+                <span>Guides</span>
+                <span class="section-chevron">▾</span>
+            </div>
+            <div id="guides-body-cmp" class="section-body">
+                <div id="guide-sections-cmp"></div>
+            </div>
         </div>
     </div><!-- /page-cmp -->
 

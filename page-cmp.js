@@ -244,14 +244,14 @@ const PageCmp = {
                 data: {
                     labels: CITIES,
                     datasets: [
-                        { label: `${rangeLabel} 2025`, data: CITIES.map(c => cityData25[c]), backgroundColor: colors.y25, borderRadius: 4 },
-                        { label: `${rangeLabel} 2026`, data: CITIES.map(c => cityData26[c]), backgroundColor: colors.y26, borderRadius: 4 }
+                        { label: `${rangeLabel} 2025`, data: CITIES.map(c => cityData25[c]), backgroundColor: CITIES.map(c => CITY_COLS[c] + '80'), borderRadius: 4 },
+                        { label: `${rangeLabel} 2026`, data: CITIES.map(c => cityData26[c]), backgroundColor: CITIES.map(c => CITY_COLS[c]), borderRadius: 4 }
                     ]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     layout: { padding: { bottom: 45, right: 55 } },
-                    plugins: { 
+                    plugins: {
                         legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
                     },
                     scales: {
@@ -271,8 +271,8 @@ const PageCmp = {
                 data: {
                     labels: CITIES,
                     datasets: [
-                        { label: `${rangeLabel} 2025`, data: CITIES.map(c => paidCityData25[c]), backgroundColor: colors.y25, borderRadius: 4 },
-                        { label: `${rangeLabel} 2026`, data: CITIES.map(c => paidCityData26[c]), backgroundColor: colors.y26, borderRadius: 4 }
+                        { label: `${rangeLabel} 2025`, data: CITIES.map(c => paidCityData25[c]), backgroundColor: CITIES.map(c => CITY_COLS[c] + '80'), borderRadius: 4 },
+                        { label: `${rangeLabel} 2026`, data: CITIES.map(c => paidCityData26[c]), backgroundColor: CITIES.map(c => CITY_COLS[c]), borderRadius: 4 }
                     ]
                 },
                 options: {
@@ -914,7 +914,7 @@ const PageCmp = {
                 label: `${rangeLabel} 2025`,
                 data: d25.map(d => d.primary),
                 _secondaryData: d25.map(d => d.secondary),
-                backgroundColor: colors.y25,
+                backgroundColor: colors.y25 + '99',
                 borderRadius: 4,
             };
             const ds26 = {

@@ -3,7 +3,927 @@ const kpiTotals25 = {
   "freeTours": 4543,
   "paidTours": 1287,
   "freePax": 93499,
-  "paidPax": 9489
+  "paidPax": 9489,
+  "revenue": 231188.1,
+  "vendorCost": 83380.0,
+  "grossMargin": 36702.22,
+  "mgmt": {
+    "revenue": 231188.1,
+    "vendorCost": 83380.0,
+    "grossMargin": 36702.22,
+    "byChannel": {
+      "web": {
+        "tours": 4613,
+        "pax": 94412,
+        "revenue": 24514.2,
+        "vendorCost": 4620.0,
+        "grossMargin": 8410.65
+      },
+      "OTA": {
+        "tours": 1010,
+        "pax": 4440,
+        "revenue": 174880.8,
+        "vendorCost": 62150.0,
+        "grossMargin": 20226.69
+      },
+      "free": {
+        "tours": 56,
+        "pax": 232,
+        "revenue": 6245.0,
+        "vendorCost": 3340.0,
+        "grossMargin": 1482.8
+      },
+      "b2b": {
+        "tours": 151,
+        "pax": 739,
+        "revenue": 25548.1,
+        "vendorCost": 13270.0,
+        "grossMargin": 6582.08
+      }
+    },
+    "bySource": {
+      "FST": {
+        "tours": 4625,
+        "pax": 94546,
+        "revenue": 27524.2,
+        "vendorCost": 5630.0,
+        "grossMargin": 9693.65
+      },
+      "Viator": {
+        "tours": 433,
+        "pax": 1812,
+        "revenue": 89590.0,
+        "vendorCost": 26040.0,
+        "grossMargin": 13997.6
+      },
+      "Nikolina Folnović": {
+        "tours": 6,
+        "pax": 14,
+        "revenue": 350.0,
+        "vendorCost": 360.0,
+        "grossMargin": -86.0
+      },
+      "Civitatis": {
+        "tours": 307,
+        "pax": 1651,
+        "revenue": 41956.0,
+        "vendorCost": 20090.0,
+        "grossMargin": 2820.4
+      },
+      "GYG": {
+        "tours": 208,
+        "pax": 780,
+        "revenue": 32867.8,
+        "vendorCost": 12400.0,
+        "grossMargin": 2037.58
+      },
+      "Airbnb": {
+        "tours": 39,
+        "pax": 128,
+        "revenue": 7174.0,
+        "vendorCost": 2250.0,
+        "grossMargin": 1247.46
+      },
+      "Musement": {
+        "tours": 12,
+        "pax": 44,
+        "revenue": 1907.0,
+        "vendorCost": 690.0,
+        "grossMargin": 209.85
+      },
+      "Roundabout": {
+        "tours": 79,
+        "pax": 270,
+        "revenue": 11970.5,
+        "vendorCost": 7390.0,
+        "grossMargin": 2226.4
+      },
+      "Go Real Travel": {
+        "tours": 1,
+        "pax": 2,
+        "revenue": 120.0,
+        "vendorCost": 60.0,
+        "grossMargin": 36.0
+      },
+      "Grape Escapes": {
+        "tours": 8,
+        "pax": 24,
+        "revenue": 1170.0,
+        "vendorCost": 640.0,
+        "grossMargin": 296.0
+      },
+      "Royal Tours Croatia": {
+        "tours": 7,
+        "pax": 16,
+        "revenue": 1405.4,
+        "vendorCost": 440.0,
+        "grossMargin": 330.82
+      },
+      "Darko Crnolatac": {
+        "tours": 4,
+        "pax": 19,
+        "revenue": 495.0,
+        "vendorCost": 250.0,
+        "grossMargin": 133.0
+      },
+      "Luka Pelicarić": {
+        "tours": 8,
+        "pax": 67,
+        "revenue": 1705.0,
+        "vendorCost": 340.0,
+        "grossMargin": 970.8
+      },
+      "Perfecta Travel": {
+        "tours": 2,
+        "pax": 8,
+        "revenue": 487.2,
+        "vendorCost": 120.0,
+        "grossMargin": 106.76
+      },
+      "Turneo": {
+        "tours": 9,
+        "pax": 19,
+        "revenue": 1086.0,
+        "vendorCost": 550.0,
+        "grossMargin": -158.7
+      },
+      "Dinaric Adventures": {
+        "tours": 2,
+        "pax": 10,
+        "revenue": 320.0,
+        "vendorCost": 60.0,
+        "grossMargin": 276.0
+      },
+      "Touch Croatia": {
+        "tours": 4,
+        "pax": 18,
+        "revenue": 1077.5,
+        "vendorCost": 250.0,
+        "grossMargin": 526.0
+      },
+      "Diana Bolić": {
+        "tours": 1,
+        "pax": 2,
+        "revenue": 50.0,
+        "vendorCost": 60.0,
+        "grossMargin": -22.0
+      },
+      "Iva Pavlović": {
+        "tours": 4,
+        "pax": 10,
+        "revenue": 290.0,
+        "vendorCost": 250.0,
+        "grossMargin": -26.0
+      },
+      "Ivana Čakarić": {
+        "tours": 1,
+        "pax": 1,
+        "revenue": 30.0,
+        "vendorCost": 60.0,
+        "grossMargin": -37.2
+      },
+      "Travel Croatia DMC": {
+        "tours": 4,
+        "pax": 11,
+        "revenue": 540.0,
+        "vendorCost": 240.0,
+        "grossMargin": 192.0
+      },
+      "ZŠEM": {
+        "tours": 3,
+        "pax": 113,
+        "revenue": 300.0,
+        "vendorCost": 120.0,
+        "grossMargin": 120.0
+      },
+      "Katarina Novoselac": {
+        "tours": 15,
+        "pax": 58,
+        "revenue": 1655.0,
+        "vendorCost": 960.0,
+        "grossMargin": 314.6
+      },
+      "Buendia": {
+        "tours": 1,
+        "pax": 4,
+        "revenue": 150.0,
+        "vendorCost": 70.0,
+        "grossMargin": 12.5
+      },
+      "Liberty Adriatic": {
+        "tours": 1,
+        "pax": 20,
+        "revenue": 300.0,
+        "vendorCost": 70.0,
+        "grossMargin": 170.0
+      },
+      "Katija Crnčević": {
+        "tours": 9,
+        "pax": 30,
+        "revenue": 815.0,
+        "vendorCost": 560.0,
+        "grossMargin": 72.8
+      },
+      "Nadir Ivanović": {
+        "tours": 7,
+        "pax": 28,
+        "revenue": 750.0,
+        "vendorCost": 440.0,
+        "grossMargin": 138.8
+      },
+      "Motonomads": {
+        "tours": 1,
+        "pax": 13,
+        "revenue": 250.0,
+        "vendorCost": 60.0,
+        "grossMargin": 140.0
+      },
+      "Taste Dalmatia": {
+        "tours": 26,
+        "pax": 91,
+        "revenue": 4387.5,
+        "vendorCost": 2640.0,
+        "grossMargin": 881.1
+      },
+      "GoAndiamo": {
+        "tours": 1,
+        "pax": 3,
+        "revenue": 180.0,
+        "vendorCost": 110.0,
+        "grossMargin": 34.0
+      },
+      "Atlantida Travel": {
+        "tours": 1,
+        "pax": 8,
+        "revenue": 180.0,
+        "vendorCost": 120.0,
+        "grossMargin": 24.0
+      },
+      "Tonka Baričević": {
+        "tours": 1,
+        "pax": 3,
+        "revenue": 105.0,
+        "vendorCost": 60.0,
+        "grossMargin": 24.0
+      }
+    },
+    "byDow": {
+      "Thu": {
+        "tours": 816,
+        "pax": 13356,
+        "revenue": 28791.8,
+        "vendorCost": 11380.0,
+        "grossMargin": 4064.83
+      },
+      "Fri": {
+        "tours": 892,
+        "pax": 15659,
+        "revenue": 45136.5,
+        "vendorCost": 13150.0,
+        "grossMargin": 8561.48
+      },
+      "Sat": {
+        "tours": 902,
+        "pax": 16490,
+        "revenue": 43670.1,
+        "vendorCost": 14720.0,
+        "grossMargin": 7635.48
+      },
+      "Sun": {
+        "tours": 776,
+        "pax": 14118,
+        "revenue": 23915.3,
+        "vendorCost": 10330.0,
+        "grossMargin": 3460.97
+      },
+      "Mon": {
+        "tours": 804,
+        "pax": 13293,
+        "revenue": 29010.4,
+        "vendorCost": 11050.0,
+        "grossMargin": 4528.89
+      },
+      "Tue": {
+        "tours": 818,
+        "pax": 13577,
+        "revenue": 31904.0,
+        "vendorCost": 11210.0,
+        "grossMargin": 4845.46
+      },
+      "Wed": {
+        "tours": 822,
+        "pax": 13330,
+        "revenue": 28760.0,
+        "vendorCost": 11540.0,
+        "grossMargin": 3605.11
+      }
+    },
+    "byTime": {
+      "11": {
+        "tours": 1582,
+        "pax": 35111,
+        "revenue": 12107.9,
+        "vendorCost": 3950.0,
+        "grossMargin": 2655.33
+      },
+      "10": {
+        "tours": 1665,
+        "pax": 21411,
+        "revenue": 109602.2,
+        "vendorCost": 39250.0,
+        "grossMargin": 10815.36
+      },
+      "15": {
+        "tours": 310,
+        "pax": 1412,
+        "revenue": 53451.8,
+        "vendorCost": 17360.0,
+        "grossMargin": 13013.75
+      },
+      "16": {
+        "tours": 242,
+        "pax": 2344,
+        "revenue": 20729.5,
+        "vendorCost": 10310.0,
+        "grossMargin": 2705.77
+      },
+      "17": {
+        "tours": 931,
+        "pax": 18250,
+        "revenue": 7949.5,
+        "vendorCost": 4360.0,
+        "grossMargin": 518.86
+      },
+      "12": {
+        "tours": 167,
+        "pax": 3566,
+        "revenue": 1670.0,
+        "vendorCost": 710.0,
+        "grossMargin": 475.5
+      },
+      "9": {
+        "tours": 201,
+        "pax": 3715,
+        "revenue": 6680.0,
+        "vendorCost": 3300.0,
+        "grossMargin": 1368.0
+      },
+      "14": {
+        "tours": 16,
+        "pax": 78,
+        "revenue": 2570.0,
+        "vendorCost": 1210.0,
+        "grossMargin": 479.75
+      },
+      "13": {
+        "tours": 13,
+        "pax": 150,
+        "revenue": 2395.0,
+        "vendorCost": 810.0,
+        "grossMargin": 891.7
+      },
+      "18": {
+        "tours": 470,
+        "pax": 7848,
+        "revenue": 2670.0,
+        "vendorCost": 1470.0,
+        "grossMargin": 245.5
+      },
+      "8": {
+        "tours": 6,
+        "pax": 386,
+        "revenue": 10712.2,
+        "vendorCost": 380.0,
+        "grossMargin": 3370.2
+      },
+      "20": {
+        "tours": 52,
+        "pax": 1168,
+        "revenue": 175.0,
+        "vendorCost": 70.0,
+        "grossMargin": 26.25
+      },
+      "19": {
+        "tours": 175,
+        "pax": 4384,
+        "revenue": 475.0,
+        "vendorCost": 200.0,
+        "grossMargin": 136.25
+      }
+    },
+    "bySeason": {
+      "low": {
+        "tours": 296,
+        "pax": 2872,
+        "revenue": 13286.0,
+        "vendorCost": 6310.0,
+        "grossMargin": 766.84
+      },
+      "shoulder": {
+        "tours": 1927,
+        "pax": 29149,
+        "revenue": 91010.9,
+        "vendorCost": 31710.0,
+        "grossMargin": 14414.59
+      },
+      "high": {
+        "tours": 3607,
+        "pax": 67802,
+        "revenue": 126891.2,
+        "vendorCost": 45360.0,
+        "grossMargin": 21520.79
+      }
+    },
+    "byPaxBand": {
+      "21-30": {
+        "tours": 1649,
+        "pax": 41473,
+        "revenue": 1575.0,
+        "vendorCost": 260.0,
+        "grossMargin": 931.5
+      },
+      "1-4": {
+        "tours": 1042,
+        "pax": 2807,
+        "revenue": 111651.4,
+        "vendorCost": 56280.0,
+        "grossMargin": 2672.75
+      },
+      "11-20": {
+        "tours": 1605,
+        "pax": 25440,
+        "revenue": 20598.5,
+        "vendorCost": 4560.0,
+        "grossMargin": 7459.02
+      },
+      "5-10": {
+        "tours": 903,
+        "pax": 6705,
+        "revenue": 84926.0,
+        "vendorCost": 21650.0,
+        "grossMargin": 21088.5
+      },
+      "30+": {
+        "tours": 631,
+        "pax": 23398,
+        "revenue": 12437.2,
+        "vendorCost": 630.0,
+        "grossMargin": 4550.45
+      }
+    },
+    "byWeek": {
+      "1": {
+        "tours": 27,
+        "pax": 420,
+        "revenue": 1906.0,
+        "vendorCost": 890.0,
+        "grossMargin": 167.48
+      },
+      "2": {
+        "tours": 13,
+        "pax": 131,
+        "revenue": 295.0,
+        "vendorCost": 180.0,
+        "grossMargin": -14.66
+      },
+      "3": {
+        "tours": 18,
+        "pax": 167,
+        "revenue": 1003.0,
+        "vendorCost": 430.0,
+        "grossMargin": 101.24
+      },
+      "4": {
+        "tours": 16,
+        "pax": 206,
+        "revenue": 461.0,
+        "vendorCost": 240.0,
+        "grossMargin": 53.12
+      },
+      "5": {
+        "tours": 21,
+        "pax": 194,
+        "revenue": 1076.0,
+        "vendorCost": 670.0,
+        "grossMargin": -76.11
+      },
+      "6": {
+        "tours": 20,
+        "pax": 177,
+        "revenue": 973.0,
+        "vendorCost": 370.0,
+        "grossMargin": 123.09
+      },
+      "9": {
+        "tours": 21,
+        "pax": 173,
+        "revenue": 1011.0,
+        "vendorCost": 440.0,
+        "grossMargin": 81.61
+      },
+      "10": {
+        "tours": 35,
+        "pax": 289,
+        "revenue": 1770.0,
+        "vendorCost": 820.0,
+        "grossMargin": 104.24
+      },
+      "11": {
+        "tours": 25,
+        "pax": 280,
+        "revenue": 470.0,
+        "vendorCost": 370.0,
+        "grossMargin": -113.0
+      },
+      "12": {
+        "tours": 34,
+        "pax": 339,
+        "revenue": 1317.0,
+        "vendorCost": 740.0,
+        "grossMargin": 9.88
+      },
+      "13": {
+        "tours": 34,
+        "pax": 300,
+        "revenue": 1337.0,
+        "vendorCost": 610.0,
+        "grossMargin": 153.56
+      },
+      "14": {
+        "tours": 67,
+        "pax": 1181,
+        "revenue": 11297.2,
+        "vendorCost": 560.0,
+        "grossMargin": 3502.56
+      },
+      "15": {
+        "tours": 78,
+        "pax": 1151,
+        "revenue": 2454.5,
+        "vendorCost": 920.0,
+        "grossMargin": 427.02
+      },
+      "16": {
+        "tours": 111,
+        "pax": 2043,
+        "revenue": 3714.5,
+        "vendorCost": 1440.0,
+        "grossMargin": 469.19
+      },
+      "17": {
+        "tours": 108,
+        "pax": 1797,
+        "revenue": 3979.5,
+        "vendorCost": 1630.0,
+        "grossMargin": 432.93
+      },
+      "18": {
+        "tours": 141,
+        "pax": 2024,
+        "revenue": 5526.0,
+        "vendorCost": 2360.0,
+        "grossMargin": 622.66
+      },
+      "19": {
+        "tours": 153,
+        "pax": 2179,
+        "revenue": 6728.0,
+        "vendorCost": 2490.0,
+        "grossMargin": 1181.65
+      },
+      "20": {
+        "tours": 161,
+        "pax": 2295,
+        "revenue": 8136.0,
+        "vendorCost": 2870.0,
+        "grossMargin": 1509.04
+      },
+      "21": {
+        "tours": 158,
+        "pax": 2369,
+        "revenue": 8392.0,
+        "vendorCost": 2840.0,
+        "grossMargin": 1587.16
+      },
+      "22": {
+        "tours": 165,
+        "pax": 2675,
+        "revenue": 8180.0,
+        "vendorCost": 3110.0,
+        "grossMargin": 1168.77
+      },
+      "23": {
+        "tours": 184,
+        "pax": 3077,
+        "revenue": 7117.4,
+        "vendorCost": 2480.0,
+        "grossMargin": 1160.29
+      },
+      "24": {
+        "tours": 180,
+        "pax": 3162,
+        "revenue": 5018.0,
+        "vendorCost": 1920.0,
+        "grossMargin": 811.07
+      },
+      "25": {
+        "tours": 183,
+        "pax": 3168,
+        "revenue": 7385.0,
+        "vendorCost": 2390.0,
+        "grossMargin": 893.53
+      },
+      "26": {
+        "tours": 195,
+        "pax": 3199,
+        "revenue": 7712.5,
+        "vendorCost": 2560.0,
+        "grossMargin": 1683.49
+      },
+      "27": {
+        "tours": 186,
+        "pax": 3177,
+        "revenue": 7623.5,
+        "vendorCost": 2460.0,
+        "grossMargin": 1718.01
+      },
+      "28": {
+        "tours": 206,
+        "pax": 3308,
+        "revenue": 7783.0,
+        "vendorCost": 3310.0,
+        "grossMargin": 786.7
+      },
+      "30": {
+        "tours": 217,
+        "pax": 4001,
+        "revenue": 7575.0,
+        "vendorCost": 2500.0,
+        "grossMargin": 1733.44
+      },
+      "31": {
+        "tours": 238,
+        "pax": 4585,
+        "revenue": 7600.0,
+        "vendorCost": 3140.0,
+        "grossMargin": 813.57
+      },
+      "32": {
+        "tours": 240,
+        "pax": 5035,
+        "revenue": 7146.0,
+        "vendorCost": 2630.0,
+        "grossMargin": 1341.31
+      },
+      "33": {
+        "tours": 236,
+        "pax": 5020,
+        "revenue": 7443.0,
+        "vendorCost": 2760.0,
+        "grossMargin": 1345.31
+      },
+      "34": {
+        "tours": 238,
+        "pax": 4913,
+        "revenue": 6282.5,
+        "vendorCost": 2510.0,
+        "grossMargin": 814.71
+      },
+      "35": {
+        "tours": 209,
+        "pax": 4250,
+        "revenue": 5321.3,
+        "vendorCost": 1950.0,
+        "grossMargin": 969.49
+      },
+      "36": {
+        "tours": 217,
+        "pax": 4412,
+        "revenue": 8063.0,
+        "vendorCost": 2730.0,
+        "grossMargin": 1119.28
+      },
+      "37": {
+        "tours": 207,
+        "pax": 4113,
+        "revenue": 7747.5,
+        "vendorCost": 2580.0,
+        "grossMargin": 1443.8
+      },
+      "38": {
+        "tours": 206,
+        "pax": 3830,
+        "revenue": 10506.0,
+        "vendorCost": 3380.0,
+        "grossMargin": 2117.57
+      },
+      "39": {
+        "tours": 184,
+        "pax": 3494,
+        "revenue": 8585.5,
+        "vendorCost": 2730.0,
+        "grossMargin": 1665.69
+      },
+      "40": {
+        "tours": 149,
+        "pax": 2701,
+        "revenue": 6139.0,
+        "vendorCost": 2390.0,
+        "grossMargin": 1176.12
+      },
+      "41": {
+        "tours": 156,
+        "pax": 2740,
+        "revenue": 7655.7,
+        "vendorCost": 2870.0,
+        "grossMargin": 1005.71
+      },
+      "42": {
+        "tours": 121,
+        "pax": 2186,
+        "revenue": 2904.0,
+        "vendorCost": 1310.0,
+        "grossMargin": 378.1
+      },
+      "44": {
+        "tours": 85,
+        "pax": 919,
+        "revenue": 1721.0,
+        "vendorCost": 1020.0,
+        "grossMargin": -79.05
+      },
+      "45": {
+        "tours": 42,
+        "pax": 547,
+        "revenue": 3119.0,
+        "vendorCost": 1030.0,
+        "grossMargin": 621.59
+      },
+      "46": {
+        "tours": 33,
+        "pax": 363,
+        "revenue": 1794.0,
+        "vendorCost": 640.0,
+        "grossMargin": 265.21
+      },
+      "47": {
+        "tours": 29,
+        "pax": 273,
+        "revenue": 1302.0,
+        "vendorCost": 700.0,
+        "grossMargin": -103.98
+      },
+      "48": {
+        "tours": 26,
+        "pax": 297,
+        "revenue": 392.0,
+        "vendorCost": 360.0,
+        "grossMargin": -138.16
+      },
+      "49": {
+        "tours": 28,
+        "pax": 295,
+        "revenue": 1815.0,
+        "vendorCost": 730.0,
+        "grossMargin": 24.6
+      },
+      "50": {
+        "tours": 25,
+        "pax": 296,
+        "revenue": 1124.0,
+        "vendorCost": 610.0,
+        "grossMargin": 120.0
+      },
+      "51": {
+        "tours": 23,
+        "pax": 197,
+        "revenue": 906.0,
+        "vendorCost": 610.0,
+        "grossMargin": -129.3
+      },
+      "52": {
+        "tours": 21,
+        "pax": 243,
+        "revenue": 1721.0,
+        "vendorCost": 560.0,
+        "grossMargin": 233.98
+      },
+      "8": {
+        "tours": 16,
+        "pax": 141,
+        "revenue": 730.0,
+        "vendorCost": 310.0,
+        "grossMargin": 31.2
+      },
+      "29": {
+        "tours": 207,
+        "pax": 3814,
+        "revenue": 5376.5,
+        "vendorCost": 2210.0,
+        "grossMargin": 737.16
+      },
+      "7": {
+        "tours": 21,
+        "pax": 183,
+        "revenue": 1254.0,
+        "vendorCost": 480.0,
+        "grossMargin": 205.71
+      },
+      "43": {
+        "tours": 116,
+        "pax": 1494,
+        "revenue": 4299.0,
+        "vendorCost": 1540.0,
+        "grossMargin": 444.64
+      }
+    },
+    "byMonth": {
+      "1": {
+        "tours": 75,
+        "pax": 818,
+        "revenue": 3490.0,
+        "vendorCost": 1730.0,
+        "grossMargin": 135.72
+      },
+      "2": {
+        "tours": 79,
+        "pax": 700,
+        "revenue": 4038.0,
+        "vendorCost": 1720.0,
+        "grossMargin": 428.96
+      },
+      "3": {
+        "tours": 142,
+        "pax": 1354,
+        "revenue": 5758.0,
+        "vendorCost": 2860.0,
+        "grossMargin": 202.16
+      },
+      "4": {
+        "tours": 405,
+        "pax": 6765,
+        "revenue": 22522.7,
+        "vendorCost": 5010.0,
+        "grossMargin": 5097.28
+      },
+      "5": {
+        "tours": 706,
+        "pax": 10452,
+        "revenue": 34818.5,
+        "vendorCost": 12710.0,
+        "grossMargin": 5706.6
+      },
+      "6": {
+        "tours": 793,
+        "pax": 13477,
+        "revenue": 28619.4,
+        "vendorCost": 9960.0,
+        "grossMargin": 4793.48
+      },
+      "7": {
+        "tours": 927,
+        "pax": 16550,
+        "revenue": 32662.0,
+        "vendorCost": 12200.0,
+        "grossMargin": 5322.29
+      },
+      "8": {
+        "tours": 1024,
+        "pax": 21116,
+        "revenue": 28834.8,
+        "vendorCost": 11030.0,
+        "grossMargin": 4815.41
+      },
+      "9": {
+        "tours": 863,
+        "pax": 16659,
+        "revenue": 36775.0,
+        "vendorCost": 12170.0,
+        "grossMargin": 6589.61
+      },
+      "10": {
+        "tours": 568,
+        "pax": 9073,
+        "revenue": 20413.7,
+        "vendorCost": 8180.0,
+        "grossMargin": 2652.23
+      },
+      "11": {
+        "tours": 140,
+        "pax": 1637,
+        "revenue": 7039.0,
+        "vendorCost": 2930.0,
+        "grossMargin": 674.68
+      },
+      "12": {
+        "tours": 108,
+        "pax": 1222,
+        "revenue": 6217.0,
+        "vendorCost": 2880.0,
+        "grossMargin": 283.8
+      }
+    }
+  }
 };
 
 const guideStats25 = [
@@ -6013,6 +6933,741 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 25319.4,
+      "vendorCost": 8480.0,
+      "grossMargin": 4430.85,
+      "byChannel": {
+        "web": {
+          "tours": 137,
+          "pax": 3054,
+          "revenue": 2330.0,
+          "vendorCost": 570.0,
+          "grossMargin": 1026.4
+        },
+        "OTA": {
+          "tours": 120,
+          "pax": 477,
+          "revenue": 21664.8,
+          "vendorCost": 7290.0,
+          "grossMargin": 3090.77
+        },
+        "free": {
+          "tours": 4,
+          "pax": 19,
+          "revenue": 475.0,
+          "vendorCost": 260.0,
+          "grossMargin": 110.0
+        },
+        "b2b": {
+          "tours": 6,
+          "pax": 16,
+          "revenue": 849.6,
+          "vendorCost": 360.0,
+          "grossMargin": 203.68
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 137,
+          "pax": 3054,
+          "revenue": 2330.0,
+          "vendorCost": 570.0,
+          "grossMargin": 1026.4
+        },
+        "Viator": {
+          "tours": 63,
+          "pax": 283,
+          "revenue": 11769.0,
+          "vendorCost": 3880.0,
+          "grossMargin": 2122.62
+        },
+        "Nikolina Folnović": {
+          "tours": 1,
+          "pax": 1,
+          "revenue": 25.0,
+          "vendorCost": 60.0,
+          "grossMargin": -40.0
+        },
+        "Civitatis": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 178.0,
+          "vendorCost": 60.0,
+          "grossMargin": 7.9
+        },
+        "GYG": {
+          "tours": 42,
+          "pax": 146,
+          "revenue": 6813.8,
+          "vendorCost": 2540.0,
+          "grossMargin": 482.7
+        },
+        "Airbnb": {
+          "tours": 10,
+          "pax": 39,
+          "revenue": 2431.0,
+          "vendorCost": 560.0,
+          "grossMargin": 568.4
+        },
+        "Musement": {
+          "tours": 3,
+          "pax": 6,
+          "revenue": 434.0,
+          "vendorCost": 190.0,
+          "grossMargin": -52.3
+        },
+        "Roundabout": {
+          "tours": 2,
+          "pax": 4,
+          "revenue": 240.0,
+          "vendorCost": 120.0,
+          "grossMargin": 72.0
+        },
+        "Go Real Travel": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        },
+        "Grape Escapes": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        },
+        "Royal Tours Croatia": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 158.4,
+          "vendorCost": 60.0,
+          "grossMargin": 24.72
+        },
+        "Darko Crnolatac": {
+          "tours": 2,
+          "pax": 12,
+          "revenue": 300.0,
+          "vendorCost": 130.0,
+          "grossMargin": 100.0
+        },
+        "Luka Pelicarić": {
+          "tours": 1,
+          "pax": 6,
+          "revenue": 150.0,
+          "vendorCost": 70.0,
+          "grossMargin": 50.0
+        },
+        "Perfecta Travel": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 211.2,
+          "vendorCost": 60.0,
+          "grossMargin": 34.96
+        },
+        "Turneo": {
+          "tours": 1,
+          "pax": 1,
+          "revenue": 39.0,
+          "vendorCost": 60.0,
+          "grossMargin": -38.55
+        }
+      },
+      "byDow": {
+        "Thu": {
+          "tours": 32,
+          "pax": 346,
+          "revenue": 2431.4,
+          "vendorCost": 1070.0,
+          "grossMargin": 309.7
+        },
+        "Fri": {
+          "tours": 41,
+          "pax": 613,
+          "revenue": 3005.0,
+          "vendorCost": 1120.0,
+          "grossMargin": 536.63
+        },
+        "Sat": {
+          "tours": 38,
+          "pax": 541,
+          "revenue": 4279.6,
+          "vendorCost": 1200.0,
+          "grossMargin": 956.26
+        },
+        "Sun": {
+          "tours": 41,
+          "pax": 662,
+          "revenue": 3595.0,
+          "vendorCost": 1270.0,
+          "grossMargin": 617.94
+        },
+        "Mon": {
+          "tours": 36,
+          "pax": 392,
+          "revenue": 4061.4,
+          "vendorCost": 1260.0,
+          "grossMargin": 592.28
+        },
+        "Tue": {
+          "tours": 38,
+          "pax": 491,
+          "revenue": 4524.0,
+          "vendorCost": 1270.0,
+          "grossMargin": 1073.04
+        },
+        "Wed": {
+          "tours": 41,
+          "pax": 521,
+          "revenue": 3423.0,
+          "vendorCost": 1290.0,
+          "grossMargin": 345.0
+        }
+      },
+      "byTime": {
+        "11": {
+          "tours": 86,
+          "pax": 2087,
+          "revenue": 1048.4,
+          "vendorCost": 370.0,
+          "grossMargin": 49.4
+        },
+        "10": {
+          "tours": 68,
+          "pax": 259,
+          "revenue": 12021.6,
+          "vendorCost": 4040.0,
+          "grossMargin": 1323.42
+        },
+        "15": {
+          "tours": 60,
+          "pax": 280,
+          "revenue": 10669.4,
+          "vendorCost": 3710.0,
+          "grossMargin": 2362.03
+        },
+        "16": {
+          "tours": 2,
+          "pax": 25,
+          "revenue": 1090.0,
+          "vendorCost": 120.0,
+          "grossMargin": 544.0
+        },
+        "17": {
+          "tours": 47,
+          "pax": 897,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "12": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        },
+        "9": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        },
+        "14": {
+          "tours": 2,
+          "pax": 14,
+          "revenue": 250.0,
+          "vendorCost": 120.0,
+          "grossMargin": 80.0
+        }
+      },
+      "bySeason": {
+        "low": {
+          "tours": 32,
+          "pax": 274,
+          "revenue": 2321.0,
+          "vendorCost": 1020.0,
+          "grossMargin": 143.58
+        },
+        "shoulder": {
+          "tours": 114,
+          "pax": 1471,
+          "revenue": 11568.2,
+          "vendorCost": 3380.0,
+          "grossMargin": 2392.29
+        },
+        "high": {
+          "tours": 121,
+          "pax": 1821,
+          "revenue": 11430.2,
+          "vendorCost": 4080.0,
+          "grossMargin": 1894.98
+        }
+      },
+      "byPaxBand": {
+        "21-30": {
+          "tours": 47,
+          "pax": 1204,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "1-4": {
+          "tours": 98,
+          "pax": 255,
+          "revenue": 13121.0,
+          "vendorCost": 5550.0,
+          "grossMargin": 468.79
+        },
+        "11-20": {
+          "tours": 37,
+          "pax": 578,
+          "revenue": 1619.0,
+          "vendorCost": 250.0,
+          "grossMargin": 742.82
+        },
+        "5-10": {
+          "tours": 56,
+          "pax": 398,
+          "revenue": 10179.4,
+          "vendorCost": 2610.0,
+          "grossMargin": 2945.24
+        },
+        "30+": {
+          "tours": 29,
+          "pax": 1131,
+          "revenue": 400.0,
+          "vendorCost": 70.0,
+          "grossMargin": 274.0
+        }
+      },
+      "byWeek": {
+        "1": {
+          "tours": 9,
+          "pax": 138,
+          "revenue": 452.0,
+          "vendorCost": 250.0,
+          "grossMargin": -54.96
+        },
+        "2": {
+          "tours": 2,
+          "pax": 17,
+          "revenue": 178.0,
+          "vendorCost": 60.0,
+          "grossMargin": 45.28
+        },
+        "3": {
+          "tours": 2,
+          "pax": 12,
+          "revenue": 273.0,
+          "vendorCost": 60.0,
+          "grossMargin": 81.96
+        },
+        "4": {
+          "tours": 2,
+          "pax": 33,
+          "revenue": 25.0,
+          "vendorCost": 60.0,
+          "grossMargin": -40.0
+        },
+        "5": {
+          "tours": 3,
+          "pax": 12,
+          "revenue": 328.0,
+          "vendorCost": 120.0,
+          "grossMargin": 34.9
+        },
+        "6": {
+          "tours": 2,
+          "pax": 9,
+          "revenue": 195.0,
+          "vendorCost": 60.0,
+          "grossMargin": 37.5
+        },
+        "9": {
+          "tours": 1,
+          "pax": 13,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "10": {
+          "tours": 4,
+          "pax": 15,
+          "revenue": 712.0,
+          "vendorCost": 180.0,
+          "grossMargin": 155.68
+        },
+        "11": {
+          "tours": 4,
+          "pax": 49,
+          "revenue": 117.0,
+          "vendorCost": 120.0,
+          "grossMargin": -52.14
+        },
+        "12": {
+          "tours": 3,
+          "pax": 15,
+          "revenue": 217.0,
+          "vendorCost": 120.0,
+          "grossMargin": -32.6
+        },
+        "13": {
+          "tours": 4,
+          "pax": 30,
+          "revenue": 158.0,
+          "vendorCost": 120.0,
+          "grossMargin": -28.36
+        },
+        "14": {
+          "tours": 7,
+          "pax": 126,
+          "revenue": 601.0,
+          "vendorCost": 0.0,
+          "grossMargin": 400.46
+        },
+        "15": {
+          "tours": 5,
+          "pax": 82,
+          "revenue": 690.0,
+          "vendorCost": 0.0,
+          "grossMargin": 283.76
+        },
+        "16": {
+          "tours": 8,
+          "pax": 64,
+          "revenue": 552.0,
+          "vendorCost": 240.0,
+          "grossMargin": 8.84
+        },
+        "17": {
+          "tours": 6,
+          "pax": 82,
+          "revenue": 665.0,
+          "vendorCost": 260.0,
+          "grossMargin": 92.82
+        },
+        "18": {
+          "tours": 6,
+          "pax": 55,
+          "revenue": 807.0,
+          "vendorCost": 240.0,
+          "grossMargin": 113.26
+        },
+        "19": {
+          "tours": 8,
+          "pax": 129,
+          "revenue": 1095.0,
+          "vendorCost": 340.0,
+          "grossMargin": 321.5
+        },
+        "20": {
+          "tours": 8,
+          "pax": 107,
+          "revenue": 1149.0,
+          "vendorCost": 260.0,
+          "grossMargin": 431.82
+        },
+        "21": {
+          "tours": 8,
+          "pax": 84,
+          "revenue": 1489.0,
+          "vendorCost": 400.0,
+          "grossMargin": 268.74
+        },
+        "22": {
+          "tours": 5,
+          "pax": 88,
+          "revenue": 705.0,
+          "vendorCost": 200.0,
+          "grossMargin": 215.9
+        },
+        "23": {
+          "tours": 7,
+          "pax": 103,
+          "revenue": 1132.4,
+          "vendorCost": 270.0,
+          "grossMargin": 260.28
+        },
+        "24": {
+          "tours": 5,
+          "pax": 74,
+          "revenue": 509.0,
+          "vendorCost": 130.0,
+          "grossMargin": 165.22
+        },
+        "25": {
+          "tours": 7,
+          "pax": 95,
+          "revenue": 627.0,
+          "vendorCost": 250.0,
+          "grossMargin": 113.66
+        },
+        "26": {
+          "tours": 6,
+          "pax": 94,
+          "revenue": 178.0,
+          "vendorCost": 120.0,
+          "grossMargin": -2.72
+        },
+        "27": {
+          "tours": 7,
+          "pax": 72,
+          "revenue": 568.0,
+          "vendorCost": 250.0,
+          "grossMargin": -3.0
+        },
+        "28": {
+          "tours": 8,
+          "pax": 73,
+          "revenue": 643.0,
+          "vendorCost": 310.0,
+          "grossMargin": 53.74
+        },
+        "30": {
+          "tours": 5,
+          "pax": 80,
+          "revenue": 960.0,
+          "vendorCost": 240.0,
+          "grossMargin": 293.6
+        },
+        "31": {
+          "tours": 9,
+          "pax": 50,
+          "revenue": 1236.0,
+          "vendorCost": 440.0,
+          "grossMargin": 158.6
+        },
+        "32": {
+          "tours": 8,
+          "pax": 104,
+          "revenue": 364.0,
+          "vendorCost": 300.0,
+          "grossMargin": -90.36
+        },
+        "33": {
+          "tours": 9,
+          "pax": 150,
+          "revenue": 1118.0,
+          "vendorCost": 330.0,
+          "grossMargin": 213.08
+        },
+        "34": {
+          "tours": 7,
+          "pax": 128,
+          "revenue": 302.4,
+          "vendorCost": 180.0,
+          "grossMargin": -12.8
+        },
+        "35": {
+          "tours": 8,
+          "pax": 145,
+          "revenue": 296.4,
+          "vendorCost": 130.0,
+          "grossMargin": 22.1
+        },
+        "36": {
+          "tours": 10,
+          "pax": 185,
+          "revenue": 802.0,
+          "vendorCost": 270.0,
+          "grossMargin": 118.82
+        },
+        "37": {
+          "tours": 10,
+          "pax": 235,
+          "revenue": 624.0,
+          "vendorCost": 200.0,
+          "grossMargin": 146.32
+        },
+        "38": {
+          "tours": 2,
+          "pax": 35,
+          "revenue": 234.0,
+          "vendorCost": 70.0,
+          "grossMargin": 47.0
+        },
+        "39": {
+          "tours": 8,
+          "pax": 126,
+          "revenue": 1208.0,
+          "vendorCost": 340.0,
+          "grossMargin": 297.2
+        },
+        "40": {
+          "tours": 9,
+          "pax": 155,
+          "revenue": 689.0,
+          "vendorCost": 240.0,
+          "grossMargin": 69.62
+        },
+        "41": {
+          "tours": 9,
+          "pax": 156,
+          "revenue": 702.2,
+          "vendorCost": 250.0,
+          "grossMargin": 179.82
+        },
+        "42": {
+          "tours": 3,
+          "pax": 36,
+          "revenue": 274.0,
+          "vendorCost": 130.0,
+          "grossMargin": 28.92
+        },
+        "44": {
+          "tours": 5,
+          "pax": 56,
+          "revenue": 78.0,
+          "vendorCost": 60.0,
+          "grossMargin": -21.0
+        },
+        "45": {
+          "tours": 5,
+          "pax": 41,
+          "revenue": 351.0,
+          "vendorCost": 200.0,
+          "grossMargin": -24.5
+        },
+        "46": {
+          "tours": 4,
+          "pax": 36,
+          "revenue": 156.0,
+          "vendorCost": 130.0,
+          "grossMargin": -47.71
+        },
+        "47": {
+          "tours": 2,
+          "pax": 13,
+          "revenue": 78.0,
+          "vendorCost": 60.0,
+          "grossMargin": -21.0
+        },
+        "48": {
+          "tours": 3,
+          "pax": 35,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "49": {
+          "tours": 4,
+          "pax": 27,
+          "revenue": 395.0,
+          "vendorCost": 120.0,
+          "grossMargin": 22.1
+        },
+        "50": {
+          "tours": 3,
+          "pax": 48,
+          "revenue": 356.0,
+          "vendorCost": 60.0,
+          "grossMargin": 55.12
+        },
+        "51": {
+          "tours": 2,
+          "pax": 8,
+          "revenue": 78.0,
+          "vendorCost": 60.0,
+          "grossMargin": -19.44
+        },
+        "52": {
+          "tours": 5,
+          "pax": 46,
+          "revenue": 952.0,
+          "vendorCost": 250.0,
+          "grossMargin": 143.82
+        }
+      },
+      "byMonth": {
+        "1": {
+          "tours": 13,
+          "pax": 141,
+          "revenue": 772.0,
+          "vendorCost": 360.0,
+          "grossMargin": 36.5
+        },
+        "2": {
+          "tours": 4,
+          "pax": 24,
+          "revenue": 345.0,
+          "vendorCost": 120.0,
+          "grossMargin": 64.5
+        },
+        "3": {
+          "tours": 15,
+          "pax": 109,
+          "revenue": 1204.0,
+          "vendorCost": 540.0,
+          "grossMargin": 42.58
+        },
+        "4": {
+          "tours": 31,
+          "pax": 407,
+          "revenue": 3137.0,
+          "vendorCost": 680.0,
+          "grossMargin": 901.34
+        },
+        "5": {
+          "tours": 28,
+          "pax": 397,
+          "revenue": 4261.0,
+          "vendorCost": 1130.0,
+          "grossMargin": 1159.86
+        },
+        "6": {
+          "tours": 29,
+          "pax": 398,
+          "revenue": 2979.4,
+          "vendorCost": 960.0,
+          "grossMargin": 604.34
+        },
+        "7": {
+          "tours": 23,
+          "pax": 237,
+          "revenue": 2728.0,
+          "vendorCost": 990.0,
+          "grossMargin": 389.84
+        },
+        "8": {
+          "tours": 36,
+          "pax": 546,
+          "revenue": 2581.8,
+          "vendorCost": 1130.0,
+          "grossMargin": 253.12
+        },
+        "9": {
+          "tours": 33,
+          "pax": 640,
+          "revenue": 3141.0,
+          "vendorCost": 1000.0,
+          "grossMargin": 647.68
+        },
+        "10": {
+          "tours": 21,
+          "pax": 309,
+          "revenue": 1392.2,
+          "vendorCost": 500.0,
+          "grossMargin": 240.02
+        },
+        "11": {
+          "tours": 16,
+          "pax": 160,
+          "revenue": 663.0,
+          "vendorCost": 450.0,
+          "grossMargin": -114.21
+        },
+        "12": {
+          "tours": 18,
+          "pax": 198,
+          "revenue": 2115.0,
+          "vendorCost": 620.0,
+          "grossMargin": 205.28
+        }
+      }
     }
   },
   {
@@ -9471,6 +11126,601 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 9272.2,
+      "vendorCost": 300.0,
+      "grossMargin": 5205.04,
+      "byChannel": {
+        "web": {
+          "tours": 125,
+          "pax": 3782,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "OTA": {
+          "tours": 48,
+          "pax": 209,
+          "revenue": 7967.2,
+          "vendorCost": 240.0,
+          "grossMargin": 4177.24
+        },
+        "free": {
+          "tours": 3,
+          "pax": 35,
+          "revenue": 905.0,
+          "vendorCost": 0.0,
+          "grossMargin": 687.8
+        },
+        "b2b": {
+          "tours": 2,
+          "pax": 23,
+          "revenue": 400.0,
+          "vendorCost": 60.0,
+          "grossMargin": 340.0
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 126,
+          "pax": 3803,
+          "revenue": 400.0,
+          "vendorCost": 0.0,
+          "grossMargin": 320.0
+        },
+        "Viator": {
+          "tours": 28,
+          "pax": 131,
+          "revenue": 4972.0,
+          "vendorCost": 120.0,
+          "grossMargin": 2745.04
+        },
+        "Civitatis": {
+          "tours": 2,
+          "pax": 5,
+          "revenue": 195.0,
+          "vendorCost": 0.0,
+          "grossMargin": 107.25
+        },
+        "Luka Pelicarić": {
+          "tours": 3,
+          "pax": 35,
+          "revenue": 905.0,
+          "vendorCost": 0.0,
+          "grossMargin": 687.8
+        },
+        "Airbnb": {
+          "tours": 2,
+          "pax": 5,
+          "revenue": 195.0,
+          "vendorCost": 0.0,
+          "grossMargin": 128.7
+        },
+        "Musement": {
+          "tours": 1,
+          "pax": 7,
+          "revenue": 273.0,
+          "vendorCost": 0.0,
+          "grossMargin": 150.15
+        },
+        "GYG": {
+          "tours": 15,
+          "pax": 61,
+          "revenue": 2332.2,
+          "vendorCost": 120.0,
+          "grossMargin": 1046.1
+        },
+        "Dinaric Adventures": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 0.0,
+          "vendorCost": 60.0,
+          "grossMargin": 20.0
+        }
+      },
+      "byDow": {
+        "Fri": {
+          "tours": 33,
+          "pax": 647,
+          "revenue": 1529.8,
+          "vendorCost": 60.0,
+          "grossMargin": 807.94
+        },
+        "Sat": {
+          "tours": 30,
+          "pax": 774,
+          "revenue": 1677.0,
+          "vendorCost": 0.0,
+          "grossMargin": 932.1
+        },
+        "Wed": {
+          "tours": 19,
+          "pax": 480,
+          "revenue": 585.0,
+          "vendorCost": 0.0,
+          "grossMargin": 329.94
+        },
+        "Thu": {
+          "tours": 30,
+          "pax": 651,
+          "revenue": 851.4,
+          "vendorCost": 120.0,
+          "grossMargin": 454.31
+        },
+        "Tue": {
+          "tours": 28,
+          "pax": 593,
+          "revenue": 1404.0,
+          "vendorCost": 60.0,
+          "grossMargin": 695.43
+        },
+        "Sun": {
+          "tours": 11,
+          "pax": 267,
+          "revenue": 946.0,
+          "vendorCost": 0.0,
+          "grossMargin": 624.2
+        },
+        "Mon": {
+          "tours": 27,
+          "pax": 637,
+          "revenue": 2279.0,
+          "vendorCost": 60.0,
+          "grossMargin": 1361.12
+        }
+      },
+      "byTime": {
+        "11": {
+          "tours": 93,
+          "pax": 3119,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "15": {
+          "tours": 45,
+          "pax": 221,
+          "revenue": 8112.2,
+          "vendorCost": 240.0,
+          "grossMargin": 4430.48
+        },
+        "10": {
+          "tours": 5,
+          "pax": 21,
+          "revenue": 610.0,
+          "vendorCost": 0.0,
+          "grossMargin": 347.56
+        },
+        "17": {
+          "tours": 32,
+          "pax": 663,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "9": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 150.0,
+          "vendorCost": 0.0,
+          "grossMargin": 87.0
+        },
+        "13": {
+          "tours": 2,
+          "pax": 23,
+          "revenue": 400.0,
+          "vendorCost": 60.0,
+          "grossMargin": 340.0
+        }
+      },
+      "bySeason": {
+        "low": {
+          "tours": 20,
+          "pax": 289,
+          "revenue": 453.0,
+          "vendorCost": 0.0,
+          "grossMargin": 288.12
+        },
+        "shoulder": {
+          "tours": 42,
+          "pax": 709,
+          "revenue": 2413.0,
+          "vendorCost": 300.0,
+          "grossMargin": 1109.34
+        },
+        "high": {
+          "tours": 116,
+          "pax": 3051,
+          "revenue": 6406.2,
+          "vendorCost": 0.0,
+          "grossMargin": 3807.58
+        }
+      },
+      "byPaxBand": {
+        "11-20": {
+          "tours": 31,
+          "pax": 466,
+          "revenue": 429.0,
+          "vendorCost": 0.0,
+          "grossMargin": 248.82
+        },
+        "5-10": {
+          "tours": 20,
+          "pax": 146,
+          "revenue": 4343.0,
+          "vendorCost": 0.0,
+          "grossMargin": 2494.91
+        },
+        "1-4": {
+          "tours": 34,
+          "pax": 97,
+          "revenue": 3575.2,
+          "vendorCost": 300.0,
+          "grossMargin": 1742.31
+        },
+        "21-30": {
+          "tours": 41,
+          "pax": 1043,
+          "revenue": 925.0,
+          "vendorCost": 0.0,
+          "grossMargin": 719.0
+        },
+        "30+": {
+          "tours": 52,
+          "pax": 2297,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "2": {
+          "tours": 2,
+          "pax": 31,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "3": {
+          "tours": 1,
+          "pax": 9,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "4": {
+          "tours": 2,
+          "pax": 13,
+          "revenue": 78.0,
+          "vendorCost": 0.0,
+          "grossMargin": 40.56
+        },
+        "5": {
+          "tours": 2,
+          "pax": 40,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "8": {
+          "tours": 2,
+          "pax": 13,
+          "revenue": 39.0,
+          "vendorCost": 0.0,
+          "grossMargin": 22.62
+        },
+        "9": {
+          "tours": 1,
+          "pax": 13,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "10": {
+          "tours": 3,
+          "pax": 48,
+          "revenue": 78.0,
+          "vendorCost": 0.0,
+          "grossMargin": 42.9
+        },
+        "11": {
+          "tours": 3,
+          "pax": 52,
+          "revenue": 78.0,
+          "vendorCost": 0.0,
+          "grossMargin": 45.24
+        },
+        "12": {
+          "tours": 3,
+          "pax": 52,
+          "revenue": 180.0,
+          "vendorCost": 0.0,
+          "grossMargin": 136.8
+        },
+        "13": {
+          "tours": 1,
+          "pax": 18,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "20": {
+          "tours": 2,
+          "pax": 34,
+          "revenue": 40.0,
+          "vendorCost": 0.0,
+          "grossMargin": 23.2
+        },
+        "21": {
+          "tours": 12,
+          "pax": 228,
+          "revenue": 813.0,
+          "vendorCost": 0.0,
+          "grossMargin": 471.54
+        },
+        "22": {
+          "tours": 4,
+          "pax": 92,
+          "revenue": 156.0,
+          "vendorCost": 0.0,
+          "grossMargin": 90.48
+        },
+        "23": {
+          "tours": 4,
+          "pax": 91,
+          "revenue": 429.0,
+          "vendorCost": 0.0,
+          "grossMargin": 248.82
+        },
+        "24": {
+          "tours": 8,
+          "pax": 168,
+          "revenue": 273.0,
+          "vendorCost": 0.0,
+          "grossMargin": 167.7
+        },
+        "25": {
+          "tours": 10,
+          "pax": 227,
+          "revenue": 312.0,
+          "vendorCost": 0.0,
+          "grossMargin": 180.96
+        },
+        "26": {
+          "tours": 6,
+          "pax": 123,
+          "revenue": 273.0,
+          "vendorCost": 0.0,
+          "grossMargin": 150.15
+        },
+        "27": {
+          "tours": 4,
+          "pax": 88,
+          "revenue": 156.0,
+          "vendorCost": 0.0,
+          "grossMargin": 78.0
+        },
+        "28": {
+          "tours": 4,
+          "pax": 93,
+          "revenue": 78.0,
+          "vendorCost": 0.0,
+          "grossMargin": 45.24
+        },
+        "29": {
+          "tours": 7,
+          "pax": 162,
+          "revenue": 156.0,
+          "vendorCost": 0.0,
+          "grossMargin": 78.0
+        },
+        "30": {
+          "tours": 10,
+          "pax": 228,
+          "revenue": 863.0,
+          "vendorCost": 0.0,
+          "grossMargin": 483.5
+        },
+        "31": {
+          "tours": 10,
+          "pax": 262,
+          "revenue": 624.0,
+          "vendorCost": 0.0,
+          "grossMargin": 336.96
+        },
+        "32": {
+          "tours": 8,
+          "pax": 269,
+          "revenue": 234.0,
+          "vendorCost": 0.0,
+          "grossMargin": 129.48
+        },
+        "33": {
+          "tours": 4,
+          "pax": 174,
+          "revenue": 525.0,
+          "vendorCost": 0.0,
+          "grossMargin": 399.0
+        },
+        "34": {
+          "tours": 8,
+          "pax": 181,
+          "revenue": 218.4,
+          "vendorCost": 0.0,
+          "grossMargin": 121.68
+        },
+        "35": {
+          "tours": 7,
+          "pax": 202,
+          "revenue": 241.8,
+          "vendorCost": 0.0,
+          "grossMargin": 126.75
+        },
+        "36": {
+          "tours": 4,
+          "pax": 166,
+          "revenue": 351.0,
+          "vendorCost": 0.0,
+          "grossMargin": 203.58
+        },
+        "37": {
+          "tours": 5,
+          "pax": 117,
+          "revenue": 673.0,
+          "vendorCost": 0.0,
+          "grossMargin": 478.34
+        },
+        "38": {
+          "tours": 9,
+          "pax": 229,
+          "revenue": 765.0,
+          "vendorCost": 0.0,
+          "grossMargin": 443.7
+        },
+        "39": {
+          "tours": 7,
+          "pax": 233,
+          "revenue": 234.0,
+          "vendorCost": 0.0,
+          "grossMargin": 135.72
+        },
+        "40": {
+          "tours": 7,
+          "pax": 182,
+          "revenue": 468.0,
+          "vendorCost": 0.0,
+          "grossMargin": 271.44
+        },
+        "42": {
+          "tours": 2,
+          "pax": 54,
+          "revenue": 234.0,
+          "vendorCost": 0.0,
+          "grossMargin": 117.0
+        },
+        "45": {
+          "tours": 4,
+          "pax": 48,
+          "revenue": 195.0,
+          "vendorCost": 120.0,
+          "grossMargin": -20.16
+        },
+        "46": {
+          "tours": 4,
+          "pax": 58,
+          "revenue": 234.0,
+          "vendorCost": 0.0,
+          "grossMargin": 117.0
+        },
+        "47": {
+          "tours": 2,
+          "pax": 15,
+          "revenue": 117.0,
+          "vendorCost": 60.0,
+          "grossMargin": 0.84
+        },
+        "48": {
+          "tours": 2,
+          "pax": 13,
+          "revenue": 78.0,
+          "vendorCost": 0.0,
+          "grossMargin": 39.0
+        },
+        "49": {
+          "tours": 2,
+          "pax": 10,
+          "revenue": 0.0,
+          "vendorCost": 60.0,
+          "grossMargin": 20.0
+        },
+        "50": {
+          "tours": 2,
+          "pax": 13,
+          "revenue": 78.0,
+          "vendorCost": 60.0,
+          "grossMargin": -21.0
+        }
+      },
+      "byMonth": {
+        "1": {
+          "tours": 6,
+          "pax": 66,
+          "revenue": 78.0,
+          "vendorCost": 0.0,
+          "grossMargin": 40.56
+        },
+        "2": {
+          "tours": 3,
+          "pax": 40,
+          "revenue": 39.0,
+          "vendorCost": 0.0,
+          "grossMargin": 22.62
+        },
+        "3": {
+          "tours": 11,
+          "pax": 183,
+          "revenue": 336.0,
+          "vendorCost": 0.0,
+          "grossMargin": 224.94
+        },
+        "5": {
+          "tours": 18,
+          "pax": 354,
+          "revenue": 1009.0,
+          "vendorCost": 0.0,
+          "grossMargin": 585.22
+        },
+        "6": {
+          "tours": 30,
+          "pax": 653,
+          "revenue": 1443.0,
+          "vendorCost": 0.0,
+          "grossMargin": 825.63
+        },
+        "7": {
+          "tours": 30,
+          "pax": 736,
+          "revenue": 1409.0,
+          "vendorCost": 0.0,
+          "grossMargin": 762.74
+        },
+        "8": {
+          "tours": 30,
+          "pax": 879,
+          "revenue": 1531.2,
+          "vendorCost": 0.0,
+          "grossMargin": 957.87
+        },
+        "9": {
+          "tours": 26,
+          "pax": 783,
+          "revenue": 2023.0,
+          "vendorCost": 0.0,
+          "grossMargin": 1261.34
+        },
+        "10": {
+          "tours": 8,
+          "pax": 198,
+          "revenue": 702.0,
+          "vendorCost": 0.0,
+          "grossMargin": 388.44
+        },
+        "11": {
+          "tours": 12,
+          "pax": 134,
+          "revenue": 624.0,
+          "vendorCost": 180.0,
+          "grossMargin": 136.68
+        },
+        "12": {
+          "tours": 4,
+          "pax": 23,
+          "revenue": 78.0,
+          "vendorCost": 120.0,
+          "grossMargin": -1.0
+        }
+      }
     }
   },
   {
@@ -11535,6 +13785,461 @@ const guideStats25 = [
               "pax": 2
             }
           }
+        }
+      }
+    },
+    "mgmt": {
+      "revenue": 4814.0,
+      "vendorCost": 2490.0,
+      "grossMargin": 550.22,
+      "byChannel": {
+        "web": {
+          "tours": 52,
+          "pax": 1129,
+          "revenue": 656.0,
+          "vendorCost": 370.0,
+          "grossMargin": 140.56
+        },
+        "OTA": {
+          "tours": 30,
+          "pax": 103,
+          "revenue": 3808.0,
+          "vendorCost": 1900.0,
+          "grossMargin": 229.66
+        },
+        "b2b": {
+          "tours": 3,
+          "pax": 22,
+          "revenue": 350.0,
+          "vendorCost": 220.0,
+          "grossMargin": 180.0
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 54,
+          "pax": 1149,
+          "revenue": 1006.0,
+          "vendorCost": 530.0,
+          "grossMargin": 260.56
+        },
+        "Viator": {
+          "tours": 21,
+          "pax": 71,
+          "revenue": 2655.0,
+          "vendorCost": 1330.0,
+          "grossMargin": 181.82
+        },
+        "Airbnb": {
+          "tours": 1,
+          "pax": 6,
+          "revenue": 234.0,
+          "vendorCost": 70.0,
+          "grossMargin": 84.44
+        },
+        "GYG": {
+          "tours": 7,
+          "pax": 24,
+          "revenue": 841.0,
+          "vendorCost": 440.0,
+          "grossMargin": -19.5
+        },
+        "Civitatis": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 78.0,
+          "vendorCost": 60.0,
+          "grossMargin": -17.1
+        },
+        "Roundabout": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 0.0,
+          "vendorCost": 60.0,
+          "grossMargin": 60.0
+        }
+      },
+      "byDow": {
+        "Wed": {
+          "tours": 17,
+          "pax": 175,
+          "revenue": 592.0,
+          "vendorCost": 540.0,
+          "grossMargin": -42.0
+        },
+        "Thu": {
+          "tours": 13,
+          "pax": 295,
+          "revenue": 741.0,
+          "vendorCost": 330.0,
+          "grossMargin": 74.82
+        },
+        "Sat": {
+          "tours": 12,
+          "pax": 227,
+          "revenue": 897.0,
+          "vendorCost": 260.0,
+          "grossMargin": 286.78
+        },
+        "Sun": {
+          "tours": 8,
+          "pax": 92,
+          "revenue": 312.0,
+          "vendorCost": 250.0,
+          "grossMargin": -75.28
+        },
+        "Fri": {
+          "tours": 10,
+          "pax": 130,
+          "revenue": 785.0,
+          "vendorCost": 330.0,
+          "grossMargin": 150.38
+        },
+        "Tue": {
+          "tours": 16,
+          "pax": 179,
+          "revenue": 1092.0,
+          "vendorCost": 560.0,
+          "grossMargin": 102.42
+        },
+        "Mon": {
+          "tours": 9,
+          "pax": 156,
+          "revenue": 395.0,
+          "vendorCost": 220.0,
+          "grossMargin": 53.1
+        }
+      },
+      "byTime": {
+        "11": {
+          "tours": 35,
+          "pax": 828,
+          "revenue": 0.0,
+          "vendorCost": 60.0,
+          "grossMargin": -60.0
+        },
+        "15": {
+          "tours": 23,
+          "pax": 83,
+          "revenue": 3237.0,
+          "vendorCost": 1470.0,
+          "grossMargin": 354.42
+        },
+        "17": {
+          "tours": 12,
+          "pax": 221,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "9": {
+          "tours": 1,
+          "pax": 18,
+          "revenue": 200.0,
+          "vendorCost": 70.0,
+          "grossMargin": 82.0
+        },
+        "10": {
+          "tours": 13,
+          "pax": 91,
+          "revenue": 1227.0,
+          "vendorCost": 830.0,
+          "grossMargin": 113.8
+        },
+        "18": {
+          "tours": 1,
+          "pax": 13,
+          "revenue": 150.0,
+          "vendorCost": 60.0,
+          "grossMargin": 60.0
+        }
+      },
+      "bySeason": {
+        "low": {
+          "tours": 8,
+          "pax": 87,
+          "revenue": 156.0,
+          "vendorCost": 120.0,
+          "grossMargin": -20.16
+        },
+        "shoulder": {
+          "tours": 38,
+          "pax": 471,
+          "revenue": 1906.0,
+          "vendorCost": 960.0,
+          "grossMargin": 267.28
+        },
+        "high": {
+          "tours": 39,
+          "pax": 696,
+          "revenue": 2752.0,
+          "vendorCost": 1410.0,
+          "grossMargin": 303.1
+        }
+      },
+      "byPaxBand": {
+        "11-20": {
+          "tours": 19,
+          "pax": 276,
+          "revenue": 857.0,
+          "vendorCost": 200.0,
+          "grossMargin": 366.06
+        },
+        "1-4": {
+          "tours": 26,
+          "pax": 55,
+          "revenue": 1719.0,
+          "vendorCost": 1520.0,
+          "grossMargin": -418.58
+        },
+        "5-10": {
+          "tours": 15,
+          "pax": 98,
+          "revenue": 1938.0,
+          "vendorCost": 650.0,
+          "grossMargin": 482.74
+        },
+        "21-30": {
+          "tours": 11,
+          "pax": 271,
+          "revenue": 100.0,
+          "vendorCost": 60.0,
+          "grossMargin": 20.0
+        },
+        "30+": {
+          "tours": 14,
+          "pax": 554,
+          "revenue": 200.0,
+          "vendorCost": 60.0,
+          "grossMargin": 100.0
+        }
+      },
+      "byWeek": {
+        "2": {
+          "tours": 2,
+          "pax": 22,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "3": {
+          "tours": 3,
+          "pax": 27,
+          "revenue": 78.0,
+          "vendorCost": 60.0,
+          "grossMargin": -0.72
+        },
+        "4": {
+          "tours": 3,
+          "pax": 38,
+          "revenue": 78.0,
+          "vendorCost": 60.0,
+          "grossMargin": -19.44
+        },
+        "20": {
+          "tours": 7,
+          "pax": 110,
+          "revenue": 780.0,
+          "vendorCost": 200.0,
+          "grossMargin": 252.4
+        },
+        "24": {
+          "tours": 1,
+          "pax": 39,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "26": {
+          "tours": 2,
+          "pax": 40,
+          "revenue": 39.0,
+          "vendorCost": 60.0,
+          "grossMargin": -37.38
+        },
+        "27": {
+          "tours": 6,
+          "pax": 62,
+          "revenue": 941.0,
+          "vendorCost": 330.0,
+          "grossMargin": 264.26
+        },
+        "28": {
+          "tours": 8,
+          "pax": 133,
+          "revenue": 235.0,
+          "vendorCost": 240.0,
+          "grossMargin": -103.7
+        },
+        "30": {
+          "tours": 6,
+          "pax": 128,
+          "revenue": 534.0,
+          "vendorCost": 230.0,
+          "grossMargin": 127.0
+        },
+        "31": {
+          "tours": 3,
+          "pax": 79,
+          "revenue": 278.0,
+          "vendorCost": 120.0,
+          "grossMargin": 79.0
+        },
+        "33": {
+          "tours": 4,
+          "pax": 85,
+          "revenue": 39.0,
+          "vendorCost": 60.0,
+          "grossMargin": -37.38
+        },
+        "34": {
+          "tours": 1,
+          "pax": 5,
+          "revenue": 100.0,
+          "vendorCost": 60.0,
+          "grossMargin": -10.0
+        },
+        "36": {
+          "tours": 2,
+          "pax": 55,
+          "revenue": 234.0,
+          "vendorCost": 70.0,
+          "grossMargin": 65.72
+        },
+        "37": {
+          "tours": 4,
+          "pax": 66,
+          "revenue": 234.0,
+          "vendorCost": 120.0,
+          "grossMargin": 13.38
+        },
+        "38": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 78.0,
+          "vendorCost": 60.0,
+          "grossMargin": -21.0
+        },
+        "40": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -36.8
+        },
+        "41": {
+          "tours": 8,
+          "pax": 157,
+          "revenue": 390.0,
+          "vendorCost": 140.0,
+          "grossMargin": 70.6
+        },
+        "42": {
+          "tours": 4,
+          "pax": 44,
+          "revenue": 190.0,
+          "vendorCost": 120.0,
+          "grossMargin": 23.2
+        },
+        "47": {
+          "tours": 5,
+          "pax": 50,
+          "revenue": 156.0,
+          "vendorCost": 130.0,
+          "grossMargin": -50.44
+        },
+        "48": {
+          "tours": 4,
+          "pax": 40,
+          "revenue": 78.0,
+          "vendorCost": 120.0,
+          "grossMargin": -79.44
+        },
+        "50": {
+          "tours": 3,
+          "pax": 10,
+          "revenue": 78.0,
+          "vendorCost": 120.0,
+          "grossMargin": 59.28
+        },
+        "51": {
+          "tours": 5,
+          "pax": 41,
+          "revenue": 234.0,
+          "vendorCost": 130.0,
+          "grossMargin": -8.32
+        },
+        "52": {
+          "tours": 2,
+          "pax": 19,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "1": {
+          "tours": 8,
+          "pax": 87,
+          "revenue": 156.0,
+          "vendorCost": 120.0,
+          "grossMargin": -20.16
+        },
+        "5": {
+          "tours": 7,
+          "pax": 110,
+          "revenue": 780.0,
+          "vendorCost": 200.0,
+          "grossMargin": 252.4
+        },
+        "6": {
+          "tours": 3,
+          "pax": 79,
+          "revenue": 39.0,
+          "vendorCost": 60.0,
+          "grossMargin": -37.38
+        },
+        "7": {
+          "tours": 21,
+          "pax": 359,
+          "revenue": 1910.0,
+          "vendorCost": 860.0,
+          "grossMargin": 387.56
+        },
+        "8": {
+          "tours": 7,
+          "pax": 133,
+          "revenue": 217.0,
+          "vendorCost": 180.0,
+          "grossMargin": -68.38
+        },
+        "9": {
+          "tours": 8,
+          "pax": 125,
+          "revenue": 586.0,
+          "vendorCost": 310.0,
+          "grossMargin": 21.3
+        },
+        "10": {
+          "tours": 12,
+          "pax": 201,
+          "revenue": 580.0,
+          "vendorCost": 260.0,
+          "grossMargin": 93.8
+        },
+        "11": {
+          "tours": 9,
+          "pax": 90,
+          "revenue": 234.0,
+          "vendorCost": 250.0,
+          "grossMargin": -129.88
+        },
+        "12": {
+          "tours": 10,
+          "pax": 70,
+          "revenue": 312.0,
+          "vendorCost": 250.0,
+          "grossMargin": 50.96
         }
       }
     }
@@ -16947,6 +19652,657 @@ const guideStats25 = [
               "pax": 3
             }
           }
+        }
+      }
+    },
+    "mgmt": {
+      "revenue": 18988.3,
+      "vendorCost": 7530.0,
+      "grossMargin": 2928.26,
+      "byChannel": {
+        "web": {
+          "tours": 125,
+          "pax": 2369,
+          "revenue": 837.0,
+          "vendorCost": 310.0,
+          "grossMargin": 286.8
+        },
+        "OTA": {
+          "tours": 106,
+          "pax": 398,
+          "revenue": 16086.8,
+          "vendorCost": 6650.0,
+          "grossMargin": 1714.86
+        },
+        "b2b": {
+          "tours": 6,
+          "pax": 38,
+          "revenue": 1669.5,
+          "vendorCost": 380.0,
+          "grossMargin": 803.6
+        },
+        "free": {
+          "tours": 3,
+          "pax": 15,
+          "revenue": 395.0,
+          "vendorCost": 190.0,
+          "grossMargin": 123.0
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 126,
+          "pax": 2389,
+          "revenue": 1237.0,
+          "vendorCost": 380.0,
+          "grossMargin": 536.8
+        },
+        "Viator": {
+          "tours": 60,
+          "pax": 236,
+          "revenue": 9515.0,
+          "vendorCost": 3750.0,
+          "grossMargin": 1405.08
+        },
+        "GYG": {
+          "tours": 36,
+          "pax": 139,
+          "revenue": 5412.8,
+          "vendorCost": 2290.0,
+          "grossMargin": 341.4
+        },
+        "Civitatis": {
+          "tours": 4,
+          "pax": 7,
+          "revenue": 335.0,
+          "vendorCost": 240.0,
+          "grossMargin": -92.75
+        },
+        "Royal Tours Croatia": {
+          "tours": 2,
+          "pax": 4,
+          "revenue": 317.0,
+          "vendorCost": 120.0,
+          "grossMargin": 67.6
+        },
+        "Darko Crnolatac": {
+          "tours": 2,
+          "pax": 7,
+          "revenue": 195.0,
+          "vendorCost": 120.0,
+          "grossMargin": 33.0
+        },
+        "Airbnb": {
+          "tours": 4,
+          "pax": 9,
+          "revenue": 551.0,
+          "vendorCost": 240.0,
+          "grossMargin": 40.98
+        },
+        "Musement": {
+          "tours": 2,
+          "pax": 7,
+          "revenue": 273.0,
+          "vendorCost": 130.0,
+          "grossMargin": 20.15
+        },
+        "Roundabout": {
+          "tours": 2,
+          "pax": 6,
+          "revenue": 240.0,
+          "vendorCost": 120.0,
+          "grossMargin": 72.0
+        },
+        "Touch Croatia": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 712.5,
+          "vendorCost": 70.0,
+          "grossMargin": 414.0
+        },
+        "Luka Pelicarić": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 200.0,
+          "vendorCost": 70.0,
+          "grossMargin": 90.0
+        }
+      },
+      "byDow": {
+        "Tue": {
+          "tours": 33,
+          "pax": 356,
+          "revenue": 3096.0,
+          "vendorCost": 1050.0,
+          "grossMargin": 598.48
+        },
+        "Sat": {
+          "tours": 33,
+          "pax": 439,
+          "revenue": 2664.0,
+          "vendorCost": 1140.0,
+          "grossMargin": 214.01
+        },
+        "Sun": {
+          "tours": 27,
+          "pax": 337,
+          "revenue": 1646.8,
+          "vendorCost": 800.0,
+          "grossMargin": 165.6
+        },
+        "Thu": {
+          "tours": 40,
+          "pax": 383,
+          "revenue": 3228.5,
+          "vendorCost": 1310.0,
+          "grossMargin": 476.4
+        },
+        "Mon": {
+          "tours": 40,
+          "pax": 508,
+          "revenue": 2819.0,
+          "vendorCost": 1150.0,
+          "grossMargin": 420.04
+        },
+        "Fri": {
+          "tours": 25,
+          "pax": 277,
+          "revenue": 2721.0,
+          "vendorCost": 870.0,
+          "grossMargin": 680.96
+        },
+        "Wed": {
+          "tours": 42,
+          "pax": 520,
+          "revenue": 2813.0,
+          "vendorCost": 1210.0,
+          "grossMargin": 372.77
+        }
+      },
+      "byTime": {
+        "11": {
+          "tours": 87,
+          "pax": 1727,
+          "revenue": 392.0,
+          "vendorCost": 180.0,
+          "grossMargin": 157.0
+        },
+        "15": {
+          "tours": 66,
+          "pax": 271,
+          "revenue": 10347.8,
+          "vendorCost": 4240.0,
+          "grossMargin": 1482.3
+        },
+        "10": {
+          "tours": 48,
+          "pax": 190,
+          "revenue": 7858.5,
+          "vendorCost": 2930.0,
+          "grossMargin": 1189.96
+        },
+        "17": {
+          "tours": 38,
+          "pax": 630,
+          "revenue": 240.0,
+          "vendorCost": 120.0,
+          "grossMargin": 72.0
+        },
+        "9": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 150.0,
+          "vendorCost": 60.0,
+          "grossMargin": 27.0
+        }
+      },
+      "bySeason": {
+        "low": {
+          "tours": 46,
+          "pax": 302,
+          "revenue": 2002.0,
+          "vendorCost": 1230.0,
+          "grossMargin": -173.82
+        },
+        "shoulder": {
+          "tours": 88,
+          "pax": 1078,
+          "revenue": 7000.0,
+          "vendorCost": 2710.0,
+          "grossMargin": 960.37
+        },
+        "high": {
+          "tours": 106,
+          "pax": 1440,
+          "revenue": 9986.3,
+          "vendorCost": 3590.0,
+          "grossMargin": 2141.71
+        }
+      },
+      "byPaxBand": {
+        "5-10": {
+          "tours": 43,
+          "pax": 312,
+          "revenue": 6240.5,
+          "vendorCost": 1580.0,
+          "grossMargin": 1939.24
+        },
+        "1-4": {
+          "tours": 99,
+          "pax": 268,
+          "revenue": 10927.8,
+          "vendorCost": 5670.0,
+          "grossMargin": 110.2
+        },
+        "11-20": {
+          "tours": 43,
+          "pax": 654,
+          "revenue": 1820.0,
+          "vendorCost": 280.0,
+          "grossMargin": 878.82
+        },
+        "21-30": {
+          "tours": 36,
+          "pax": 900,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30+": {
+          "tours": 19,
+          "pax": 686,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "2": {
+          "tours": 4,
+          "pax": 16,
+          "revenue": 117.0,
+          "vendorCost": 120.0,
+          "grossMargin": -59.94
+        },
+        "3": {
+          "tours": 2,
+          "pax": 9,
+          "revenue": 156.0,
+          "vendorCost": 60.0,
+          "grossMargin": 18.0
+        },
+        "4": {
+          "tours": 2,
+          "pax": 26,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "5": {
+          "tours": 4,
+          "pax": 19,
+          "revenue": 198.0,
+          "vendorCost": 180.0,
+          "grossMargin": -78.64
+        },
+        "6": {
+          "tours": 4,
+          "pax": 23,
+          "revenue": 267.0,
+          "vendorCost": 60.0,
+          "grossMargin": 49.86
+        },
+        "7": {
+          "tours": 3,
+          "pax": 14,
+          "revenue": 78.0,
+          "vendorCost": 60.0,
+          "grossMargin": -21.0
+        },
+        "8": {
+          "tours": 5,
+          "pax": 38,
+          "revenue": 78.0,
+          "vendorCost": 60.0,
+          "grossMargin": -14.76
+        },
+        "9": {
+          "tours": 3,
+          "pax": 15,
+          "revenue": 78.0,
+          "vendorCost": 60.0,
+          "grossMargin": -21.0
+        },
+        "10": {
+          "tours": 6,
+          "pax": 31,
+          "revenue": 392.0,
+          "vendorCost": 250.0,
+          "grossMargin": -23.84
+        },
+        "11": {
+          "tours": 3,
+          "pax": 17,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -36.8
+        },
+        "12": {
+          "tours": 4,
+          "pax": 51,
+          "revenue": 196.0,
+          "vendorCost": 130.0,
+          "grossMargin": -28.8
+        },
+        "13": {
+          "tours": 4,
+          "pax": 26,
+          "revenue": 246.0,
+          "vendorCost": 120.0,
+          "grossMargin": 35.1
+        },
+        "14": {
+          "tours": 6,
+          "pax": 50,
+          "revenue": 356.0,
+          "vendorCost": 250.0,
+          "grossMargin": -32.8
+        },
+        "15": {
+          "tours": 7,
+          "pax": 95,
+          "revenue": 634.0,
+          "vendorCost": 240.0,
+          "grossMargin": 107.72
+        },
+        "16": {
+          "tours": 8,
+          "pax": 130,
+          "revenue": 919.0,
+          "vendorCost": 200.0,
+          "grossMargin": 233.06
+        },
+        "17": {
+          "tours": 7,
+          "pax": 111,
+          "revenue": 579.0,
+          "vendorCost": 190.0,
+          "grossMargin": 121.16
+        },
+        "18": {
+          "tours": 2,
+          "pax": 28,
+          "revenue": 234.0,
+          "vendorCost": 70.0,
+          "grossMargin": 65.72
+        },
+        "19": {
+          "tours": 6,
+          "pax": 87,
+          "revenue": 668.0,
+          "vendorCost": 190.0,
+          "grossMargin": 137.32
+        },
+        "20": {
+          "tours": 2,
+          "pax": 33,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "22": {
+          "tours": 10,
+          "pax": 169,
+          "revenue": 1411.0,
+          "vendorCost": 390.0,
+          "grossMargin": 437.15
+        },
+        "23": {
+          "tours": 11,
+          "pax": 145,
+          "revenue": 1139.0,
+          "vendorCost": 320.0,
+          "grossMargin": 270.62
+        },
+        "24": {
+          "tours": 7,
+          "pax": 108,
+          "revenue": 426.0,
+          "vendorCost": 180.0,
+          "grossMargin": 81.0
+        },
+        "25": {
+          "tours": 6,
+          "pax": 64,
+          "revenue": 539.0,
+          "vendorCost": 260.0,
+          "grossMargin": 38.48
+        },
+        "26": {
+          "tours": 8,
+          "pax": 77,
+          "revenue": 318.0,
+          "vendorCost": 240.0,
+          "grossMargin": -32.36
+        },
+        "27": {
+          "tours": 4,
+          "pax": 88,
+          "revenue": 712.5,
+          "vendorCost": 70.0,
+          "grossMargin": 414.0
+        },
+        "28": {
+          "tours": 10,
+          "pax": 131,
+          "revenue": 648.0,
+          "vendorCost": 370.0,
+          "grossMargin": -18.73
+        },
+        "29": {
+          "tours": 9,
+          "pax": 134,
+          "revenue": 819.0,
+          "vendorCost": 320.0,
+          "grossMargin": 120.7
+        },
+        "32": {
+          "tours": 6,
+          "pax": 83,
+          "revenue": 1008.0,
+          "vendorCost": 260.0,
+          "grossMargin": 296.56
+        },
+        "33": {
+          "tours": 7,
+          "pax": 89,
+          "revenue": 726.0,
+          "vendorCost": 250.0,
+          "grossMargin": 139.88
+        },
+        "34": {
+          "tours": 8,
+          "pax": 115,
+          "revenue": 475.8,
+          "vendorCost": 240.0,
+          "grossMargin": 25.98
+        },
+        "35": {
+          "tours": 8,
+          "pax": 128,
+          "revenue": 426.0,
+          "vendorCost": 240.0,
+          "grossMargin": 51.0
+        },
+        "36": {
+          "tours": 7,
+          "pax": 72,
+          "revenue": 751.0,
+          "vendorCost": 250.0,
+          "grossMargin": 148.34
+        },
+        "38": {
+          "tours": 8,
+          "pax": 130,
+          "revenue": 1391.0,
+          "vendorCost": 340.0,
+          "grossMargin": 534.78
+        },
+        "39": {
+          "tours": 7,
+          "pax": 76,
+          "revenue": 607.0,
+          "vendorCost": 250.0,
+          "grossMargin": 71.46
+        },
+        "42": {
+          "tours": 3,
+          "pax": 35,
+          "revenue": 117.0,
+          "vendorCost": 70.0,
+          "grossMargin": -2.14
+        },
+        "43": {
+          "tours": 10,
+          "pax": 143,
+          "revenue": 313.0,
+          "vendorCost": 200.0,
+          "grossMargin": -40.3
+        },
+        "44": {
+          "tours": 5,
+          "pax": 49,
+          "revenue": 156.0,
+          "vendorCost": 130.0,
+          "grossMargin": -45.76
+        },
+        "47": {
+          "tours": 5,
+          "pax": 25,
+          "revenue": 373.0,
+          "vendorCost": 180.0,
+          "grossMargin": -34.94
+        },
+        "48": {
+          "tours": 4,
+          "pax": 34,
+          "revenue": 156.0,
+          "vendorCost": 120.0,
+          "grossMargin": -21.72
+        },
+        "49": {
+          "tours": 7,
+          "pax": 46,
+          "revenue": 1024.0,
+          "vendorCost": 310.0,
+          "grossMargin": 85.94
+        },
+        "50": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "51": {
+          "tours": 4,
+          "pax": 39,
+          "revenue": 156.0,
+          "vendorCost": 120.0,
+          "grossMargin": -40.44
+        },
+        "52": {
+          "tours": 3,
+          "pax": 17,
+          "revenue": 60.0,
+          "vendorCost": 120.0,
+          "grossMargin": -1.6
+        }
+      },
+      "byMonth": {
+        "1": {
+          "tours": 12,
+          "pax": 70,
+          "revenue": 471.0,
+          "vendorCost": 360.0,
+          "grossMargin": -120.58
+        },
+        "2": {
+          "tours": 15,
+          "pax": 90,
+          "revenue": 501.0,
+          "vendorCost": 240.0,
+          "grossMargin": -6.9
+        },
+        "3": {
+          "tours": 19,
+          "pax": 142,
+          "revenue": 1030.0,
+          "vendorCost": 630.0,
+          "grossMargin": -46.34
+        },
+        "4": {
+          "tours": 28,
+          "pax": 397,
+          "revenue": 2566.0,
+          "vendorCost": 880.0,
+          "grossMargin": 486.86
+        },
+        "5": {
+          "tours": 18,
+          "pax": 289,
+          "revenue": 2079.0,
+          "vendorCost": 580.0,
+          "grossMargin": 574.47
+        },
+        "6": {
+          "tours": 32,
+          "pax": 394,
+          "revenue": 2422.0,
+          "vendorCost": 1000.0,
+          "grossMargin": 357.74
+        },
+        "7": {
+          "tours": 23,
+          "pax": 353,
+          "revenue": 2179.5,
+          "vendorCost": 760.0,
+          "grossMargin": 515.97
+        },
+        "8": {
+          "tours": 29,
+          "pax": 415,
+          "revenue": 2635.8,
+          "vendorCost": 990.0,
+          "grossMargin": 513.42
+        },
+        "9": {
+          "tours": 22,
+          "pax": 278,
+          "revenue": 2749.0,
+          "vendorCost": 840.0,
+          "grossMargin": 754.58
+        },
+        "10": {
+          "tours": 18,
+          "pax": 227,
+          "revenue": 586.0,
+          "vendorCost": 400.0,
+          "grossMargin": -88.2
+        },
+        "11": {
+          "tours": 9,
+          "pax": 59,
+          "revenue": 529.0,
+          "vendorCost": 300.0,
+          "grossMargin": -56.66
+        },
+        "12": {
+          "tours": 15,
+          "pax": 106,
+          "revenue": 1240.0,
+          "vendorCost": 550.0,
+          "grossMargin": 43.9
         }
       }
     }
@@ -23249,6 +26605,755 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 31802.4,
+      "vendorCost": 10220.0,
+      "grossMargin": 6580.78,
+      "byChannel": {
+        "web": {
+          "tours": 146,
+          "pax": 3277,
+          "revenue": 4317.0,
+          "vendorCost": 760.0,
+          "grossMargin": 1703.32
+        },
+        "OTA": {
+          "tours": 136,
+          "pax": 613,
+          "revenue": 25541.4,
+          "vendorCost": 8710.0,
+          "grossMargin": 4261.46
+        },
+        "free": {
+          "tours": 6,
+          "pax": 22,
+          "revenue": 560.0,
+          "vendorCost": 380.0,
+          "grossMargin": 47.8
+        },
+        "b2b": {
+          "tours": 7,
+          "pax": 24,
+          "revenue": 1384.0,
+          "vendorCost": 370.0,
+          "grossMargin": 568.2
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 147,
+          "pax": 3233,
+          "revenue": 4617.0,
+          "vendorCost": 890.0,
+          "grossMargin": 1813.32
+        },
+        "GYG": {
+          "tours": 40,
+          "pax": 186,
+          "revenue": 7421.4,
+          "vendorCost": 2580.0,
+          "grossMargin": 910.58
+        },
+        "Viator": {
+          "tours": 82,
+          "pax": 385,
+          "revenue": 15969.0,
+          "vendorCost": 5270.0,
+          "grossMargin": 3124.56
+        },
+        "Civitatis": {
+          "tours": 1,
+          "pax": 1,
+          "revenue": 39.0,
+          "vendorCost": 60.0,
+          "grossMargin": -38.55
+        },
+        "Diana Bolić": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 50.0,
+          "vendorCost": 60.0,
+          "grossMargin": -22.0
+        },
+        "Musement": {
+          "tours": 2,
+          "pax": 10,
+          "revenue": 257.0,
+          "vendorCost": 120.0,
+          "grossMargin": 21.35
+        },
+        "Airbnb": {
+          "tours": 8,
+          "pax": 23,
+          "revenue": 1271.0,
+          "vendorCost": 500.0,
+          "grossMargin": 164.82
+        },
+        "Iva Pavlović": {
+          "tours": 1,
+          "pax": 1,
+          "revenue": 30.0,
+          "vendorCost": 60.0,
+          "grossMargin": -36.0
+        },
+        "Ivana Čakarić": {
+          "tours": 1,
+          "pax": 1,
+          "revenue": 30.0,
+          "vendorCost": 60.0,
+          "grossMargin": -37.2
+        },
+        "Roundabout": {
+          "tours": 2,
+          "pax": 4,
+          "revenue": 398.0,
+          "vendorCost": 120.0,
+          "grossMargin": 118.4
+        },
+        "Perfecta Travel": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 276.0,
+          "vendorCost": 60.0,
+          "grossMargin": 71.8
+        },
+        "Touch Croatia": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        },
+        "Dinaric Adventures": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 320.0,
+          "vendorCost": 0.0,
+          "grossMargin": 256.0
+        },
+        "Travel Croatia DMC": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        },
+        "Luka Pelicarić": {
+          "tours": 3,
+          "pax": 18,
+          "revenue": 450.0,
+          "vendorCost": 200.0,
+          "grossMargin": 143.0
+        },
+        "ZŠEM": {
+          "tours": 1,
+          "pax": 48,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Turneo": {
+          "tours": 2,
+          "pax": 6,
+          "revenue": 434.0,
+          "vendorCost": 120.0,
+          "grossMargin": 18.7
+        }
+      },
+      "byDow": {
+        "Thu": {
+          "tours": 43,
+          "pax": 526,
+          "revenue": 4947.0,
+          "vendorCost": 1730.0,
+          "grossMargin": 993.51
+        },
+        "Fri": {
+          "tours": 44,
+          "pax": 591,
+          "revenue": 4335.4,
+          "vendorCost": 1560.0,
+          "grossMargin": 1026.32
+        },
+        "Mon": {
+          "tours": 44,
+          "pax": 443,
+          "revenue": 3643.0,
+          "vendorCost": 1650.0,
+          "grossMargin": 272.29
+        },
+        "Tue": {
+          "tours": 38,
+          "pax": 402,
+          "revenue": 5263.0,
+          "vendorCost": 1490.0,
+          "grossMargin": 1126.68
+        },
+        "Sat": {
+          "tours": 42,
+          "pax": 689,
+          "revenue": 5126.0,
+          "vendorCost": 1290.0,
+          "grossMargin": 1110.82
+        },
+        "Sun": {
+          "tours": 50,
+          "pax": 928,
+          "revenue": 3828.0,
+          "vendorCost": 1160.0,
+          "grossMargin": 1009.5
+        },
+        "Wed": {
+          "tours": 34,
+          "pax": 357,
+          "revenue": 4660.0,
+          "vendorCost": 1340.0,
+          "grossMargin": 1041.66
+        }
+      },
+      "byTime": {
+        "11": {
+          "tours": 104,
+          "pax": 2509,
+          "revenue": 2013.0,
+          "vendorCost": 210.0,
+          "grossMargin": 856.38
+        },
+        "15": {
+          "tours": 87,
+          "pax": 427,
+          "revenue": 16300.4,
+          "vendorCost": 5660.0,
+          "grossMargin": 3470.26
+        },
+        "10": {
+          "tours": 60,
+          "pax": 253,
+          "revenue": 10595.0,
+          "vendorCost": 3680.0,
+          "grossMargin": 1276.58
+        },
+        "9": {
+          "tours": 2,
+          "pax": 4,
+          "revenue": 300.0,
+          "vendorCost": 130.0,
+          "grossMargin": 104.0
+        },
+        "17": {
+          "tours": 36,
+          "pax": 720,
+          "revenue": 891.0,
+          "vendorCost": 120.0,
+          "grossMargin": 257.16
+        },
+        "16": {
+          "tours": 4,
+          "pax": 19,
+          "revenue": 1433.0,
+          "vendorCost": 300.0,
+          "grossMargin": 553.4
+        },
+        "14": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 150.0,
+          "vendorCost": 60.0,
+          "grossMargin": 27.0
+        },
+        "8": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        }
+      },
+      "bySeason": {
+        "low": {
+          "tours": 48,
+          "pax": 449,
+          "revenue": 3089.0,
+          "vendorCost": 1370.0,
+          "grossMargin": 247.47
+        },
+        "shoulder": {
+          "tours": 122,
+          "pax": 1695,
+          "revenue": 14461.0,
+          "vendorCost": 4280.0,
+          "grossMargin": 3235.77
+        },
+        "high": {
+          "tours": 125,
+          "pax": 1792,
+          "revenue": 14252.4,
+          "vendorCost": 4570.0,
+          "grossMargin": 3097.54
+        }
+      },
+      "byPaxBand": {
+        "21-30": {
+          "tours": 55,
+          "pax": 1388,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "5-10": {
+          "tours": 65,
+          "pax": 460,
+          "revenue": 15244.0,
+          "vendorCost": 3370.0,
+          "grossMargin": 4760.24
+        },
+        "1-4": {
+          "tours": 106,
+          "pax": 288,
+          "revenue": 11933.4,
+          "vendorCost": 6170.0,
+          "grossMargin": -157.44
+        },
+        "11-20": {
+          "tours": 38,
+          "pax": 602,
+          "revenue": 4625.0,
+          "vendorCost": 680.0,
+          "grossMargin": 1977.98
+        },
+        "30+": {
+          "tours": 31,
+          "pax": 1198,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "1": {
+          "tours": 6,
+          "pax": 99,
+          "revenue": 624.0,
+          "vendorCost": 200.0,
+          "grossMargin": 114.34
+        },
+        "3": {
+          "tours": 3,
+          "pax": 12,
+          "revenue": 156.0,
+          "vendorCost": 60.0,
+          "grossMargin": 18.0
+        },
+        "4": {
+          "tours": 2,
+          "pax": 10,
+          "revenue": 80.0,
+          "vendorCost": 60.0,
+          "grossMargin": -20.0
+        },
+        "5": {
+          "tours": 3,
+          "pax": 24,
+          "revenue": 39.0,
+          "vendorCost": 60.0,
+          "grossMargin": -37.38
+        },
+        "6": {
+          "tours": 4,
+          "pax": 37,
+          "revenue": 156.0,
+          "vendorCost": 60.0,
+          "grossMargin": 30.48
+        },
+        "7": {
+          "tours": 7,
+          "pax": 87,
+          "revenue": 267.0,
+          "vendorCost": 180.0,
+          "grossMargin": 6.69
+        },
+        "8": {
+          "tours": 4,
+          "pax": 45,
+          "revenue": 495.0,
+          "vendorCost": 130.0,
+          "grossMargin": 76.1
+        },
+        "9": {
+          "tours": 5,
+          "pax": 41,
+          "revenue": 390.0,
+          "vendorCost": 130.0,
+          "grossMargin": 61.88
+        },
+        "10": {
+          "tours": 2,
+          "pax": 16,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11": {
+          "tours": 2,
+          "pax": 9,
+          "revenue": 39.0,
+          "vendorCost": 60.0,
+          "grossMargin": -40.5
+        },
+        "12": {
+          "tours": 6,
+          "pax": 51,
+          "revenue": 274.0,
+          "vendorCost": 240.0,
+          "grossMargin": -60.02
+        },
+        "13": {
+          "tours": 5,
+          "pax": 48,
+          "revenue": 508.0,
+          "vendorCost": 190.0,
+          "grossMargin": 132.72
+        },
+        "14": {
+          "tours": 3,
+          "pax": 30,
+          "revenue": 178.0,
+          "vendorCost": 60.0,
+          "grossMargin": -34.0
+        },
+        "15": {
+          "tours": 5,
+          "pax": 83,
+          "revenue": 395.0,
+          "vendorCost": 190.0,
+          "grossMargin": 59.5
+        },
+        "16": {
+          "tours": 11,
+          "pax": 166,
+          "revenue": 918.0,
+          "vendorCost": 370.0,
+          "grossMargin": 119.45
+        },
+        "17": {
+          "tours": 5,
+          "pax": 90,
+          "revenue": 429.0,
+          "vendorCost": 130.0,
+          "grossMargin": 93.08
+        },
+        "18": {
+          "tours": 10,
+          "pax": 223,
+          "revenue": 822.0,
+          "vendorCost": 270.0,
+          "grossMargin": 233.44
+        },
+        "19": {
+          "tours": 9,
+          "pax": 120,
+          "revenue": 1016.0,
+          "vendorCost": 260.0,
+          "grossMargin": 212.28
+        },
+        "20": {
+          "tours": 8,
+          "pax": 118,
+          "revenue": 1138.0,
+          "vendorCost": 260.0,
+          "grossMargin": 333.04
+        },
+        "21": {
+          "tours": 10,
+          "pax": 139,
+          "revenue": 2065.0,
+          "vendorCost": 460.0,
+          "grossMargin": 534.52
+        },
+        "22": {
+          "tours": 6,
+          "pax": 117,
+          "revenue": 491.0,
+          "vendorCost": 190.0,
+          "grossMargin": 94.78
+        },
+        "23": {
+          "tours": 8,
+          "pax": 125,
+          "revenue": 684.0,
+          "vendorCost": 250.0,
+          "grossMargin": 27.72
+        },
+        "24": {
+          "tours": 6,
+          "pax": 53,
+          "revenue": 238.0,
+          "vendorCost": 250.0,
+          "grossMargin": -124.6
+        },
+        "25": {
+          "tours": 3,
+          "pax": 82,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "26": {
+          "tours": 7,
+          "pax": 106,
+          "revenue": 1844.0,
+          "vendorCost": 260.0,
+          "grossMargin": 850.16
+        },
+        "27": {
+          "tours": 6,
+          "pax": 75,
+          "revenue": 550.0,
+          "vendorCost": 190.0,
+          "grossMargin": 122.6
+        },
+        "28": {
+          "tours": 5,
+          "pax": 48,
+          "revenue": 237.0,
+          "vendorCost": 180.0,
+          "grossMargin": -19.26
+        },
+        "29": {
+          "tours": 9,
+          "pax": 124,
+          "revenue": 846.0,
+          "vendorCost": 320.0,
+          "grossMargin": 162.68
+        },
+        "30": {
+          "tours": 8,
+          "pax": 115,
+          "revenue": 1940.0,
+          "vendorCost": 380.0,
+          "grossMargin": 783.4
+        },
+        "31": {
+          "tours": 10,
+          "pax": 145,
+          "revenue": 739.0,
+          "vendorCost": 370.0,
+          "grossMargin": -34.18
+        },
+        "32": {
+          "tours": 6,
+          "pax": 73,
+          "revenue": 743.0,
+          "vendorCost": 260.0,
+          "grossMargin": 130.38
+        },
+        "33": {
+          "tours": 8,
+          "pax": 97,
+          "revenue": 1003.0,
+          "vendorCost": 320.0,
+          "grossMargin": 188.78
+        },
+        "34": {
+          "tours": 9,
+          "pax": 127,
+          "revenue": 564.4,
+          "vendorCost": 320.0,
+          "grossMargin": 4.4
+        },
+        "36": {
+          "tours": 11,
+          "pax": 167,
+          "revenue": 610.0,
+          "vendorCost": 370.0,
+          "grossMargin": -87.84
+        },
+        "37": {
+          "tours": 10,
+          "pax": 150,
+          "revenue": 2010.0,
+          "vendorCost": 440.0,
+          "grossMargin": 456.1
+        },
+        "38": {
+          "tours": 6,
+          "pax": 77,
+          "revenue": 891.0,
+          "vendorCost": 270.0,
+          "grossMargin": 279.78
+        },
+        "39": {
+          "tours": 8,
+          "pax": 135,
+          "revenue": 1236.0,
+          "vendorCost": 330.0,
+          "grossMargin": 358.92
+        },
+        "40": {
+          "tours": 11,
+          "pax": 164,
+          "revenue": 1095.0,
+          "vendorCost": 330.0,
+          "grossMargin": 277.02
+        },
+        "41": {
+          "tours": 8,
+          "pax": 119,
+          "revenue": 819.0,
+          "vendorCost": 270.0,
+          "grossMargin": 205.02
+        },
+        "42": {
+          "tours": 3,
+          "pax": 33,
+          "revenue": 156.0,
+          "vendorCost": 70.0,
+          "grossMargin": 20.48
+        },
+        "43": {
+          "tours": 8,
+          "pax": 83,
+          "revenue": 998.0,
+          "vendorCost": 330.0,
+          "grossMargin": 175.84
+        },
+        "44": {
+          "tours": 4,
+          "pax": 60,
+          "revenue": 234.0,
+          "vendorCost": 130.0,
+          "grossMargin": -13.0
+        },
+        "45": {
+          "tours": 4,
+          "pax": 51,
+          "revenue": 1524.0,
+          "vendorCost": 140.0,
+          "grossMargin": 618.8
+        },
+        "46": {
+          "tours": 6,
+          "pax": 53,
+          "revenue": 846.0,
+          "vendorCost": 260.0,
+          "grossMargin": 185.36
+        },
+        "49": {
+          "tours": 3,
+          "pax": 21,
+          "revenue": 256.0,
+          "vendorCost": 120.0,
+          "grossMargin": -60.44
+        },
+        "50": {
+          "tours": 6,
+          "pax": 44,
+          "revenue": 412.0,
+          "vendorCost": 250.0,
+          "grossMargin": 36.6
+        },
+        "51": {
+          "tours": 3,
+          "pax": 14,
+          "revenue": 218.0,
+          "vendorCost": 120.0,
+          "grossMargin": -0.1
+        },
+        "52": {
+          "tours": 3,
+          "pax": 30,
+          "revenue": 629.0,
+          "vendorCost": 130.0,
+          "grossMargin": 107.76
+        }
+      },
+      "byMonth": {
+        "1": {
+          "tours": 10,
+          "pax": 96,
+          "revenue": 743.0,
+          "vendorCost": 260.0,
+          "grossMargin": 111.5
+        },
+        "2": {
+          "tours": 20,
+          "pax": 204,
+          "revenue": 1035.0,
+          "vendorCost": 490.0,
+          "grossMargin": 51.77
+        },
+        "3": {
+          "tours": 18,
+          "pax": 149,
+          "revenue": 1311.0,
+          "vendorCost": 620.0,
+          "grossMargin": 84.2
+        },
+        "4": {
+          "tours": 25,
+          "pax": 393,
+          "revenue": 1940.0,
+          "vendorCost": 750.0,
+          "grossMargin": 350.43
+        },
+        "5": {
+          "tours": 39,
+          "pax": 629,
+          "revenue": 5334.0,
+          "vendorCost": 1380.0,
+          "grossMargin": 1329.66
+        },
+        "6": {
+          "tours": 27,
+          "pax": 432,
+          "revenue": 2846.0,
+          "vendorCost": 820.0,
+          "grossMargin": 733.28
+        },
+        "7": {
+          "tours": 33,
+          "pax": 405,
+          "revenue": 4152.0,
+          "vendorCost": 1320.0,
+          "grossMargin": 1052.04
+        },
+        "8": {
+          "tours": 27,
+          "pax": 395,
+          "revenue": 2390.4,
+          "vendorCost": 960.0,
+          "grossMargin": 306.76
+        },
+        "9": {
+          "tours": 38,
+          "pax": 560,
+          "revenue": 4864.0,
+          "vendorCost": 1470.0,
+          "grossMargin": 1005.46
+        },
+        "10": {
+          "tours": 31,
+          "pax": 428,
+          "revenue": 3185.0,
+          "vendorCost": 1070.0,
+          "grossMargin": 666.86
+        },
+        "11": {
+          "tours": 10,
+          "pax": 104,
+          "revenue": 2370.0,
+          "vendorCost": 400.0,
+          "grossMargin": 804.16
+        },
+        "12": {
+          "tours": 17,
+          "pax": 141,
+          "revenue": 1632.0,
+          "vendorCost": 680.0,
+          "grossMargin": 84.66
+        }
+      }
     }
   },
   {
@@ -28617,6 +32722,699 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 10980.0,
+      "vendorCost": 4890.0,
+      "grossMargin": 1749.11,
+      "byChannel": {
+        "OTA": {
+          "tours": 55,
+          "pax": 222,
+          "revenue": 7849.0,
+          "vendorCost": 3570.0,
+          "grossMargin": 727.95
+        },
+        "web": {
+          "tours": 193,
+          "pax": 5022,
+          "revenue": 1056.0,
+          "vendorCost": 280.0,
+          "grossMargin": 448.56
+        },
+        "free": {
+          "tours": 15,
+          "pax": 61,
+          "revenue": 1775.0,
+          "vendorCost": 970.0,
+          "grossMargin": 402.6
+        },
+        "b2b": {
+          "tours": 1,
+          "pax": 20,
+          "revenue": 300.0,
+          "vendorCost": 70.0,
+          "grossMargin": 170.0
+        }
+      },
+      "bySource": {
+        "Viator": {
+          "tours": 15,
+          "pax": 48,
+          "revenue": 1682.0,
+          "vendorCost": 950.0,
+          "grossMargin": 9.0
+        },
+        "FST": {
+          "tours": 193,
+          "pax": 5022,
+          "revenue": 1056.0,
+          "vendorCost": 280.0,
+          "grossMargin": 448.56
+        },
+        "GYG": {
+          "tours": 9,
+          "pax": 32,
+          "revenue": 1058.0,
+          "vendorCost": 600.0,
+          "grossMargin": -71.0
+        },
+        "Civitatis": {
+          "tours": 30,
+          "pax": 138,
+          "revenue": 4959.0,
+          "vendorCost": 1950.0,
+          "grossMargin": 777.45
+        },
+        "Katarina Novoselac": {
+          "tours": 11,
+          "pax": 47,
+          "revenue": 1365.0,
+          "vendorCost": 720.0,
+          "grossMargin": 334.2
+        },
+        "Buendia": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 150.0,
+          "vendorCost": 70.0,
+          "grossMargin": 12.5
+        },
+        "Liberty Adriatic": {
+          "tours": 1,
+          "pax": 20,
+          "revenue": 300.0,
+          "vendorCost": 70.0,
+          "grossMargin": 170.0
+        },
+        "Katija Crnčević": {
+          "tours": 2,
+          "pax": 4,
+          "revenue": 110.0,
+          "vendorCost": 120.0,
+          "grossMargin": -34.4
+        },
+        "Nadir Ivanović": {
+          "tours": 2,
+          "pax": 10,
+          "revenue": 300.0,
+          "vendorCost": 130.0,
+          "grossMargin": 102.8
+        }
+      },
+      "byDow": {
+        "Fri": {
+          "tours": 43,
+          "pax": 974,
+          "revenue": 1256.0,
+          "vendorCost": 650.0,
+          "grossMargin": 98.01
+        },
+        "Wed": {
+          "tours": 42,
+          "pax": 801,
+          "revenue": 1999.0,
+          "vendorCost": 640.0,
+          "grossMargin": 565.98
+        },
+        "Thu": {
+          "tours": 35,
+          "pax": 642,
+          "revenue": 1992.0,
+          "vendorCost": 780.0,
+          "grossMargin": 374.18
+        },
+        "Sat": {
+          "tours": 51,
+          "pax": 1111,
+          "revenue": 1949.0,
+          "vendorCost": 930.0,
+          "grossMargin": 308.77
+        },
+        "Tue": {
+          "tours": 26,
+          "pax": 559,
+          "revenue": 723.0,
+          "vendorCost": 440.0,
+          "grossMargin": 3.94
+        },
+        "Sun": {
+          "tours": 30,
+          "pax": 646,
+          "revenue": 1062.0,
+          "vendorCost": 590.0,
+          "grossMargin": 20.98
+        },
+        "Mon": {
+          "tours": 37,
+          "pax": 592,
+          "revenue": 1999.0,
+          "vendorCost": 860.0,
+          "grossMargin": 377.25
+        }
+      },
+      "byTime": {
+        "10": {
+          "tours": 11,
+          "pax": 75,
+          "revenue": 1194.0,
+          "vendorCost": 680.0,
+          "grossMargin": 28.8
+        },
+        "11": {
+          "tours": 145,
+          "pax": 3811,
+          "revenue": 175.0,
+          "vendorCost": 70.0,
+          "grossMargin": 26.25
+        },
+        "15": {
+          "tours": 12,
+          "pax": 48,
+          "revenue": 1827.0,
+          "vendorCost": 790.0,
+          "grossMargin": 296.42
+        },
+        "17": {
+          "tours": 45,
+          "pax": 1163,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "14": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 150.0,
+          "vendorCost": 70.0,
+          "grossMargin": 12.5
+        },
+        "16": {
+          "tours": 49,
+          "pax": 212,
+          "revenue": 7034.0,
+          "vendorCost": 3180.0,
+          "grossMargin": 1115.14
+        },
+        "13": {
+          "tours": 1,
+          "pax": 12,
+          "revenue": 600.0,
+          "vendorCost": 100.0,
+          "grossMargin": 270.0
+        }
+      },
+      "bySeason": {
+        "low": {
+          "tours": 38,
+          "pax": 416,
+          "revenue": 1514.0,
+          "vendorCost": 820.0,
+          "grossMargin": 34.23
+        },
+        "shoulder": {
+          "tours": 105,
+          "pax": 1936,
+          "revenue": 3715.0,
+          "vendorCost": 1800.0,
+          "grossMargin": 557.32
+        },
+        "high": {
+          "tours": 121,
+          "pax": 2973,
+          "revenue": 5751.0,
+          "vendorCost": 2270.0,
+          "grossMargin": 1157.56
+        }
+      },
+      "byPaxBand": {
+        "1-4": {
+          "tours": 57,
+          "pax": 153,
+          "revenue": 4441.0,
+          "vendorCost": 3140.0,
+          "grossMargin": -509.12
+        },
+        "11-20": {
+          "tours": 42,
+          "pax": 679,
+          "revenue": 1992.0,
+          "vendorCost": 310.0,
+          "grossMargin": 900.6
+        },
+        "5-10": {
+          "tours": 30,
+          "pax": 209,
+          "revenue": 4247.0,
+          "vendorCost": 1380.0,
+          "grossMargin": 1177.63
+        },
+        "21-30": {
+          "tours": 58,
+          "pax": 1503,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30+": {
+          "tours": 77,
+          "pax": 2781,
+          "revenue": 300.0,
+          "vendorCost": 60.0,
+          "grossMargin": 180.0
+        }
+      },
+      "byWeek": {
+        "1": {
+          "tours": 2,
+          "pax": 36,
+          "revenue": 80.0,
+          "vendorCost": 60.0,
+          "grossMargin": -18.4
+        },
+        "2": {
+          "tours": 2,
+          "pax": 25,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "3": {
+          "tours": 3,
+          "pax": 44,
+          "revenue": 200.0,
+          "vendorCost": 70.0,
+          "grossMargin": 30.0
+        },
+        "4": {
+          "tours": 1,
+          "pax": 14,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "5": {
+          "tours": 5,
+          "pax": 57,
+          "revenue": 371.0,
+          "vendorCost": 190.0,
+          "grossMargin": 45.61
+        },
+        "6": {
+          "tours": 2,
+          "pax": 41,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "7": {
+          "tours": 2,
+          "pax": 18,
+          "revenue": 273.0,
+          "vendorCost": 60.0,
+          "grossMargin": 98.34
+        },
+        "8": {
+          "tours": 2,
+          "pax": 3,
+          "revenue": 78.0,
+          "vendorCost": 60.0,
+          "grossMargin": -14.76
+        },
+        "9": {
+          "tours": 2,
+          "pax": 33,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "10": {
+          "tours": 7,
+          "pax": 90,
+          "revenue": 158.0,
+          "vendorCost": 130.0,
+          "grossMargin": -47.0
+        },
+        "11": {
+          "tours": 5,
+          "pax": 42,
+          "revenue": 196.0,
+          "vendorCost": 130.0,
+          "grossMargin": -28.8
+        },
+        "13": {
+          "tours": 5,
+          "pax": 31,
+          "revenue": 158.0,
+          "vendorCost": 120.0,
+          "grossMargin": -30.76
+        },
+        "14": {
+          "tours": 2,
+          "pax": 31,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "15": {
+          "tours": 6,
+          "pax": 95,
+          "revenue": 190.0,
+          "vendorCost": 130.0,
+          "grossMargin": 12.0
+        },
+        "16": {
+          "tours": 6,
+          "pax": 167,
+          "revenue": 150.0,
+          "vendorCost": 70.0,
+          "grossMargin": 12.5
+        },
+        "17": {
+          "tours": 3,
+          "pax": 72,
+          "revenue": 273.0,
+          "vendorCost": 70.0,
+          "grossMargin": 88.34
+        },
+        "18": {
+          "tours": 8,
+          "pax": 173,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -36.8
+        },
+        "19": {
+          "tours": 8,
+          "pax": 192,
+          "revenue": 300.0,
+          "vendorCost": 60.0,
+          "grossMargin": 180.0
+        },
+        "20": {
+          "tours": 9,
+          "pax": 146,
+          "revenue": 429.0,
+          "vendorCost": 200.0,
+          "grossMargin": 129.85
+        },
+        "21": {
+          "tours": 9,
+          "pax": 140,
+          "revenue": 255.0,
+          "vendorCost": 180.0,
+          "grossMargin": -39.75
+        },
+        "22": {
+          "tours": 10,
+          "pax": 189,
+          "revenue": 1107.0,
+          "vendorCost": 300.0,
+          "grossMargin": 348.85
+        },
+        "23": {
+          "tours": 7,
+          "pax": 135,
+          "revenue": 318.0,
+          "vendorCost": 200.0,
+          "grossMargin": 21.4
+        },
+        "24": {
+          "tours": 2,
+          "pax": 41,
+          "revenue": 195.0,
+          "vendorCost": 70.0,
+          "grossMargin": 43.1
+        },
+        "25": {
+          "tours": 5,
+          "pax": 105,
+          "revenue": 234.0,
+          "vendorCost": 130.0,
+          "grossMargin": 1.04
+        },
+        "26": {
+          "tours": 7,
+          "pax": 139,
+          "revenue": 510.0,
+          "vendorCost": 200.0,
+          "grossMargin": 192.4
+        },
+        "27": {
+          "tours": 5,
+          "pax": 151,
+          "revenue": 90.0,
+          "vendorCost": 60.0,
+          "grossMargin": 12.0
+        },
+        "28": {
+          "tours": 9,
+          "pax": 209,
+          "revenue": 138.0,
+          "vendorCost": 120.0,
+          "grossMargin": -31.5
+        },
+        "29": {
+          "tours": 7,
+          "pax": 177,
+          "revenue": 609.0,
+          "vendorCost": 140.0,
+          "grossMargin": 232.75
+        },
+        "30": {
+          "tours": 8,
+          "pax": 213,
+          "revenue": 195.0,
+          "vendorCost": 120.0,
+          "grossMargin": -11.58
+        },
+        "31": {
+          "tours": 9,
+          "pax": 216,
+          "revenue": 281.0,
+          "vendorCost": 190.0,
+          "grossMargin": -9.2
+        },
+        "32": {
+          "tours": 11,
+          "pax": 317,
+          "revenue": 741.0,
+          "vendorCost": 130.0,
+          "grossMargin": 273.65
+        },
+        "33": {
+          "tours": 9,
+          "pax": 192,
+          "revenue": 741.0,
+          "vendorCost": 270.0,
+          "grossMargin": 121.95
+        },
+        "34": {
+          "tours": 7,
+          "pax": 191,
+          "revenue": 468.0,
+          "vendorCost": 140.0,
+          "grossMargin": 117.4
+        },
+        "35": {
+          "tours": 9,
+          "pax": 241,
+          "revenue": 507.0,
+          "vendorCost": 130.0,
+          "grossMargin": 148.85
+        },
+        "36": {
+          "tours": 9,
+          "pax": 206,
+          "revenue": 468.0,
+          "vendorCost": 190.0,
+          "grossMargin": 67.4
+        },
+        "37": {
+          "tours": 9,
+          "pax": 228,
+          "revenue": 156.0,
+          "vendorCost": 120.0,
+          "grossMargin": -38.1
+        },
+        "38": {
+          "tours": 6,
+          "pax": 149,
+          "revenue": 100.0,
+          "vendorCost": 60.0,
+          "grossMargin": 16.0
+        },
+        "41": {
+          "tours": 7,
+          "pax": 158,
+          "revenue": 128.0,
+          "vendorCost": 120.0,
+          "grossMargin": -34.76
+        },
+        "42": {
+          "tours": 8,
+          "pax": 133,
+          "revenue": 273.0,
+          "vendorCost": 210.0,
+          "grossMargin": -59.07
+        },
+        "43": {
+          "tours": 4,
+          "pax": 75,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "44": {
+          "tours": 5,
+          "pax": 66,
+          "revenue": 390.0,
+          "vendorCost": 210.0,
+          "grossMargin": 2.16
+        },
+        "45": {
+          "tours": 4,
+          "pax": 43,
+          "revenue": 180.0,
+          "vendorCost": 130.0,
+          "grossMargin": 14.0
+        },
+        "46": {
+          "tours": 2,
+          "pax": 22,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "47": {
+          "tours": 3,
+          "pax": 46,
+          "revenue": 0.0,
+          "vendorCost": 60.0,
+          "grossMargin": -60.0
+        },
+        "48": {
+          "tours": 3,
+          "pax": 47,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "49": {
+          "tours": 4,
+          "pax": 73,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "50": {
+          "tours": 3,
+          "pax": 75,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "51": {
+          "tours": 2,
+          "pax": 23,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "52": {
+          "tours": 1,
+          "pax": 15,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "1": {
+          "tours": 9,
+          "pax": 108,
+          "revenue": 320.0,
+          "vendorCost": 190.0,
+          "grossMargin": -27.6
+        },
+        "2": {
+          "tours": 10,
+          "pax": 115,
+          "revenue": 682.0,
+          "vendorCost": 250.0,
+          "grossMargin": 168.39
+        },
+        "3": {
+          "tours": 19,
+          "pax": 193,
+          "revenue": 512.0,
+          "vendorCost": 380.0,
+          "grossMargin": -106.56
+        },
+        "4": {
+          "tours": 17,
+          "pax": 374,
+          "revenue": 613.0,
+          "vendorCost": 270.0,
+          "grossMargin": 112.84
+        },
+        "5": {
+          "tours": 41,
+          "pax": 754,
+          "revenue": 2131.0,
+          "vendorCost": 800.0,
+          "grossMargin": 582.15
+        },
+        "6": {
+          "tours": 25,
+          "pax": 507,
+          "revenue": 1347.0,
+          "vendorCost": 660.0,
+          "grossMargin": 269.94
+        },
+        "7": {
+          "tours": 32,
+          "pax": 845,
+          "revenue": 1145.0,
+          "vendorCost": 510.0,
+          "grossMargin": 197.57
+        },
+        "8": {
+          "tours": 40,
+          "pax": 1038,
+          "revenue": 2535.0,
+          "vendorCost": 730.0,
+          "grossMargin": 644.75
+        },
+        "9": {
+          "tours": 24,
+          "pax": 583,
+          "revenue": 724.0,
+          "vendorCost": 370.0,
+          "grossMargin": 45.3
+        },
+        "10": {
+          "tours": 23,
+          "pax": 428,
+          "revenue": 635.0,
+          "vendorCost": 470.0,
+          "grossMargin": -102.79
+        },
+        "11": {
+          "tours": 13,
+          "pax": 162,
+          "revenue": 336.0,
+          "vendorCost": 260.0,
+          "grossMargin": -34.88
+        },
+        "12": {
+          "tours": 11,
+          "pax": 218,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      }
     }
   },
   {
@@ -33348,6 +38146,671 @@ const guideStats25 = [
               "pax": 4
             }
           }
+        }
+      }
+    },
+    "mgmt": {
+      "revenue": 8414.0,
+      "vendorCost": 4640.0,
+      "grossMargin": 83.9,
+      "byChannel": {
+        "OTA": {
+          "tours": 64,
+          "pax": 271,
+          "revenue": 7072.0,
+          "vendorCost": 3900.0,
+          "grossMargin": -181.74
+        },
+        "web": {
+          "tours": 112,
+          "pax": 3381,
+          "revenue": 234.0,
+          "vendorCost": 120.0,
+          "grossMargin": 57.84
+        },
+        "b2b": {
+          "tours": 4,
+          "pax": 11,
+          "revenue": 568.0,
+          "vendorCost": 240.0,
+          "grossMargin": 175.4
+        },
+        "free": {
+          "tours": 6,
+          "pax": 21,
+          "revenue": 540.0,
+          "vendorCost": 380.0,
+          "grossMargin": 32.4
+        }
+      },
+      "bySource": {
+        "Civitatis": {
+          "tours": 36,
+          "pax": 185,
+          "revenue": 3982.0,
+          "vendorCost": 2220.0,
+          "grossMargin": -29.9
+        },
+        "Viator": {
+          "tours": 14,
+          "pax": 39,
+          "revenue": 1641.0,
+          "vendorCost": 840.0,
+          "grossMargin": -31.02
+        },
+        "FST": {
+          "tours": 112,
+          "pax": 3381,
+          "revenue": 234.0,
+          "vendorCost": 120.0,
+          "grossMargin": 57.84
+        },
+        "Airbnb": {
+          "tours": 3,
+          "pax": 12,
+          "revenue": 378.0,
+          "vendorCost": 180.0,
+          "grossMargin": 29.88
+        },
+        "GYG": {
+          "tours": 9,
+          "pax": 27,
+          "revenue": 635.0,
+          "vendorCost": 540.0,
+          "grossMargin": -222.5
+        },
+        "Musement": {
+          "tours": 2,
+          "pax": 8,
+          "revenue": 436.0,
+          "vendorCost": 120.0,
+          "grossMargin": 71.8
+        },
+        "Roundabout": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        },
+        "Katarina Novoselac": {
+          "tours": 2,
+          "pax": 5,
+          "revenue": 140.0,
+          "vendorCost": 120.0,
+          "grossMargin": -13.6
+        },
+        "Grape Escapes": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        },
+        "Travel Croatia DMC": {
+          "tours": 1,
+          "pax": 5,
+          "revenue": 150.0,
+          "vendorCost": 60.0,
+          "grossMargin": 60.0
+        },
+        "Nikolina Folnović": {
+          "tours": 2,
+          "pax": 4,
+          "revenue": 100.0,
+          "vendorCost": 120.0,
+          "grossMargin": -42.0
+        },
+        "Royal Tours Croatia": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 178.0,
+          "vendorCost": 60.0,
+          "grossMargin": 43.4
+        },
+        "Nadir Ivanović": {
+          "tours": 1,
+          "pax": 6,
+          "revenue": 150.0,
+          "vendorCost": 70.0,
+          "grossMargin": 44.0
+        },
+        "Katija Crnčević": {
+          "tours": 1,
+          "pax": 6,
+          "revenue": 150.0,
+          "vendorCost": 70.0,
+          "grossMargin": 44.0
+        }
+      },
+      "byDow": {
+        "Sun": {
+          "tours": 28,
+          "pax": 602,
+          "revenue": 1678.0,
+          "vendorCost": 810.0,
+          "grossMargin": 180.34
+        },
+        "Wed": {
+          "tours": 27,
+          "pax": 535,
+          "revenue": 820.0,
+          "vendorCost": 600.0,
+          "grossMargin": -121.4
+        },
+        "Sat": {
+          "tours": 31,
+          "pax": 660,
+          "revenue": 1528.0,
+          "vendorCost": 790.0,
+          "grossMargin": 83.86
+        },
+        "Thu": {
+          "tours": 29,
+          "pax": 485,
+          "revenue": 1547.0,
+          "vendorCost": 860.0,
+          "grossMargin": -40.1
+        },
+        "Tue": {
+          "tours": 22,
+          "pax": 401,
+          "revenue": 1059.0,
+          "vendorCost": 600.0,
+          "grossMargin": 4.5
+        },
+        "Fri": {
+          "tours": 32,
+          "pax": 666,
+          "revenue": 1318.0,
+          "vendorCost": 740.0,
+          "grossMargin": -72.1
+        },
+        "Mon": {
+          "tours": 17,
+          "pax": 335,
+          "revenue": 464.0,
+          "vendorCost": 240.0,
+          "grossMargin": 48.8
+        }
+      },
+      "byTime": {
+        "11": {
+          "tours": 91,
+          "pax": 2639,
+          "revenue": 1170.0,
+          "vendorCost": 470.0,
+          "grossMargin": 241.0
+        },
+        "10": {
+          "tours": 48,
+          "pax": 199,
+          "revenue": 5165.0,
+          "vendorCost": 2880.0,
+          "grossMargin": -178.18
+        },
+        "17": {
+          "tours": 27,
+          "pax": 795,
+          "revenue": 175.0,
+          "vendorCost": 70.0,
+          "grossMargin": 26.25
+        },
+        "9": {
+          "tours": 2,
+          "pax": 4,
+          "revenue": 350.0,
+          "vendorCost": 120.0,
+          "grossMargin": 83.0
+        },
+        "16": {
+          "tours": 18,
+          "pax": 47,
+          "revenue": 1554.0,
+          "vendorCost": 1100.0,
+          "grossMargin": -88.17
+        }
+      },
+      "bySeason": {
+        "low": {
+          "tours": 20,
+          "pax": 214,
+          "revenue": 1470.0,
+          "vendorCost": 750.0,
+          "grossMargin": 4.29
+        },
+        "shoulder": {
+          "tours": 78,
+          "pax": 1285,
+          "revenue": 3092.0,
+          "vendorCost": 2050.0,
+          "grossMargin": -372.46
+        },
+        "high": {
+          "tours": 88,
+          "pax": 2185,
+          "revenue": 3852.0,
+          "vendorCost": 1840.0,
+          "grossMargin": 452.07
+        }
+      },
+      "byPaxBand": {
+        "11-20": {
+          "tours": 19,
+          "pax": 281,
+          "revenue": 1445.0,
+          "vendorCost": 450.0,
+          "grossMargin": 344.75
+        },
+        "1-4": {
+          "tours": 56,
+          "pax": 131,
+          "revenue": 4729.0,
+          "vendorCost": 3250.0,
+          "grossMargin": -655.55
+        },
+        "21-30": {
+          "tours": 35,
+          "pax": 921,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "5-10": {
+          "tours": 18,
+          "pax": 126,
+          "revenue": 2240.0,
+          "vendorCost": 940.0,
+          "grossMargin": 394.7
+        },
+        "30+": {
+          "tours": 58,
+          "pax": 2225,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "6": {
+          "tours": 1,
+          "pax": 12,
+          "revenue": 175.0,
+          "vendorCost": 70.0,
+          "grossMargin": 26.25
+        },
+        "7": {
+          "tours": 3,
+          "pax": 41,
+          "revenue": 280.0,
+          "vendorCost": 120.0,
+          "grossMargin": 35.2
+        },
+        "8": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -38.0
+        },
+        "9": {
+          "tours": 3,
+          "pax": 40,
+          "revenue": 178.0,
+          "vendorCost": 60.0,
+          "grossMargin": 27.48
+        },
+        "10": {
+          "tours": 4,
+          "pax": 16,
+          "revenue": 255.0,
+          "vendorCost": 190.0,
+          "grossMargin": -49.75
+        },
+        "11": {
+          "tours": 2,
+          "pax": 51,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "12": {
+          "tours": 4,
+          "pax": 22,
+          "revenue": 275.0,
+          "vendorCost": 190.0,
+          "grossMargin": -41.75
+        },
+        "13": {
+          "tours": 2,
+          "pax": 30,
+          "revenue": 267.0,
+          "vendorCost": 60.0,
+          "grossMargin": 44.86
+        },
+        "14": {
+          "tours": 3,
+          "pax": 25,
+          "revenue": 80.0,
+          "vendorCost": 120.0,
+          "grossMargin": -76.0
+        },
+        "15": {
+          "tours": 4,
+          "pax": 89,
+          "revenue": 80.0,
+          "vendorCost": 120.0,
+          "grossMargin": -71.6
+        },
+        "16": {
+          "tours": 4,
+          "pax": 65,
+          "revenue": 200.0,
+          "vendorCost": 120.0,
+          "grossMargin": -2.0
+        },
+        "17": {
+          "tours": 5,
+          "pax": 65,
+          "revenue": 120.0,
+          "vendorCost": 180.0,
+          "grossMargin": -116.4
+        },
+        "18": {
+          "tours": 2,
+          "pax": 64,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "19": {
+          "tours": 6,
+          "pax": 63,
+          "revenue": 556.0,
+          "vendorCost": 180.0,
+          "grossMargin": 107.8
+        },
+        "20": {
+          "tours": 8,
+          "pax": 102,
+          "revenue": 688.0,
+          "vendorCost": 300.0,
+          "grossMargin": 50.84
+        },
+        "21": {
+          "tours": 4,
+          "pax": 43,
+          "revenue": 120.0,
+          "vendorCost": 180.0,
+          "grossMargin": -113.6
+        },
+        "22": {
+          "tours": 6,
+          "pax": 101,
+          "revenue": 278.0,
+          "vendorCost": 180.0,
+          "grossMargin": -33.1
+        },
+        "23": {
+          "tours": 6,
+          "pax": 103,
+          "revenue": 308.0,
+          "vendorCost": 180.0,
+          "grossMargin": 1.3
+        },
+        "24": {
+          "tours": 6,
+          "pax": 162,
+          "revenue": 175.0,
+          "vendorCost": 70.0,
+          "grossMargin": 26.25
+        },
+        "25": {
+          "tours": 4,
+          "pax": 152,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "26": {
+          "tours": 7,
+          "pax": 154,
+          "revenue": 260.0,
+          "vendorCost": 120.0,
+          "grossMargin": 53.0
+        },
+        "27": {
+          "tours": 2,
+          "pax": 44,
+          "revenue": 150.0,
+          "vendorCost": 60.0,
+          "grossMargin": 60.0
+        },
+        "28": {
+          "tours": 7,
+          "pax": 136,
+          "revenue": 238.0,
+          "vendorCost": 180.0,
+          "grossMargin": -32.72
+        },
+        "31": {
+          "tours": 8,
+          "pax": 200,
+          "revenue": 465.0,
+          "vendorCost": 190.0,
+          "grossMargin": 78.25
+        },
+        "32": {
+          "tours": 6,
+          "pax": 200,
+          "revenue": 156.0,
+          "vendorCost": 60.0,
+          "grossMargin": 58.56
+        },
+        "33": {
+          "tours": 10,
+          "pax": 268,
+          "revenue": 617.0,
+          "vendorCost": 240.0,
+          "grossMargin": 102.9
+        },
+        "34": {
+          "tours": 9,
+          "pax": 286,
+          "revenue": 228.0,
+          "vendorCost": 130.0,
+          "grossMargin": 26.9
+        },
+        "37": {
+          "tours": 7,
+          "pax": 154,
+          "revenue": 337.0,
+          "vendorCost": 180.0,
+          "grossMargin": 5.35
+        },
+        "38": {
+          "tours": 6,
+          "pax": 101,
+          "revenue": 456.0,
+          "vendorCost": 180.0,
+          "grossMargin": 44.48
+        },
+        "39": {
+          "tours": 7,
+          "pax": 148,
+          "revenue": 306.0,
+          "vendorCost": 190.0,
+          "grossMargin": 2.0
+        },
+        "40": {
+          "tours": 5,
+          "pax": 123,
+          "revenue": 206.0,
+          "vendorCost": 120.0,
+          "grossMargin": 3.8
+        },
+        "41": {
+          "tours": 5,
+          "pax": 139,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "43": {
+          "tours": 4,
+          "pax": 38,
+          "revenue": 160.0,
+          "vendorCost": 120.0,
+          "grossMargin": -28.4
+        },
+        "44": {
+          "tours": 3,
+          "pax": 36,
+          "revenue": 50.0,
+          "vendorCost": 60.0,
+          "grossMargin": -22.0
+        },
+        "45": {
+          "tours": 5,
+          "pax": 129,
+          "revenue": 150.0,
+          "vendorCost": 60.0,
+          "grossMargin": 18.0
+        },
+        "46": {
+          "tours": 1,
+          "pax": 27,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "47": {
+          "tours": 2,
+          "pax": 29,
+          "revenue": 200.0,
+          "vendorCost": 70.0,
+          "grossMargin": 40.0
+        },
+        "48": {
+          "tours": 2,
+          "pax": 46,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -38.0
+        },
+        "49": {
+          "tours": 2,
+          "pax": 51,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "50": {
+          "tours": 3,
+          "pax": 27,
+          "revenue": 200.0,
+          "vendorCost": 120.0,
+          "grossMargin": -10.0
+        },
+        "51": {
+          "tours": 2,
+          "pax": 16,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -40.0
+        },
+        "52": {
+          "tours": 3,
+          "pax": 32,
+          "revenue": 80.0,
+          "vendorCost": 60.0,
+          "grossMargin": -16.0
+        },
+        "1": {
+          "tours": 2,
+          "pax": 52,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "2": {
+          "tours": 6,
+          "pax": 68,
+          "revenue": 495.0,
+          "vendorCost": 250.0,
+          "grossMargin": 23.45
+        },
+        "3": {
+          "tours": 14,
+          "pax": 146,
+          "revenue": 975.0,
+          "vendorCost": 500.0,
+          "grossMargin": -19.16
+        },
+        "4": {
+          "tours": 18,
+          "pax": 308,
+          "revenue": 480.0,
+          "vendorCost": 540.0,
+          "grossMargin": -266.0
+        },
+        "5": {
+          "tours": 23,
+          "pax": 280,
+          "revenue": 1642.0,
+          "vendorCost": 840.0,
+          "grossMargin": 11.94
+        },
+        "6": {
+          "tours": 25,
+          "pax": 605,
+          "revenue": 893.0,
+          "vendorCost": 430.0,
+          "grossMargin": 140.55
+        },
+        "7": {
+          "tours": 11,
+          "pax": 281,
+          "revenue": 238.0,
+          "vendorCost": 180.0,
+          "grossMargin": -32.72
+        },
+        "8": {
+          "tours": 30,
+          "pax": 848,
+          "revenue": 1466.0,
+          "vendorCost": 620.0,
+          "grossMargin": 266.61
+        },
+        "9": {
+          "tours": 22,
+          "pax": 451,
+          "revenue": 1255.0,
+          "vendorCost": 610.0,
+          "grossMargin": 77.63
+        },
+        "10": {
+          "tours": 14,
+          "pax": 263,
+          "revenue": 260.0,
+          "vendorCost": 240.0,
+          "grossMargin": -72.4
+        },
+        "11": {
+          "tours": 11,
+          "pax": 256,
+          "revenue": 390.0,
+          "vendorCost": 190.0,
+          "grossMargin": 20.0
+        },
+        "12": {
+          "tours": 12,
+          "pax": 178,
+          "revenue": 320.0,
+          "vendorCost": 240.0,
+          "grossMargin": -66.0
         }
       }
     }
@@ -39111,6 +44574,713 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 12339.0,
+      "vendorCost": 5600.0,
+      "grossMargin": 1206.93,
+      "byChannel": {
+        "web": {
+          "tours": 172,
+          "pax": 4007,
+          "revenue": 850.0,
+          "vendorCost": 420.0,
+          "grossMargin": 182.0
+        },
+        "OTA": {
+          "tours": 72,
+          "pax": 335,
+          "revenue": 10298.0,
+          "vendorCost": 4510.0,
+          "grossMargin": 869.13
+        },
+        "free": {
+          "tours": 9,
+          "pax": 28,
+          "revenue": 735.0,
+          "vendorCost": 550.0,
+          "grossMargin": 16.0
+        },
+        "b2b": {
+          "tours": 2,
+          "pax": 6,
+          "revenue": 456.0,
+          "vendorCost": 120.0,
+          "grossMargin": 139.8
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 172,
+          "pax": 4007,
+          "revenue": 850.0,
+          "vendorCost": 420.0,
+          "grossMargin": 182.0
+        },
+        "Civitatis": {
+          "tours": 52,
+          "pax": 271,
+          "revenue": 7293.0,
+          "vendorCost": 3290.0,
+          "grossMargin": 721.15
+        },
+        "Viator": {
+          "tours": 15,
+          "pax": 48,
+          "revenue": 2402.0,
+          "vendorCost": 920.0,
+          "grossMargin": 204.48
+        },
+        "GYG": {
+          "tours": 5,
+          "pax": 16,
+          "revenue": 603.0,
+          "vendorCost": 300.0,
+          "grossMargin": -56.5
+        },
+        "Iva Pavlović": {
+          "tours": 2,
+          "pax": 4,
+          "revenue": 110.0,
+          "vendorCost": 120.0,
+          "grossMargin": -34.0
+        },
+        "Katija Crnčević": {
+          "tours": 2,
+          "pax": 8,
+          "revenue": 225.0,
+          "vendorCost": 130.0,
+          "grossMargin": 44.0
+        },
+        "Katarina Novoselac": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 100.0,
+          "vendorCost": 60.0,
+          "grossMargin": 16.0
+        },
+        "Royal Tours Croatia": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 336.0,
+          "vendorCost": 60.0,
+          "grossMargin": 103.8
+        },
+        "Nadir Ivanović": {
+          "tours": 2,
+          "pax": 6,
+          "revenue": 150.0,
+          "vendorCost": 120.0,
+          "grossMargin": -6.0
+        },
+        "Nikolina Folnović": {
+          "tours": 2,
+          "pax": 6,
+          "revenue": 150.0,
+          "vendorCost": 120.0,
+          "grossMargin": -4.0
+        },
+        "Touch Croatia": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        }
+      },
+      "byDow": {
+        "Sat": {
+          "tours": 40,
+          "pax": 754,
+          "revenue": 2143.0,
+          "vendorCost": 880.0,
+          "grossMargin": 239.07
+        },
+        "Fri": {
+          "tours": 46,
+          "pax": 640,
+          "revenue": 3200.0,
+          "vendorCost": 1260.0,
+          "grossMargin": 474.88
+        },
+        "Sun": {
+          "tours": 34,
+          "pax": 611,
+          "revenue": 1907.0,
+          "vendorCost": 920.0,
+          "grossMargin": 118.28
+        },
+        "Tue": {
+          "tours": 36,
+          "pax": 614,
+          "revenue": 1063.0,
+          "vendorCost": 560.0,
+          "grossMargin": 32.84
+        },
+        "Wed": {
+          "tours": 37,
+          "pax": 561,
+          "revenue": 1930.0,
+          "vendorCost": 910.0,
+          "grossMargin": 224.27
+        },
+        "Thu": {
+          "tours": 32,
+          "pax": 707,
+          "revenue": 480.0,
+          "vendorCost": 300.0,
+          "grossMargin": -21.0
+        },
+        "Mon": {
+          "tours": 30,
+          "pax": 489,
+          "revenue": 1616.0,
+          "vendorCost": 770.0,
+          "grossMargin": 138.59
+        }
+      },
+      "byTime": {
+        "11": {
+          "tours": 124,
+          "pax": 2871,
+          "revenue": 1742.0,
+          "vendorCost": 620.0,
+          "grossMargin": 272.75
+        },
+        "10": {
+          "tours": 41,
+          "pax": 209,
+          "revenue": 5612.0,
+          "vendorCost": 2470.0,
+          "grossMargin": 469.32
+        },
+        "17": {
+          "tours": 53,
+          "pax": 1178,
+          "revenue": 686.0,
+          "vendorCost": 200.0,
+          "grossMargin": 156.3
+        },
+        "16": {
+          "tours": 34,
+          "pax": 108,
+          "revenue": 3849.0,
+          "vendorCost": 2120.0,
+          "grossMargin": 182.31
+        },
+        "14": {
+          "tours": 2,
+          "pax": 8,
+          "revenue": 325.0,
+          "vendorCost": 130.0,
+          "grossMargin": 86.25
+        },
+        "9": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 125.0,
+          "vendorCost": 60.0,
+          "grossMargin": 40.0
+        }
+      },
+      "bySeason": {
+        "low": {
+          "tours": 24,
+          "pax": 297,
+          "revenue": 1181.0,
+          "vendorCost": 490.0,
+          "grossMargin": 157.13
+        },
+        "shoulder": {
+          "tours": 102,
+          "pax": 1577,
+          "revenue": 4943.0,
+          "vendorCost": 2310.0,
+          "grossMargin": 261.12
+        },
+        "high": {
+          "tours": 129,
+          "pax": 2502,
+          "revenue": 6215.0,
+          "vendorCost": 2800.0,
+          "grossMargin": 788.68
+        }
+      },
+      "byPaxBand": {
+        "11-20": {
+          "tours": 44,
+          "pax": 772,
+          "revenue": 375.0,
+          "vendorCost": 140.0,
+          "grossMargin": 66.25
+        },
+        "1-4": {
+          "tours": 64,
+          "pax": 173,
+          "revenue": 6987.0,
+          "vendorCost": 3940.0,
+          "grossMargin": -95.89
+        },
+        "5-10": {
+          "tours": 40,
+          "pax": 297,
+          "revenue": 4357.0,
+          "vendorCost": 1460.0,
+          "grossMargin": 955.57
+        },
+        "21-30": {
+          "tours": 76,
+          "pax": 1982,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30+": {
+          "tours": 31,
+          "pax": 1152,
+          "revenue": 620.0,
+          "vendorCost": 60.0,
+          "grossMargin": 281.0
+        }
+      },
+      "byWeek": {
+        "1": {
+          "tours": 1,
+          "pax": 12,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "3": {
+          "tours": 2,
+          "pax": 24,
+          "revenue": 80.0,
+          "vendorCost": 60.0,
+          "grossMargin": -16.0
+        },
+        "4": {
+          "tours": 2,
+          "pax": 27,
+          "revenue": 200.0,
+          "vendorCost": 60.0,
+          "grossMargin": 92.0
+        },
+        "5": {
+          "tours": 2,
+          "pax": 27,
+          "revenue": 80.0,
+          "vendorCost": 60.0,
+          "grossMargin": -13.6
+        },
+        "6": {
+          "tours": 3,
+          "pax": 34,
+          "revenue": 100.0,
+          "vendorCost": 60.0,
+          "grossMargin": -5.0
+        },
+        "7": {
+          "tours": 2,
+          "pax": 13,
+          "revenue": 356.0,
+          "vendorCost": 60.0,
+          "grossMargin": 86.48
+        },
+        "8": {
+          "tours": 2,
+          "pax": 40,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "9": {
+          "tours": 3,
+          "pax": 8,
+          "revenue": 365.0,
+          "vendorCost": 190.0,
+          "grossMargin": 13.25
+        },
+        "10": {
+          "tours": 1,
+          "pax": 24,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11": {
+          "tours": 1,
+          "pax": 13,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "12": {
+          "tours": 3,
+          "pax": 50,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "13": {
+          "tours": 2,
+          "pax": 25,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "14": {
+          "tours": 3,
+          "pax": 31,
+          "revenue": 215.0,
+          "vendorCost": 130.0,
+          "grossMargin": -10.55
+        },
+        "15": {
+          "tours": 4,
+          "pax": 79,
+          "revenue": 80.0,
+          "vendorCost": 60.0,
+          "grossMargin": 0.8
+        },
+        "16": {
+          "tours": 5,
+          "pax": 113,
+          "revenue": 200.0,
+          "vendorCost": 60.0,
+          "grossMargin": 50.0
+        },
+        "17": {
+          "tours": 5,
+          "pax": 88,
+          "revenue": 350.0,
+          "vendorCost": 140.0,
+          "grossMargin": 52.5
+        },
+        "18": {
+          "tours": 8,
+          "pax": 122,
+          "revenue": 393.0,
+          "vendorCost": 190.0,
+          "grossMargin": 8.53
+        },
+        "19": {
+          "tours": 4,
+          "pax": 42,
+          "revenue": 267.0,
+          "vendorCost": 60.0,
+          "grossMargin": 15.5
+        },
+        "20": {
+          "tours": 9,
+          "pax": 111,
+          "revenue": 1028.0,
+          "vendorCost": 310.0,
+          "grossMargin": 153.48
+        },
+        "21": {
+          "tours": 7,
+          "pax": 116,
+          "revenue": 255.0,
+          "vendorCost": 130.0,
+          "grossMargin": 10.25
+        },
+        "22": {
+          "tours": 6,
+          "pax": 118,
+          "revenue": 140.0,
+          "vendorCost": 60.0,
+          "grossMargin": 21.2
+        },
+        "23": {
+          "tours": 5,
+          "pax": 120,
+          "revenue": 156.0,
+          "vendorCost": 70.0,
+          "grossMargin": 15.8
+        },
+        "24": {
+          "tours": 7,
+          "pax": 134,
+          "revenue": 954.0,
+          "vendorCost": 190.0,
+          "grossMargin": 325.04
+        },
+        "25": {
+          "tours": 7,
+          "pax": 128,
+          "revenue": 250.0,
+          "vendorCost": 190.0,
+          "grossMargin": -6.0
+        },
+        "26": {
+          "tours": 5,
+          "pax": 75,
+          "revenue": 39.0,
+          "vendorCost": 60.0,
+          "grossMargin": -30.36
+        },
+        "28": {
+          "tours": 6,
+          "pax": 148,
+          "revenue": 39.0,
+          "vendorCost": 60.0,
+          "grossMargin": -38.55
+        },
+        "29": {
+          "tours": 10,
+          "pax": 295,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30": {
+          "tours": 11,
+          "pax": 204,
+          "revenue": 371.0,
+          "vendorCost": 250.0,
+          "grossMargin": -49.85
+        },
+        "31": {
+          "tours": 12,
+          "pax": 264,
+          "revenue": 470.0,
+          "vendorCost": 200.0,
+          "grossMargin": 79.5
+        },
+        "32": {
+          "tours": 11,
+          "pax": 233,
+          "revenue": 711.0,
+          "vendorCost": 250.0,
+          "grossMargin": 141.05
+        },
+        "33": {
+          "tours": 11,
+          "pax": 282,
+          "revenue": 351.0,
+          "vendorCost": 180.0,
+          "grossMargin": 31.8
+        },
+        "34": {
+          "tours": 1,
+          "pax": 6,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 6.0
+        },
+        "35": {
+          "tours": 6,
+          "pax": 131,
+          "revenue": 570.0,
+          "vendorCost": 130.0,
+          "grossMargin": 162.5
+        },
+        "36": {
+          "tours": 8,
+          "pax": 123,
+          "revenue": 356.0,
+          "vendorCost": 180.0,
+          "grossMargin": 57.8
+        },
+        "37": {
+          "tours": 10,
+          "pax": 128,
+          "revenue": 477.0,
+          "vendorCost": 310.0,
+          "grossMargin": -50.35
+        },
+        "38": {
+          "tours": 10,
+          "pax": 103,
+          "revenue": 930.0,
+          "vendorCost": 430.0,
+          "grossMargin": 128.5
+        },
+        "39": {
+          "tours": 7,
+          "pax": 100,
+          "revenue": 343.0,
+          "vendorCost": 180.0,
+          "grossMargin": 32.9
+        },
+        "40": {
+          "tours": 5,
+          "pax": 90,
+          "revenue": 118.0,
+          "vendorCost": 120.0,
+          "grossMargin": -53.9
+        },
+        "41": {
+          "tours": 10,
+          "pax": 154,
+          "revenue": 694.0,
+          "vendorCost": 320.0,
+          "grossMargin": 117.5
+        },
+        "42": {
+          "tours": 9,
+          "pax": 176,
+          "revenue": 195.0,
+          "vendorCost": 120.0,
+          "grossMargin": -12.75
+        },
+        "43": {
+          "tours": 6,
+          "pax": 49,
+          "revenue": 228.0,
+          "vendorCost": 240.0,
+          "grossMargin": -104.1
+        },
+        "44": {
+          "tours": 4,
+          "pax": 44,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -38.0
+        },
+        "45": {
+          "tours": 3,
+          "pax": 53,
+          "revenue": 260.0,
+          "vendorCost": 120.0,
+          "grossMargin": 23.0
+        },
+        "46": {
+          "tours": 3,
+          "pax": 43,
+          "revenue": 200.0,
+          "vendorCost": 70.0,
+          "grossMargin": 40.0
+        },
+        "47": {
+          "tours": 4,
+          "pax": 35,
+          "revenue": 178.0,
+          "vendorCost": 60.0,
+          "grossMargin": -8.44
+        },
+        "48": {
+          "tours": 2,
+          "pax": 34,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "49": {
+          "tours": 2,
+          "pax": 26,
+          "revenue": 100.0,
+          "vendorCost": 60.0,
+          "grossMargin": -5.0
+        },
+        "50": {
+          "tours": 1,
+          "pax": 20,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "51": {
+          "tours": 2,
+          "pax": 12,
+          "revenue": 80.0,
+          "vendorCost": 60.0,
+          "grossMargin": -16.0
+        },
+        "52": {
+          "tours": 2,
+          "pax": 49,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "1": {
+          "tours": 5,
+          "pax": 63,
+          "revenue": 280.0,
+          "vendorCost": 120.0,
+          "grossMargin": 76.0
+        },
+        "2": {
+          "tours": 11,
+          "pax": 120,
+          "revenue": 861.0,
+          "vendorCost": 310.0,
+          "grossMargin": 121.13
+        },
+        "3": {
+          "tours": 8,
+          "pax": 114,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -40.0
+        },
+        "4": {
+          "tours": 19,
+          "pax": 329,
+          "revenue": 885.0,
+          "vendorCost": 450.0,
+          "grossMargin": 54.75
+        },
+        "5": {
+          "tours": 32,
+          "pax": 491,
+          "revenue": 2043.0,
+          "vendorCost": 690.0,
+          "grossMargin": 246.96
+        },
+        "6": {
+          "tours": 24,
+          "pax": 457,
+          "revenue": 1399.0,
+          "vendorCost": 510.0,
+          "grossMargin": 304.48
+        },
+        "7": {
+          "tours": 34,
+          "pax": 791,
+          "revenue": 685.0,
+          "vendorCost": 440.0,
+          "grossMargin": -46.15
+        },
+        "8": {
+          "tours": 34,
+          "pax": 772,
+          "revenue": 1947.0,
+          "vendorCost": 690.0,
+          "grossMargin": 378.6
+        },
+        "9": {
+          "tours": 37,
+          "pax": 482,
+          "revenue": 2184.0,
+          "vendorCost": 1160.0,
+          "grossMargin": 151.75
+        },
+        "10": {
+          "tours": 32,
+          "pax": 485,
+          "revenue": 1197.0,
+          "vendorCost": 800.0,
+          "grossMargin": -74.15
+        },
+        "11": {
+          "tours": 12,
+          "pax": 165,
+          "revenue": 638.0,
+          "vendorCost": 250.0,
+          "grossMargin": 54.56
+        },
+        "12": {
+          "tours": 7,
+          "pax": 107,
+          "revenue": 180.0,
+          "vendorCost": 120.0,
+          "grossMargin": -21.0
+        }
+      }
     }
   },
   {
@@ -43148,6 +49318,685 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 5237.0,
+      "vendorCost": 3120.0,
+      "grossMargin": 9.84,
+      "byChannel": {
+        "web": {
+          "tours": 142,
+          "pax": 3624,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "OTA": {
+          "tours": 40,
+          "pax": 141,
+          "revenue": 4082.0,
+          "vendorCost": 2450.0,
+          "grossMargin": -229.36
+        },
+        "b2b": {
+          "tours": 2,
+          "pax": 15,
+          "revenue": 400.0,
+          "vendorCost": 120.0,
+          "grossMargin": 200.0
+        },
+        "free": {
+          "tours": 9,
+          "pax": 28,
+          "revenue": 755.0,
+          "vendorCost": 550.0,
+          "grossMargin": 39.2
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 142,
+          "pax": 3624,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Civitatis": {
+          "tours": 28,
+          "pax": 104,
+          "revenue": 2886.0,
+          "vendorCost": 1710.0,
+          "grossMargin": -122.7
+        },
+        "GYG": {
+          "tours": 6,
+          "pax": 22,
+          "revenue": 725.0,
+          "vendorCost": 370.0,
+          "grossMargin": -7.5
+        },
+        "Motonomads": {
+          "tours": 1,
+          "pax": 13,
+          "revenue": 250.0,
+          "vendorCost": 60.0,
+          "grossMargin": 140.0
+        },
+        "Viator": {
+          "tours": 5,
+          "pax": 13,
+          "revenue": 393.0,
+          "vendorCost": 310.0,
+          "grossMargin": -82.06
+        },
+        "Katija Crnčević": {
+          "tours": 4,
+          "pax": 12,
+          "revenue": 330.0,
+          "vendorCost": 240.0,
+          "grossMargin": 19.2
+        },
+        "Iva Pavlović": {
+          "tours": 1,
+          "pax": 5,
+          "revenue": 150.0,
+          "vendorCost": 70.0,
+          "grossMargin": 44.0
+        },
+        "Musement": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 78.0,
+          "vendorCost": 60.0,
+          "grossMargin": -17.1
+        },
+        "Nikolina Folnović": {
+          "tours": 1,
+          "pax": 3,
+          "revenue": 75.0,
+          "vendorCost": 60.0,
+          "grossMargin": 0.0
+        },
+        "Travel Croatia DMC": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 150.0,
+          "vendorCost": 60.0,
+          "grossMargin": 60.0
+        },
+        "Katarina Novoselac": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 50.0,
+          "vendorCost": 60.0,
+          "grossMargin": -22.0
+        },
+        "Nadir Ivanović": {
+          "tours": 2,
+          "pax": 6,
+          "revenue": 150.0,
+          "vendorCost": 120.0,
+          "grossMargin": -2.0
+        }
+      },
+      "byDow": {
+        "Thu": {
+          "tours": 22,
+          "pax": 456,
+          "revenue": 398.0,
+          "vendorCost": 300.0,
+          "grossMargin": -58.1
+        },
+        "Fri": {
+          "tours": 32,
+          "pax": 707,
+          "revenue": 334.0,
+          "vendorCost": 250.0,
+          "grossMargin": -38.96
+        },
+        "Sat": {
+          "tours": 36,
+          "pax": 740,
+          "revenue": 1599.0,
+          "vendorCost": 750.0,
+          "grossMargin": 131.25
+        },
+        "Mon": {
+          "tours": 23,
+          "pax": 362,
+          "revenue": 512.0,
+          "vendorCost": 480.0,
+          "grossMargin": -180.28
+        },
+        "Sun": {
+          "tours": 34,
+          "pax": 748,
+          "revenue": 762.0,
+          "vendorCost": 490.0,
+          "grossMargin": -37.0
+        },
+        "Wed": {
+          "tours": 25,
+          "pax": 466,
+          "revenue": 823.0,
+          "vendorCost": 420.0,
+          "grossMargin": 110.15
+        },
+        "Tue": {
+          "tours": 21,
+          "pax": 329,
+          "revenue": 809.0,
+          "vendorCost": 430.0,
+          "grossMargin": 82.78
+        }
+      },
+      "byTime": {
+        "11": {
+          "tours": 104,
+          "pax": 2687,
+          "revenue": 150.0,
+          "vendorCost": 60.0,
+          "grossMargin": 60.0
+        },
+        "8": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 175.0,
+          "vendorCost": 70.0,
+          "grossMargin": 26.25
+        },
+        "10": {
+          "tours": 17,
+          "pax": 82,
+          "revenue": 1640.0,
+          "vendorCost": 1020.0,
+          "grossMargin": -121.4
+        },
+        "17": {
+          "tours": 40,
+          "pax": 941,
+          "revenue": 200.0,
+          "vendorCost": 70.0,
+          "grossMargin": 40.0
+        },
+        "16": {
+          "tours": 30,
+          "pax": 81,
+          "revenue": 2822.0,
+          "vendorCost": 1840.0,
+          "grossMargin": -135.01
+        },
+        "15": {
+          "tours": 1,
+          "pax": 13,
+          "revenue": 250.0,
+          "vendorCost": 60.0,
+          "grossMargin": 140.0
+        }
+      },
+      "bySeason": {
+        "low": {
+          "tours": 17,
+          "pax": 268,
+          "revenue": 375.0,
+          "vendorCost": 250.0,
+          "grossMargin": -46.75
+        },
+        "shoulder": {
+          "tours": 82,
+          "pax": 1472,
+          "revenue": 1646.0,
+          "vendorCost": 1100.0,
+          "grossMargin": -95.33
+        },
+        "high": {
+          "tours": 94,
+          "pax": 2068,
+          "revenue": 3216.0,
+          "vendorCost": 1770.0,
+          "grossMargin": 151.92
+        }
+      },
+      "byPaxBand": {
+        "21-30": {
+          "tours": 65,
+          "pax": 1694,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "1-4": {
+          "tours": 43,
+          "pax": 113,
+          "revenue": 3583.0,
+          "vendorCost": 2560.0,
+          "grossMargin": -422.16
+        },
+        "11-20": {
+          "tours": 25,
+          "pax": 417,
+          "revenue": 250.0,
+          "vendorCost": 60.0,
+          "grossMargin": 140.0
+        },
+        "5-10": {
+          "tours": 19,
+          "pax": 142,
+          "revenue": 1404.0,
+          "vendorCost": 500.0,
+          "grossMargin": 292.0
+        },
+        "30+": {
+          "tours": 41,
+          "pax": 1442,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "1": {
+          "tours": 3,
+          "pax": 61,
+          "revenue": 175.0,
+          "vendorCost": 70.0,
+          "grossMargin": 26.25
+        },
+        "2": {
+          "tours": 1,
+          "pax": 20,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "3": {
+          "tours": 2,
+          "pax": 30,
+          "revenue": 60.0,
+          "vendorCost": 60.0,
+          "grossMargin": -30.0
+        },
+        "4": {
+          "tours": 2,
+          "pax": 45,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "5": {
+          "tours": 2,
+          "pax": 15,
+          "revenue": 60.0,
+          "vendorCost": 60.0,
+          "grossMargin": -27.0
+        },
+        "6": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 80.0,
+          "vendorCost": 60.0,
+          "grossMargin": -16.0
+        },
+        "11": {
+          "tours": 1,
+          "pax": 6,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "12": {
+          "tours": 3,
+          "pax": 59,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "13": {
+          "tours": 2,
+          "pax": 28,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "14": {
+          "tours": 4,
+          "pax": 85,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "15": {
+          "tours": 1,
+          "pax": 18,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "16": {
+          "tours": 5,
+          "pax": 120,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "17": {
+          "tours": 4,
+          "pax": 117,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "18": {
+          "tours": 4,
+          "pax": 95,
+          "revenue": 78.0,
+          "vendorCost": 60.0,
+          "grossMargin": -17.1
+        },
+        "19": {
+          "tours": 8,
+          "pax": 93,
+          "revenue": 406.0,
+          "vendorCost": 180.0,
+          "grossMargin": 105.8
+        },
+        "20": {
+          "tours": 5,
+          "pax": 66,
+          "revenue": 159.0,
+          "vendorCost": 120.0,
+          "grossMargin": -6.18
+        },
+        "21": {
+          "tours": 7,
+          "pax": 143,
+          "revenue": 78.0,
+          "vendorCost": 60.0,
+          "grossMargin": -17.1
+        },
+        "22": {
+          "tours": 4,
+          "pax": 55,
+          "revenue": 150.0,
+          "vendorCost": 70.0,
+          "grossMargin": 44.0
+        },
+        "23": {
+          "tours": 6,
+          "pax": 136,
+          "revenue": 78.0,
+          "vendorCost": 60.0,
+          "grossMargin": -17.1
+        },
+        "24": {
+          "tours": 8,
+          "pax": 159,
+          "revenue": 218.0,
+          "vendorCost": 180.0,
+          "grossMargin": -46.6
+        },
+        "25": {
+          "tours": 4,
+          "pax": 84,
+          "revenue": 156.0,
+          "vendorCost": 70.0,
+          "grossMargin": 20.48
+        },
+        "26": {
+          "tours": 3,
+          "pax": 42,
+          "revenue": 234.0,
+          "vendorCost": 70.0,
+          "grossMargin": 47.0
+        },
+        "27": {
+          "tours": 6,
+          "pax": 146,
+          "revenue": 78.0,
+          "vendorCost": 60.0,
+          "grossMargin": -14.76
+        },
+        "28": {
+          "tours": 3,
+          "pax": 61,
+          "revenue": 78.0,
+          "vendorCost": 60.0,
+          "grossMargin": -17.1
+        },
+        "29": {
+          "tours": 6,
+          "pax": 123,
+          "revenue": 275.0,
+          "vendorCost": 180.0,
+          "grossMargin": -38.6
+        },
+        "30": {
+          "tours": 8,
+          "pax": 203,
+          "revenue": 75.0,
+          "vendorCost": 60.0,
+          "grossMargin": 0.0
+        },
+        "31": {
+          "tours": 9,
+          "pax": 225,
+          "revenue": 78.0,
+          "vendorCost": 60.0,
+          "grossMargin": -17.1
+        },
+        "32": {
+          "tours": 10,
+          "pax": 202,
+          "revenue": 764.0,
+          "vendorCost": 300.0,
+          "grossMargin": 157.7
+        },
+        "33": {
+          "tours": 8,
+          "pax": 169,
+          "revenue": 458.0,
+          "vendorCost": 180.0,
+          "grossMargin": 71.9
+        },
+        "34": {
+          "tours": 9,
+          "pax": 233,
+          "revenue": 128.0,
+          "vendorCost": 120.0,
+          "grossMargin": -39.1
+        },
+        "35": {
+          "tours": 4,
+          "pax": 97,
+          "revenue": 100.0,
+          "vendorCost": 60.0,
+          "grossMargin": 20.0
+        },
+        "38": {
+          "tours": 3,
+          "pax": 45,
+          "revenue": 90.0,
+          "vendorCost": 120.0,
+          "grossMargin": -56.8
+        },
+        "39": {
+          "tours": 6,
+          "pax": 138,
+          "revenue": 256.0,
+          "vendorCost": 120.0,
+          "grossMargin": 38.0
+        },
+        "40": {
+          "tours": 6,
+          "pax": 141,
+          "revenue": 78.0,
+          "vendorCost": 70.0,
+          "grossMargin": -27.1
+        },
+        "41": {
+          "tours": 6,
+          "pax": 66,
+          "revenue": 270.0,
+          "vendorCost": 180.0,
+          "grossMargin": -21.0
+        },
+        "42": {
+          "tours": 4,
+          "pax": 50,
+          "revenue": 100.0,
+          "vendorCost": 120.0,
+          "grossMargin": -65.0
+        },
+        "43": {
+          "tours": 3,
+          "pax": 66,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "44": {
+          "tours": 4,
+          "pax": 71,
+          "revenue": 117.0,
+          "vendorCost": 60.0,
+          "grossMargin": 4.35
+        },
+        "45": {
+          "tours": 5,
+          "pax": 81,
+          "revenue": 220.0,
+          "vendorCost": 130.0,
+          "grossMargin": -9.0
+        },
+        "47": {
+          "tours": 2,
+          "pax": 30,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "48": {
+          "tours": 1,
+          "pax": 11,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "49": {
+          "tours": 3,
+          "pax": 39,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -38.0
+        },
+        "50": {
+          "tours": 3,
+          "pax": 55,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "51": {
+          "tours": 3,
+          "pax": 44,
+          "revenue": 100.0,
+          "vendorCost": 60.0,
+          "grossMargin": -5.0
+        },
+        "52": {
+          "tours": 1,
+          "pax": 31,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "1": {
+          "tours": 10,
+          "pax": 171,
+          "revenue": 295.0,
+          "vendorCost": 190.0,
+          "grossMargin": -30.75
+        },
+        "2": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 80.0,
+          "vendorCost": 60.0,
+          "grossMargin": -16.0
+        },
+        "3": {
+          "tours": 6,
+          "pax": 93,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "4": {
+          "tours": 14,
+          "pax": 340,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "5": {
+          "tours": 27,
+          "pax": 447,
+          "revenue": 721.0,
+          "vendorCost": 420.0,
+          "grossMargin": 65.42
+        },
+        "6": {
+          "tours": 22,
+          "pax": 426,
+          "revenue": 836.0,
+          "vendorCost": 450.0,
+          "grossMargin": 47.78
+        },
+        "7": {
+          "tours": 29,
+          "pax": 671,
+          "revenue": 584.0,
+          "vendorCost": 420.0,
+          "grossMargin": -87.56
+        },
+        "8": {
+          "tours": 34,
+          "pax": 788,
+          "revenue": 1450.0,
+          "vendorCost": 660.0,
+          "grossMargin": 210.5
+        },
+        "9": {
+          "tours": 9,
+          "pax": 183,
+          "revenue": 346.0,
+          "vendorCost": 240.0,
+          "grossMargin": -18.8
+        },
+        "10": {
+          "tours": 22,
+          "pax": 362,
+          "revenue": 565.0,
+          "vendorCost": 430.0,
+          "grossMargin": -108.75
+        },
+        "11": {
+          "tours": 9,
+          "pax": 154,
+          "revenue": 220.0,
+          "vendorCost": 130.0,
+          "grossMargin": -9.0
+        },
+        "12": {
+          "tours": 10,
+          "pax": 169,
+          "revenue": 140.0,
+          "vendorCost": 120.0,
+          "grossMargin": -43.0
+        }
+      }
     }
   },
   {
@@ -44861,6 +51710,447 @@ const guideStats25 = [
               "pax": 4
             }
           }
+        }
+      }
+    },
+    "mgmt": {
+      "revenue": 6225.6,
+      "vendorCost": 2440.0,
+      "grossMargin": 1001.27,
+      "byChannel": {
+        "OTA": {
+          "tours": 31,
+          "pax": 137,
+          "revenue": 5685.6,
+          "vendorCost": 2240.0,
+          "grossMargin": 769.27
+        },
+        "web": {
+          "tours": 11,
+          "pax": 264,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "b2b": {
+          "tours": 3,
+          "pax": 35,
+          "revenue": 540.0,
+          "vendorCost": 200.0,
+          "grossMargin": 232.0
+        }
+      },
+      "bySource": {
+        "Viator": {
+          "tours": 15,
+          "pax": 72,
+          "revenue": 2518.0,
+          "vendorCost": 980.0,
+          "grossMargin": 450.44
+        },
+        "FST": {
+          "tours": 12,
+          "pax": 295,
+          "revenue": 300.0,
+          "vendorCost": 70.0,
+          "grossMargin": 170.0
+        },
+        "GYG": {
+          "tours": 7,
+          "pax": 32,
+          "revenue": 1756.6,
+          "vendorCost": 610.0,
+          "grossMargin": 268.3
+        },
+        "Musement": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 156.0,
+          "vendorCost": 70.0,
+          "grossMargin": 15.8
+        },
+        "Airbnb": {
+          "tours": 3,
+          "pax": 12,
+          "revenue": 668.0,
+          "vendorCost": 200.0,
+          "grossMargin": 91.88
+        },
+        "Civitatis": {
+          "tours": 3,
+          "pax": 14,
+          "revenue": 470.0,
+          "vendorCost": 260.0,
+          "grossMargin": -1.5
+        },
+        "Roundabout": {
+          "tours": 2,
+          "pax": 4,
+          "revenue": 240.0,
+          "vendorCost": 130.0,
+          "grossMargin": 62.0
+        },
+        "Turneo": {
+          "tours": 2,
+          "pax": 3,
+          "revenue": 117.0,
+          "vendorCost": 120.0,
+          "grossMargin": -55.65
+        }
+      },
+      "byDow": {
+        "Sat": {
+          "tours": 9,
+          "pax": 114,
+          "revenue": 1418.0,
+          "vendorCost": 450.0,
+          "grossMargin": 227.68
+        },
+        "Sun": {
+          "tours": 7,
+          "pax": 86,
+          "revenue": 742.0,
+          "vendorCost": 270.0,
+          "grossMargin": 160.36
+        },
+        "Mon": {
+          "tours": 3,
+          "pax": 33,
+          "revenue": 351.0,
+          "vendorCost": 140.0,
+          "grossMargin": 63.58
+        },
+        "Tue": {
+          "tours": 6,
+          "pax": 44,
+          "revenue": 584.0,
+          "vendorCost": 330.0,
+          "grossMargin": 8.7
+        },
+        "Fri": {
+          "tours": 10,
+          "pax": 91,
+          "revenue": 1280.6,
+          "vendorCost": 510.0,
+          "grossMargin": 215.0
+        },
+        "Thu": {
+          "tours": 3,
+          "pax": 39,
+          "revenue": 706.0,
+          "vendorCost": 240.0,
+          "grossMargin": 210.8
+        },
+        "Wed": {
+          "tours": 7,
+          "pax": 29,
+          "revenue": 1144.0,
+          "vendorCost": 500.0,
+          "grossMargin": 115.15
+        }
+      },
+      "byTime": {
+        "10": {
+          "tours": 17,
+          "pax": 80,
+          "revenue": 2902.6,
+          "vendorCost": 1190.0,
+          "grossMargin": 313.88
+        },
+        "15": {
+          "tours": 10,
+          "pax": 47,
+          "revenue": 1833.0,
+          "vendorCost": 680.0,
+          "grossMargin": 334.39
+        },
+        "17": {
+          "tours": 7,
+          "pax": 122,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        },
+        "14": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 250.0,
+          "vendorCost": 100.0,
+          "grossMargin": 25.0
+        },
+        "11": {
+          "tours": 7,
+          "pax": 149,
+          "revenue": 450.0,
+          "vendorCost": 170.0,
+          "grossMargin": 71.0
+        },
+        "9": {
+          "tours": 1,
+          "pax": 3,
+          "revenue": 250.0,
+          "vendorCost": 100.0,
+          "grossMargin": 25.0
+        },
+        "13": {
+          "tours": 2,
+          "pax": 33,
+          "revenue": 420.0,
+          "vendorCost": 140.0,
+          "grossMargin": 196.0
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 20,
+          "pax": 217,
+          "revenue": 2428.0,
+          "vendorCost": 900.0,
+          "grossMargin": 307.69
+        },
+        "high": {
+          "tours": 25,
+          "pax": 219,
+          "revenue": 3797.6,
+          "vendorCost": 1540.0,
+          "grossMargin": 693.58
+        }
+      },
+      "byPaxBand": {
+        "1-4": {
+          "tours": 18,
+          "pax": 44,
+          "revenue": 2815.0,
+          "vendorCost": 1330.0,
+          "grossMargin": 120.9
+        },
+        "5-10": {
+          "tours": 16,
+          "pax": 106,
+          "revenue": 3110.6,
+          "vendorCost": 1040.0,
+          "grossMargin": 710.37
+        },
+        "11-20": {
+          "tours": 3,
+          "pax": 46,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30+": {
+          "tours": 4,
+          "pax": 142,
+          "revenue": 300.0,
+          "vendorCost": 70.0,
+          "grossMargin": 170.0
+        },
+        "21-30": {
+          "tours": 4,
+          "pax": 98,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "17": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 178.0,
+          "vendorCost": 60.0,
+          "grossMargin": 13.24
+        },
+        "18": {
+          "tours": 1,
+          "pax": 5,
+          "revenue": 195.0,
+          "vendorCost": 70.0,
+          "grossMargin": 43.1
+        },
+        "19": {
+          "tours": 1,
+          "pax": 17,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "20": {
+          "tours": 2,
+          "pax": 7,
+          "revenue": 445.0,
+          "vendorCost": 170.0,
+          "grossMargin": 68.1
+        },
+        "21": {
+          "tours": 1,
+          "pax": 1,
+          "revenue": 200.0,
+          "vendorCost": 70.0,
+          "grossMargin": 46.0
+        },
+        "22": {
+          "tours": 2,
+          "pax": 8,
+          "revenue": 512.0,
+          "vendorCost": 140.0,
+          "grossMargin": 31.76
+        },
+        "23": {
+          "tours": 2,
+          "pax": 4,
+          "revenue": 215.0,
+          "vendorCost": 160.0,
+          "grossMargin": -40.55
+        },
+        "25": {
+          "tours": 2,
+          "pax": 38,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 9.6
+        },
+        "27": {
+          "tours": 2,
+          "pax": 7,
+          "revenue": 445.0,
+          "vendorCost": 170.0,
+          "grossMargin": 68.1
+        },
+        "28": {
+          "tours": 2,
+          "pax": 10,
+          "revenue": 390.0,
+          "vendorCost": 160.0,
+          "grossMargin": 46.2
+        },
+        "31": {
+          "tours": 1,
+          "pax": 21,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "32": {
+          "tours": 3,
+          "pax": 36,
+          "revenue": 409.0,
+          "vendorCost": 170.0,
+          "grossMargin": 43.25
+        },
+        "34": {
+          "tours": 2,
+          "pax": 8,
+          "revenue": 312.0,
+          "vendorCost": 130.0,
+          "grossMargin": 75.92
+        },
+        "35": {
+          "tours": 6,
+          "pax": 46,
+          "revenue": 996.6,
+          "vendorCost": 330.0,
+          "grossMargin": 250.86
+        },
+        "37": {
+          "tours": 3,
+          "pax": 35,
+          "revenue": 460.0,
+          "vendorCost": 200.0,
+          "grossMargin": 159.2
+        },
+        "38": {
+          "tours": 2,
+          "pax": 14,
+          "revenue": 450.0,
+          "vendorCost": 160.0,
+          "grossMargin": 81.0
+        },
+        "42": {
+          "tours": 4,
+          "pax": 85,
+          "revenue": 585.0,
+          "vendorCost": 140.0,
+          "grossMargin": 177.46
+        },
+        "43": {
+          "tours": 3,
+          "pax": 15,
+          "revenue": 196.0,
+          "vendorCost": 130.0,
+          "grossMargin": -16.32
+        },
+        "44": {
+          "tours": 3,
+          "pax": 64,
+          "revenue": 78.0,
+          "vendorCost": 60.0,
+          "grossMargin": -17.1
+        },
+        "45": {
+          "tours": 2,
+          "pax": 13,
+          "revenue": 39.0,
+          "vendorCost": 60.0,
+          "grossMargin": -38.55
+        }
+      },
+      "byMonth": {
+        "4": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 178.0,
+          "vendorCost": 60.0,
+          "grossMargin": 13.24
+        },
+        "5": {
+          "tours": 7,
+          "pax": 38,
+          "revenue": 1352.0,
+          "vendorCost": 450.0,
+          "grossMargin": 188.96
+        },
+        "6": {
+          "tours": 4,
+          "pax": 42,
+          "revenue": 335.0,
+          "vendorCost": 220.0,
+          "grossMargin": -30.95
+        },
+        "7": {
+          "tours": 5,
+          "pax": 38,
+          "revenue": 835.0,
+          "vendorCost": 330.0,
+          "grossMargin": 114.3
+        },
+        "8": {
+          "tours": 11,
+          "pax": 90,
+          "revenue": 1717.6,
+          "vendorCost": 630.0,
+          "grossMargin": 370.03
+        },
+        "9": {
+          "tours": 5,
+          "pax": 49,
+          "revenue": 910.0,
+          "vendorCost": 360.0,
+          "grossMargin": 240.2
+        },
+        "10": {
+          "tours": 9,
+          "pax": 125,
+          "revenue": 859.0,
+          "vendorCost": 330.0,
+          "grossMargin": 144.04
+        },
+        "11": {
+          "tours": 3,
+          "pax": 52,
+          "revenue": 39.0,
+          "vendorCost": 60.0,
+          "grossMargin": -38.55
         }
       }
     }
@@ -47421,6 +54711,461 @@ const guideStats25 = [
               "pax": 2
             }
           }
+        }
+      }
+    },
+    "mgmt": {
+      "revenue": 12791.0,
+      "vendorCost": 3830.0,
+      "grossMargin": 1262.2,
+      "byChannel": {
+        "OTA": {
+          "tours": 59,
+          "pax": 237,
+          "revenue": 11909.0,
+          "vendorCost": 3630.0,
+          "grossMargin": 1017.46
+        },
+        "web": {
+          "tours": 16,
+          "pax": 349,
+          "revenue": 684.0,
+          "vendorCost": 130.0,
+          "grossMargin": 204.84
+        },
+        "b2b": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 198.0,
+          "vendorCost": 70.0,
+          "grossMargin": 39.9
+        }
+      },
+      "bySource": {
+        "Viator": {
+          "tours": 42,
+          "pax": 185,
+          "revenue": 8363.0,
+          "vendorCost": 2590.0,
+          "grossMargin": 818.86
+        },
+        "FST": {
+          "tours": 16,
+          "pax": 349,
+          "revenue": 684.0,
+          "vendorCost": 130.0,
+          "grossMargin": 204.84
+        },
+        "Airbnb": {
+          "tours": 4,
+          "pax": 12,
+          "revenue": 930.0,
+          "vendorCost": 240.0,
+          "grossMargin": 176.8
+        },
+        "GYG": {
+          "tours": 11,
+          "pax": 36,
+          "revenue": 2260.0,
+          "vendorCost": 680.0,
+          "grossMargin": 28.0
+        },
+        "Civitatis": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 178.0,
+          "vendorCost": 60.0,
+          "grossMargin": -3.1
+        },
+        "Turneo": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 178.0,
+          "vendorCost": 60.0,
+          "grossMargin": -3.1
+        },
+        "Royal Tours Croatia": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 198.0,
+          "vendorCost": 70.0,
+          "grossMargin": 39.9
+        }
+      },
+      "byDow": {
+        "Thu": {
+          "tours": 9,
+          "pax": 62,
+          "revenue": 1806.0,
+          "vendorCost": 500.0,
+          "grossMargin": 187.68
+        },
+        "Sun": {
+          "tours": 13,
+          "pax": 139,
+          "revenue": 1419.0,
+          "vendorCost": 550.0,
+          "grossMargin": -3.5
+        },
+        "Sat": {
+          "tours": 18,
+          "pax": 170,
+          "revenue": 3983.0,
+          "vendorCost": 890.0,
+          "grossMargin": 669.52
+        },
+        "Fri": {
+          "tours": 13,
+          "pax": 74,
+          "revenue": 2062.0,
+          "vendorCost": 670.0,
+          "grossMargin": 154.66
+        },
+        "Wed": {
+          "tours": 4,
+          "pax": 13,
+          "revenue": 398.0,
+          "vendorCost": 240.0,
+          "grossMargin": -53.16
+        },
+        "Mon": {
+          "tours": 11,
+          "pax": 67,
+          "revenue": 2171.0,
+          "vendorCost": 620.0,
+          "grossMargin": 247.7
+        },
+        "Tue": {
+          "tours": 8,
+          "pax": 63,
+          "revenue": 952.0,
+          "vendorCost": 360.0,
+          "grossMargin": 59.3
+        }
+      },
+      "byTime": {
+        "10": {
+          "tours": 58,
+          "pax": 232,
+          "revenue": 11464.0,
+          "vendorCost": 3570.0,
+          "grossMargin": 1003.8
+        },
+        "17": {
+          "tours": 10,
+          "pax": 209,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11": {
+          "tours": 7,
+          "pax": 137,
+          "revenue": 1177.0,
+          "vendorCost": 200.0,
+          "grossMargin": 204.4
+        },
+        "14": {
+          "tours": 1,
+          "pax": 10,
+          "revenue": 150.0,
+          "vendorCost": 60.0,
+          "grossMargin": 54.0
+        }
+      },
+      "bySeason": {
+        "low": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 200.0,
+          "vendorCost": 60.0,
+          "grossMargin": 44.0
+        },
+        "shoulder": {
+          "tours": 25,
+          "pax": 253,
+          "revenue": 3283.0,
+          "vendorCost": 990.0,
+          "grossMargin": 402.08
+        },
+        "high": {
+          "tours": 50,
+          "pax": 327,
+          "revenue": 9308.0,
+          "vendorCost": 2780.0,
+          "grossMargin": 816.12
+        }
+      },
+      "byPaxBand": {
+        "5-10": {
+          "tours": 21,
+          "pax": 152,
+          "revenue": 5399.0,
+          "vendorCost": 1140.0,
+          "grossMargin": 1239.7
+        },
+        "21-30": {
+          "tours": 6,
+          "pax": 152,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "1-4": {
+          "tours": 44,
+          "pax": 126,
+          "revenue": 7392.0,
+          "vendorCost": 2690.0,
+          "grossMargin": 22.5
+        },
+        "30+": {
+          "tours": 4,
+          "pax": 138,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11-20": {
+          "tours": 1,
+          "pax": 20,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "1": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 200.0,
+          "vendorCost": 60.0,
+          "grossMargin": 44.0
+        },
+        "18": {
+          "tours": 2,
+          "pax": 32,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -36.8
+        },
+        "19": {
+          "tours": 2,
+          "pax": 26,
+          "revenue": 178.0,
+          "vendorCost": 60.0,
+          "grossMargin": -34.76
+        },
+        "20": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 160.0,
+          "vendorCost": 60.0,
+          "grossMargin": 32.8
+        },
+        "21": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -36.8
+        },
+        "25": {
+          "tours": 2,
+          "pax": 8,
+          "revenue": 298.0,
+          "vendorCost": 120.0,
+          "grossMargin": 14.84
+        },
+        "27": {
+          "tours": 4,
+          "pax": 17,
+          "revenue": 1099.0,
+          "vendorCost": 250.0,
+          "grossMargin": 165.14
+        },
+        "28": {
+          "tours": 3,
+          "pax": 10,
+          "revenue": 614.0,
+          "vendorCost": 180.0,
+          "grossMargin": 55.78
+        },
+        "29": {
+          "tours": 7,
+          "pax": 65,
+          "revenue": 458.0,
+          "vendorCost": 300.0,
+          "grossMargin": -73.12
+        },
+        "30": {
+          "tours": 5,
+          "pax": 15,
+          "revenue": 576.0,
+          "vendorCost": 300.0,
+          "grossMargin": -61.26
+        },
+        "31": {
+          "tours": 5,
+          "pax": 12,
+          "revenue": 516.0,
+          "vendorCost": 300.0,
+          "grossMargin": -145.2
+        },
+        "32": {
+          "tours": 1,
+          "pax": 10,
+          "revenue": 200.0,
+          "vendorCost": 60.0,
+          "grossMargin": 56.0
+        },
+        "33": {
+          "tours": 1,
+          "pax": 5,
+          "revenue": 100.0,
+          "vendorCost": 60.0,
+          "grossMargin": -2.0
+        },
+        "34": {
+          "tours": 3,
+          "pax": 15,
+          "revenue": 1335.0,
+          "vendorCost": 200.0,
+          "grossMargin": 272.58
+        },
+        "35": {
+          "tours": 1,
+          "pax": 3,
+          "revenue": 267.0,
+          "vendorCost": 60.0,
+          "grossMargin": 24.86
+        },
+        "36": {
+          "tours": 4,
+          "pax": 26,
+          "revenue": 1436.0,
+          "vendorCost": 250.0,
+          "grossMargin": 354.88
+        },
+        "37": {
+          "tours": 6,
+          "pax": 87,
+          "revenue": 1237.0,
+          "vendorCost": 260.0,
+          "grossMargin": 143.1
+        },
+        "38": {
+          "tours": 7,
+          "pax": 52,
+          "revenue": 1132.0,
+          "vendorCost": 380.0,
+          "grossMargin": 47.32
+        },
+        "39": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -36.8
+        },
+        "40": {
+          "tours": 2,
+          "pax": 12,
+          "revenue": 516.0,
+          "vendorCost": 120.0,
+          "grossMargin": 129.76
+        },
+        "41": {
+          "tours": 6,
+          "pax": 26,
+          "revenue": 1693.0,
+          "vendorCost": 380.0,
+          "grossMargin": 274.02
+        },
+        "42": {
+          "tours": 5,
+          "pax": 98,
+          "revenue": 200.0,
+          "vendorCost": 60.0,
+          "grossMargin": 56.0
+        },
+        "43": {
+          "tours": 2,
+          "pax": 33,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "44": {
+          "tours": 3,
+          "pax": 14,
+          "revenue": 278.0,
+          "vendorCost": 130.0,
+          "grossMargin": 26.3
+        },
+        "46": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 178.0,
+          "vendorCost": 60.0,
+          "grossMargin": -8.44
+        }
+      },
+      "byMonth": {
+        "1": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 200.0,
+          "vendorCost": 60.0,
+          "grossMargin": 44.0
+        },
+        "5": {
+          "tours": 6,
+          "pax": 68,
+          "revenue": 418.0,
+          "vendorCost": 240.0,
+          "grossMargin": -75.56
+        },
+        "6": {
+          "tours": 2,
+          "pax": 8,
+          "revenue": 298.0,
+          "vendorCost": 120.0,
+          "grossMargin": 14.84
+        },
+        "7": {
+          "tours": 22,
+          "pax": 115,
+          "revenue": 3183.0,
+          "vendorCost": 1210.0,
+          "grossMargin": 14.94
+        },
+        "8": {
+          "tours": 8,
+          "pax": 37,
+          "revenue": 1982.0,
+          "vendorCost": 500.0,
+          "grossMargin": 277.84
+        },
+        "9": {
+          "tours": 18,
+          "pax": 167,
+          "revenue": 3845.0,
+          "vendorCost": 950.0,
+          "grossMargin": 508.5
+        },
+        "10": {
+          "tours": 17,
+          "pax": 181,
+          "revenue": 2489.0,
+          "vendorCost": 620.0,
+          "grossMargin": 446.18
+        },
+        "11": {
+          "tours": 2,
+          "pax": 4,
+          "revenue": 376.0,
+          "vendorCost": 130.0,
+          "grossMargin": 31.46
         }
       }
     }
@@ -51257,6 +59002,489 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 7405.0,
+      "vendorCost": 4000.0,
+      "grossMargin": 95.35,
+      "byChannel": {
+        "OTA": {
+          "tours": 64,
+          "pax": 328,
+          "revenue": 7285.0,
+          "vendorCost": 3940.0,
+          "grossMargin": 59.35
+        },
+        "web": {
+          "tours": 112,
+          "pax": 3287,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "b2b": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        }
+      },
+      "bySource": {
+        "GYG": {
+          "tours": 4,
+          "pax": 14,
+          "revenue": 280.0,
+          "vendorCost": 240.0,
+          "grossMargin": -100.0
+        },
+        "Viator": {
+          "tours": 6,
+          "pax": 15,
+          "revenue": 300.0,
+          "vendorCost": 360.0,
+          "grossMargin": -186.0
+        },
+        "Civitatis": {
+          "tours": 54,
+          "pax": 299,
+          "revenue": 6705.0,
+          "vendorCost": 3340.0,
+          "grossMargin": 345.35
+        },
+        "FST": {
+          "tours": 112,
+          "pax": 3287,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Travel Croatia DMC": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        }
+      },
+      "byDow": {
+        "Thu": {
+          "tours": 21,
+          "pax": 365,
+          "revenue": 1260.0,
+          "vendorCost": 670.0,
+          "grossMargin": 54.4
+        },
+        "Fri": {
+          "tours": 27,
+          "pax": 555,
+          "revenue": 1335.0,
+          "vendorCost": 740.0,
+          "grossMargin": -8.15
+        },
+        "Sat": {
+          "tours": 29,
+          "pax": 596,
+          "revenue": 1110.0,
+          "vendorCost": 680.0,
+          "grossMargin": -68.3
+        },
+        "Sun": {
+          "tours": 25,
+          "pax": 475,
+          "revenue": 1220.0,
+          "vendorCost": 610.0,
+          "grossMargin": 63.4
+        },
+        "Tue": {
+          "tours": 26,
+          "pax": 501,
+          "revenue": 670.0,
+          "vendorCost": 440.0,
+          "grossMargin": -71.5
+        },
+        "Wed": {
+          "tours": 24,
+          "pax": 543,
+          "revenue": 800.0,
+          "vendorCost": 420.0,
+          "grossMargin": 12.0
+        },
+        "Mon": {
+          "tours": 25,
+          "pax": 582,
+          "revenue": 1010.0,
+          "vendorCost": 440.0,
+          "grossMargin": 113.5
+        }
+      },
+      "byTime": {
+        "10": {
+          "tours": 55,
+          "pax": 277,
+          "revenue": 5635.0,
+          "vendorCost": 3310.0,
+          "grossMargin": -218.15
+        },
+        "20": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 175.0,
+          "vendorCost": 70.0,
+          "grossMargin": 26.25
+        },
+        "17": {
+          "tours": 79,
+          "pax": 2181,
+          "revenue": 845.0,
+          "vendorCost": 340.0,
+          "grossMargin": 154.75
+        },
+        "11": {
+          "tours": 41,
+          "pax": 1142,
+          "revenue": 550.0,
+          "vendorCost": 210.0,
+          "grossMargin": 92.5
+        },
+        "8": {
+          "tours": 1,
+          "pax": 15,
+          "revenue": 200.0,
+          "vendorCost": 70.0,
+          "grossMargin": 40.0
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 42,
+          "pax": 494,
+          "revenue": 2310.0,
+          "vendorCost": 1480.0,
+          "grossMargin": -209.9
+        },
+        "high": {
+          "tours": 135,
+          "pax": 3123,
+          "revenue": 5095.0,
+          "vendorCost": 2520.0,
+          "grossMargin": 305.25
+        }
+      },
+      "byPaxBand": {
+        "1-4": {
+          "tours": 38,
+          "pax": 110,
+          "revenue": 3135.0,
+          "vendorCost": 2350.0,
+          "grossMargin": -606.15
+        },
+        "5-10": {
+          "tours": 25,
+          "pax": 174,
+          "revenue": 2535.0,
+          "vendorCost": 1150.0,
+          "grossMargin": 247.25
+        },
+        "21-30": {
+          "tours": 38,
+          "pax": 972,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11-20": {
+          "tours": 22,
+          "pax": 326,
+          "revenue": 1735.0,
+          "vendorCost": 500.0,
+          "grossMargin": 454.25
+        },
+        "30+": {
+          "tours": 54,
+          "pax": 2035,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "17": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 80.0,
+          "vendorCost": 60.0,
+          "grossMargin": -20.0
+        },
+        "18": {
+          "tours": 3,
+          "pax": 10,
+          "revenue": 200.0,
+          "vendorCost": 180.0,
+          "grossMargin": -68.8
+        },
+        "19": {
+          "tours": 2,
+          "pax": 7,
+          "revenue": 140.0,
+          "vendorCost": 120.0,
+          "grossMargin": -41.8
+        },
+        "20": {
+          "tours": 3,
+          "pax": 5,
+          "revenue": 100.0,
+          "vendorCost": 180.0,
+          "grossMargin": -125.0
+        },
+        "21": {
+          "tours": 3,
+          "pax": 14,
+          "revenue": 415.0,
+          "vendorCost": 190.0,
+          "grossMargin": 38.25
+        },
+        "22": {
+          "tours": 6,
+          "pax": 59,
+          "revenue": 260.0,
+          "vendorCost": 240.0,
+          "grossMargin": -94.6
+        },
+        "23": {
+          "tours": 4,
+          "pax": 47,
+          "revenue": 320.0,
+          "vendorCost": 180.0,
+          "grossMargin": -4.0
+        },
+        "24": {
+          "tours": 4,
+          "pax": 51,
+          "revenue": 140.0,
+          "vendorCost": 120.0,
+          "grossMargin": -43.0
+        },
+        "25": {
+          "tours": 7,
+          "pax": 78,
+          "revenue": 360.0,
+          "vendorCost": 240.0,
+          "grossMargin": -46.0
+        },
+        "26": {
+          "tours": 8,
+          "pax": 87,
+          "revenue": 415.0,
+          "vendorCost": 250.0,
+          "grossMargin": 9.45
+        },
+        "27": {
+          "tours": 8,
+          "pax": 156,
+          "revenue": 295.0,
+          "vendorCost": 130.0,
+          "grossMargin": 32.25
+        },
+        "28": {
+          "tours": 6,
+          "pax": 104,
+          "revenue": 440.0,
+          "vendorCost": 180.0,
+          "grossMargin": 62.0
+        },
+        "29": {
+          "tours": 9,
+          "pax": 169,
+          "revenue": 700.0,
+          "vendorCost": 300.0,
+          "grossMargin": 81.0
+        },
+        "30": {
+          "tours": 7,
+          "pax": 159,
+          "revenue": 580.0,
+          "vendorCost": 240.0,
+          "grossMargin": 77.0
+        },
+        "31": {
+          "tours": 9,
+          "pax": 123,
+          "revenue": 1010.0,
+          "vendorCost": 440.0,
+          "grossMargin": 116.1
+        },
+        "32": {
+          "tours": 10,
+          "pax": 331,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "33": {
+          "tours": 10,
+          "pax": 358,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "34": {
+          "tours": 9,
+          "pax": 291,
+          "revenue": 160.0,
+          "vendorCost": 60.0,
+          "grossMargin": 28.0
+        },
+        "35": {
+          "tours": 12,
+          "pax": 408,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -38.0
+        },
+        "36": {
+          "tours": 10,
+          "pax": 286,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "37": {
+          "tours": 7,
+          "pax": 138,
+          "revenue": 420.0,
+          "vendorCost": 190.0,
+          "grossMargin": 41.0
+        },
+        "38": {
+          "tours": 7,
+          "pax": 172,
+          "revenue": 175.0,
+          "vendorCost": 70.0,
+          "grossMargin": 26.25
+        },
+        "39": {
+          "tours": 5,
+          "pax": 121,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "40": {
+          "tours": 5,
+          "pax": 151,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "41": {
+          "tours": 5,
+          "pax": 57,
+          "revenue": 415.0,
+          "vendorCost": 200.0,
+          "grossMargin": 28.25
+        },
+        "42": {
+          "tours": 2,
+          "pax": 67,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "43": {
+          "tours": 5,
+          "pax": 56,
+          "revenue": 220.0,
+          "vendorCost": 60.0,
+          "grossMargin": 61.0
+        },
+        "44": {
+          "tours": 3,
+          "pax": 28,
+          "revenue": 100.0,
+          "vendorCost": 60.0,
+          "grossMargin": -5.0
+        },
+        "45": {
+          "tours": 1,
+          "pax": 15,
+          "revenue": 200.0,
+          "vendorCost": 70.0,
+          "grossMargin": 40.0
+        },
+        "46": {
+          "tours": 4,
+          "pax": 54,
+          "revenue": 180.0,
+          "vendorCost": 120.0,
+          "grossMargin": -21.0
+        },
+        "48": {
+          "tours": 2,
+          "pax": 11,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -38.0
+        }
+      },
+      "byMonth": {
+        "4": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 80.0,
+          "vendorCost": 60.0,
+          "grossMargin": -20.0
+        },
+        "5": {
+          "tours": 16,
+          "pax": 93,
+          "revenue": 1075.0,
+          "vendorCost": 850.0,
+          "grossMargin": -255.15
+        },
+        "6": {
+          "tours": 25,
+          "pax": 286,
+          "revenue": 1275.0,
+          "vendorCost": 850.0,
+          "grossMargin": -120.35
+        },
+        "7": {
+          "tours": 34,
+          "pax": 637,
+          "revenue": 2630.0,
+          "vendorCost": 1100.0,
+          "grossMargin": 343.5
+        },
+        "8": {
+          "tours": 45,
+          "pax": 1441,
+          "revenue": 595.0,
+          "vendorCost": 310.0,
+          "grossMargin": 14.85
+        },
+        "9": {
+          "tours": 31,
+          "pax": 759,
+          "revenue": 595.0,
+          "vendorCost": 260.0,
+          "grossMargin": 67.25
+        },
+        "10": {
+          "tours": 18,
+          "pax": 317,
+          "revenue": 735.0,
+          "vendorCost": 320.0,
+          "grossMargin": 84.25
+        },
+        "11": {
+          "tours": 7,
+          "pax": 80,
+          "revenue": 420.0,
+          "vendorCost": 250.0,
+          "grossMargin": -19.0
+        }
+      }
     }
   },
   {
@@ -54757,6 +62985,517 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 2992.5,
+      "vendorCost": 1740.0,
+      "grossMargin": 643.6,
+      "byChannel": {
+        "web": {
+          "tours": 191,
+          "pax": 3172,
+          "revenue": 460.0,
+          "vendorCost": 230.0,
+          "grossMargin": 127.6
+        },
+        "b2b": {
+          "tours": 14,
+          "pax": 34,
+          "revenue": 2532.5,
+          "vendorCost": 1510.0,
+          "grossMargin": 516.0
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 191,
+          "pax": 3172,
+          "revenue": 460.0,
+          "vendorCost": 230.0,
+          "grossMargin": 127.6
+        },
+        "Taste Dalmatia": {
+          "tours": 3,
+          "pax": 9,
+          "revenue": 562.5,
+          "vendorCost": 330.0,
+          "grossMargin": 120.0
+        },
+        "Grape Escapes": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 150.0,
+          "vendorCost": 110.0,
+          "grossMargin": 10.0
+        },
+        "Roundabout": {
+          "tours": 9,
+          "pax": 18,
+          "revenue": 1640.0,
+          "vendorCost": 960.0,
+          "grossMargin": 352.0
+        },
+        "GoAndiamo": {
+          "tours": 1,
+          "pax": 3,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        }
+      },
+      "byDow": {
+        "Tue": {
+          "tours": 31,
+          "pax": 411,
+          "revenue": 367.5,
+          "vendorCost": 220.0,
+          "grossMargin": 74.0
+        },
+        "Fri": {
+          "tours": 36,
+          "pax": 601,
+          "revenue": 360.0,
+          "vendorCost": 230.0,
+          "grossMargin": 58.0
+        },
+        "Sat": {
+          "tours": 26,
+          "pax": 425,
+          "revenue": 647.5,
+          "vendorCost": 340.0,
+          "grossMargin": 167.6
+        },
+        "Sun": {
+          "tours": 32,
+          "pax": 520,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Mon": {
+          "tours": 23,
+          "pax": 368,
+          "revenue": 740.0,
+          "vendorCost": 460.0,
+          "grossMargin": 132.0
+        },
+        "Wed": {
+          "tours": 30,
+          "pax": 488,
+          "revenue": 510.0,
+          "vendorCost": 300.0,
+          "grossMargin": 108.0
+        },
+        "Thu": {
+          "tours": 27,
+          "pax": 393,
+          "revenue": 367.5,
+          "vendorCost": 190.0,
+          "grossMargin": 104.0
+        }
+      },
+      "byTime": {
+        "11": {
+          "tours": 78,
+          "pax": 1333,
+          "revenue": 210.0,
+          "vendorCost": 110.0,
+          "grossMargin": 58.0
+        },
+        "10": {
+          "tours": 58,
+          "pax": 911,
+          "revenue": 1517.5,
+          "vendorCost": 850.0,
+          "grossMargin": 353.6
+        },
+        "17": {
+          "tours": 37,
+          "pax": 555,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "9": {
+          "tours": 3,
+          "pax": 9,
+          "revenue": 525.0,
+          "vendorCost": 330.0,
+          "grossMargin": 90.0
+        },
+        "15": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "18": {
+          "tours": 26,
+          "pax": 386,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "16": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 200.0,
+          "vendorCost": 120.0,
+          "grossMargin": 40.0
+        },
+        "19": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 86,
+          "pax": 1248,
+          "revenue": 1087.5,
+          "vendorCost": 630.0,
+          "grossMargin": 240.0
+        },
+        "high": {
+          "tours": 119,
+          "pax": 1958,
+          "revenue": 1905.0,
+          "vendorCost": 1110.0,
+          "grossMargin": 403.6
+        }
+      },
+      "byPaxBand": {
+        "5-10": {
+          "tours": 39,
+          "pax": 316,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 80.0
+        },
+        "11-20": {
+          "tours": 82,
+          "pax": 1226,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "21-30": {
+          "tours": 56,
+          "pax": 1378,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "1-4": {
+          "tours": 21,
+          "pax": 56,
+          "revenue": 2792.5,
+          "vendorCost": 1660.0,
+          "grossMargin": 563.6
+        },
+        "30+": {
+          "tours": 7,
+          "pax": 230,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "14": {
+          "tours": 4,
+          "pax": 47,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "15": {
+          "tours": 3,
+          "pax": 31,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "16": {
+          "tours": 5,
+          "pax": 78,
+          "revenue": 187.5,
+          "vendorCost": 110.0,
+          "grossMargin": 40.0
+        },
+        "17": {
+          "tours": 5,
+          "pax": 92,
+          "revenue": 150.0,
+          "vendorCost": 110.0,
+          "grossMargin": 10.0
+        },
+        "18": {
+          "tours": 7,
+          "pax": 112,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "19": {
+          "tours": 8,
+          "pax": 121,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "20": {
+          "tours": 7,
+          "pax": 126,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "21": {
+          "tours": 8,
+          "pax": 122,
+          "revenue": 390.0,
+          "vendorCost": 220.0,
+          "grossMargin": 92.0
+        },
+        "22": {
+          "tours": 8,
+          "pax": 113,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "23": {
+          "tours": 7,
+          "pax": 70,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 80.0
+        },
+        "24": {
+          "tours": 8,
+          "pax": 113,
+          "revenue": 200.0,
+          "vendorCost": 120.0,
+          "grossMargin": 40.0
+        },
+        "25": {
+          "tours": 7,
+          "pax": 114,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "26": {
+          "tours": 4,
+          "pax": 30,
+          "revenue": 180.0,
+          "vendorCost": 120.0,
+          "grossMargin": 24.0
+        },
+        "27": {
+          "tours": 7,
+          "pax": 58,
+          "revenue": 180.0,
+          "vendorCost": 120.0,
+          "grossMargin": 24.0
+        },
+        "28": {
+          "tours": 8,
+          "pax": 89,
+          "revenue": 367.5,
+          "vendorCost": 220.0,
+          "grossMargin": 74.0
+        },
+        "29": {
+          "tours": 7,
+          "pax": 111,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30": {
+          "tours": 6,
+          "pax": 113,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "31": {
+          "tours": 6,
+          "pax": 108,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "32": {
+          "tours": 8,
+          "pax": 113,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "33": {
+          "tours": 5,
+          "pax": 78,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "34": {
+          "tours": 8,
+          "pax": 163,
+          "revenue": 187.5,
+          "vendorCost": 110.0,
+          "grossMargin": 40.0
+        },
+        "35": {
+          "tours": 6,
+          "pax": 108,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "36": {
+          "tours": 7,
+          "pax": 127,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "37": {
+          "tours": 7,
+          "pax": 179,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "38": {
+          "tours": 7,
+          "pax": 167,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 40.0
+        },
+        "39": {
+          "tours": 8,
+          "pax": 159,
+          "revenue": 260.0,
+          "vendorCost": 150.0,
+          "grossMargin": 47.6
+        },
+        "40": {
+          "tours": 3,
+          "pax": 80,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "41": {
+          "tours": 8,
+          "pax": 130,
+          "revenue": 180.0,
+          "vendorCost": 80.0,
+          "grossMargin": 64.0
+        },
+        "42": {
+          "tours": 6,
+          "pax": 107,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "43": {
+          "tours": 4,
+          "pax": 44,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "44": {
+          "tours": 7,
+          "pax": 59,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "45": {
+          "tours": 4,
+          "pax": 29,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "46": {
+          "tours": 2,
+          "pax": 15,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "4": {
+          "tours": 18,
+          "pax": 273,
+          "revenue": 337.5,
+          "vendorCost": 220.0,
+          "grossMargin": 50.0
+        },
+        "5": {
+          "tours": 35,
+          "pax": 546,
+          "revenue": 570.0,
+          "vendorCost": 330.0,
+          "grossMargin": 126.0
+        },
+        "6": {
+          "tours": 28,
+          "pax": 350,
+          "revenue": 580.0,
+          "vendorCost": 320.0,
+          "grossMargin": 144.0
+        },
+        "7": {
+          "tours": 33,
+          "pax": 471,
+          "revenue": 547.5,
+          "vendorCost": 340.0,
+          "grossMargin": 98.0
+        },
+        "8": {
+          "tours": 28,
+          "pax": 470,
+          "revenue": 367.5,
+          "vendorCost": 220.0,
+          "grossMargin": 74.0
+        },
+        "9": {
+          "tours": 30,
+          "pax": 667,
+          "revenue": 410.0,
+          "vendorCost": 230.0,
+          "grossMargin": 87.6
+        },
+        "10": {
+          "tours": 26,
+          "pax": 384,
+          "revenue": 180.0,
+          "vendorCost": 80.0,
+          "grossMargin": 64.0
+        },
+        "11": {
+          "tours": 7,
+          "pax": 45,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      }
     }
   },
   {
@@ -58009,6 +66748,496 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 2455.0,
+      "vendorCost": 1510.0,
+      "grossMargin": 448.0,
+      "byChannel": {
+        "web": {
+          "tours": 183,
+          "pax": 3290,
+          "revenue": 350.0,
+          "vendorCost": 160.0,
+          "grossMargin": 114.0
+        },
+        "b2b": {
+          "tours": 13,
+          "pax": 51,
+          "revenue": 2105.0,
+          "vendorCost": 1350.0,
+          "grossMargin": 334.0
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 183,
+          "pax": 3290,
+          "revenue": 350.0,
+          "vendorCost": 160.0,
+          "grossMargin": 114.0
+        },
+        "Taste Dalmatia": {
+          "tours": 5,
+          "pax": 17,
+          "revenue": 750.0,
+          "vendorCost": 550.0,
+          "grossMargin": 50.0
+        },
+        "Roundabout": {
+          "tours": 8,
+          "pax": 34,
+          "revenue": 1355.0,
+          "vendorCost": 800.0,
+          "grossMargin": 284.0
+        }
+      },
+      "byDow": {
+        "Wed": {
+          "tours": 33,
+          "pax": 589,
+          "revenue": 0.0,
+          "vendorCost": 110.0,
+          "grossMargin": -110.0
+        },
+        "Thu": {
+          "tours": 31,
+          "pax": 553,
+          "revenue": 350.0,
+          "vendorCost": 160.0,
+          "grossMargin": 120.0
+        },
+        "Tue": {
+          "tours": 27,
+          "pax": 431,
+          "revenue": 367.5,
+          "vendorCost": 220.0,
+          "grossMargin": 74.0
+        },
+        "Fri": {
+          "tours": 30,
+          "pax": 506,
+          "revenue": 847.5,
+          "vendorCost": 490.0,
+          "grossMargin": 182.0
+        },
+        "Sat": {
+          "tours": 28,
+          "pax": 466,
+          "revenue": 180.0,
+          "vendorCost": 120.0,
+          "grossMargin": 24.0
+        },
+        "Mon": {
+          "tours": 26,
+          "pax": 418,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 40.0
+        },
+        "Sun": {
+          "tours": 21,
+          "pax": 378,
+          "revenue": 560.0,
+          "vendorCost": 330.0,
+          "grossMargin": 118.0
+        }
+      },
+      "byTime": {
+        "11": {
+          "tours": 56,
+          "pax": 1062,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 80.0
+        },
+        "16": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 187.5,
+          "vendorCost": 110.0,
+          "grossMargin": 40.0
+        },
+        "17": {
+          "tours": 39,
+          "pax": 632,
+          "revenue": 517.5,
+          "vendorCost": 410.0,
+          "grossMargin": 4.0
+        },
+        "10": {
+          "tours": 70,
+          "pax": 1184,
+          "revenue": 877.5,
+          "vendorCost": 530.0,
+          "grossMargin": 172.0
+        },
+        "14": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 34.0
+        },
+        "13": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 185.0,
+          "vendorCost": 110.0,
+          "grossMargin": 38.0
+        },
+        "18": {
+          "tours": 26,
+          "pax": 448,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "9": {
+          "tours": 2,
+          "pax": 7,
+          "revenue": 337.5,
+          "vendorCost": 190.0,
+          "grossMargin": 80.0
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 64,
+          "pax": 1136,
+          "revenue": 522.5,
+          "vendorCost": 300.0,
+          "grossMargin": 112.0
+        },
+        "high": {
+          "tours": 132,
+          "pax": 2205,
+          "revenue": 1932.5,
+          "vendorCost": 1210.0,
+          "grossMargin": 336.0
+        }
+      },
+      "byPaxBand": {
+        "5-10": {
+          "tours": 32,
+          "pax": 251,
+          "revenue": 510.0,
+          "vendorCost": 310.0,
+          "grossMargin": 98.0
+        },
+        "11-20": {
+          "tours": 87,
+          "pax": 1352,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "21-30": {
+          "tours": 48,
+          "pax": 1190,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "1-4": {
+          "tours": 14,
+          "pax": 41,
+          "revenue": 1745.0,
+          "vendorCost": 1120.0,
+          "grossMargin": 270.0
+        },
+        "30+": {
+          "tours": 15,
+          "pax": 507,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 80.0
+        }
+      },
+      "byWeek": {
+        "14": {
+          "tours": 2,
+          "pax": 21,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "15": {
+          "tours": 4,
+          "pax": 51,
+          "revenue": 187.5,
+          "vendorCost": 110.0,
+          "grossMargin": 40.0
+        },
+        "16": {
+          "tours": 4,
+          "pax": 96,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "17": {
+          "tours": 6,
+          "pax": 117,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "18": {
+          "tours": 2,
+          "pax": 37,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "19": {
+          "tours": 7,
+          "pax": 119,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 34.0
+        },
+        "20": {
+          "tours": 5,
+          "pax": 89,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "21": {
+          "tours": 7,
+          "pax": 127,
+          "revenue": 185.0,
+          "vendorCost": 110.0,
+          "grossMargin": 38.0
+        },
+        "22": {
+          "tours": 4,
+          "pax": 60,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "23": {
+          "tours": 9,
+          "pax": 148,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "24": {
+          "tours": 7,
+          "pax": 97,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "25": {
+          "tours": 7,
+          "pax": 102,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "26": {
+          "tours": 10,
+          "pax": 171,
+          "revenue": 0.0,
+          "vendorCost": 110.0,
+          "grossMargin": -110.0
+        },
+        "27": {
+          "tours": 7,
+          "pax": 117,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "28": {
+          "tours": 8,
+          "pax": 84,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 40.0
+        },
+        "29": {
+          "tours": 8,
+          "pax": 132,
+          "revenue": 187.5,
+          "vendorCost": 110.0,
+          "grossMargin": 40.0
+        },
+        "30": {
+          "tours": 7,
+          "pax": 106,
+          "revenue": 180.0,
+          "vendorCost": 120.0,
+          "grossMargin": 24.0
+        },
+        "31": {
+          "tours": 6,
+          "pax": 122,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "32": {
+          "tours": 10,
+          "pax": 189,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 80.0
+        },
+        "33": {
+          "tours": 7,
+          "pax": 111,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 40.0
+        },
+        "34": {
+          "tours": 8,
+          "pax": 111,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "35": {
+          "tours": 7,
+          "pax": 117,
+          "revenue": 187.5,
+          "vendorCost": 110.0,
+          "grossMargin": 40.0
+        },
+        "36": {
+          "tours": 8,
+          "pax": 178,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 40.0
+        },
+        "37": {
+          "tours": 6,
+          "pax": 125,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "38": {
+          "tours": 8,
+          "pax": 196,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "39": {
+          "tours": 7,
+          "pax": 76,
+          "revenue": 187.5,
+          "vendorCost": 110.0,
+          "grossMargin": 40.0
+        },
+        "40": {
+          "tours": 7,
+          "pax": 160,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "41": {
+          "tours": 6,
+          "pax": 129,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "42": {
+          "tours": 5,
+          "pax": 79,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "43": {
+          "tours": 4,
+          "pax": 57,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "45": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "46": {
+          "tours": 2,
+          "pax": 15,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "4": {
+          "tours": 17,
+          "pax": 295,
+          "revenue": 187.5,
+          "vendorCost": 110.0,
+          "grossMargin": 40.0
+        },
+        "5": {
+          "tours": 24,
+          "pax": 422,
+          "revenue": 335.0,
+          "vendorCost": 190.0,
+          "grossMargin": 72.0
+        },
+        "6": {
+          "tours": 34,
+          "pax": 553,
+          "revenue": 0.0,
+          "vendorCost": 110.0,
+          "grossMargin": -110.0
+        },
+        "7": {
+          "tours": 32,
+          "pax": 474,
+          "revenue": 697.5,
+          "vendorCost": 420.0,
+          "grossMargin": 138.0
+        },
+        "8": {
+          "tours": 35,
+          "pax": 580,
+          "revenue": 717.5,
+          "vendorCost": 380.0,
+          "grossMargin": 194.0
+        },
+        "9": {
+          "tours": 31,
+          "pax": 598,
+          "revenue": 517.5,
+          "vendorCost": 300.0,
+          "grossMargin": 114.0
+        },
+        "10": {
+          "tours": 20,
+          "pax": 402,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11": {
+          "tours": 3,
+          "pax": 17,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      }
     }
   },
   {
@@ -60955,6 +70184,440 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 1600.0,
+      "vendorCost": 930.0,
+      "grossMargin": 350.0,
+      "byChannel": {
+        "web": {
+          "tours": 170,
+          "pax": 3046,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "b2b": {
+          "tours": 9,
+          "pax": 79,
+          "revenue": 1600.0,
+          "vendorCost": 930.0,
+          "grossMargin": 350.0
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 171,
+          "pax": 3084,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 80.0
+        },
+        "Taste Dalmatia": {
+          "tours": 3,
+          "pax": 25,
+          "revenue": 560.0,
+          "vendorCost": 330.0,
+          "grossMargin": 118.0
+        },
+        "Roundabout": {
+          "tours": 5,
+          "pax": 16,
+          "revenue": 840.0,
+          "vendorCost": 520.0,
+          "grossMargin": 152.0
+        }
+      },
+      "byDow": {
+        "Wed": {
+          "tours": 18,
+          "pax": 328,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Sat": {
+          "tours": 26,
+          "pax": 557,
+          "revenue": 385.0,
+          "vendorCost": 190.0,
+          "grossMargin": 118.0
+        },
+        "Tue": {
+          "tours": 28,
+          "pax": 437,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "Fri": {
+          "tours": 22,
+          "pax": 362,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "Sun": {
+          "tours": 26,
+          "pax": 478,
+          "revenue": 375.0,
+          "vendorCost": 220.0,
+          "grossMargin": 80.0
+        },
+        "Mon": {
+          "tours": 35,
+          "pax": 563,
+          "revenue": 480.0,
+          "vendorCost": 300.0,
+          "grossMargin": 84.0
+        },
+        "Thu": {
+          "tours": 24,
+          "pax": 400,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byTime": {
+        "11": {
+          "tours": 65,
+          "pax": 1239,
+          "revenue": 187.5,
+          "vendorCost": 110.0,
+          "grossMargin": 40.0
+        },
+        "17": {
+          "tours": 40,
+          "pax": 714,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "10": {
+          "tours": 48,
+          "pax": 828,
+          "revenue": 1047.5,
+          "vendorCost": 600.0,
+          "grossMargin": 238.0
+        },
+        "18": {
+          "tours": 24,
+          "pax": 336,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "9": {
+          "tours": 2,
+          "pax": 8,
+          "revenue": 365.0,
+          "vendorCost": 220.0,
+          "grossMargin": 72.0
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 64,
+          "pax": 1115,
+          "revenue": 675.0,
+          "vendorCost": 410.0,
+          "grossMargin": 130.0
+        },
+        "high": {
+          "tours": 115,
+          "pax": 2010,
+          "revenue": 925.0,
+          "vendorCost": 520.0,
+          "grossMargin": 220.0
+        }
+      },
+      "byPaxBand": {
+        "11-20": {
+          "tours": 94,
+          "pax": 1488,
+          "revenue": 187.5,
+          "vendorCost": 110.0,
+          "grossMargin": 40.0
+        },
+        "5-10": {
+          "tours": 23,
+          "pax": 187,
+          "revenue": 187.5,
+          "vendorCost": 110.0,
+          "grossMargin": 40.0
+        },
+        "21-30": {
+          "tours": 49,
+          "pax": 1197,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "1-4": {
+          "tours": 6,
+          "pax": 20,
+          "revenue": 1025.0,
+          "vendorCost": 630.0,
+          "grossMargin": 190.0
+        },
+        "30+": {
+          "tours": 7,
+          "pax": 233,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 80.0
+        }
+      },
+      "byWeek": {
+        "16": {
+          "tours": 4,
+          "pax": 72,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "17": {
+          "tours": 6,
+          "pax": 85,
+          "revenue": 187.5,
+          "vendorCost": 110.0,
+          "grossMargin": 40.0
+        },
+        "18": {
+          "tours": 8,
+          "pax": 113,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "19": {
+          "tours": 6,
+          "pax": 97,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "20": {
+          "tours": 7,
+          "pax": 117,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "21": {
+          "tours": 5,
+          "pax": 83,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "22": {
+          "tours": 10,
+          "pax": 159,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "23": {
+          "tours": 6,
+          "pax": 101,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "24": {
+          "tours": 6,
+          "pax": 90,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "25": {
+          "tours": 5,
+          "pax": 77,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "26": {
+          "tours": 6,
+          "pax": 74,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "27": {
+          "tours": 8,
+          "pax": 119,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "28": {
+          "tours": 7,
+          "pax": 90,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "29": {
+          "tours": 7,
+          "pax": 82,
+          "revenue": 185.0,
+          "vendorCost": 110.0,
+          "grossMargin": 38.0
+        },
+        "30": {
+          "tours": 6,
+          "pax": 74,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "31": {
+          "tours": 6,
+          "pax": 106,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "32": {
+          "tours": 5,
+          "pax": 93,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "33": {
+          "tours": 8,
+          "pax": 142,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "34": {
+          "tours": 7,
+          "pax": 153,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "35": {
+          "tours": 7,
+          "pax": 102,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "36": {
+          "tours": 7,
+          "pax": 140,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "37": {
+          "tours": 7,
+          "pax": 131,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "38": {
+          "tours": 6,
+          "pax": 175,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 80.0
+        },
+        "39": {
+          "tours": 7,
+          "pax": 187,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "40": {
+          "tours": 6,
+          "pax": 139,
+          "revenue": 187.5,
+          "vendorCost": 110.0,
+          "grossMargin": 40.0
+        },
+        "41": {
+          "tours": 6,
+          "pax": 131,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "42": {
+          "tours": 6,
+          "pax": 134,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "43": {
+          "tours": 4,
+          "pax": 59,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "4": {
+          "tours": 13,
+          "pax": 188,
+          "revenue": 187.5,
+          "vendorCost": 110.0,
+          "grossMargin": 40.0
+        },
+        "5": {
+          "tours": 31,
+          "pax": 508,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "6": {
+          "tours": 27,
+          "pax": 397,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "7": {
+          "tours": 29,
+          "pax": 395,
+          "revenue": 545.0,
+          "vendorCost": 330.0,
+          "grossMargin": 106.0
+        },
+        "8": {
+          "tours": 30,
+          "pax": 541,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "9": {
+          "tours": 29,
+          "pax": 677,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 80.0
+        },
+        "10": {
+          "tours": 20,
+          "pax": 419,
+          "revenue": 367.5,
+          "vendorCost": 220.0,
+          "grossMargin": 74.0
+        }
+      }
     }
   },
   {
@@ -63553,6 +73216,405 @@ const guideStats25 = [
               "pax": 15
             }
           }
+        }
+      }
+    },
+    "mgmt": {
+      "revenue": 300.0,
+      "vendorCost": 80.0,
+      "grossMargin": 148.0,
+      "byChannel": {
+        "web": {
+          "tours": 193,
+          "pax": 4201,
+          "revenue": 300.0,
+          "vendorCost": 80.0,
+          "grossMargin": 148.0
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 193,
+          "pax": 4201,
+          "revenue": 300.0,
+          "vendorCost": 80.0,
+          "grossMargin": 148.0
+        }
+      },
+      "byDow": {
+        "Thu": {
+          "tours": 33,
+          "pax": 719,
+          "revenue": 300.0,
+          "vendorCost": 80.0,
+          "grossMargin": 148.0
+        },
+        "Sat": {
+          "tours": 23,
+          "pax": 513,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Sun": {
+          "tours": 19,
+          "pax": 400,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Mon": {
+          "tours": 30,
+          "pax": 695,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Fri": {
+          "tours": 33,
+          "pax": 693,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Tue": {
+          "tours": 33,
+          "pax": 733,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Wed": {
+          "tours": 22,
+          "pax": 448,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byTime": {
+        "10": {
+          "tours": 76,
+          "pax": 1689,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "17": {
+          "tours": 30,
+          "pax": 567,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11": {
+          "tours": 31,
+          "pax": 702,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "12": {
+          "tours": 1,
+          "pax": 15,
+          "revenue": 300.0,
+          "vendorCost": 80.0,
+          "grossMargin": 148.0
+        },
+        "18": {
+          "tours": 31,
+          "pax": 684,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "19": {
+          "tours": 18,
+          "pax": 416,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "20": {
+          "tours": 6,
+          "pax": 128,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 45,
+          "pax": 843,
+          "revenue": 300.0,
+          "vendorCost": 80.0,
+          "grossMargin": 148.0
+        },
+        "high": {
+          "tours": 148,
+          "pax": 3358,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byPaxBand": {
+        "11-20": {
+          "tours": 73,
+          "pax": 1260,
+          "revenue": 300.0,
+          "vendorCost": 80.0,
+          "grossMargin": 148.0
+        },
+        "21-30": {
+          "tours": 105,
+          "pax": 2581,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "5-10": {
+          "tours": 5,
+          "pax": 33,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30+": {
+          "tours": 10,
+          "pax": 327,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "18": {
+          "tours": 5,
+          "pax": 84,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "19": {
+          "tours": 4,
+          "pax": 78,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "20": {
+          "tours": 5,
+          "pax": 104,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "21": {
+          "tours": 7,
+          "pax": 164,
+          "revenue": 300.0,
+          "vendorCost": 80.0,
+          "grossMargin": 148.0
+        },
+        "22": {
+          "tours": 6,
+          "pax": 102,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "23": {
+          "tours": 6,
+          "pax": 139,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "24": {
+          "tours": 9,
+          "pax": 229,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "25": {
+          "tours": 9,
+          "pax": 198,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "26": {
+          "tours": 7,
+          "pax": 169,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "27": {
+          "tours": 10,
+          "pax": 232,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "28": {
+          "tours": 7,
+          "pax": 148,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "29": {
+          "tours": 9,
+          "pax": 213,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30": {
+          "tours": 9,
+          "pax": 205,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "31": {
+          "tours": 9,
+          "pax": 207,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "32": {
+          "tours": 9,
+          "pax": 199,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "33": {
+          "tours": 11,
+          "pax": 254,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "34": {
+          "tours": 7,
+          "pax": 142,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "35": {
+          "tours": 7,
+          "pax": 152,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "36": {
+          "tours": 12,
+          "pax": 281,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "37": {
+          "tours": 8,
+          "pax": 170,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "38": {
+          "tours": 10,
+          "pax": 225,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "39": {
+          "tours": 7,
+          "pax": 149,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "40": {
+          "tours": 6,
+          "pax": 125,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "41": {
+          "tours": 5,
+          "pax": 83,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "42": {
+          "tours": 5,
+          "pax": 95,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "43": {
+          "tours": 4,
+          "pax": 54,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "5": {
+          "tours": 26,
+          "pax": 503,
+          "revenue": 300.0,
+          "vendorCost": 80.0,
+          "grossMargin": 148.0
+        },
+        "6": {
+          "tours": 33,
+          "pax": 794,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "7": {
+          "tours": 40,
+          "pax": 917,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "8": {
+          "tours": 37,
+          "pax": 805,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "9": {
+          "tours": 38,
+          "pax": 842,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "10": {
+          "tours": 19,
+          "pax": 340,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
         }
       }
     }
@@ -67559,6 +77621,552 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 380.0,
+      "vendorCost": 220.0,
+      "grossMargin": 84.0,
+      "byChannel": {
+        "web": {
+          "tours": 280,
+          "pax": 5512,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "b2b": {
+          "tours": 2,
+          "pax": 6,
+          "revenue": 380.0,
+          "vendorCost": 220.0,
+          "grossMargin": 84.0
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 280,
+          "pax": 5512,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Taste Dalmatia": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 200.0,
+          "vendorCost": 110.0,
+          "grossMargin": 50.0
+        },
+        "Roundabout": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        }
+      },
+      "byDow": {
+        "Tue": {
+          "tours": 43,
+          "pax": 877,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Thu": {
+          "tours": 47,
+          "pax": 917,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Sat": {
+          "tours": 33,
+          "pax": 585,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "Fri": {
+          "tours": 37,
+          "pax": 729,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Mon": {
+          "tours": 44,
+          "pax": 893,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Wed": {
+          "tours": 39,
+          "pax": 677,
+          "revenue": 200.0,
+          "vendorCost": 110.0,
+          "grossMargin": 50.0
+        },
+        "Sun": {
+          "tours": 39,
+          "pax": 840,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byTime": {
+        "11": {
+          "tours": 71,
+          "pax": 1414,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "17": {
+          "tours": 61,
+          "pax": 1158,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "10": {
+          "tours": 92,
+          "pax": 1731,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "16": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 200.0,
+          "vendorCost": 110.0,
+          "grossMargin": 50.0
+        },
+        "18": {
+          "tours": 32,
+          "pax": 687,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "19": {
+          "tours": 21,
+          "pax": 442,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "20": {
+          "tours": 4,
+          "pax": 82,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "bySeason": {
+        "low": {
+          "tours": 9,
+          "pax": 120,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "shoulder": {
+          "tours": 113,
+          "pax": 2045,
+          "revenue": 200.0,
+          "vendorCost": 110.0,
+          "grossMargin": 50.0
+        },
+        "high": {
+          "tours": 160,
+          "pax": 3353,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        }
+      },
+      "byPaxBand": {
+        "5-10": {
+          "tours": 21,
+          "pax": 176,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "1-4": {
+          "tours": 3,
+          "pax": 10,
+          "revenue": 380.0,
+          "vendorCost": 220.0,
+          "grossMargin": 84.0
+        },
+        "11-20": {
+          "tours": 128,
+          "pax": 2141,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "21-30": {
+          "tours": 120,
+          "pax": 2868,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30+": {
+          "tours": 10,
+          "pax": 323,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "10": {
+          "tours": 3,
+          "pax": 29,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11": {
+          "tours": 2,
+          "pax": 35,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "12": {
+          "tours": 1,
+          "pax": 6,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "13": {
+          "tours": 2,
+          "pax": 28,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "14": {
+          "tours": 12,
+          "pax": 186,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "15": {
+          "tours": 12,
+          "pax": 219,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "16": {
+          "tours": 11,
+          "pax": 280,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "17": {
+          "tours": 12,
+          "pax": 253,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "18": {
+          "tours": 9,
+          "pax": 183,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "19": {
+          "tours": 5,
+          "pax": 83,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "20": {
+          "tours": 5,
+          "pax": 76,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "21": {
+          "tours": 5,
+          "pax": 93,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "22": {
+          "tours": 7,
+          "pax": 128,
+          "revenue": 200.0,
+          "vendorCost": 110.0,
+          "grossMargin": 50.0
+        },
+        "23": {
+          "tours": 11,
+          "pax": 238,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "24": {
+          "tours": 9,
+          "pax": 189,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "25": {
+          "tours": 9,
+          "pax": 184,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "26": {
+          "tours": 9,
+          "pax": 168,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "27": {
+          "tours": 8,
+          "pax": 163,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "28": {
+          "tours": 7,
+          "pax": 146,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "29": {
+          "tours": 11,
+          "pax": 198,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30": {
+          "tours": 9,
+          "pax": 206,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "31": {
+          "tours": 9,
+          "pax": 203,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "32": {
+          "tours": 9,
+          "pax": 228,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "33": {
+          "tours": 6,
+          "pax": 128,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "34": {
+          "tours": 11,
+          "pax": 245,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "35": {
+          "tours": 9,
+          "pax": 173,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "36": {
+          "tours": 10,
+          "pax": 230,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "37": {
+          "tours": 9,
+          "pax": 181,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "38": {
+          "tours": 10,
+          "pax": 185,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "39": {
+          "tours": 10,
+          "pax": 204,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "40": {
+          "tours": 6,
+          "pax": 125,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "41": {
+          "tours": 7,
+          "pax": 125,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "42": {
+          "tours": 3,
+          "pax": 55,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "43": {
+          "tours": 8,
+          "pax": 136,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "44": {
+          "tours": 6,
+          "pax": 87,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "45": {
+          "tours": 3,
+          "pax": 40,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "46": {
+          "tours": 3,
+          "pax": 36,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "47": {
+          "tours": 1,
+          "pax": 20,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "48": {
+          "tours": 3,
+          "pax": 26,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "3": {
+          "tours": 9,
+          "pax": 120,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "4": {
+          "tours": 52,
+          "pax": 1041,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "5": {
+          "tours": 23,
+          "pax": 391,
+          "revenue": 200.0,
+          "vendorCost": 110.0,
+          "grossMargin": 50.0
+        },
+        "6": {
+          "tours": 40,
+          "pax": 826,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "7": {
+          "tours": 41,
+          "pax": 846,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "8": {
+          "tours": 38,
+          "pax": 844,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "9": {
+          "tours": 41,
+          "pax": 837,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "10": {
+          "tours": 27,
+          "pax": 478,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11": {
+          "tours": 11,
+          "pax": 135,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      }
     }
   },
   {
@@ -70994,6 +81602,510 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 5540.0,
+      "vendorCost": 3310.0,
+      "grossMargin": 1018.1,
+      "byChannel": {
+        "web": {
+          "tours": 158,
+          "pax": 3727,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "b2b": {
+          "tours": 30,
+          "pax": 126,
+          "revenue": 5540.0,
+          "vendorCost": 3310.0,
+          "grossMargin": 1018.1
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 161,
+          "pax": 3735,
+          "revenue": 740.0,
+          "vendorCost": 330.0,
+          "grossMargin": 147.0
+        },
+        "Taste Dalmatia": {
+          "tours": 6,
+          "pax": 20,
+          "revenue": 1122.5,
+          "vendorCost": 670.0,
+          "grossMargin": 239.1
+        },
+        "Roundabout": {
+          "tours": 18,
+          "pax": 84,
+          "revenue": 3197.5,
+          "vendorCost": 2030.0,
+          "grossMargin": 528.0
+        },
+        "Grape Escapes": {
+          "tours": 2,
+          "pax": 6,
+          "revenue": 300.0,
+          "vendorCost": 160.0,
+          "grossMargin": 80.0
+        },
+        "Atlantida Travel": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 180.0,
+          "vendorCost": 120.0,
+          "grossMargin": 24.0
+        }
+      },
+      "byDow": {
+        "Mon": {
+          "tours": 25,
+          "pax": 508,
+          "revenue": 660.0,
+          "vendorCost": 340.0,
+          "grossMargin": 73.0
+        },
+        "Sat": {
+          "tours": 37,
+          "pax": 770,
+          "revenue": 1227.5,
+          "vendorCost": 800.0,
+          "grossMargin": 182.0
+        },
+        "Sun": {
+          "tours": 37,
+          "pax": 824,
+          "revenue": 907.5,
+          "vendorCost": 570.0,
+          "grossMargin": 156.0
+        },
+        "Fri": {
+          "tours": 28,
+          "pax": 504,
+          "revenue": 1420.0,
+          "vendorCost": 880.0,
+          "grossMargin": 267.1
+        },
+        "Tue": {
+          "tours": 17,
+          "pax": 342,
+          "revenue": 440.0,
+          "vendorCost": 230.0,
+          "grossMargin": 122.0
+        },
+        "Thu": {
+          "tours": 20,
+          "pax": 392,
+          "revenue": 187.5,
+          "vendorCost": 110.0,
+          "grossMargin": 40.0
+        },
+        "Wed": {
+          "tours": 24,
+          "pax": 513,
+          "revenue": 697.5,
+          "vendorCost": 380.0,
+          "grossMargin": 178.0
+        }
+      },
+      "byTime": {
+        "11": {
+          "tours": 44,
+          "pax": 1077,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "17": {
+          "tours": 24,
+          "pax": 455,
+          "revenue": 360.0,
+          "vendorCost": 230.0,
+          "grossMargin": 58.0
+        },
+        "16": {
+          "tours": 4,
+          "pax": 12,
+          "revenue": 740.0,
+          "vendorCost": 450.0,
+          "grossMargin": 153.1
+        },
+        "10": {
+          "tours": 47,
+          "pax": 843,
+          "revenue": 2297.5,
+          "vendorCost": 1420.0,
+          "grossMargin": 418.0
+        },
+        "18": {
+          "tours": 25,
+          "pax": 548,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "14": {
+          "tours": 3,
+          "pax": 9,
+          "revenue": 600.0,
+          "vendorCost": 310.0,
+          "grossMargin": 55.0
+        },
+        "9": {
+          "tours": 6,
+          "pax": 23,
+          "revenue": 1182.5,
+          "vendorCost": 670.0,
+          "grossMargin": 276.0
+        },
+        "19": {
+          "tours": 10,
+          "pax": 287,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "20": {
+          "tours": 23,
+          "pax": 582,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "12": {
+          "tours": 1,
+          "pax": 9,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "15": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 180.0,
+          "vendorCost": 120.0,
+          "grossMargin": 24.0
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 45,
+          "pax": 628,
+          "revenue": 2140.0,
+          "vendorCost": 1190.0,
+          "grossMargin": 418.1
+        },
+        "high": {
+          "tours": 143,
+          "pax": 3225,
+          "revenue": 3400.0,
+          "vendorCost": 2120.0,
+          "grossMargin": 600.0
+        }
+      },
+      "byPaxBand": {
+        "11-20": {
+          "tours": 42,
+          "pax": 691,
+          "revenue": 120.0,
+          "vendorCost": 110.0,
+          "grossMargin": -14.0
+        },
+        "21-30": {
+          "tours": 74,
+          "pax": 1896,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "1-4": {
+          "tours": 23,
+          "pax": 72,
+          "revenue": 4140.0,
+          "vendorCost": 2400.0,
+          "grossMargin": 808.1
+        },
+        "5-10": {
+          "tours": 17,
+          "pax": 119,
+          "revenue": 1280.0,
+          "vendorCost": 800.0,
+          "grossMargin": 224.0
+        },
+        "30+": {
+          "tours": 32,
+          "pax": 1075,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "15": {
+          "tours": 2,
+          "pax": 44,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "16": {
+          "tours": 1,
+          "pax": 27,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "17": {
+          "tours": 1,
+          "pax": 27,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "18": {
+          "tours": 1,
+          "pax": 12,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "19": {
+          "tours": 2,
+          "pax": 41,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "20": {
+          "tours": 3,
+          "pax": 20,
+          "revenue": 365.0,
+          "vendorCost": 220.0,
+          "grossMargin": 83.1
+        },
+        "21": {
+          "tours": 3,
+          "pax": 45,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "22": {
+          "tours": 5,
+          "pax": 35,
+          "revenue": 675.0,
+          "vendorCost": 440.0,
+          "grossMargin": 100.0
+        },
+        "23": {
+          "tours": 11,
+          "pax": 213,
+          "revenue": 400.0,
+          "vendorCost": 240.0,
+          "grossMargin": 80.0
+        },
+        "24": {
+          "tours": 3,
+          "pax": 54,
+          "revenue": 180.0,
+          "vendorCost": 120.0,
+          "grossMargin": 24.0
+        },
+        "25": {
+          "tours": 4,
+          "pax": 59,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 40.0
+        },
+        "26": {
+          "tours": 8,
+          "pax": 143,
+          "revenue": 487.5,
+          "vendorCost": 310.0,
+          "grossMargin": 80.0
+        },
+        "27": {
+          "tours": 6,
+          "pax": 132,
+          "revenue": 180.0,
+          "vendorCost": 120.0,
+          "grossMargin": 24.0
+        },
+        "28": {
+          "tours": 7,
+          "pax": 122,
+          "revenue": 367.5,
+          "vendorCost": 230.0,
+          "grossMargin": 64.0
+        },
+        "29": {
+          "tours": 8,
+          "pax": 201,
+          "revenue": 180.0,
+          "vendorCost": 120.0,
+          "grossMargin": 24.0
+        },
+        "30": {
+          "tours": 9,
+          "pax": 199,
+          "revenue": 180.0,
+          "vendorCost": 120.0,
+          "grossMargin": 24.0
+        },
+        "31": {
+          "tours": 11,
+          "pax": 264,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "32": {
+          "tours": 9,
+          "pax": 210,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "33": {
+          "tours": 12,
+          "pax": 315,
+          "revenue": 180.0,
+          "vendorCost": 120.0,
+          "grossMargin": 24.0
+        },
+        "34": {
+          "tours": 9,
+          "pax": 280,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "35": {
+          "tours": 6,
+          "pax": 161,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "36": {
+          "tours": 7,
+          "pax": 216,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "37": {
+          "tours": 9,
+          "pax": 186,
+          "revenue": 187.5,
+          "vendorCost": 110.0,
+          "grossMargin": 40.0
+        },
+        "38": {
+          "tours": 9,
+          "pax": 201,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "39": {
+          "tours": 12,
+          "pax": 238,
+          "revenue": 360.0,
+          "vendorCost": 220.0,
+          "grossMargin": 68.0
+        },
+        "40": {
+          "tours": 7,
+          "pax": 108,
+          "revenue": 367.5,
+          "vendorCost": 190.0,
+          "grossMargin": 104.0
+        },
+        "41": {
+          "tours": 4,
+          "pax": 50,
+          "revenue": 360.0,
+          "vendorCost": 230.0,
+          "grossMargin": 58.0
+        },
+        "42": {
+          "tours": 5,
+          "pax": 106,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "43": {
+          "tours": 7,
+          "pax": 77,
+          "revenue": 560.0,
+          "vendorCost": 220.0,
+          "grossMargin": 113.0
+        },
+        "44": {
+          "tours": 7,
+          "pax": 67,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "4": {
+          "tours": 4,
+          "pax": 98,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "5": {
+          "tours": 12,
+          "pax": 135,
+          "revenue": 852.5,
+          "vendorCost": 550.0,
+          "grossMargin": 143.1
+        },
+        "6": {
+          "tours": 29,
+          "pax": 508,
+          "revenue": 1405.0,
+          "vendorCost": 860.0,
+          "grossMargin": 264.0
+        },
+        "7": {
+          "tours": 34,
+          "pax": 762,
+          "revenue": 907.5,
+          "vendorCost": 590.0,
+          "grossMargin": 136.0
+        },
+        "8": {
+          "tours": 42,
+          "pax": 1101,
+          "revenue": 540.0,
+          "vendorCost": 340.0,
+          "grossMargin": 92.0
+        },
+        "9": {
+          "tours": 38,
+          "pax": 854,
+          "revenue": 547.5,
+          "vendorCost": 330.0,
+          "grossMargin": 108.0
+        },
+        "10": {
+          "tours": 29,
+          "pax": 395,
+          "revenue": 1287.5,
+          "vendorCost": 640.0,
+          "grossMargin": 275.0
+        }
+      }
     }
   },
   {
@@ -72879,6 +83991,419 @@ const guideStats25 = [
               "pax": 2
             }
           }
+        }
+      }
+    },
+    "mgmt": {
+      "revenue": 1762.5,
+      "vendorCost": 1040.0,
+      "grossMargin": 370.0,
+      "byChannel": {
+        "web": {
+          "tours": 86,
+          "pax": 1684,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "b2b": {
+          "tours": 10,
+          "pax": 23,
+          "revenue": 1762.5,
+          "vendorCost": 1040.0,
+          "grossMargin": 370.0
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 86,
+          "pax": 1684,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Roundabout": {
+          "tours": 5,
+          "pax": 13,
+          "revenue": 870.0,
+          "vendorCost": 520.0,
+          "grossMargin": 176.0
+        },
+        "Taste Dalmatia": {
+          "tours": 4,
+          "pax": 8,
+          "revenue": 712.5,
+          "vendorCost": 410.0,
+          "grossMargin": 160.0
+        },
+        "Grape Escapes": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        }
+      },
+      "byDow": {
+        "Sat": {
+          "tours": 22,
+          "pax": 368,
+          "revenue": 697.5,
+          "vendorCost": 410.0,
+          "grossMargin": 148.0
+        },
+        "Sun": {
+          "tours": 19,
+          "pax": 351,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "Thu": {
+          "tours": 13,
+          "pax": 205,
+          "revenue": 187.5,
+          "vendorCost": 110.0,
+          "grossMargin": 40.0
+        },
+        "Mon": {
+          "tours": 10,
+          "pax": 180,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 40.0
+        },
+        "Fri": {
+          "tours": 15,
+          "pax": 289,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Wed": {
+          "tours": 10,
+          "pax": 179,
+          "revenue": 367.5,
+          "vendorCost": 220.0,
+          "grossMargin": 74.0
+        },
+        "Tue": {
+          "tours": 7,
+          "pax": 135,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        }
+      },
+      "byTime": {
+        "17": {
+          "tours": 8,
+          "pax": 130,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "11": {
+          "tours": 30,
+          "pax": 569,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "16": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 40.0
+        },
+        "10": {
+          "tours": 18,
+          "pax": 297,
+          "revenue": 727.5,
+          "vendorCost": 440.0,
+          "grossMargin": 142.0
+        },
+        "18": {
+          "tours": 10,
+          "pax": 192,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "9": {
+          "tours": 4,
+          "pax": 8,
+          "revenue": 705.0,
+          "vendorCost": 410.0,
+          "grossMargin": 154.0
+        },
+        "19": {
+          "tours": 9,
+          "pax": 191,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "20": {
+          "tours": 16,
+          "pax": 318,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 15,
+          "pax": 157,
+          "revenue": 697.5,
+          "vendorCost": 410.0,
+          "grossMargin": 148.0
+        },
+        "high": {
+          "tours": 81,
+          "pax": 1550,
+          "revenue": 1065.0,
+          "vendorCost": 630.0,
+          "grossMargin": 222.0
+        }
+      },
+      "byPaxBand": {
+        "11-20": {
+          "tours": 47,
+          "pax": 807,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "5-10": {
+          "tours": 7,
+          "pax": 50,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "1-4": {
+          "tours": 9,
+          "pax": 18,
+          "revenue": 1582.5,
+          "vendorCost": 930.0,
+          "grossMargin": 336.0
+        },
+        "21-30": {
+          "tours": 31,
+          "pax": 770,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30+": {
+          "tours": 2,
+          "pax": 62,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "17": {
+          "tours": 2,
+          "pax": 34,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "18": {
+          "tours": 3,
+          "pax": 9,
+          "revenue": 330.0,
+          "vendorCost": 190.0,
+          "grossMargin": 74.0
+        },
+        "24": {
+          "tours": 4,
+          "pax": 53,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 40.0
+        },
+        "25": {
+          "tours": 2,
+          "pax": 4,
+          "revenue": 375.0,
+          "vendorCost": 220.0,
+          "grossMargin": 80.0
+        },
+        "26": {
+          "tours": 4,
+          "pax": 90,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "27": {
+          "tours": 4,
+          "pax": 73,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "28": {
+          "tours": 5,
+          "pax": 104,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "29": {
+          "tours": 3,
+          "pax": 61,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30": {
+          "tours": 7,
+          "pax": 151,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "31": {
+          "tours": 6,
+          "pax": 120,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "32": {
+          "tours": 7,
+          "pax": 149,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "33": {
+          "tours": 9,
+          "pax": 186,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "34": {
+          "tours": 6,
+          "pax": 117,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "35": {
+          "tours": 6,
+          "pax": 110,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "36": {
+          "tours": 6,
+          "pax": 113,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "37": {
+          "tours": 7,
+          "pax": 132,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "38": {
+          "tours": 3,
+          "pax": 49,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "40": {
+          "tours": 3,
+          "pax": 40,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "41": {
+          "tours": 3,
+          "pax": 30,
+          "revenue": 187.5,
+          "vendorCost": 110.0,
+          "grossMargin": 40.0
+        },
+        "42": {
+          "tours": 2,
+          "pax": 36,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "43": {
+          "tours": 4,
+          "pax": 46,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "4": {
+          "tours": 2,
+          "pax": 34,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "5": {
+          "tours": 3,
+          "pax": 9,
+          "revenue": 330.0,
+          "vendorCost": 190.0,
+          "grossMargin": 74.0
+        },
+        "6": {
+          "tours": 10,
+          "pax": 147,
+          "revenue": 525.0,
+          "vendorCost": 300.0,
+          "grossMargin": 120.0
+        },
+        "7": {
+          "tours": 21,
+          "pax": 438,
+          "revenue": 180.0,
+          "vendorCost": 110.0,
+          "grossMargin": 34.0
+        },
+        "8": {
+          "tours": 32,
+          "pax": 633,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "9": {
+          "tours": 18,
+          "pax": 332,
+          "revenue": 360.0,
+          "vendorCost": 220.0,
+          "grossMargin": 68.0
+        },
+        "10": {
+          "tours": 10,
+          "pax": 114,
+          "revenue": 367.5,
+          "vendorCost": 220.0,
+          "grossMargin": 74.0
         }
       }
     }
@@ -75202,6 +86727,391 @@ const guideStats25 = [
         },
         "byMonthType": {},
         "byDayType": {}
+      }
+    },
+    "mgmt": {
+      "revenue": 0.0,
+      "vendorCost": 0.0,
+      "grossMargin": 0.0,
+      "byChannel": {
+        "web": {
+          "tours": 175,
+          "pax": 3975,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 175,
+          "pax": 3975,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byDow": {
+        "Tue": {
+          "tours": 37,
+          "pax": 887,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Wed": {
+          "tours": 33,
+          "pax": 740,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Thu": {
+          "tours": 16,
+          "pax": 325,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Sat": {
+          "tours": 22,
+          "pax": 512,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Mon": {
+          "tours": 24,
+          "pax": 563,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Fri": {
+          "tours": 23,
+          "pax": 483,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Sun": {
+          "tours": 20,
+          "pax": 465,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byTime": {
+        "10": {
+          "tours": 71,
+          "pax": 1568,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "17": {
+          "tours": 25,
+          "pax": 530,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11": {
+          "tours": 26,
+          "pax": 583,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "18": {
+          "tours": 27,
+          "pax": 653,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "19": {
+          "tours": 24,
+          "pax": 585,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "20": {
+          "tours": 2,
+          "pax": 56,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 42,
+          "pax": 853,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "high": {
+          "tours": 133,
+          "pax": 3122,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byPaxBand": {
+        "11-20": {
+          "tours": 41,
+          "pax": 700,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "21-30": {
+          "tours": 117,
+          "pax": 2910,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "5-10": {
+          "tours": 8,
+          "pax": 67,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30+": {
+          "tours": 9,
+          "pax": 298,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "19": {
+          "tours": 6,
+          "pax": 114,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "20": {
+          "tours": 7,
+          "pax": 158,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "21": {
+          "tours": 2,
+          "pax": 49,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "22": {
+          "tours": 6,
+          "pax": 135,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "24": {
+          "tours": 7,
+          "pax": 169,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "25": {
+          "tours": 9,
+          "pax": 221,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "26": {
+          "tours": 8,
+          "pax": 198,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "27": {
+          "tours": 7,
+          "pax": 185,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "28": {
+          "tours": 7,
+          "pax": 143,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "29": {
+          "tours": 10,
+          "pax": 225,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30": {
+          "tours": 9,
+          "pax": 197,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "31": {
+          "tours": 9,
+          "pax": 232,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "32": {
+          "tours": 9,
+          "pax": 210,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "33": {
+          "tours": 7,
+          "pax": 171,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "34": {
+          "tours": 9,
+          "pax": 208,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "35": {
+          "tours": 8,
+          "pax": 187,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "36": {
+          "tours": 6,
+          "pax": 160,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "37": {
+          "tours": 8,
+          "pax": 171,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "38": {
+          "tours": 10,
+          "pax": 206,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "39": {
+          "tours": 6,
+          "pax": 145,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "40": {
+          "tours": 6,
+          "pax": 134,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "41": {
+          "tours": 6,
+          "pax": 141,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "42": {
+          "tours": 5,
+          "pax": 98,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "43": {
+          "tours": 5,
+          "pax": 87,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "44": {
+          "tours": 3,
+          "pax": 31,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "5": {
+          "tours": 21,
+          "pax": 456,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "6": {
+          "tours": 26,
+          "pax": 643,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "7": {
+          "tours": 37,
+          "pax": 854,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "8": {
+          "tours": 36,
+          "pax": 849,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "9": {
+          "tours": 34,
+          "pax": 776,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "10": {
+          "tours": 21,
+          "pax": 397,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
       }
     }
   },
@@ -78738,6 +90648,475 @@ const guideStats25 = [
               "pax": 2
             }
           }
+        }
+      }
+    },
+    "mgmt": {
+      "revenue": 1425.0,
+      "vendorCost": 640.0,
+      "grossMargin": 143.75,
+      "byChannel": {
+        "web": {
+          "tours": 244,
+          "pax": 5173,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "OTA": {
+          "tours": 8,
+          "pax": 52,
+          "revenue": 1425.0,
+          "vendorCost": 640.0,
+          "grossMargin": 143.75
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 244,
+          "pax": 5173,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Civitatis": {
+          "tours": 8,
+          "pax": 52,
+          "revenue": 1425.0,
+          "vendorCost": 640.0,
+          "grossMargin": 143.75
+        }
+      },
+      "byDow": {
+        "Wed": {
+          "tours": 36,
+          "pax": 732,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "Thu": {
+          "tours": 37,
+          "pax": 775,
+          "revenue": 350.0,
+          "vendorCost": 160.0,
+          "grossMargin": 32.5
+        },
+        "Fri": {
+          "tours": 36,
+          "pax": 703,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "Sat": {
+          "tours": 38,
+          "pax": 796,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "Tue": {
+          "tours": 33,
+          "pax": 674,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "Sun": {
+          "tours": 36,
+          "pax": 792,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "Mon": {
+          "tours": 36,
+          "pax": 753,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 30.0
+        }
+      },
+      "byTime": {
+        "10": {
+          "tours": 30,
+          "pax": 569,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "17": {
+          "tours": 27,
+          "pax": 529,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "9": {
+          "tours": 64,
+          "pax": 1330,
+          "revenue": 350.0,
+          "vendorCost": 160.0,
+          "grossMargin": 32.5
+        },
+        "12": {
+          "tours": 55,
+          "pax": 1151,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "16": {
+          "tours": 37,
+          "pax": 712,
+          "revenue": 350.0,
+          "vendorCost": 160.0,
+          "grossMargin": 32.5
+        },
+        "19": {
+          "tours": 36,
+          "pax": 914,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "18": {
+          "tours": 2,
+          "pax": 18,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "11": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 30.0
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 77,
+          "pax": 1311,
+          "revenue": 875.0,
+          "vendorCost": 400.0,
+          "grossMargin": 81.25
+        },
+        "high": {
+          "tours": 175,
+          "pax": 3914,
+          "revenue": 550.0,
+          "vendorCost": 240.0,
+          "grossMargin": 62.5
+        }
+      },
+      "byPaxBand": {
+        "5-10": {
+          "tours": 13,
+          "pax": 107,
+          "revenue": 350.0,
+          "vendorCost": 160.0,
+          "grossMargin": 32.5
+        },
+        "21-30": {
+          "tours": 129,
+          "pax": 3214,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11-20": {
+          "tours": 92,
+          "pax": 1504,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "1-4": {
+          "tours": 6,
+          "pax": 18,
+          "revenue": 900.0,
+          "vendorCost": 400.0,
+          "grossMargin": 95.0
+        },
+        "30+": {
+          "tours": 12,
+          "pax": 382,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "14": {
+          "tours": 4,
+          "pax": 55,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "15": {
+          "tours": 5,
+          "pax": 79,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "16": {
+          "tours": 7,
+          "pax": 134,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "17": {
+          "tours": 7,
+          "pax": 149,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "18": {
+          "tours": 6,
+          "pax": 100,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "19": {
+          "tours": 6,
+          "pax": 103,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "20": {
+          "tours": 11,
+          "pax": 172,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "21": {
+          "tours": 10,
+          "pax": 132,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "22": {
+          "tours": 11,
+          "pax": 174,
+          "revenue": 350.0,
+          "vendorCost": 160.0,
+          "grossMargin": 32.5
+        },
+        "23": {
+          "tours": 14,
+          "pax": 317,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "24": {
+          "tours": 13,
+          "pax": 287,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "25": {
+          "tours": 10,
+          "pax": 249,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "26": {
+          "tours": 11,
+          "pax": 226,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "27": {
+          "tours": 11,
+          "pax": 235,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "28": {
+          "tours": 9,
+          "pax": 194,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "29": {
+          "tours": 9,
+          "pax": 191,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "30": {
+          "tours": 9,
+          "pax": 216,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "31": {
+          "tours": 11,
+          "pax": 232,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "32": {
+          "tours": 14,
+          "pax": 330,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "33": {
+          "tours": 8,
+          "pax": 182,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "34": {
+          "tours": 12,
+          "pax": 273,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "35": {
+          "tours": 9,
+          "pax": 191,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "36": {
+          "tours": 12,
+          "pax": 278,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "37": {
+          "tours": 9,
+          "pax": 234,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "38": {
+          "tours": 6,
+          "pax": 102,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 30.0
+        },
+        "39": {
+          "tours": 4,
+          "pax": 91,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "40": {
+          "tours": 4,
+          "pax": 89,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "41": {
+          "tours": 4,
+          "pax": 119,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "42": {
+          "tours": 3,
+          "pax": 64,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "43": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "44": {
+          "tours": 2,
+          "pax": 19,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "4": {
+          "tours": 25,
+          "pax": 454,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "5": {
+          "tours": 40,
+          "pax": 597,
+          "revenue": 700.0,
+          "vendorCost": 320.0,
+          "grossMargin": 65.0
+        },
+        "6": {
+          "tours": 52,
+          "pax": 1162,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "7": {
+          "tours": 43,
+          "pax": 939,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "8": {
+          "tours": 47,
+          "pax": 1069,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "9": {
+          "tours": 33,
+          "pax": 744,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 30.0
+        },
+        "10": {
+          "tours": 12,
+          "pax": 260,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
         }
       }
     }
@@ -82570,6 +94949,510 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 960.0,
+      "vendorCost": 640.0,
+      "grossMargin": 128.0,
+      "byChannel": {
+        "web": {
+          "tours": 219,
+          "pax": 2498,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "b2b": {
+          "tours": 8,
+          "pax": 28,
+          "revenue": 960.0,
+          "vendorCost": 640.0,
+          "grossMargin": 128.0
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 219,
+          "pax": 2498,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Roundabout": {
+          "tours": 8,
+          "pax": 28,
+          "revenue": 960.0,
+          "vendorCost": 640.0,
+          "grossMargin": 128.0
+        }
+      },
+      "byDow": {
+        "Mon": {
+          "tours": 30,
+          "pax": 373,
+          "revenue": 240.0,
+          "vendorCost": 160.0,
+          "grossMargin": 32.0
+        },
+        "Tue": {
+          "tours": 32,
+          "pax": 292,
+          "revenue": 240.0,
+          "vendorCost": 160.0,
+          "grossMargin": 32.0
+        },
+        "Wed": {
+          "tours": 31,
+          "pax": 290,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "Thu": {
+          "tours": 39,
+          "pax": 503,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Fri": {
+          "tours": 26,
+          "pax": 323,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Sat": {
+          "tours": 31,
+          "pax": 367,
+          "revenue": 360.0,
+          "vendorCost": 240.0,
+          "grossMargin": 48.0
+        },
+        "Sun": {
+          "tours": 38,
+          "pax": 378,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byTime": {
+        "10": {
+          "tours": 110,
+          "pax": 1339,
+          "revenue": 600.0,
+          "vendorCost": 400.0,
+          "grossMargin": 80.0
+        },
+        "17": {
+          "tours": 42,
+          "pax": 418,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "13": {
+          "tours": 1,
+          "pax": 12,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "18": {
+          "tours": 55,
+          "pax": 540,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11": {
+          "tours": 17,
+          "pax": 209,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "9": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "16": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 88,
+          "pax": 868,
+          "revenue": 240.0,
+          "vendorCost": 160.0,
+          "grossMargin": 32.0
+        },
+        "high": {
+          "tours": 139,
+          "pax": 1658,
+          "revenue": 720.0,
+          "vendorCost": 480.0,
+          "grossMargin": 96.0
+        }
+      },
+      "byPaxBand": {
+        "1-4": {
+          "tours": 37,
+          "pax": 110,
+          "revenue": 720.0,
+          "vendorCost": 480.0,
+          "grossMargin": 96.0
+        },
+        "11-20": {
+          "tours": 90,
+          "pax": 1286,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "5-10": {
+          "tours": 80,
+          "pax": 609,
+          "revenue": 240.0,
+          "vendorCost": 160.0,
+          "grossMargin": 32.0
+        },
+        "21-30": {
+          "tours": 18,
+          "pax": 443,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30+": {
+          "tours": 2,
+          "pax": 78,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "15": {
+          "tours": 7,
+          "pax": 45,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "16": {
+          "tours": 1,
+          "pax": 9,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "17": {
+          "tours": 7,
+          "pax": 102,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "18": {
+          "tours": 12,
+          "pax": 124,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "19": {
+          "tours": 8,
+          "pax": 82,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "20": {
+          "tours": 6,
+          "pax": 82,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "21": {
+          "tours": 9,
+          "pax": 106,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "22": {
+          "tours": 10,
+          "pax": 135,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "23": {
+          "tours": 6,
+          "pax": 76,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "24": {
+          "tours": 6,
+          "pax": 63,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "25": {
+          "tours": 8,
+          "pax": 73,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "26": {
+          "tours": 11,
+          "pax": 136,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "27": {
+          "tours": 7,
+          "pax": 81,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "28": {
+          "tours": 7,
+          "pax": 59,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "29": {
+          "tours": 9,
+          "pax": 73,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30": {
+          "tours": 10,
+          "pax": 106,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "31": {
+          "tours": 7,
+          "pax": 65,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "32": {
+          "tours": 8,
+          "pax": 64,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "33": {
+          "tours": 9,
+          "pax": 103,
+          "revenue": 240.0,
+          "vendorCost": 160.0,
+          "grossMargin": 32.0
+        },
+        "34": {
+          "tours": 8,
+          "pax": 83,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "35": {
+          "tours": 6,
+          "pax": 103,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "36": {
+          "tours": 10,
+          "pax": 125,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "37": {
+          "tours": 8,
+          "pax": 143,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "38": {
+          "tours": 8,
+          "pax": 139,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "39": {
+          "tours": 6,
+          "pax": 111,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "40": {
+          "tours": 9,
+          "pax": 84,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "41": {
+          "tours": 9,
+          "pax": 75,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "42": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "43": {
+          "tours": 5,
+          "pax": 51,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "44": {
+          "tours": 3,
+          "pax": 8,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "45": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "46": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "47": {
+          "tours": 2,
+          "pax": 8,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "49": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "52": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "4": {
+          "tours": 20,
+          "pax": 212,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "5": {
+          "tours": 38,
+          "pax": 454,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "6": {
+          "tours": 35,
+          "pax": 383,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "7": {
+          "tours": 35,
+          "pax": 335,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "8": {
+          "tours": 34,
+          "pax": 386,
+          "revenue": 360.0,
+          "vendorCost": 240.0,
+          "grossMargin": 48.0
+        },
+        "9": {
+          "tours": 35,
+          "pax": 554,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "10": {
+          "tours": 24,
+          "pax": 184,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "11": {
+          "tours": 4,
+          "pax": 12,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "12": {
+          "tours": 2,
+          "pax": 6,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      }
     }
   },
   {
@@ -84880,6 +97763,412 @@ const guideStats25 = [
               "pax": 6
             }
           }
+        }
+      }
+    },
+    "mgmt": {
+      "revenue": 270.0,
+      "vendorCost": 240.0,
+      "grossMargin": -24.0,
+      "byChannel": {
+        "web": {
+          "tours": 116,
+          "pax": 1491,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "b2b": {
+          "tours": 3,
+          "pax": 18,
+          "revenue": 270.0,
+          "vendorCost": 240.0,
+          "grossMargin": -24.0
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 116,
+          "pax": 1491,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Roundabout": {
+          "tours": 3,
+          "pax": 18,
+          "revenue": 270.0,
+          "vendorCost": 240.0,
+          "grossMargin": -24.0
+        }
+      },
+      "byDow": {
+        "Tue": {
+          "tours": 22,
+          "pax": 265,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Wed": {
+          "tours": 17,
+          "pax": 194,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Fri": {
+          "tours": 25,
+          "pax": 326,
+          "revenue": 0.0,
+          "vendorCost": 80.0,
+          "grossMargin": -80.0
+        },
+        "Sat": {
+          "tours": 18,
+          "pax": 270,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 40.0
+        },
+        "Thu": {
+          "tours": 10,
+          "pax": 90,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Sun": {
+          "tours": 6,
+          "pax": 84,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "Mon": {
+          "tours": 21,
+          "pax": 280,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byTime": {
+        "10": {
+          "tours": 67,
+          "pax": 964,
+          "revenue": 150.0,
+          "vendorCost": 160.0,
+          "grossMargin": -40.0
+        },
+        "17": {
+          "tours": 13,
+          "pax": 107,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "18": {
+          "tours": 26,
+          "pax": 272,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11": {
+          "tours": 13,
+          "pax": 166,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 32,
+          "pax": 346,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "high": {
+          "tours": 87,
+          "pax": 1163,
+          "revenue": 150.0,
+          "vendorCost": 160.0,
+          "grossMargin": -40.0
+        }
+      },
+      "byPaxBand": {
+        "5-10": {
+          "tours": 38,
+          "pax": 277,
+          "revenue": 150.0,
+          "vendorCost": 160.0,
+          "grossMargin": -40.0
+        },
+        "1-4": {
+          "tours": 8,
+          "pax": 24,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "11-20": {
+          "tours": 60,
+          "pax": 873,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "21-30": {
+          "tours": 10,
+          "pax": 233,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30+": {
+          "tours": 3,
+          "pax": 102,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "14": {
+          "tours": 4,
+          "pax": 29,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "16": {
+          "tours": 6,
+          "pax": 62,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "19": {
+          "tours": 5,
+          "pax": 25,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "20": {
+          "tours": 4,
+          "pax": 53,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "23": {
+          "tours": 7,
+          "pax": 91,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "24": {
+          "tours": 6,
+          "pax": 101,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "25": {
+          "tours": 3,
+          "pax": 32,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "26": {
+          "tours": 2,
+          "pax": 12,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "27": {
+          "tours": 5,
+          "pax": 46,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "28": {
+          "tours": 7,
+          "pax": 60,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 40.0
+        },
+        "29": {
+          "tours": 5,
+          "pax": 39,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30": {
+          "tours": 2,
+          "pax": 22,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "31": {
+          "tours": 5,
+          "pax": 58,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "32": {
+          "tours": 5,
+          "pax": 70,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "33": {
+          "tours": 7,
+          "pax": 125,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "34": {
+          "tours": 6,
+          "pax": 101,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "35": {
+          "tours": 7,
+          "pax": 96,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "36": {
+          "tours": 5,
+          "pax": 84,
+          "revenue": 0.0,
+          "vendorCost": 80.0,
+          "grossMargin": -80.0
+        },
+        "37": {
+          "tours": 6,
+          "pax": 84,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "38": {
+          "tours": 4,
+          "pax": 73,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "39": {
+          "tours": 4,
+          "pax": 57,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "40": {
+          "tours": 3,
+          "pax": 45,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "41": {
+          "tours": 3,
+          "pax": 45,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "42": {
+          "tours": 6,
+          "pax": 86,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "44": {
+          "tours": 2,
+          "pax": 13,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "4": {
+          "tours": 10,
+          "pax": 91,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "5": {
+          "tours": 9,
+          "pax": 78,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "6": {
+          "tours": 18,
+          "pax": 236,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "7": {
+          "tours": 21,
+          "pax": 200,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 40.0
+        },
+        "8": {
+          "tours": 28,
+          "pax": 417,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "9": {
+          "tours": 20,
+          "pax": 310,
+          "revenue": 0.0,
+          "vendorCost": 80.0,
+          "grossMargin": -80.0
+        },
+        "10": {
+          "tours": 12,
+          "pax": 171,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11": {
+          "tours": 1,
+          "pax": 6,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
         }
       }
     }
@@ -87240,6 +100529,405 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 675.0,
+      "vendorCost": 320.0,
+      "grossMargin": 82.75,
+      "byChannel": {
+        "web": {
+          "tours": 174,
+          "pax": 4150,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 34.0
+        },
+        "OTA": {
+          "tours": 3,
+          "pax": 42,
+          "revenue": 525.0,
+          "vendorCost": 240.0,
+          "grossMargin": 48.75
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 174,
+          "pax": 4150,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 34.0
+        },
+        "Civitatis": {
+          "tours": 3,
+          "pax": 42,
+          "revenue": 525.0,
+          "vendorCost": 240.0,
+          "grossMargin": 48.75
+        }
+      },
+      "byDow": {
+        "Mon": {
+          "tours": 25,
+          "pax": 567,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "Thu": {
+          "tours": 29,
+          "pax": 696,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "Fri": {
+          "tours": 32,
+          "pax": 768,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 34.0
+        },
+        "Sun": {
+          "tours": 19,
+          "pax": 416,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "Tue": {
+          "tours": 23,
+          "pax": 548,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Wed": {
+          "tours": 29,
+          "pax": 684,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Sat": {
+          "tours": 20,
+          "pax": 513,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byTime": {
+        "9": {
+          "tours": 42,
+          "pax": 1008,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "12": {
+          "tours": 43,
+          "pax": 1006,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "16": {
+          "tours": 25,
+          "pax": 497,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "19": {
+          "tours": 25,
+          "pax": 689,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "18": {
+          "tours": 3,
+          "pax": 51,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 34.0
+        },
+        "10": {
+          "tours": 22,
+          "pax": 532,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "17": {
+          "tours": 13,
+          "pax": 349,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11": {
+          "tours": 3,
+          "pax": 40,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "8": {
+          "tours": 1,
+          "pax": 20,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        }
+      },
+      "bySeason": {
+        "high": {
+          "tours": 156,
+          "pax": 3692,
+          "revenue": 500.0,
+          "vendorCost": 240.0,
+          "grossMargin": 66.5
+        },
+        "shoulder": {
+          "tours": 21,
+          "pax": 500,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        }
+      },
+      "byPaxBand": {
+        "21-30": {
+          "tours": 95,
+          "pax": 2455,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11-20": {
+          "tours": 45,
+          "pax": 715,
+          "revenue": 350.0,
+          "vendorCost": 160.0,
+          "grossMargin": 32.5
+        },
+        "30+": {
+          "tours": 29,
+          "pax": 971,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "5-10": {
+          "tours": 6,
+          "pax": 45,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "1-4": {
+          "tours": 2,
+          "pax": 6,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 34.0
+        }
+      },
+      "byWeek": {
+        "23": {
+          "tours": 7,
+          "pax": 165,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "24": {
+          "tours": 8,
+          "pax": 178,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "25": {
+          "tours": 10,
+          "pax": 227,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "26": {
+          "tours": 9,
+          "pax": 187,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 34.0
+        },
+        "27": {
+          "tours": 7,
+          "pax": 150,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "28": {
+          "tours": 9,
+          "pax": 193,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "29": {
+          "tours": 11,
+          "pax": 249,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30": {
+          "tours": 10,
+          "pax": 239,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "31": {
+          "tours": 12,
+          "pax": 307,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "32": {
+          "tours": 9,
+          "pax": 253,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "33": {
+          "tours": 10,
+          "pax": 293,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "34": {
+          "tours": 11,
+          "pax": 269,
+          "revenue": 350.0,
+          "vendorCost": 160.0,
+          "grossMargin": 32.5
+        },
+        "35": {
+          "tours": 12,
+          "pax": 306,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "36": {
+          "tours": 7,
+          "pax": 191,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "37": {
+          "tours": 6,
+          "pax": 120,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "38": {
+          "tours": 8,
+          "pax": 160,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "39": {
+          "tours": 8,
+          "pax": 161,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "40": {
+          "tours": 6,
+          "pax": 135,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "41": {
+          "tours": 7,
+          "pax": 215,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "42": {
+          "tours": 6,
+          "pax": 135,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "43": {
+          "tours": 2,
+          "pax": 42,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "44": {
+          "tours": 2,
+          "pax": 17,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "6": {
+          "tours": 36,
+          "pax": 809,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 34.0
+        },
+        "7": {
+          "tours": 41,
+          "pax": 933,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "8": {
+          "tours": 48,
+          "pax": 1274,
+          "revenue": 350.0,
+          "vendorCost": 160.0,
+          "grossMargin": 32.5
+        },
+        "9": {
+          "tours": 31,
+          "pax": 676,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "10": {
+          "tours": 21,
+          "pax": 500,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        }
+      }
     }
   },
   {
@@ -88458,6 +102146,328 @@ const guideStats25 = [
               "pax": 2
             }
           }
+        }
+      }
+    },
+    "mgmt": {
+      "revenue": 1225.0,
+      "vendorCost": 480.0,
+      "grossMargin": 193.75,
+      "byChannel": {
+        "web": {
+          "tours": 67,
+          "pax": 1694,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "OTA": {
+          "tours": 6,
+          "pax": 28,
+          "revenue": 1225.0,
+          "vendorCost": 480.0,
+          "grossMargin": 193.75
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 67,
+          "pax": 1694,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Civitatis": {
+          "tours": 6,
+          "pax": 28,
+          "revenue": 1225.0,
+          "vendorCost": 480.0,
+          "grossMargin": 193.75
+        }
+      },
+      "byDow": {
+        "Mon": {
+          "tours": 10,
+          "pax": 218,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Tue": {
+          "tours": 14,
+          "pax": 336,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 30.0
+        },
+        "Sat": {
+          "tours": 12,
+          "pax": 235,
+          "revenue": 575.0,
+          "vendorCost": 240.0,
+          "grossMargin": 76.25
+        },
+        "Wed": {
+          "tours": 6,
+          "pax": 177,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Fri": {
+          "tours": 9,
+          "pax": 280,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Sun": {
+          "tours": 11,
+          "pax": 273,
+          "revenue": 250.0,
+          "vendorCost": 80.0,
+          "grossMargin": 57.5
+        },
+        "Thu": {
+          "tours": 11,
+          "pax": 203,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 30.0
+        }
+      },
+      "byTime": {
+        "10": {
+          "tours": 21,
+          "pax": 502,
+          "revenue": 400.0,
+          "vendorCost": 160.0,
+          "grossMargin": 60.0
+        },
+        "16": {
+          "tours": 4,
+          "pax": 100,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "12": {
+          "tours": 4,
+          "pax": 73,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "17": {
+          "tours": 35,
+          "pax": 902,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "19": {
+          "tours": 3,
+          "pax": 97,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "9": {
+          "tours": 4,
+          "pax": 37,
+          "revenue": 375.0,
+          "vendorCost": 160.0,
+          "grossMargin": 46.25
+        },
+        "11": {
+          "tours": 1,
+          "pax": 9,
+          "revenue": 250.0,
+          "vendorCost": 80.0,
+          "grossMargin": 57.5
+        },
+        "18": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 30.0
+        }
+      },
+      "bySeason": {
+        "high": {
+          "tours": 58,
+          "pax": 1412,
+          "revenue": 1025.0,
+          "vendorCost": 400.0,
+          "grossMargin": 163.75
+        },
+        "shoulder": {
+          "tours": 15,
+          "pax": 310,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 30.0
+        }
+      },
+      "byPaxBand": {
+        "11-20": {
+          "tours": 13,
+          "pax": 222,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30+": {
+          "tours": 20,
+          "pax": 686,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "21-30": {
+          "tours": 28,
+          "pax": 742,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "1-4": {
+          "tours": 5,
+          "pax": 13,
+          "revenue": 800.0,
+          "vendorCost": 320.0,
+          "grossMargin": 120.0
+        },
+        "5-10": {
+          "tours": 7,
+          "pax": 59,
+          "revenue": 425.0,
+          "vendorCost": 160.0,
+          "grossMargin": 73.75
+        }
+      },
+      "byWeek": {
+        "33": {
+          "tours": 5,
+          "pax": 105,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "34": {
+          "tours": 9,
+          "pax": 250,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "35": {
+          "tours": 11,
+          "pax": 252,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 30.0
+        },
+        "36": {
+          "tours": 8,
+          "pax": 246,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "37": {
+          "tours": 8,
+          "pax": 213,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 30.0
+        },
+        "38": {
+          "tours": 10,
+          "pax": 200,
+          "revenue": 425.0,
+          "vendorCost": 160.0,
+          "grossMargin": 73.75
+        },
+        "39": {
+          "tours": 6,
+          "pax": 144,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "40": {
+          "tours": 3,
+          "pax": 65,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 30.0
+        },
+        "41": {
+          "tours": 2,
+          "pax": 63,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "42": {
+          "tours": 4,
+          "pax": 116,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "43": {
+          "tours": 5,
+          "pax": 64,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "44": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "47": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 30.0
+        }
+      },
+      "byMonth": {
+        "8": {
+          "tours": 25,
+          "pax": 607,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 30.0
+        },
+        "9": {
+          "tours": 33,
+          "pax": 805,
+          "revenue": 825.0,
+          "vendorCost": 320.0,
+          "grossMargin": 133.75
+        },
+        "10": {
+          "tours": 14,
+          "pax": 308,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 30.0
         }
       }
     }
@@ -90890,6 +104900,468 @@ const guideStats25 = [
               "pax": 8
             }
           }
+        }
+      }
+    },
+    "mgmt": {
+      "revenue": 2400.0,
+      "vendorCost": 1040.0,
+      "grossMargin": 280.0,
+      "byChannel": {
+        "web": {
+          "tours": 120,
+          "pax": 1877,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "OTA": {
+          "tours": 13,
+          "pax": 79,
+          "revenue": 2400.0,
+          "vendorCost": 1040.0,
+          "grossMargin": 280.0
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 120,
+          "pax": 1877,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Civitatis": {
+          "tours": 13,
+          "pax": 79,
+          "revenue": 2400.0,
+          "vendorCost": 1040.0,
+          "grossMargin": 280.0
+        }
+      },
+      "byDow": {
+        "Wed": {
+          "tours": 17,
+          "pax": 289,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Thu": {
+          "tours": 20,
+          "pax": 283,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "Fri": {
+          "tours": 20,
+          "pax": 266,
+          "revenue": 525.0,
+          "vendorCost": 240.0,
+          "grossMargin": 48.75
+        },
+        "Tue": {
+          "tours": 22,
+          "pax": 329,
+          "revenue": 550.0,
+          "vendorCost": 240.0,
+          "grossMargin": 62.5
+        },
+        "Sat": {
+          "tours": 16,
+          "pax": 235,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "Sun": {
+          "tours": 19,
+          "pax": 276,
+          "revenue": 375.0,
+          "vendorCost": 160.0,
+          "grossMargin": 46.25
+        },
+        "Mon": {
+          "tours": 19,
+          "pax": 278,
+          "revenue": 600.0,
+          "vendorCost": 240.0,
+          "grossMargin": 90.0
+        }
+      },
+      "byTime": {
+        "11": {
+          "tours": 33,
+          "pax": 151,
+          "revenue": 525.0,
+          "vendorCost": 240.0,
+          "grossMargin": 48.75
+        },
+        "10": {
+          "tours": 9,
+          "pax": 88,
+          "revenue": 375.0,
+          "vendorCost": 160.0,
+          "grossMargin": 46.25
+        },
+        "17": {
+          "tours": 26,
+          "pax": 455,
+          "revenue": 425.0,
+          "vendorCost": 160.0,
+          "grossMargin": 73.75
+        },
+        "12": {
+          "tours": 26,
+          "pax": 568,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "9": {
+          "tours": 31,
+          "pax": 567,
+          "revenue": 350.0,
+          "vendorCost": 160.0,
+          "grossMargin": 32.5
+        },
+        "13": {
+          "tours": 1,
+          "pax": 25,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "15": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "16": {
+          "tours": 2,
+          "pax": 27,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 30.0
+        },
+        "19": {
+          "tours": 3,
+          "pax": 65,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "18": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        }
+      },
+      "bySeason": {
+        "low": {
+          "tours": 30,
+          "pax": 126,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "shoulder": {
+          "tours": 94,
+          "pax": 1707,
+          "revenue": 1500.0,
+          "vendorCost": 640.0,
+          "grossMargin": 185.0
+        },
+        "high": {
+          "tours": 9,
+          "pax": 123,
+          "revenue": 900.0,
+          "vendorCost": 400.0,
+          "grossMargin": 95.0
+        }
+      },
+      "byPaxBand": {
+        "5-10": {
+          "tours": 24,
+          "pax": 185,
+          "revenue": 725.0,
+          "vendorCost": 320.0,
+          "grossMargin": 78.75
+        },
+        "1-4": {
+          "tours": 28,
+          "pax": 76,
+          "revenue": 1250.0,
+          "vendorCost": 560.0,
+          "grossMargin": 127.5
+        },
+        "11-20": {
+          "tours": 43,
+          "pax": 696,
+          "revenue": 425.0,
+          "vendorCost": 160.0,
+          "grossMargin": 73.75
+        },
+        "21-30": {
+          "tours": 30,
+          "pax": 724,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30+": {
+          "tours": 8,
+          "pax": 275,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "6": {
+          "tours": 3,
+          "pax": 17,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "7": {
+          "tours": 4,
+          "pax": 10,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "9": {
+          "tours": 3,
+          "pax": 10,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "10": {
+          "tours": 4,
+          "pax": 12,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11": {
+          "tours": 2,
+          "pax": 6,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "12": {
+          "tours": 6,
+          "pax": 27,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "13": {
+          "tours": 7,
+          "pax": 36,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "14": {
+          "tours": 6,
+          "pax": 66,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "15": {
+          "tours": 5,
+          "pax": 54,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "16": {
+          "tours": 11,
+          "pax": 264,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "17": {
+          "tours": 8,
+          "pax": 153,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "18": {
+          "tours": 13,
+          "pax": 211,
+          "revenue": 350.0,
+          "vendorCost": 160.0,
+          "grossMargin": 32.5
+        },
+        "19": {
+          "tours": 12,
+          "pax": 234,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "20": {
+          "tours": 12,
+          "pax": 160,
+          "revenue": 525.0,
+          "vendorCost": 240.0,
+          "grossMargin": 48.75
+        },
+        "21": {
+          "tours": 11,
+          "pax": 242,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "22": {
+          "tours": 11,
+          "pax": 251,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "23": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "25": {
+          "tours": 1,
+          "pax": 6,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "31": {
+          "tours": 2,
+          "pax": 48,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "32": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "33": {
+          "tours": 1,
+          "pax": 34,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "39": {
+          "tours": 2,
+          "pax": 6,
+          "revenue": 375.0,
+          "vendorCost": 160.0,
+          "grossMargin": 46.25
+        },
+        "40": {
+          "tours": 1,
+          "pax": 19,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "41": {
+          "tours": 1,
+          "pax": 14,
+          "revenue": 250.0,
+          "vendorCost": 80.0,
+          "grossMargin": 57.5
+        },
+        "42": {
+          "tours": 3,
+          "pax": 45,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 30.0
+        },
+        "44": {
+          "tours": 2,
+          "pax": 21,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "2": {
+          "tours": 9,
+          "pax": 35,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "3": {
+          "tours": 21,
+          "pax": 91,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "4": {
+          "tours": 34,
+          "pax": 627,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "5": {
+          "tours": 54,
+          "pax": 1000,
+          "revenue": 1050.0,
+          "vendorCost": 480.0,
+          "grossMargin": 97.5
+        },
+        "6": {
+          "tours": 2,
+          "pax": 8,
+          "revenue": 350.0,
+          "vendorCost": 160.0,
+          "grossMargin": 32.5
+        },
+        "8": {
+          "tours": 4,
+          "pax": 90,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "9": {
+          "tours": 3,
+          "pax": 25,
+          "revenue": 375.0,
+          "vendorCost": 160.0,
+          "grossMargin": 46.25
+        },
+        "10": {
+          "tours": 6,
+          "pax": 80,
+          "revenue": 450.0,
+          "vendorCost": 160.0,
+          "grossMargin": 87.5
         }
       }
     }
@@ -94375,6 +108847,475 @@ const guideStats25 = [
               "pax": 10
             }
           }
+        }
+      }
+    },
+    "mgmt": {
+      "revenue": 14965.0,
+      "vendorCost": 2370.0,
+      "grossMargin": 1370.2,
+      "byChannel": {
+        "web": {
+          "tours": 113,
+          "pax": 1795,
+          "revenue": 70.0,
+          "vendorCost": 60.0,
+          "grossMargin": -6.8
+        },
+        "OTA": {
+          "tours": 33,
+          "pax": 145,
+          "revenue": 14895.0,
+          "vendorCost": 2310.0,
+          "grossMargin": 1377.0
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 113,
+          "pax": 1795,
+          "revenue": 70.0,
+          "vendorCost": 60.0,
+          "grossMargin": -6.8
+        },
+        "Viator": {
+          "tours": 28,
+          "pax": 131,
+          "revenue": 13409.0,
+          "vendorCost": 1960.0,
+          "grossMargin": 1572.62
+        },
+        "Airbnb": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 178.0,
+          "vendorCost": 70.0,
+          "grossMargin": -16.52
+        },
+        "Civitatis": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 218.0,
+          "vendorCost": 70.0,
+          "grossMargin": -5.1
+        },
+        "GYG": {
+          "tours": 3,
+          "pax": 10,
+          "revenue": 1090.0,
+          "vendorCost": 210.0,
+          "grossMargin": -174.0
+        }
+      },
+      "byDow": {
+        "Fri": {
+          "tours": 24,
+          "pax": 318,
+          "revenue": 3516.0,
+          "vendorCost": 490.0,
+          "grossMargin": 205.76
+        },
+        "Sat": {
+          "tours": 23,
+          "pax": 351,
+          "revenue": 2844.0,
+          "vendorCost": 410.0,
+          "grossMargin": 390.12
+        },
+        "Tue": {
+          "tours": 24,
+          "pax": 339,
+          "revenue": 2803.0,
+          "vendorCost": 420.0,
+          "grossMargin": 339.14
+        },
+        "Wed": {
+          "tours": 22,
+          "pax": 255,
+          "revenue": 2078.0,
+          "vendorCost": 350.0,
+          "grossMargin": 78.24
+        },
+        "Thu": {
+          "tours": 21,
+          "pax": 205,
+          "revenue": 1644.0,
+          "vendorCost": 420.0,
+          "grossMargin": -6.92
+        },
+        "Mon": {
+          "tours": 19,
+          "pax": 259,
+          "revenue": 2080.0,
+          "vendorCost": 280.0,
+          "grossMargin": 363.86
+        },
+        "Sun": {
+          "tours": 13,
+          "pax": 213,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byTime": {
+        "11": {
+          "tours": 41,
+          "pax": 621,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "10": {
+          "tours": 96,
+          "pax": 1205,
+          "revenue": 14895.0,
+          "vendorCost": 2310.0,
+          "grossMargin": 1377.0
+        },
+        "18": {
+          "tours": 5,
+          "pax": 70,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "15": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 70.0,
+          "vendorCost": 60.0,
+          "grossMargin": -6.8
+        },
+        "17": {
+          "tours": 3,
+          "pax": 42,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 56,
+          "pax": 683,
+          "revenue": 5848.0,
+          "vendorCost": 1050.0,
+          "grossMargin": 472.48
+        },
+        "high": {
+          "tours": 90,
+          "pax": 1257,
+          "revenue": 9117.0,
+          "vendorCost": 1320.0,
+          "grossMargin": 897.72
+        }
+      },
+      "byPaxBand": {
+        "11-20": {
+          "tours": 43,
+          "pax": 688,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "5-10": {
+          "tours": 44,
+          "pax": 348,
+          "revenue": 9734.0,
+          "vendorCost": 910.0,
+          "grossMargin": 1355.4
+        },
+        "1-4": {
+          "tours": 26,
+          "pax": 70,
+          "revenue": 5231.0,
+          "vendorCost": 1460.0,
+          "grossMargin": 14.8
+        },
+        "21-30": {
+          "tours": 30,
+          "pax": 732,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30+": {
+          "tours": 3,
+          "pax": 102,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "14": {
+          "tours": 2,
+          "pax": 31,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "15": {
+          "tours": 4,
+          "pax": 45,
+          "revenue": 198.0,
+          "vendorCost": 70.0,
+          "grossMargin": -5.16
+        },
+        "16": {
+          "tours": 3,
+          "pax": 33,
+          "revenue": 198.0,
+          "vendorCost": 70.0,
+          "grossMargin": -5.16
+        },
+        "17": {
+          "tours": 4,
+          "pax": 28,
+          "revenue": 693.0,
+          "vendorCost": 140.0,
+          "grossMargin": 86.94
+        },
+        "18": {
+          "tours": 5,
+          "pax": 65,
+          "revenue": 792.0,
+          "vendorCost": 70.0,
+          "grossMargin": 145.36
+        },
+        "19": {
+          "tours": 6,
+          "pax": 118,
+          "revenue": 198.0,
+          "vendorCost": 70.0,
+          "grossMargin": -20.76
+        },
+        "20": {
+          "tours": 5,
+          "pax": 62,
+          "revenue": 772.0,
+          "vendorCost": 140.0,
+          "grossMargin": 58.0
+        },
+        "21": {
+          "tours": 4,
+          "pax": 51,
+          "revenue": 198.0,
+          "vendorCost": 70.0,
+          "grossMargin": -7.16
+        },
+        "22": {
+          "tours": 4,
+          "pax": 49,
+          "revenue": 218.0,
+          "vendorCost": 70.0,
+          "grossMargin": -63.56
+        },
+        "23": {
+          "tours": 7,
+          "pax": 130,
+          "revenue": 218.0,
+          "vendorCost": 70.0,
+          "grossMargin": -5.1
+        },
+        "24": {
+          "tours": 4,
+          "pax": 46,
+          "revenue": 218.0,
+          "vendorCost": 70.0,
+          "grossMargin": -33.0
+        },
+        "25": {
+          "tours": 5,
+          "pax": 56,
+          "revenue": 1090.0,
+          "vendorCost": 140.0,
+          "grossMargin": 51.76
+        },
+        "26": {
+          "tours": 5,
+          "pax": 44,
+          "revenue": 1199.0,
+          "vendorCost": 140.0,
+          "grossMargin": 245.42
+        },
+        "27": {
+          "tours": 5,
+          "pax": 55,
+          "revenue": 436.0,
+          "vendorCost": 70.0,
+          "grossMargin": 69.88
+        },
+        "28": {
+          "tours": 7,
+          "pax": 72,
+          "revenue": 942.0,
+          "vendorCost": 130.0,
+          "grossMargin": 164.96
+        },
+        "29": {
+          "tours": 5,
+          "pax": 79,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30": {
+          "tours": 5,
+          "pax": 46,
+          "revenue": 218.0,
+          "vendorCost": 70.0,
+          "grossMargin": -15.56
+        },
+        "31": {
+          "tours": 5,
+          "pax": 28,
+          "revenue": 327.0,
+          "vendorCost": 70.0,
+          "grossMargin": 35.66
+        },
+        "32": {
+          "tours": 5,
+          "pax": 58,
+          "revenue": 218.0,
+          "vendorCost": 70.0,
+          "grossMargin": -53.56
+        },
+        "33": {
+          "tours": 3,
+          "pax": 53,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "34": {
+          "tours": 5,
+          "pax": 75,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "35": {
+          "tours": 6,
+          "pax": 100,
+          "revenue": 436.0,
+          "vendorCost": 70.0,
+          "grossMargin": 67.88
+        },
+        "36": {
+          "tours": 7,
+          "pax": 112,
+          "revenue": 1090.0,
+          "vendorCost": 140.0,
+          "grossMargin": -33.12
+        },
+        "37": {
+          "tours": 5,
+          "pax": 121,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "38": {
+          "tours": 5,
+          "pax": 112,
+          "revenue": 1090.0,
+          "vendorCost": 70.0,
+          "grossMargin": 209.2
+        },
+        "39": {
+          "tours": 4,
+          "pax": 54,
+          "revenue": 1199.0,
+          "vendorCost": 140.0,
+          "grossMargin": 110.42
+        },
+        "40": {
+          "tours": 4,
+          "pax": 46,
+          "revenue": 436.0,
+          "vendorCost": 70.0,
+          "grossMargin": 82.88
+        },
+        "41": {
+          "tours": 5,
+          "pax": 45,
+          "revenue": 1157.0,
+          "vendorCost": 210.0,
+          "grossMargin": 10.06
+        },
+        "42": {
+          "tours": 3,
+          "pax": 50,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "43": {
+          "tours": 6,
+          "pax": 56,
+          "revenue": 1424.0,
+          "vendorCost": 140.0,
+          "grossMargin": 273.92
+        },
+        "44": {
+          "tours": 3,
+          "pax": 20,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "4": {
+          "tours": 16,
+          "pax": 169,
+          "revenue": 1089.0,
+          "vendorCost": 280.0,
+          "grossMargin": 76.62
+        },
+        "5": {
+          "tours": 20,
+          "pax": 301,
+          "revenue": 2178.0,
+          "vendorCost": 420.0,
+          "grossMargin": 111.88
+        },
+        "6": {
+          "tours": 22,
+          "pax": 288,
+          "revenue": 2725.0,
+          "vendorCost": 420.0,
+          "grossMargin": 259.08
+        },
+        "7": {
+          "tours": 26,
+          "pax": 272,
+          "revenue": 1923.0,
+          "vendorCost": 340.0,
+          "grossMargin": 254.94
+        },
+        "8": {
+          "tours": 20,
+          "pax": 294,
+          "revenue": 654.0,
+          "vendorCost": 140.0,
+          "grossMargin": 14.32
+        },
+        "9": {
+          "tours": 22,
+          "pax": 403,
+          "revenue": 3815.0,
+          "vendorCost": 420.0,
+          "grossMargin": 369.38
+        },
+        "10": {
+          "tours": 20,
+          "pax": 213,
+          "revenue": 2581.0,
+          "vendorCost": 350.0,
+          "grossMargin": 283.98
         }
       }
     }
@@ -98691,6 +113632,538 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 1815.0,
+      "vendorCost": 1140.0,
+      "grossMargin": 136.5,
+      "byChannel": {
+        "web": {
+          "tours": 232,
+          "pax": 4149,
+          "revenue": 420.0,
+          "vendorCost": 300.0,
+          "grossMargin": 22.0
+        },
+        "OTA": {
+          "tours": 8,
+          "pax": 24,
+          "revenue": 630.0,
+          "vendorCost": 480.0,
+          "grossMargin": -137.5
+        },
+        "b2b": {
+          "tours": 5,
+          "pax": 45,
+          "revenue": 660.0,
+          "vendorCost": 300.0,
+          "grossMargin": 228.0
+        },
+        "free": {
+          "tours": 1,
+          "pax": 3,
+          "revenue": 105.0,
+          "vendorCost": 60.0,
+          "grossMargin": 24.0
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 232,
+          "pax": 4149,
+          "revenue": 420.0,
+          "vendorCost": 300.0,
+          "grossMargin": 22.0
+        },
+        "GYG": {
+          "tours": 2,
+          "pax": 4,
+          "revenue": 80.0,
+          "vendorCost": 120.0,
+          "grossMargin": -80.0
+        },
+        "Turneo": {
+          "tours": 1,
+          "pax": 3,
+          "revenue": 60.0,
+          "vendorCost": 60.0,
+          "grossMargin": -27.0
+        },
+        "Civitatis": {
+          "tours": 5,
+          "pax": 17,
+          "revenue": 490.0,
+          "vendorCost": 300.0,
+          "grossMargin": -30.5
+        },
+        "Taste Dalmatia": {
+          "tours": 2,
+          "pax": 4,
+          "revenue": 240.0,
+          "vendorCost": 120.0,
+          "grossMargin": 72.0
+        },
+        "ZŠEM": {
+          "tours": 1,
+          "pax": 35,
+          "revenue": 150.0,
+          "vendorCost": 60.0,
+          "grossMargin": 60.0
+        },
+        "Tonka Baričević": {
+          "tours": 1,
+          "pax": 3,
+          "revenue": 105.0,
+          "vendorCost": 60.0,
+          "grossMargin": 24.0
+        },
+        "Grape Escapes": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 150.0,
+          "vendorCost": 60.0,
+          "grossMargin": 60.0
+        },
+        "Roundabout": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        }
+      },
+      "byDow": {
+        "Tue": {
+          "tours": 31,
+          "pax": 494,
+          "revenue": 280.0,
+          "vendorCost": 180.0,
+          "grossMargin": 35.6
+        },
+        "Wed": {
+          "tours": 38,
+          "pax": 593,
+          "revenue": 245.0,
+          "vendorCost": 180.0,
+          "grossMargin": 10.4
+        },
+        "Thu": {
+          "tours": 37,
+          "pax": 489,
+          "revenue": 490.0,
+          "vendorCost": 300.0,
+          "grossMargin": 65.0
+        },
+        "Mon": {
+          "tours": 39,
+          "pax": 616,
+          "revenue": 100.0,
+          "vendorCost": 120.0,
+          "grossMargin": -65.0
+        },
+        "Fri": {
+          "tours": 41,
+          "pax": 757,
+          "revenue": 365.0,
+          "vendorCost": 180.0,
+          "grossMargin": 56.25
+        },
+        "Sat": {
+          "tours": 34,
+          "pax": 774,
+          "revenue": 295.0,
+          "vendorCost": 120.0,
+          "grossMargin": 72.25
+        },
+        "Sun": {
+          "tours": 26,
+          "pax": 498,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -38.0
+        }
+      },
+      "byTime": {
+        "11": {
+          "tours": 75,
+          "pax": 1260,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "17": {
+          "tours": 26,
+          "pax": 250,
+          "revenue": 700.0,
+          "vendorCost": 660.0,
+          "grossMargin": -188.0
+        },
+        "10": {
+          "tours": 81,
+          "pax": 1567,
+          "revenue": 360.0,
+          "vendorCost": 180.0,
+          "grossMargin": 108.0
+        },
+        "18": {
+          "tours": 57,
+          "pax": 1048,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "12": {
+          "tours": 4,
+          "pax": 56,
+          "revenue": 350.0,
+          "vendorCost": 120.0,
+          "grossMargin": 72.5
+        },
+        "19": {
+          "tours": 1,
+          "pax": 35,
+          "revenue": 150.0,
+          "vendorCost": 60.0,
+          "grossMargin": 60.0
+        },
+        "14": {
+          "tours": 1,
+          "pax": 3,
+          "revenue": 105.0,
+          "vendorCost": 60.0,
+          "grossMargin": 24.0
+        },
+        "15": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 150.0,
+          "vendorCost": 60.0,
+          "grossMargin": 60.0
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 74,
+          "pax": 1050,
+          "revenue": 590.0,
+          "vendorCost": 540.0,
+          "grossMargin": -144.8
+        },
+        "high": {
+          "tours": 172,
+          "pax": 3171,
+          "revenue": 1225.0,
+          "vendorCost": 600.0,
+          "grossMargin": 281.3
+        }
+      },
+      "byPaxBand": {
+        "5-10": {
+          "tours": 38,
+          "pax": 280,
+          "revenue": 175.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.25
+        },
+        "11-20": {
+          "tours": 99,
+          "pax": 1521,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "1-4": {
+          "tours": 23,
+          "pax": 55,
+          "revenue": 1490.0,
+          "vendorCost": 1020.0,
+          "grossMargin": 40.25
+        },
+        "30+": {
+          "tours": 16,
+          "pax": 567,
+          "revenue": 150.0,
+          "vendorCost": 60.0,
+          "grossMargin": 60.0
+        },
+        "21-30": {
+          "tours": 70,
+          "pax": 1798,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "14": {
+          "tours": 3,
+          "pax": 32,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "15": {
+          "tours": 3,
+          "pax": 30,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "16": {
+          "tours": 5,
+          "pax": 106,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -40.0
+        },
+        "17": {
+          "tours": 7,
+          "pax": 78,
+          "revenue": 100.0,
+          "vendorCost": 120.0,
+          "grossMargin": -65.0
+        },
+        "18": {
+          "tours": 7,
+          "pax": 72,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -38.0
+        },
+        "19": {
+          "tours": 7,
+          "pax": 113,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -40.0
+        },
+        "20": {
+          "tours": 6,
+          "pax": 101,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "21": {
+          "tours": 6,
+          "pax": 112,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "22": {
+          "tours": 8,
+          "pax": 128,
+          "revenue": 130.0,
+          "vendorCost": 120.0,
+          "grossMargin": -33.8
+        },
+        "23": {
+          "tours": 6,
+          "pax": 88,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "24": {
+          "tours": 10,
+          "pax": 140,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "25": {
+          "tours": 8,
+          "pax": 108,
+          "revenue": 70.0,
+          "vendorCost": 60.0,
+          "grossMargin": -4.0
+        },
+        "26": {
+          "tours": 8,
+          "pax": 128,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "27": {
+          "tours": 11,
+          "pax": 191,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "28": {
+          "tours": 11,
+          "pax": 152,
+          "revenue": 70.0,
+          "vendorCost": 60.0,
+          "grossMargin": -6.8
+        },
+        "29": {
+          "tours": 11,
+          "pax": 222,
+          "revenue": 175.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.25
+        },
+        "30": {
+          "tours": 10,
+          "pax": 159,
+          "revenue": 175.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.25
+        },
+        "31": {
+          "tours": 9,
+          "pax": 230,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "32": {
+          "tours": 12,
+          "pax": 260,
+          "revenue": 70.0,
+          "vendorCost": 60.0,
+          "grossMargin": -6.8
+        },
+        "33": {
+          "tours": 12,
+          "pax": 317,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "34": {
+          "tours": 11,
+          "pax": 227,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "35": {
+          "tours": 11,
+          "pax": 252,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "36": {
+          "tours": 12,
+          "pax": 236,
+          "revenue": 270.0,
+          "vendorCost": 120.0,
+          "grossMargin": 96.0
+        },
+        "37": {
+          "tours": 10,
+          "pax": 171,
+          "revenue": 245.0,
+          "vendorCost": 120.0,
+          "grossMargin": 70.4
+        },
+        "38": {
+          "tours": 7,
+          "pax": 98,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "39": {
+          "tours": 9,
+          "pax": 139,
+          "revenue": 150.0,
+          "vendorCost": 60.0,
+          "grossMargin": 60.0
+        },
+        "40": {
+          "tours": 6,
+          "pax": 51,
+          "revenue": 240.0,
+          "vendorCost": 120.0,
+          "grossMargin": 72.0
+        },
+        "41": {
+          "tours": 6,
+          "pax": 105,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "42": {
+          "tours": 5,
+          "pax": 77,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "43": {
+          "tours": 6,
+          "pax": 75,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "44": {
+          "tours": 3,
+          "pax": 23,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "4": {
+          "tours": 21,
+          "pax": 266,
+          "revenue": 180.0,
+          "vendorCost": 240.0,
+          "grossMargin": -143.0
+        },
+        "5": {
+          "tours": 30,
+          "pax": 488,
+          "revenue": 170.0,
+          "vendorCost": 180.0,
+          "grossMargin": -73.8
+        },
+        "6": {
+          "tours": 35,
+          "pax": 508,
+          "revenue": 70.0,
+          "vendorCost": 60.0,
+          "grossMargin": -4.0
+        },
+        "7": {
+          "tours": 45,
+          "pax": 799,
+          "revenue": 420.0,
+          "vendorCost": 180.0,
+          "grossMargin": 65.7
+        },
+        "8": {
+          "tours": 51,
+          "pax": 1185,
+          "revenue": 70.0,
+          "vendorCost": 60.0,
+          "grossMargin": -6.8
+        },
+        "9": {
+          "tours": 41,
+          "pax": 679,
+          "revenue": 665.0,
+          "vendorCost": 300.0,
+          "grossMargin": 226.4
+        },
+        "10": {
+          "tours": 23,
+          "pax": 296,
+          "revenue": 240.0,
+          "vendorCost": 120.0,
+          "grossMargin": 72.0
+        }
+      }
     }
   },
   {
@@ -102032,6 +117505,475 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 5027.0,
+      "vendorCost": 1980.0,
+      "grossMargin": 160.52,
+      "byChannel": {
+        "web": {
+          "tours": 122,
+          "pax": 2152,
+          "revenue": 200.0,
+          "vendorCost": 60.0,
+          "grossMargin": 100.0
+        },
+        "OTA": {
+          "tours": 31,
+          "pax": 113,
+          "revenue": 4827.0,
+          "vendorCost": 1920.0,
+          "grossMargin": 60.52
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 122,
+          "pax": 2152,
+          "revenue": 200.0,
+          "vendorCost": 60.0,
+          "grossMargin": 100.0
+        },
+        "Civitatis": {
+          "tours": 19,
+          "pax": 76,
+          "revenue": 2140.0,
+          "vendorCost": 1140.0,
+          "grossMargin": 37.0
+        },
+        "GYG": {
+          "tours": 5,
+          "pax": 14,
+          "revenue": 280.0,
+          "vendorCost": 300.0,
+          "grossMargin": -160.0
+        },
+        "Viator": {
+          "tours": 6,
+          "pax": 21,
+          "revenue": 2189.0,
+          "vendorCost": 410.0,
+          "grossMargin": 198.62
+        },
+        "Turneo": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 218.0,
+          "vendorCost": 70.0,
+          "grossMargin": -15.1
+        }
+      },
+      "byDow": {
+        "Sun": {
+          "tours": 24,
+          "pax": 403,
+          "revenue": 260.0,
+          "vendorCost": 180.0,
+          "grossMargin": -40.0
+        },
+        "Thu": {
+          "tours": 24,
+          "pax": 321,
+          "revenue": 961.0,
+          "vendorCost": 370.0,
+          "grossMargin": 48.83
+        },
+        "Sat": {
+          "tours": 31,
+          "pax": 550,
+          "revenue": 940.0,
+          "vendorCost": 360.0,
+          "grossMargin": 205.0
+        },
+        "Mon": {
+          "tours": 17,
+          "pax": 182,
+          "revenue": 100.0,
+          "vendorCost": 120.0,
+          "grossMargin": -69.0
+        },
+        "Fri": {
+          "tours": 14,
+          "pax": 164,
+          "revenue": 1457.0,
+          "vendorCost": 330.0,
+          "grossMargin": 137.12
+        },
+        "Tue": {
+          "tours": 23,
+          "pax": 452,
+          "revenue": 651.0,
+          "vendorCost": 190.0,
+          "grossMargin": 41.13
+        },
+        "Wed": {
+          "tours": 20,
+          "pax": 193,
+          "revenue": 658.0,
+          "vendorCost": 430.0,
+          "grossMargin": -162.56
+        }
+      },
+      "byTime": {
+        "11": {
+          "tours": 42,
+          "pax": 556,
+          "revenue": 550.0,
+          "vendorCost": 180.0,
+          "grossMargin": 172.5
+        },
+        "10": {
+          "tours": 58,
+          "pax": 1002,
+          "revenue": 3107.0,
+          "vendorCost": 720.0,
+          "grossMargin": 328.52
+        },
+        "17": {
+          "tours": 20,
+          "pax": 207,
+          "revenue": 555.0,
+          "vendorCost": 540.0,
+          "grossMargin": -243.75
+        },
+        "18": {
+          "tours": 32,
+          "pax": 498,
+          "revenue": 640.0,
+          "vendorCost": 480.0,
+          "grossMargin": -133.0
+        },
+        "9": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 175.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.25
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 46,
+          "pax": 541,
+          "revenue": 1339.0,
+          "vendorCost": 620.0,
+          "grossMargin": -20.73
+        },
+        "high": {
+          "tours": 107,
+          "pax": 1724,
+          "revenue": 3688.0,
+          "vendorCost": 1360.0,
+          "grossMargin": 181.25
+        }
+      },
+      "byPaxBand": {
+        "5-10": {
+          "tours": 27,
+          "pax": 195,
+          "revenue": 1943.0,
+          "vendorCost": 490.0,
+          "grossMargin": 447.54
+        },
+        "11-20": {
+          "tours": 57,
+          "pax": 911,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "1-4": {
+          "tours": 30,
+          "pax": 85,
+          "revenue": 3084.0,
+          "vendorCost": 1490.0,
+          "grossMargin": -287.02
+        },
+        "21-30": {
+          "tours": 30,
+          "pax": 748,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30+": {
+          "tours": 9,
+          "pax": 326,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "14": {
+          "tours": 1,
+          "pax": 6,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "15": {
+          "tours": 1,
+          "pax": 12,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "16": {
+          "tours": 3,
+          "pax": 41,
+          "revenue": 175.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.25
+        },
+        "17": {
+          "tours": 3,
+          "pax": 40,
+          "revenue": 175.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.25
+        },
+        "18": {
+          "tours": 5,
+          "pax": 50,
+          "revenue": 60.0,
+          "vendorCost": 60.0,
+          "grossMargin": -30.0
+        },
+        "19": {
+          "tours": 7,
+          "pax": 52,
+          "revenue": 634.0,
+          "vendorCost": 200.0,
+          "grossMargin": 14.52
+        },
+        "20": {
+          "tours": 3,
+          "pax": 30,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -38.0
+        },
+        "21": {
+          "tours": 3,
+          "pax": 24,
+          "revenue": 175.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.25
+        },
+        "22": {
+          "tours": 5,
+          "pax": 71,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -38.0
+        },
+        "23": {
+          "tours": 10,
+          "pax": 111,
+          "revenue": 215.0,
+          "vendorCost": 120.0,
+          "grossMargin": -3.75
+        },
+        "24": {
+          "tours": 5,
+          "pax": 69,
+          "revenue": 80.0,
+          "vendorCost": 60.0,
+          "grossMargin": -20.0
+        },
+        "25": {
+          "tours": 7,
+          "pax": 76,
+          "revenue": 20.0,
+          "vendorCost": 60.0,
+          "grossMargin": -49.0
+        },
+        "26": {
+          "tours": 9,
+          "pax": 123,
+          "revenue": 611.0,
+          "vendorCost": 130.0,
+          "grossMargin": 81.13
+        },
+        "27": {
+          "tours": 2,
+          "pax": 33,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "28": {
+          "tours": 6,
+          "pax": 86,
+          "revenue": 938.0,
+          "vendorCost": 130.0,
+          "grossMargin": 204.79
+        },
+        "29": {
+          "tours": 1,
+          "pax": 17,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30": {
+          "tours": 7,
+          "pax": 107,
+          "revenue": 295.0,
+          "vendorCost": 120.0,
+          "grossMargin": 42.25
+        },
+        "31": {
+          "tours": 9,
+          "pax": 190,
+          "revenue": 140.0,
+          "vendorCost": 120.0,
+          "grossMargin": -46.0
+        },
+        "32": {
+          "tours": 7,
+          "pax": 94,
+          "revenue": 458.0,
+          "vendorCost": 190.0,
+          "grossMargin": -3.1
+        },
+        "33": {
+          "tours": 3,
+          "pax": 95,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "34": {
+          "tours": 7,
+          "pax": 169,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "35": {
+          "tours": 11,
+          "pax": 204,
+          "revenue": 458.0,
+          "vendorCost": 180.0,
+          "grossMargin": 59.24
+        },
+        "36": {
+          "tours": 7,
+          "pax": 121,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -38.0
+        },
+        "37": {
+          "tours": 4,
+          "pax": 78,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "38": {
+          "tours": 6,
+          "pax": 58,
+          "revenue": 433.0,
+          "vendorCost": 190.0,
+          "grossMargin": -46.31
+        },
+        "39": {
+          "tours": 5,
+          "pax": 81,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "40": {
+          "tours": 4,
+          "pax": 42,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -38.0
+        },
+        "41": {
+          "tours": 2,
+          "pax": 59,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "42": {
+          "tours": 4,
+          "pax": 57,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "43": {
+          "tours": 3,
+          "pax": 37,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "44": {
+          "tours": 3,
+          "pax": 32,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "4": {
+          "tours": 8,
+          "pax": 99,
+          "revenue": 350.0,
+          "vendorCost": 120.0,
+          "grossMargin": 72.5
+        },
+        "5": {
+          "tours": 23,
+          "pax": 227,
+          "revenue": 949.0,
+          "vendorCost": 440.0,
+          "grossMargin": -55.23
+        },
+        "6": {
+          "tours": 31,
+          "pax": 379,
+          "revenue": 926.0,
+          "vendorCost": 370.0,
+          "grossMargin": 8.38
+        },
+        "7": {
+          "tours": 21,
+          "pax": 364,
+          "revenue": 1313.0,
+          "vendorCost": 310.0,
+          "grossMargin": 231.04
+        },
+        "8": {
+          "tours": 32,
+          "pax": 631,
+          "revenue": 976.0,
+          "vendorCost": 430.0,
+          "grossMargin": 26.14
+        },
+        "9": {
+          "tours": 23,
+          "pax": 350,
+          "revenue": 473.0,
+          "vendorCost": 250.0,
+          "grossMargin": -84.31
+        },
+        "10": {
+          "tours": 15,
+          "pax": 215,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -38.0
+        }
+      }
     }
   },
   {
@@ -105040,6 +120982,489 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 13906.0,
+      "vendorCost": 3000.0,
+      "grossMargin": 1745.6,
+      "byChannel": {
+        "b2b": {
+          "tours": 5,
+          "pax": 40,
+          "revenue": 733.0,
+          "vendorCost": 310.0,
+          "grossMargin": 223.4
+        },
+        "web": {
+          "tours": 117,
+          "pax": 1860,
+          "revenue": 743.0,
+          "vendorCost": 310.0,
+          "grossMargin": 193.68
+        },
+        "OTA": {
+          "tours": 35,
+          "pax": 165,
+          "revenue": 12430.0,
+          "vendorCost": 2380.0,
+          "grossMargin": 1328.52
+        }
+      },
+      "bySource": {
+        "Touch Croatia": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 125.0,
+          "vendorCost": 60.0,
+          "grossMargin": 40.0
+        },
+        "FST": {
+          "tours": 117,
+          "pax": 1860,
+          "revenue": 743.0,
+          "vendorCost": 310.0,
+          "grossMargin": 193.68
+        },
+        "Viator": {
+          "tours": 23,
+          "pax": 97,
+          "revenue": 10433.0,
+          "vendorCost": 1610.0,
+          "grossMargin": 1423.14
+        },
+        "GYG": {
+          "tours": 7,
+          "pax": 17,
+          "revenue": 1279.0,
+          "vendorCost": 460.0,
+          "grossMargin": -148.5
+        },
+        "Civitatis": {
+          "tours": 3,
+          "pax": 47,
+          "revenue": 460.0,
+          "vendorCost": 180.0,
+          "grossMargin": 73.0
+        },
+        "Taste Dalmatia": {
+          "tours": 2,
+          "pax": 4,
+          "revenue": 240.0,
+          "vendorCost": 120.0,
+          "grossMargin": 72.0
+        },
+        "ZŠEM": {
+          "tours": 1,
+          "pax": 30,
+          "revenue": 150.0,
+          "vendorCost": 60.0,
+          "grossMargin": 60.0
+        },
+        "Turneo": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -38.0
+        },
+        "Airbnb": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 218.0,
+          "vendorCost": 70.0,
+          "grossMargin": 18.88
+        },
+        "Royal Tours Croatia": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 218.0,
+          "vendorCost": 70.0,
+          "grossMargin": 51.4
+        }
+      },
+      "byDow": {
+        "Sat": {
+          "tours": 28,
+          "pax": 379,
+          "revenue": 4495.0,
+          "vendorCost": 790.0,
+          "grossMargin": 902.34
+        },
+        "Thu": {
+          "tours": 18,
+          "pax": 209,
+          "revenue": 1646.0,
+          "vendorCost": 400.0,
+          "grossMargin": 188.32
+        },
+        "Fri": {
+          "tours": 19,
+          "pax": 264,
+          "revenue": 1567.0,
+          "vendorCost": 340.0,
+          "grossMargin": 193.98
+        },
+        "Sun": {
+          "tours": 22,
+          "pax": 362,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Mon": {
+          "tours": 20,
+          "pax": 291,
+          "revenue": 1270.0,
+          "vendorCost": 400.0,
+          "grossMargin": 226.56
+        },
+        "Wed": {
+          "tours": 26,
+          "pax": 281,
+          "revenue": 2082.0,
+          "vendorCost": 410.0,
+          "grossMargin": 151.92
+        },
+        "Tue": {
+          "tours": 24,
+          "pax": 279,
+          "revenue": 2846.0,
+          "vendorCost": 660.0,
+          "grossMargin": 82.48
+        }
+      },
+      "byTime": {
+        "10": {
+          "tours": 70,
+          "pax": 804,
+          "revenue": 12313.0,
+          "vendorCost": 2150.0,
+          "grossMargin": 1436.2
+        },
+        "11": {
+          "tours": 12,
+          "pax": 194,
+          "revenue": 368.0,
+          "vendorCost": 130.0,
+          "grossMargin": 105.4
+        },
+        "18": {
+          "tours": 51,
+          "pax": 708,
+          "revenue": 300.0,
+          "vendorCost": 180.0,
+          "grossMargin": 33.0
+        },
+        "17": {
+          "tours": 21,
+          "pax": 325,
+          "revenue": 655.0,
+          "vendorCost": 360.0,
+          "grossMargin": 35.0
+        },
+        "14": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        },
+        "19": {
+          "tours": 1,
+          "pax": 30,
+          "revenue": 150.0,
+          "vendorCost": 60.0,
+          "grossMargin": 60.0
+        },
+        "16": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 0.0,
+          "vendorCost": 60.0,
+          "grossMargin": 40.0
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 21,
+          "pax": 250,
+          "revenue": 2289.0,
+          "vendorCost": 710.0,
+          "grossMargin": 30.32
+        },
+        "high": {
+          "tours": 136,
+          "pax": 1815,
+          "revenue": 11617.0,
+          "vendorCost": 2290.0,
+          "grossMargin": 1715.28
+        }
+      },
+      "byPaxBand": {
+        "1-4": {
+          "tours": 35,
+          "pax": 96,
+          "revenue": 7398.0,
+          "vendorCost": 2140.0,
+          "grossMargin": 469.96
+        },
+        "11-20": {
+          "tours": 62,
+          "pax": 916,
+          "revenue": 1799.0,
+          "vendorCost": 250.0,
+          "grossMargin": 524.92
+        },
+        "21-30": {
+          "tours": 31,
+          "pax": 760,
+          "revenue": 300.0,
+          "vendorCost": 120.0,
+          "grossMargin": 82.5
+        },
+        "5-10": {
+          "tours": 26,
+          "pax": 190,
+          "revenue": 4409.0,
+          "vendorCost": 490.0,
+          "grossMargin": 668.22
+        },
+        "30+": {
+          "tours": 3,
+          "pax": 103,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "19": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 125.0,
+          "vendorCost": 60.0,
+          "grossMargin": 40.0
+        },
+        "20": {
+          "tours": 4,
+          "pax": 62,
+          "revenue": 198.0,
+          "vendorCost": 70.0,
+          "grossMargin": -3.16
+        },
+        "21": {
+          "tours": 4,
+          "pax": 18,
+          "revenue": 594.0,
+          "vendorCost": 140.0,
+          "grossMargin": 34.52
+        },
+        "22": {
+          "tours": 5,
+          "pax": 58,
+          "revenue": 812.0,
+          "vendorCost": 140.0,
+          "grossMargin": -177.04
+        },
+        "23": {
+          "tours": 6,
+          "pax": 67,
+          "revenue": 1090.0,
+          "vendorCost": 140.0,
+          "grossMargin": 238.2
+        },
+        "24": {
+          "tours": 9,
+          "pax": 115,
+          "revenue": 942.0,
+          "vendorCost": 200.0,
+          "grossMargin": 149.96
+        },
+        "25": {
+          "tours": 9,
+          "pax": 109,
+          "revenue": 2489.0,
+          "vendorCost": 340.0,
+          "grossMargin": 425.46
+        },
+        "26": {
+          "tours": 3,
+          "pax": 30,
+          "revenue": 545.0,
+          "vendorCost": 70.0,
+          "grossMargin": 113.1
+        },
+        "27": {
+          "tours": 8,
+          "pax": 92,
+          "revenue": 763.0,
+          "vendorCost": 140.0,
+          "grossMargin": 77.54
+        },
+        "28": {
+          "tours": 4,
+          "pax": 36,
+          "revenue": 545.0,
+          "vendorCost": 70.0,
+          "grossMargin": 138.1
+        },
+        "29": {
+          "tours": 9,
+          "pax": 101,
+          "revenue": 436.0,
+          "vendorCost": 70.0,
+          "grossMargin": 23.0
+        },
+        "30": {
+          "tours": 9,
+          "pax": 74,
+          "revenue": 258.0,
+          "vendorCost": 130.0,
+          "grossMargin": -55.56
+        },
+        "31": {
+          "tours": 12,
+          "pax": 174,
+          "revenue": 586.0,
+          "vendorCost": 200.0,
+          "grossMargin": 63.68
+        },
+        "32": {
+          "tours": 8,
+          "pax": 175,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "33": {
+          "tours": 10,
+          "pax": 140,
+          "revenue": 545.0,
+          "vendorCost": 70.0,
+          "grossMargin": 93.1
+        },
+        "34": {
+          "tours": 9,
+          "pax": 95,
+          "revenue": 278.0,
+          "vendorCost": 130.0,
+          "grossMargin": -60.0
+        },
+        "35": {
+          "tours": 2,
+          "pax": 13,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "36": {
+          "tours": 13,
+          "pax": 209,
+          "revenue": 815.0,
+          "vendorCost": 260.0,
+          "grossMargin": 123.1
+        },
+        "37": {
+          "tours": 6,
+          "pax": 78,
+          "revenue": 367.0,
+          "vendorCost": 130.0,
+          "grossMargin": -1.34
+        },
+        "38": {
+          "tours": 9,
+          "pax": 162,
+          "revenue": 436.0,
+          "vendorCost": 140.0,
+          "grossMargin": 22.32
+        },
+        "39": {
+          "tours": 6,
+          "pax": 94,
+          "revenue": 1304.0,
+          "vendorCost": 130.0,
+          "grossMargin": 313.22
+        },
+        "40": {
+          "tours": 7,
+          "pax": 78,
+          "revenue": 628.0,
+          "vendorCost": 250.0,
+          "grossMargin": 124.9
+        },
+        "41": {
+          "tours": 2,
+          "pax": 50,
+          "revenue": 150.0,
+          "vendorCost": 60.0,
+          "grossMargin": 22.5
+        },
+        "42": {
+          "tours": 1,
+          "pax": 29,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "1": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 0.0,
+          "vendorCost": 60.0,
+          "grossMargin": 40.0
+        }
+      },
+      "byMonth": {
+        "5": {
+          "tours": 13,
+          "pax": 125,
+          "revenue": 1729.0,
+          "vendorCost": 410.0,
+          "grossMargin": -105.68
+        },
+        "6": {
+          "tours": 28,
+          "pax": 338,
+          "revenue": 5066.0,
+          "vendorCost": 750.0,
+          "grossMargin": 926.72
+        },
+        "7": {
+          "tours": 36,
+          "pax": 381,
+          "revenue": 2370.0,
+          "vendorCost": 540.0,
+          "grossMargin": 220.08
+        },
+        "8": {
+          "tours": 35,
+          "pax": 519,
+          "revenue": 1041.0,
+          "vendorCost": 270.0,
+          "grossMargin": 59.78
+        },
+        "9": {
+          "tours": 37,
+          "pax": 577,
+          "revenue": 3140.0,
+          "vendorCost": 730.0,
+          "grossMargin": 508.7
+        },
+        "10": {
+          "tours": 7,
+          "pax": 123,
+          "revenue": 560.0,
+          "vendorCost": 240.0,
+          "grossMargin": 96.0
+        },
+        "12": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 0.0,
+          "vendorCost": 60.0,
+          "grossMargin": 40.0
+        }
+      }
     }
   },
   {
@@ -106501,6 +122926,391 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 5200.0,
+      "vendorCost": 2700.0,
+      "grossMargin": 297.1,
+      "byChannel": {
+        "OTA": {
+          "tours": 32,
+          "pax": 200,
+          "revenue": 4830.0,
+          "vendorCost": 2540.0,
+          "grossMargin": 171.1
+        },
+        "web": {
+          "tours": 1,
+          "pax": 25,
+          "revenue": 250.0,
+          "vendorCost": 80.0,
+          "grossMargin": 110.0
+        },
+        "b2b": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        }
+      },
+      "bySource": {
+        "Civitatis": {
+          "tours": 20,
+          "pax": 157,
+          "revenue": 3330.0,
+          "vendorCost": 1660.0,
+          "grossMargin": 171.5
+        },
+        "Viator": {
+          "tours": 10,
+          "pax": 37,
+          "revenue": 1380.0,
+          "vendorCost": 760.0,
+          "grossMargin": 40.4
+        },
+        "FST": {
+          "tours": 2,
+          "pax": 27,
+          "revenue": 370.0,
+          "vendorCost": 160.0,
+          "grossMargin": 126.0
+        },
+        "Airbnb": {
+          "tours": 2,
+          "pax": 6,
+          "revenue": 120.0,
+          "vendorCost": 120.0,
+          "grossMargin": -40.8
+        }
+      },
+      "byDow": {
+        "Sun": {
+          "tours": 7,
+          "pax": 47,
+          "revenue": 1220.0,
+          "vendorCost": 510.0,
+          "grossMargin": 177.5
+        },
+        "Thu": {
+          "tours": 5,
+          "pax": 61,
+          "revenue": 875.0,
+          "vendorCost": 410.0,
+          "grossMargin": 123.75
+        },
+        "Sat": {
+          "tours": 11,
+          "pax": 53,
+          "revenue": 1420.0,
+          "vendorCost": 860.0,
+          "grossMargin": -10.9
+        },
+        "Mon": {
+          "tours": 3,
+          "pax": 17,
+          "revenue": 415.0,
+          "vendorCost": 220.0,
+          "grossMargin": 8.25
+        },
+        "Tue": {
+          "tours": 3,
+          "pax": 13,
+          "revenue": 395.0,
+          "vendorCost": 220.0,
+          "grossMargin": -2.75
+        },
+        "Fri": {
+          "tours": 4,
+          "pax": 33,
+          "revenue": 675.0,
+          "vendorCost": 380.0,
+          "grossMargin": -8.75
+        },
+        "Wed": {
+          "tours": 1,
+          "pax": 3,
+          "revenue": 200.0,
+          "vendorCost": 100.0,
+          "grossMargin": 10.0
+        }
+      },
+      "byTime": {
+        "10": {
+          "tours": 17,
+          "pax": 98,
+          "revenue": 2240.0,
+          "vendorCost": 1140.0,
+          "grossMargin": 122.9
+        },
+        "16": {
+          "tours": 3,
+          "pax": 38,
+          "revenue": 600.0,
+          "vendorCost": 280.0,
+          "grossMargin": 102.5
+        },
+        "12": {
+          "tours": 2,
+          "pax": 4,
+          "revenue": 270.0,
+          "vendorCost": 160.0,
+          "grossMargin": 23.0
+        },
+        "9": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 200.0,
+          "vendorCost": 100.0,
+          "grossMargin": 16.0
+        },
+        "13": {
+          "tours": 4,
+          "pax": 24,
+          "revenue": 615.0,
+          "vendorCost": 340.0,
+          "grossMargin": 11.45
+        },
+        "8": {
+          "tours": 1,
+          "pax": 15,
+          "revenue": 175.0,
+          "vendorCost": 100.0,
+          "grossMargin": -3.75
+        },
+        "11": {
+          "tours": 2,
+          "pax": 11,
+          "revenue": 375.0,
+          "vendorCost": 180.0,
+          "grossMargin": 26.25
+        },
+        "17": {
+          "tours": 3,
+          "pax": 15,
+          "revenue": 525.0,
+          "vendorCost": 300.0,
+          "grossMargin": -11.25
+        },
+        "14": {
+          "tours": 1,
+          "pax": 20,
+          "revenue": 200.0,
+          "vendorCost": 100.0,
+          "grossMargin": 10.0
+        }
+      },
+      "bySeason": {
+        "low": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 175.0,
+          "vendorCost": 70.0,
+          "grossMargin": 26.25
+        },
+        "shoulder": {
+          "tours": 10,
+          "pax": 79,
+          "revenue": 1690.0,
+          "vendorCost": 870.0,
+          "grossMargin": 135.7
+        },
+        "high": {
+          "tours": 23,
+          "pax": 140,
+          "revenue": 3335.0,
+          "vendorCost": 1760.0,
+          "grossMargin": 135.15
+        }
+      },
+      "byPaxBand": {
+        "5-10": {
+          "tours": 15,
+          "pax": 102,
+          "revenue": 2395.0,
+          "vendorCost": 1160.0,
+          "grossMargin": 176.75
+        },
+        "1-4": {
+          "tours": 14,
+          "pax": 34,
+          "revenue": 1685.0,
+          "vendorCost": 1100.0,
+          "grossMargin": -108.15
+        },
+        "21-30": {
+          "tours": 1,
+          "pax": 25,
+          "revenue": 250.0,
+          "vendorCost": 80.0,
+          "grossMargin": 110.0
+        },
+        "11-20": {
+          "tours": 4,
+          "pax": 66,
+          "revenue": 870.0,
+          "vendorCost": 360.0,
+          "grossMargin": 118.5
+        }
+      },
+      "byWeek": {
+        "1": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 175.0,
+          "vendorCost": 70.0,
+          "grossMargin": 26.25
+        },
+        "18": {
+          "tours": 4,
+          "pax": 14,
+          "revenue": 675.0,
+          "vendorCost": 360.0,
+          "grossMargin": 26.25
+        },
+        "21": {
+          "tours": 2,
+          "pax": 13,
+          "revenue": 425.0,
+          "vendorCost": 170.0,
+          "grossMargin": 71.25
+        },
+        "22": {
+          "tours": 1,
+          "pax": 25,
+          "revenue": 250.0,
+          "vendorCost": 80.0,
+          "grossMargin": 110.0
+        },
+        "29": {
+          "tours": 1,
+          "pax": 15,
+          "revenue": 175.0,
+          "vendorCost": 100.0,
+          "grossMargin": -3.75
+        },
+        "31": {
+          "tours": 1,
+          "pax": 15,
+          "revenue": 175.0,
+          "vendorCost": 100.0,
+          "grossMargin": -3.75
+        },
+        "32": {
+          "tours": 2,
+          "pax": 17,
+          "revenue": 335.0,
+          "vendorCost": 140.0,
+          "grossMargin": 44.25
+        },
+        "33": {
+          "tours": 5,
+          "pax": 19,
+          "revenue": 570.0,
+          "vendorCost": 380.0,
+          "grossMargin": -57.7
+        },
+        "34": {
+          "tours": 4,
+          "pax": 34,
+          "revenue": 755.0,
+          "vendorCost": 280.0,
+          "grossMargin": 135.25
+        },
+        "35": {
+          "tours": 3,
+          "pax": 12,
+          "revenue": 415.0,
+          "vendorCost": 260.0,
+          "grossMargin": -30.55
+        },
+        "36": {
+          "tours": 2,
+          "pax": 8,
+          "revenue": 270.0,
+          "vendorCost": 140.0,
+          "grossMargin": 16.6
+        },
+        "37": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -33.6
+        },
+        "38": {
+          "tours": 2,
+          "pax": 8,
+          "revenue": 320.0,
+          "vendorCost": 160.0,
+          "grossMargin": 19.6
+        },
+        "39": {
+          "tours": 2,
+          "pax": 10,
+          "revenue": 280.0,
+          "vendorCost": 140.0,
+          "grossMargin": 48.8
+        },
+        "41": {
+          "tours": 2,
+          "pax": 7,
+          "revenue": 140.0,
+          "vendorCost": 160.0,
+          "grossMargin": -81.8
+        },
+        "43": {
+          "tours": 1,
+          "pax": 20,
+          "revenue": 200.0,
+          "vendorCost": 100.0,
+          "grossMargin": 10.0
+        }
+      },
+      "byMonth": {
+        "1": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 175.0,
+          "vendorCost": 70.0,
+          "grossMargin": 26.25
+        },
+        "5": {
+          "tours": 7,
+          "pax": 52,
+          "revenue": 1350.0,
+          "vendorCost": 610.0,
+          "grossMargin": 207.5
+        },
+        "7": {
+          "tours": 2,
+          "pax": 30,
+          "revenue": 350.0,
+          "vendorCost": 200.0,
+          "grossMargin": -7.5
+        },
+        "8": {
+          "tours": 14,
+          "pax": 82,
+          "revenue": 2075.0,
+          "vendorCost": 1060.0,
+          "grossMargin": 91.25
+        },
+        "9": {
+          "tours": 7,
+          "pax": 28,
+          "revenue": 910.0,
+          "vendorCost": 500.0,
+          "grossMargin": 51.4
+        },
+        "10": {
+          "tours": 3,
+          "pax": 27,
+          "revenue": 340.0,
+          "vendorCost": 260.0,
+          "grossMargin": -71.8
+        }
+      }
     }
   },
   {
@@ -106794,6 +123604,160 @@ const guideStats25 = [
               "pax": 4
             }
           }
+        }
+      }
+    },
+    "mgmt": {
+      "revenue": 575.0,
+      "vendorCost": 290.0,
+      "grossMargin": 68.25,
+      "byChannel": {
+        "OTA": {
+          "tours": 2,
+          "pax": 12,
+          "revenue": 375.0,
+          "vendorCost": 190.0,
+          "grossMargin": 16.25
+        },
+        "web": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 200.0,
+          "vendorCost": 100.0,
+          "grossMargin": 52.0
+        }
+      },
+      "bySource": {
+        "Civitatis": {
+          "tours": 2,
+          "pax": 12,
+          "revenue": 375.0,
+          "vendorCost": 190.0,
+          "grossMargin": 16.25
+        },
+        "FST": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 200.0,
+          "vendorCost": 100.0,
+          "grossMargin": 52.0
+        }
+      },
+      "byDow": {
+        "Sat": {
+          "tours": 2,
+          "pax": 10,
+          "revenue": 375.0,
+          "vendorCost": 170.0,
+          "grossMargin": 78.25
+        },
+        "Tue": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 200.0,
+          "vendorCost": 120.0,
+          "grossMargin": -10.0
+        }
+      },
+      "byTime": {
+        "10": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 175.0,
+          "vendorCost": 70.0,
+          "grossMargin": 26.25
+        },
+        "12": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 200.0,
+          "vendorCost": 100.0,
+          "grossMargin": 52.0
+        },
+        "16": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 200.0,
+          "vendorCost": 120.0,
+          "grossMargin": -10.0
+        }
+      },
+      "bySeason": {
+        "low": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 175.0,
+          "vendorCost": 70.0,
+          "grossMargin": 26.25
+        },
+        "shoulder": {
+          "tours": 2,
+          "pax": 6,
+          "revenue": 400.0,
+          "vendorCost": 220.0,
+          "grossMargin": 42.0
+        }
+      },
+      "byPaxBand": {
+        "5-10": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 175.0,
+          "vendorCost": 70.0,
+          "grossMargin": 26.25
+        },
+        "1-4": {
+          "tours": 2,
+          "pax": 6,
+          "revenue": 400.0,
+          "vendorCost": 220.0,
+          "grossMargin": 42.0
+        }
+      },
+      "byWeek": {
+        "10": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 175.0,
+          "vendorCost": 70.0,
+          "grossMargin": 26.25
+        },
+        "18": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 200.0,
+          "vendorCost": 100.0,
+          "grossMargin": 52.0
+        },
+        "1": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 200.0,
+          "vendorCost": 120.0,
+          "grossMargin": -10.0
+        }
+      },
+      "byMonth": {
+        "3": {
+          "tours": 1,
+          "pax": 8,
+          "revenue": 175.0,
+          "vendorCost": 70.0,
+          "grossMargin": 26.25
+        },
+        "5": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 200.0,
+          "vendorCost": 100.0,
+          "grossMargin": 52.0
+        },
+        "12": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 200.0,
+          "vendorCost": 120.0,
+          "grossMargin": -10.0
         }
       }
     }
@@ -108656,6 +125620,398 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 975.0,
+      "vendorCost": 380.0,
+      "grossMargin": 208.75,
+      "byChannel": {
+        "OTA": {
+          "tours": 4,
+          "pax": 14,
+          "revenue": 725.0,
+          "vendorCost": 300.0,
+          "grossMargin": 98.75
+        },
+        "web": {
+          "tours": 122,
+          "pax": 2802,
+          "revenue": 250.0,
+          "vendorCost": 80.0,
+          "grossMargin": 110.0
+        }
+      },
+      "bySource": {
+        "Civitatis": {
+          "tours": 4,
+          "pax": 14,
+          "revenue": 725.0,
+          "vendorCost": 300.0,
+          "grossMargin": 98.75
+        },
+        "FST": {
+          "tours": 122,
+          "pax": 2802,
+          "revenue": 250.0,
+          "vendorCost": 80.0,
+          "grossMargin": 110.0
+        }
+      },
+      "byDow": {
+        "Wed": {
+          "tours": 15,
+          "pax": 305,
+          "revenue": 350.0,
+          "vendorCost": 140.0,
+          "grossMargin": 52.5
+        },
+        "Sat": {
+          "tours": 19,
+          "pax": 460,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Sun": {
+          "tours": 17,
+          "pax": 384,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Tue": {
+          "tours": 17,
+          "pax": 418,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Thu": {
+          "tours": 19,
+          "pax": 392,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "Fri": {
+          "tours": 25,
+          "pax": 531,
+          "revenue": 450.0,
+          "vendorCost": 160.0,
+          "grossMargin": 140.0
+        },
+        "Mon": {
+          "tours": 14,
+          "pax": 326,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byTime": {
+        "10": {
+          "tours": 19,
+          "pax": 353,
+          "revenue": 550.0,
+          "vendorCost": 220.0,
+          "grossMargin": 82.5
+        },
+        "16": {
+          "tours": 21,
+          "pax": 412,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "19": {
+          "tours": 21,
+          "pax": 581,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "9": {
+          "tours": 30,
+          "pax": 673,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "12": {
+          "tours": 29,
+          "pax": 680,
+          "revenue": 250.0,
+          "vendorCost": 80.0,
+          "grossMargin": 110.0
+        },
+        "11": {
+          "tours": 1,
+          "pax": 5,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "17": {
+          "tours": 5,
+          "pax": 112,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "bySeason": {
+        "low": {
+          "tours": 1,
+          "pax": 6,
+          "revenue": 175.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.25
+        },
+        "high": {
+          "tours": 117,
+          "pax": 2653,
+          "revenue": 600.0,
+          "vendorCost": 240.0,
+          "grossMargin": 142.5
+        },
+        "shoulder": {
+          "tours": 8,
+          "pax": 157,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 30.0
+        }
+      },
+      "byPaxBand": {
+        "5-10": {
+          "tours": 6,
+          "pax": 45,
+          "revenue": 175.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.25
+        },
+        "21-30": {
+          "tours": 77,
+          "pax": 1963,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30+": {
+          "tours": 9,
+          "pax": 297,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11-20": {
+          "tours": 30,
+          "pax": 501,
+          "revenue": 250.0,
+          "vendorCost": 80.0,
+          "grossMargin": 110.0
+        },
+        "1-4": {
+          "tours": 4,
+          "pax": 10,
+          "revenue": 550.0,
+          "vendorCost": 240.0,
+          "grossMargin": 62.5
+        }
+      },
+      "byWeek": {
+        "12": {
+          "tours": 1,
+          "pax": 6,
+          "revenue": 175.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.25
+        },
+        "24": {
+          "tours": 4,
+          "pax": 104,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "25": {
+          "tours": 4,
+          "pax": 101,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "26": {
+          "tours": 11,
+          "pax": 247,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "27": {
+          "tours": 10,
+          "pax": 219,
+          "revenue": 250.0,
+          "vendorCost": 80.0,
+          "grossMargin": 110.0
+        },
+        "28": {
+          "tours": 10,
+          "pax": 221,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "29": {
+          "tours": 10,
+          "pax": 209,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30": {
+          "tours": 13,
+          "pax": 292,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "31": {
+          "tours": 9,
+          "pax": 194,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "32": {
+          "tours": 13,
+          "pax": 305,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "33": {
+          "tours": 7,
+          "pax": 152,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "34": {
+          "tours": 6,
+          "pax": 125,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "35": {
+          "tours": 3,
+          "pax": 72,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "37": {
+          "tours": 5,
+          "pax": 121,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "38": {
+          "tours": 5,
+          "pax": 121,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "39": {
+          "tours": 7,
+          "pax": 170,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "40": {
+          "tours": 2,
+          "pax": 53,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "41": {
+          "tours": 2,
+          "pax": 60,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "42": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 30.0
+        },
+        "43": {
+          "tours": 2,
+          "pax": 23,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "44": {
+          "tours": 1,
+          "pax": 17,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "3": {
+          "tours": 1,
+          "pax": 6,
+          "revenue": 175.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.25
+        },
+        "6": {
+          "tours": 19,
+          "pax": 452,
+          "revenue": 175.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.25
+        },
+        "7": {
+          "tours": 50,
+          "pax": 1097,
+          "revenue": 425.0,
+          "vendorCost": 160.0,
+          "grossMargin": 126.25
+        },
+        "8": {
+          "tours": 31,
+          "pax": 692,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "9": {
+          "tours": 17,
+          "pax": 412,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "10": {
+          "tours": 8,
+          "pax": 157,
+          "revenue": 200.0,
+          "vendorCost": 80.0,
+          "grossMargin": 30.0
+        }
+      }
     }
   },
   {
@@ -108804,6 +126160,83 @@ const guideStats25 = [
               "pax": 330
             }
           }
+        }
+      }
+    },
+    "mgmt": {
+      "revenue": 9867.2,
+      "vendorCost": 0.0,
+      "grossMargin": 3255.45,
+      "byChannel": {
+        "web": {
+          "tours": 1,
+          "pax": 330,
+          "revenue": 9867.2,
+          "vendorCost": 0.0,
+          "grossMargin": 3255.45
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 1,
+          "pax": 330,
+          "revenue": 9867.2,
+          "vendorCost": 0.0,
+          "grossMargin": 3255.45
+        }
+      },
+      "byDow": {
+        "Fri": {
+          "tours": 1,
+          "pax": 330,
+          "revenue": 9867.2,
+          "vendorCost": 0.0,
+          "grossMargin": 3255.45
+        }
+      },
+      "byTime": {
+        "8": {
+          "tours": 1,
+          "pax": 330,
+          "revenue": 9867.2,
+          "vendorCost": 0.0,
+          "grossMargin": 3255.45
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 1,
+          "pax": 330,
+          "revenue": 9867.2,
+          "vendorCost": 0.0,
+          "grossMargin": 3255.45
+        }
+      },
+      "byPaxBand": {
+        "30+": {
+          "tours": 1,
+          "pax": 330,
+          "revenue": 9867.2,
+          "vendorCost": 0.0,
+          "grossMargin": 3255.45
+        }
+      },
+      "byWeek": {
+        "14": {
+          "tours": 1,
+          "pax": 330,
+          "revenue": 9867.2,
+          "vendorCost": 0.0,
+          "grossMargin": 3255.45
+        }
+      },
+      "byMonth": {
+        "4": {
+          "tours": 1,
+          "pax": 330,
+          "revenue": 9867.2,
+          "vendorCost": 0.0,
+          "grossMargin": 3255.45
         }
       }
     }
@@ -111466,6 +128899,391 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 120.0,
+      "vendorCost": 60.0,
+      "grossMargin": 36.0,
+      "byChannel": {
+        "web": {
+          "tours": 121,
+          "pax": 894,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "b2b": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 121,
+          "pax": 894,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Roundabout": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        }
+      },
+      "byDow": {
+        "Mon": {
+          "tours": 18,
+          "pax": 137,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Fri": {
+          "tours": 19,
+          "pax": 135,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Sat": {
+          "tours": 16,
+          "pax": 105,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Thu": {
+          "tours": 17,
+          "pax": 135,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Sun": {
+          "tours": 15,
+          "pax": 137,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Wed": {
+          "tours": 20,
+          "pax": 151,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        },
+        "Tue": {
+          "tours": 17,
+          "pax": 96,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byTime": {
+        "11": {
+          "tours": 8,
+          "pax": 28,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "10": {
+          "tours": 113,
+          "pax": 866,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "14": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 35,
+          "pax": 165,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        },
+        "high": {
+          "tours": 87,
+          "pax": 731,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byPaxBand": {
+        "5-10": {
+          "tours": 51,
+          "pax": 384,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "1-4": {
+          "tours": 46,
+          "pax": 127,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        },
+        "11-20": {
+          "tours": 23,
+          "pax": 323,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30+": {
+          "tours": 1,
+          "pax": 37,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "21-30": {
+          "tours": 1,
+          "pax": 25,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "16": {
+          "tours": 3,
+          "pax": 16,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "17": {
+          "tours": 3,
+          "pax": 8,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "18": {
+          "tours": 5,
+          "pax": 23,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "19": {
+          "tours": 7,
+          "pax": 15,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        },
+        "20": {
+          "tours": 6,
+          "pax": 30,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "21": {
+          "tours": 7,
+          "pax": 47,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "22": {
+          "tours": 4,
+          "pax": 26,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "23": {
+          "tours": 5,
+          "pax": 34,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "24": {
+          "tours": 6,
+          "pax": 33,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "25": {
+          "tours": 4,
+          "pax": 26,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "26": {
+          "tours": 6,
+          "pax": 29,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "27": {
+          "tours": 5,
+          "pax": 34,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "28": {
+          "tours": 5,
+          "pax": 47,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "29": {
+          "tours": 6,
+          "pax": 71,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30": {
+          "tours": 7,
+          "pax": 55,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "31": {
+          "tours": 6,
+          "pax": 44,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "32": {
+          "tours": 7,
+          "pax": 56,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "33": {
+          "tours": 6,
+          "pax": 61,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "34": {
+          "tours": 7,
+          "pax": 87,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "35": {
+          "tours": 7,
+          "pax": 68,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "36": {
+          "tours": 3,
+          "pax": 26,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "37": {
+          "tours": 1,
+          "pax": 9,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "38": {
+          "tours": 2,
+          "pax": 15,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "39": {
+          "tours": 3,
+          "pax": 32,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "40": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "4": {
+          "tours": 8,
+          "pax": 28,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "5": {
+          "tours": 27,
+          "pax": 137,
+          "revenue": 120.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.0
+        },
+        "6": {
+          "tours": 22,
+          "pax": 132,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "7": {
+          "tours": 25,
+          "pax": 221,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "8": {
+          "tours": 30,
+          "pax": 292,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "9": {
+          "tours": 10,
+          "pax": 86,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      }
     }
   },
   {
@@ -112104,6 +129922,265 @@ const guideStats25 = [
               "pax": 4
             }
           }
+        }
+      }
+    },
+    "mgmt": {
+      "revenue": 1530.0,
+      "vendorCost": 1010.0,
+      "grossMargin": 214.0,
+      "byChannel": {
+        "b2b": {
+          "tours": 12,
+          "pax": 71,
+          "revenue": 1530.0,
+          "vendorCost": 1010.0,
+          "grossMargin": 214.0
+        }
+      },
+      "bySource": {
+        "Grape Escapes": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 40.0
+        },
+        "Roundabout": {
+          "tours": 10,
+          "pax": 29,
+          "revenue": 1180.0,
+          "vendorCost": 840.0,
+          "grossMargin": 104.0
+        },
+        "FST": {
+          "tours": 1,
+          "pax": 38,
+          "revenue": 200.0,
+          "vendorCost": 90.0,
+          "grossMargin": 70.0
+        }
+      },
+      "byDow": {
+        "Mon": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 40.0
+        },
+        "Wed": {
+          "tours": 3,
+          "pax": 6,
+          "revenue": 360.0,
+          "vendorCost": 240.0,
+          "grossMargin": 48.0
+        },
+        "Thu": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "Tue": {
+          "tours": 3,
+          "pax": 46,
+          "revenue": 440.0,
+          "vendorCost": 260.0,
+          "grossMargin": 92.0
+        },
+        "Fri": {
+          "tours": 3,
+          "pax": 9,
+          "revenue": 340.0,
+          "vendorCost": 260.0,
+          "grossMargin": 12.0
+        },
+        "Sun": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 120.0,
+          "vendorCost": 90.0,
+          "grossMargin": 6.0
+        }
+      },
+      "byTime": {
+        "18": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 150.0,
+          "vendorCost": 80.0,
+          "grossMargin": 40.0
+        },
+        "10": {
+          "tours": 9,
+          "pax": 59,
+          "revenue": 1140.0,
+          "vendorCost": 770.0,
+          "grossMargin": 142.0
+        },
+        "15": {
+          "tours": 1,
+          "pax": 6,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "17": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 8,
+          "pax": 27,
+          "revenue": 970.0,
+          "vendorCost": 670.0,
+          "grossMargin": 106.0
+        },
+        "high": {
+          "tours": 4,
+          "pax": 44,
+          "revenue": 560.0,
+          "vendorCost": 340.0,
+          "grossMargin": 108.0
+        }
+      },
+      "byPaxBand": {
+        "1-4": {
+          "tours": 10,
+          "pax": 27,
+          "revenue": 1210.0,
+          "vendorCost": 840.0,
+          "grossMargin": 128.0
+        },
+        "5-10": {
+          "tours": 1,
+          "pax": 6,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "30+": {
+          "tours": 1,
+          "pax": 38,
+          "revenue": 200.0,
+          "vendorCost": 90.0,
+          "grossMargin": 70.0
+        }
+      },
+      "byWeek": {
+        "18": {
+          "tours": 2,
+          "pax": 6,
+          "revenue": 270.0,
+          "vendorCost": 160.0,
+          "grossMargin": 56.0
+        },
+        "19": {
+          "tours": 2,
+          "pax": 4,
+          "revenue": 240.0,
+          "vendorCost": 160.0,
+          "grossMargin": 32.0
+        },
+        "20": {
+          "tours": 1,
+          "pax": 6,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "21": {
+          "tours": 2,
+          "pax": 7,
+          "revenue": 220.0,
+          "vendorCost": 180.0,
+          "grossMargin": -4.0
+        },
+        "25": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 90.0,
+          "grossMargin": 6.0
+        },
+        "27": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "36": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "39": {
+          "tours": 1,
+          "pax": 38,
+          "revenue": 200.0,
+          "vendorCost": 90.0,
+          "grossMargin": 70.0
+        },
+        "40": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 120.0,
+          "vendorCost": 90.0,
+          "grossMargin": 6.0
+        }
+      },
+      "byMonth": {
+        "4": {
+          "tours": 2,
+          "pax": 6,
+          "revenue": 270.0,
+          "vendorCost": 160.0,
+          "grossMargin": 56.0
+        },
+        "5": {
+          "tours": 5,
+          "pax": 17,
+          "revenue": 580.0,
+          "vendorCost": 420.0,
+          "grossMargin": 44.0
+        },
+        "6": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 90.0,
+          "grossMargin": 6.0
+        },
+        "7": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 120.0,
+          "vendorCost": 80.0,
+          "grossMargin": 16.0
+        },
+        "9": {
+          "tours": 2,
+          "pax": 40,
+          "revenue": 320.0,
+          "vendorCost": 170.0,
+          "grossMargin": 86.0
+        },
+        "10": {
+          "tours": 1,
+          "pax": 4,
+          "revenue": 120.0,
+          "vendorCost": 90.0,
+          "grossMargin": 6.0
         }
       }
     }
@@ -113827,6 +131904,384 @@ const guideStats25 = [
           }
         }
       }
+    },
+    "mgmt": {
+      "revenue": 1635.0,
+      "vendorCost": 720.0,
+      "grossMargin": 240.15,
+      "byChannel": {
+        "web": {
+          "tours": 60,
+          "pax": 1292,
+          "revenue": 290.0,
+          "vendorCost": 120.0,
+          "grossMargin": 100.4
+        },
+        "OTA": {
+          "tours": 10,
+          "pax": 95,
+          "revenue": 1345.0,
+          "vendorCost": 600.0,
+          "grossMargin": 139.75
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 60,
+          "pax": 1292,
+          "revenue": 290.0,
+          "vendorCost": 120.0,
+          "grossMargin": 100.4
+        },
+        "Civitatis": {
+          "tours": 10,
+          "pax": 95,
+          "revenue": 1345.0,
+          "vendorCost": 600.0,
+          "grossMargin": 139.75
+        }
+      },
+      "byDow": {
+        "Sat": {
+          "tours": 15,
+          "pax": 356,
+          "revenue": 175.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.25
+        },
+        "Sun": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -29.6
+        },
+        "Wed": {
+          "tours": 11,
+          "pax": 163,
+          "revenue": 610.0,
+          "vendorCost": 240.0,
+          "grossMargin": 148.0
+        },
+        "Fri": {
+          "tours": 14,
+          "pax": 320,
+          "revenue": 80.0,
+          "vendorCost": 60.0,
+          "grossMargin": -16.0
+        },
+        "Mon": {
+          "tours": 13,
+          "pax": 208,
+          "revenue": 180.0,
+          "vendorCost": 120.0,
+          "grossMargin": -21.0
+        },
+        "Tue": {
+          "tours": 8,
+          "pax": 207,
+          "revenue": 350.0,
+          "vendorCost": 120.0,
+          "grossMargin": 72.5
+        },
+        "Thu": {
+          "tours": 8,
+          "pax": 131,
+          "revenue": 200.0,
+          "vendorCost": 60.0,
+          "grossMargin": 50.0
+        }
+      },
+      "byTime": {
+        "11": {
+          "tours": 8,
+          "pax": 174,
+          "revenue": 200.0,
+          "vendorCost": 60.0,
+          "grossMargin": 50.0
+        },
+        "17": {
+          "tours": 6,
+          "pax": 76,
+          "revenue": 160.0,
+          "vendorCost": 180.0,
+          "grossMargin": -83.6
+        },
+        "18": {
+          "tours": 34,
+          "pax": 682,
+          "revenue": 550.0,
+          "vendorCost": 240.0,
+          "grossMargin": 115.0
+        },
+        "10": {
+          "tours": 21,
+          "pax": 436,
+          "revenue": 550.0,
+          "vendorCost": 180.0,
+          "grossMargin": 122.5
+        },
+        "13": {
+          "tours": 1,
+          "pax": 19,
+          "revenue": 175.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.25
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 7,
+          "pax": 136,
+          "revenue": 200.0,
+          "vendorCost": 60.0,
+          "grossMargin": 50.0
+        },
+        "high": {
+          "tours": 63,
+          "pax": 1251,
+          "revenue": 1435.0,
+          "vendorCost": 660.0,
+          "grossMargin": 190.15
+        }
+      },
+      "byPaxBand": {
+        "21-30": {
+          "tours": 25,
+          "pax": 642,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "1-4": {
+          "tours": 7,
+          "pax": 20,
+          "revenue": 520.0,
+          "vendorCost": 360.0,
+          "grossMargin": -65.6
+        },
+        "11-20": {
+          "tours": 24,
+          "pax": 411,
+          "revenue": 975.0,
+          "vendorCost": 300.0,
+          "grossMargin": 288.75
+        },
+        "5-10": {
+          "tours": 6,
+          "pax": 46,
+          "revenue": 140.0,
+          "vendorCost": 60.0,
+          "grossMargin": 17.0
+        },
+        "30+": {
+          "tours": 8,
+          "pax": 268,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "21": {
+          "tours": 1,
+          "pax": 24,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "22": {
+          "tours": 1,
+          "pax": 30,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "23": {
+          "tours": 1,
+          "pax": 2,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -29.6
+        },
+        "24": {
+          "tours": 2,
+          "pax": 43,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "25": {
+          "tours": 4,
+          "pax": 83,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "26": {
+          "tours": 5,
+          "pax": 57,
+          "revenue": 80.0,
+          "vendorCost": 60.0,
+          "grossMargin": -16.0
+        },
+        "27": {
+          "tours": 3,
+          "pax": 54,
+          "revenue": 250.0,
+          "vendorCost": 60.0,
+          "grossMargin": 130.0
+        },
+        "28": {
+          "tours": 4,
+          "pax": 106,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "29": {
+          "tours": 3,
+          "pax": 76,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "30": {
+          "tours": 5,
+          "pax": 89,
+          "revenue": 175.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.25
+        },
+        "31": {
+          "tours": 3,
+          "pax": 41,
+          "revenue": 315.0,
+          "vendorCost": 120.0,
+          "grossMargin": 53.25
+        },
+        "32": {
+          "tours": 3,
+          "pax": 96,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "33": {
+          "tours": 4,
+          "pax": 87,
+          "revenue": 80.0,
+          "vendorCost": 60.0,
+          "grossMargin": -16.0
+        },
+        "34": {
+          "tours": 5,
+          "pax": 120,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "35": {
+          "tours": 4,
+          "pax": 70,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "36": {
+          "tours": 2,
+          "pax": 43,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "37": {
+          "tours": 6,
+          "pax": 126,
+          "revenue": 80.0,
+          "vendorCost": 60.0,
+          "grossMargin": -16.0
+        },
+        "38": {
+          "tours": 4,
+          "pax": 69,
+          "revenue": 200.0,
+          "vendorCost": 60.0,
+          "grossMargin": 50.0
+        },
+        "39": {
+          "tours": 4,
+          "pax": 69,
+          "revenue": 40.0,
+          "vendorCost": 60.0,
+          "grossMargin": -38.0
+        },
+        "40": {
+          "tours": 3,
+          "pax": 55,
+          "revenue": 175.0,
+          "vendorCost": 60.0,
+          "grossMargin": 36.25
+        },
+        "41": {
+          "tours": 2,
+          "pax": 32,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "44": {
+          "tours": 1,
+          "pax": 15,
+          "revenue": 200.0,
+          "vendorCost": 60.0,
+          "grossMargin": 50.0
+        }
+      },
+      "byMonth": {
+        "5": {
+          "tours": 2,
+          "pax": 54,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "6": {
+          "tours": 13,
+          "pax": 199,
+          "revenue": 120.0,
+          "vendorCost": 120.0,
+          "grossMargin": -45.6
+        },
+        "7": {
+          "tours": 17,
+          "pax": 352,
+          "revenue": 740.0,
+          "vendorCost": 240.0,
+          "grossMargin": 219.5
+        },
+        "8": {
+          "tours": 16,
+          "pax": 373,
+          "revenue": 80.0,
+          "vendorCost": 60.0,
+          "grossMargin": -16.0
+        },
+        "9": {
+          "tours": 17,
+          "pax": 327,
+          "revenue": 495.0,
+          "vendorCost": 240.0,
+          "grossMargin": 32.25
+        },
+        "10": {
+          "tours": 5,
+          "pax": 82,
+          "revenue": 200.0,
+          "vendorCost": 60.0,
+          "grossMargin": 50.0
+        }
+      }
     }
   },
   {
@@ -113958,6 +132413,104 @@ const guideStats25 = [
         },
         "byMonthType": {},
         "byDayType": {}
+      }
+    },
+    "mgmt": {
+      "revenue": 0.0,
+      "vendorCost": 0.0,
+      "grossMargin": 0.0,
+      "byChannel": {
+        "web": {
+          "tours": 4,
+          "pax": 76,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 4,
+          "pax": 76,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byDow": {
+        "Wed": {
+          "tours": 2,
+          "pax": 51,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Sat": {
+          "tours": 2,
+          "pax": 25,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byTime": {
+        "16": {
+          "tours": 2,
+          "pax": 32,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "19": {
+          "tours": 2,
+          "pax": 44,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "bySeason": {
+        "high": {
+          "tours": 4,
+          "pax": 76,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byPaxBand": {
+        "21-30": {
+          "tours": 2,
+          "pax": 51,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11-20": {
+          "tours": 2,
+          "pax": 25,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "23": {
+          "tours": 4,
+          "pax": 76,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "6": {
+          "tours": 4,
+          "pax": 76,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
       }
     }
   }

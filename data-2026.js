@@ -18106,6 +18106,718 @@ const guideStats26 = [
     }
   },
   {
+    "name": "Antonio Sičić",
+    "city": "Zagreb",
+    "stats": {
+      "eng": {
+        "free": {
+          "tours": 1,
+          "pax": 23
+        },
+        "paid": {
+          "tours": 1,
+          "pax": 11
+        },
+        "byType": {
+          "best": {
+            "tours": 1,
+            "pax": 11
+          }
+        },
+        "byMonth": {
+          "5": {
+            "name": "Svi",
+            "free": {
+              "tours": 1,
+              "pax": 23
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 11
+            }
+          }
+        },
+        "byDay": {
+          "5-9": {
+            "free": {
+              "tours": 1,
+              "pax": 23
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 11
+            }
+          }
+        },
+        "byMonthType": {
+          "5": {
+            "best": {
+              "tours": 1,
+              "pax": 11
+            }
+          }
+        },
+        "byDayType": {
+          "5-9": {
+            "best": {
+              "tours": 1,
+              "pax": 11
+            }
+          }
+        }
+      },
+      "esp": {
+        "free": {
+          "tours": 0,
+          "pax": 0
+        },
+        "paid": {
+          "tours": 0,
+          "pax": 0
+        },
+        "byType": {},
+        "byMonth": {},
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
+      },
+      "fra": {
+        "free": {
+          "tours": 0,
+          "pax": 0
+        },
+        "paid": {
+          "tours": 0,
+          "pax": 0
+        },
+        "byType": {},
+        "byMonth": {},
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
+      },
+      "all": {
+        "free": {
+          "tours": 1,
+          "pax": 23
+        },
+        "paid": {
+          "tours": 1,
+          "pax": 11
+        },
+        "byType": {
+          "best": {
+            "tours": 1,
+            "pax": 11
+          }
+        },
+        "byMonth": {
+          "5": {
+            "name": "Svi",
+            "free": {
+              "tours": 1,
+              "pax": 23
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 11
+            }
+          }
+        },
+        "byDay": {
+          "5-9": {
+            "free": {
+              "tours": 1,
+              "pax": 23
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 11
+            }
+          }
+        },
+        "byMonthType": {
+          "5": {
+            "best": {
+              "tours": 1,
+              "pax": 11
+            }
+          }
+        },
+        "byDayType": {
+          "5-9": {
+            "best": {
+              "tours": 1,
+              "pax": 11
+            }
+          }
+        }
+      }
+    },
+    "mgmt": {
+      "revenue": 220.0,
+      "vendorCost": 60.0,
+      "grossMargin": 39.0,
+      "byChannel": {
+        "web": {
+          "tours": 1,
+          "pax": 23,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "OTA": {
+          "tours": 1,
+          "pax": 11,
+          "revenue": 220.0,
+          "vendorCost": 60.0,
+          "grossMargin": 39.0
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 1,
+          "pax": 23,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "GYG": {
+          "tours": 1,
+          "pax": 11,
+          "revenue": 220.0,
+          "vendorCost": 60.0,
+          "grossMargin": 39.0
+        }
+      },
+      "byDow": {
+        "Sat": {
+          "tours": 2,
+          "pax": 34,
+          "revenue": 220.0,
+          "vendorCost": 60.0,
+          "grossMargin": 39.0
+        }
+      },
+      "byTime": {
+        "17": {
+          "tours": 1,
+          "pax": 23,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "10": {
+          "tours": 1,
+          "pax": 11,
+          "revenue": 220.0,
+          "vendorCost": 60.0,
+          "grossMargin": 39.0
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 2,
+          "pax": 34,
+          "revenue": 220.0,
+          "vendorCost": 60.0,
+          "grossMargin": 39.0
+        }
+      },
+      "byPaxBand": {
+        "21-30": {
+          "tours": 1,
+          "pax": 23,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11-20": {
+          "tours": 1,
+          "pax": 11,
+          "revenue": 220.0,
+          "vendorCost": 60.0,
+          "grossMargin": 39.0
+        }
+      },
+      "byWeek": {
+        "19": {
+          "tours": 2,
+          "pax": 34,
+          "revenue": 220.0,
+          "vendorCost": 60.0,
+          "grossMargin": 39.0
+        }
+      },
+      "byMonth": {
+        "5": {
+          "tours": 2,
+          "pax": 34,
+          "revenue": 220.0,
+          "vendorCost": 60.0,
+          "grossMargin": 39.0
+        }
+      }
+    }
+  },
+  {
+    "name": "Dora Mlinarek Dominik",
+    "city": "Zagreb",
+    "stats": {
+      "eng": {
+        "free": {
+          "tours": 2,
+          "pax": 39
+        },
+        "paid": {
+          "tours": 0,
+          "pax": 0
+        },
+        "byType": {},
+        "byMonth": {
+          "5": {
+            "name": "Svi",
+            "free": {
+              "tours": 2,
+              "pax": 39
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          }
+        },
+        "byDay": {
+          "5-8": {
+            "free": {
+              "tours": 1,
+              "pax": 24
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-9": {
+            "free": {
+              "tours": 1,
+              "pax": 15
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          }
+        },
+        "byMonthType": {},
+        "byDayType": {}
+      },
+      "esp": {
+        "free": {
+          "tours": 0,
+          "pax": 0
+        },
+        "paid": {
+          "tours": 0,
+          "pax": 0
+        },
+        "byType": {},
+        "byMonth": {},
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
+      },
+      "fra": {
+        "free": {
+          "tours": 0,
+          "pax": 0
+        },
+        "paid": {
+          "tours": 0,
+          "pax": 0
+        },
+        "byType": {},
+        "byMonth": {},
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
+      },
+      "all": {
+        "free": {
+          "tours": 2,
+          "pax": 39
+        },
+        "paid": {
+          "tours": 0,
+          "pax": 0
+        },
+        "byType": {},
+        "byMonth": {
+          "5": {
+            "name": "Svi",
+            "free": {
+              "tours": 2,
+              "pax": 39
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          }
+        },
+        "byDay": {
+          "5-8": {
+            "free": {
+              "tours": 1,
+              "pax": 24
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          },
+          "5-9": {
+            "free": {
+              "tours": 1,
+              "pax": 15
+            },
+            "paid": {
+              "tours": 0,
+              "pax": 0
+            }
+          }
+        },
+        "byMonthType": {},
+        "byDayType": {}
+      }
+    },
+    "mgmt": {
+      "revenue": 0.0,
+      "vendorCost": 0.0,
+      "grossMargin": 0.0,
+      "byChannel": {
+        "web": {
+          "tours": 2,
+          "pax": 39,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 2,
+          "pax": 39,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byDow": {
+        "Fri": {
+          "tours": 1,
+          "pax": 24,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "Sat": {
+          "tours": 1,
+          "pax": 15,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byTime": {
+        "17": {
+          "tours": 1,
+          "pax": 24,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "10": {
+          "tours": 1,
+          "pax": 15,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 2,
+          "pax": 39,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byPaxBand": {
+        "21-30": {
+          "tours": 1,
+          "pax": 24,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        },
+        "11-20": {
+          "tours": 1,
+          "pax": 15,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byWeek": {
+        "19": {
+          "tours": 2,
+          "pax": 39,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      },
+      "byMonth": {
+        "5": {
+          "tours": 2,
+          "pax": 39,
+          "revenue": 0.0,
+          "vendorCost": 0.0,
+          "grossMargin": 0.0
+        }
+      }
+    }
+  },
+  {
+    "name": "Josipa Šiklić",
+    "city": "Zagreb",
+    "stats": {
+      "eng": {
+        "free": {
+          "tours": 0,
+          "pax": 0
+        },
+        "paid": {
+          "tours": 1,
+          "pax": 28
+        },
+        "byType": {
+          "old": {
+            "tours": 1,
+            "pax": 28
+          }
+        },
+        "byMonth": {
+          "5": {
+            "name": "Svi",
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 28
+            }
+          }
+        },
+        "byDay": {
+          "5-9": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 28
+            }
+          }
+        },
+        "byMonthType": {
+          "5": {
+            "old": {
+              "tours": 1,
+              "pax": 28
+            }
+          }
+        },
+        "byDayType": {
+          "5-9": {
+            "old": {
+              "tours": 1,
+              "pax": 28
+            }
+          }
+        }
+      },
+      "esp": {
+        "free": {
+          "tours": 0,
+          "pax": 0
+        },
+        "paid": {
+          "tours": 0,
+          "pax": 0
+        },
+        "byType": {},
+        "byMonth": {},
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
+      },
+      "fra": {
+        "free": {
+          "tours": 0,
+          "pax": 0
+        },
+        "paid": {
+          "tours": 0,
+          "pax": 0
+        },
+        "byType": {},
+        "byMonth": {},
+        "byDay": {},
+        "byMonthType": {},
+        "byDayType": {}
+      },
+      "all": {
+        "free": {
+          "tours": 0,
+          "pax": 0
+        },
+        "paid": {
+          "tours": 1,
+          "pax": 28
+        },
+        "byType": {
+          "old": {
+            "tours": 1,
+            "pax": 28
+          }
+        },
+        "byMonth": {
+          "5": {
+            "name": "Svi",
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 28
+            }
+          }
+        },
+        "byDay": {
+          "5-9": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 28
+            }
+          }
+        },
+        "byMonthType": {
+          "5": {
+            "old": {
+              "tours": 1,
+              "pax": 28
+            }
+          }
+        },
+        "byDayType": {
+          "5-9": {
+            "old": {
+              "tours": 1,
+              "pax": 28
+            }
+          }
+        }
+      }
+    },
+    "mgmt": {
+      "revenue": 250.0,
+      "vendorCost": 60.0,
+      "grossMargin": 127.5,
+      "byChannel": {
+        "web": {
+          "tours": 1,
+          "pax": 28,
+          "revenue": 250.0,
+          "vendorCost": 60.0,
+          "grossMargin": 127.5
+        }
+      },
+      "bySource": {
+        "FST": {
+          "tours": 1,
+          "pax": 28,
+          "revenue": 250.0,
+          "vendorCost": 60.0,
+          "grossMargin": 127.5
+        }
+      },
+      "byDow": {
+        "Sat": {
+          "tours": 1,
+          "pax": 28,
+          "revenue": 250.0,
+          "vendorCost": 60.0,
+          "grossMargin": 127.5
+        }
+      },
+      "byTime": {
+        "10": {
+          "tours": 1,
+          "pax": 28,
+          "revenue": 250.0,
+          "vendorCost": 60.0,
+          "grossMargin": 127.5
+        }
+      },
+      "bySeason": {
+        "shoulder": {
+          "tours": 1,
+          "pax": 28,
+          "revenue": 250.0,
+          "vendorCost": 60.0,
+          "grossMargin": 127.5
+        }
+      },
+      "byPaxBand": {
+        "21-30": {
+          "tours": 1,
+          "pax": 28,
+          "revenue": 250.0,
+          "vendorCost": 60.0,
+          "grossMargin": 127.5
+        }
+      },
+      "byWeek": {
+        "19": {
+          "tours": 1,
+          "pax": 28,
+          "revenue": 250.0,
+          "vendorCost": 60.0,
+          "grossMargin": 127.5
+        }
+      },
+      "byMonth": {
+        "5": {
+          "tours": 1,
+          "pax": 28,
+          "revenue": 250.0,
+          "vendorCost": 60.0,
+          "grossMargin": 127.5
+        }
+      }
+    }
+  },
+  {
     "name": "Marin Kalauz",
     "city": "Dubrovnik",
     "stats": {
@@ -31470,718 +32182,6 @@ const guideStats26 = [
           "revenue": 0.0,
           "vendorCost": 0.0,
           "grossMargin": 0.0
-        }
-      }
-    }
-  },
-  {
-    "name": "Dora Mlinarek Dominik",
-    "city": "Unknown",
-    "stats": {
-      "eng": {
-        "free": {
-          "tours": 2,
-          "pax": 39
-        },
-        "paid": {
-          "tours": 0,
-          "pax": 0
-        },
-        "byType": {},
-        "byMonth": {
-          "5": {
-            "name": "Svi",
-            "free": {
-              "tours": 2,
-              "pax": 39
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          }
-        },
-        "byDay": {
-          "5-8": {
-            "free": {
-              "tours": 1,
-              "pax": 24
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "5-9": {
-            "free": {
-              "tours": 1,
-              "pax": 15
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          }
-        },
-        "byMonthType": {},
-        "byDayType": {}
-      },
-      "esp": {
-        "free": {
-          "tours": 0,
-          "pax": 0
-        },
-        "paid": {
-          "tours": 0,
-          "pax": 0
-        },
-        "byType": {},
-        "byMonth": {},
-        "byDay": {},
-        "byMonthType": {},
-        "byDayType": {}
-      },
-      "fra": {
-        "free": {
-          "tours": 0,
-          "pax": 0
-        },
-        "paid": {
-          "tours": 0,
-          "pax": 0
-        },
-        "byType": {},
-        "byMonth": {},
-        "byDay": {},
-        "byMonthType": {},
-        "byDayType": {}
-      },
-      "all": {
-        "free": {
-          "tours": 2,
-          "pax": 39
-        },
-        "paid": {
-          "tours": 0,
-          "pax": 0
-        },
-        "byType": {},
-        "byMonth": {
-          "5": {
-            "name": "Svi",
-            "free": {
-              "tours": 2,
-              "pax": 39
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          }
-        },
-        "byDay": {
-          "5-8": {
-            "free": {
-              "tours": 1,
-              "pax": 24
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          },
-          "5-9": {
-            "free": {
-              "tours": 1,
-              "pax": 15
-            },
-            "paid": {
-              "tours": 0,
-              "pax": 0
-            }
-          }
-        },
-        "byMonthType": {},
-        "byDayType": {}
-      }
-    },
-    "mgmt": {
-      "revenue": 0.0,
-      "vendorCost": 0.0,
-      "grossMargin": 0.0,
-      "byChannel": {
-        "web": {
-          "tours": 2,
-          "pax": 39,
-          "revenue": 0.0,
-          "vendorCost": 0.0,
-          "grossMargin": 0.0
-        }
-      },
-      "bySource": {
-        "FST": {
-          "tours": 2,
-          "pax": 39,
-          "revenue": 0.0,
-          "vendorCost": 0.0,
-          "grossMargin": 0.0
-        }
-      },
-      "byDow": {
-        "Fri": {
-          "tours": 1,
-          "pax": 24,
-          "revenue": 0.0,
-          "vendorCost": 0.0,
-          "grossMargin": 0.0
-        },
-        "Sat": {
-          "tours": 1,
-          "pax": 15,
-          "revenue": 0.0,
-          "vendorCost": 0.0,
-          "grossMargin": 0.0
-        }
-      },
-      "byTime": {
-        "17": {
-          "tours": 1,
-          "pax": 24,
-          "revenue": 0.0,
-          "vendorCost": 0.0,
-          "grossMargin": 0.0
-        },
-        "10": {
-          "tours": 1,
-          "pax": 15,
-          "revenue": 0.0,
-          "vendorCost": 0.0,
-          "grossMargin": 0.0
-        }
-      },
-      "bySeason": {
-        "shoulder": {
-          "tours": 2,
-          "pax": 39,
-          "revenue": 0.0,
-          "vendorCost": 0.0,
-          "grossMargin": 0.0
-        }
-      },
-      "byPaxBand": {
-        "21-30": {
-          "tours": 1,
-          "pax": 24,
-          "revenue": 0.0,
-          "vendorCost": 0.0,
-          "grossMargin": 0.0
-        },
-        "11-20": {
-          "tours": 1,
-          "pax": 15,
-          "revenue": 0.0,
-          "vendorCost": 0.0,
-          "grossMargin": 0.0
-        }
-      },
-      "byWeek": {
-        "19": {
-          "tours": 2,
-          "pax": 39,
-          "revenue": 0.0,
-          "vendorCost": 0.0,
-          "grossMargin": 0.0
-        }
-      },
-      "byMonth": {
-        "5": {
-          "tours": 2,
-          "pax": 39,
-          "revenue": 0.0,
-          "vendorCost": 0.0,
-          "grossMargin": 0.0
-        }
-      }
-    }
-  },
-  {
-    "name": "Antonio Sičić",
-    "city": "Unknown",
-    "stats": {
-      "eng": {
-        "free": {
-          "tours": 1,
-          "pax": 23
-        },
-        "paid": {
-          "tours": 1,
-          "pax": 11
-        },
-        "byType": {
-          "best": {
-            "tours": 1,
-            "pax": 11
-          }
-        },
-        "byMonth": {
-          "5": {
-            "name": "Svi",
-            "free": {
-              "tours": 1,
-              "pax": 23
-            },
-            "paid": {
-              "tours": 1,
-              "pax": 11
-            }
-          }
-        },
-        "byDay": {
-          "5-9": {
-            "free": {
-              "tours": 1,
-              "pax": 23
-            },
-            "paid": {
-              "tours": 1,
-              "pax": 11
-            }
-          }
-        },
-        "byMonthType": {
-          "5": {
-            "best": {
-              "tours": 1,
-              "pax": 11
-            }
-          }
-        },
-        "byDayType": {
-          "5-9": {
-            "best": {
-              "tours": 1,
-              "pax": 11
-            }
-          }
-        }
-      },
-      "esp": {
-        "free": {
-          "tours": 0,
-          "pax": 0
-        },
-        "paid": {
-          "tours": 0,
-          "pax": 0
-        },
-        "byType": {},
-        "byMonth": {},
-        "byDay": {},
-        "byMonthType": {},
-        "byDayType": {}
-      },
-      "fra": {
-        "free": {
-          "tours": 0,
-          "pax": 0
-        },
-        "paid": {
-          "tours": 0,
-          "pax": 0
-        },
-        "byType": {},
-        "byMonth": {},
-        "byDay": {},
-        "byMonthType": {},
-        "byDayType": {}
-      },
-      "all": {
-        "free": {
-          "tours": 1,
-          "pax": 23
-        },
-        "paid": {
-          "tours": 1,
-          "pax": 11
-        },
-        "byType": {
-          "best": {
-            "tours": 1,
-            "pax": 11
-          }
-        },
-        "byMonth": {
-          "5": {
-            "name": "Svi",
-            "free": {
-              "tours": 1,
-              "pax": 23
-            },
-            "paid": {
-              "tours": 1,
-              "pax": 11
-            }
-          }
-        },
-        "byDay": {
-          "5-9": {
-            "free": {
-              "tours": 1,
-              "pax": 23
-            },
-            "paid": {
-              "tours": 1,
-              "pax": 11
-            }
-          }
-        },
-        "byMonthType": {
-          "5": {
-            "best": {
-              "tours": 1,
-              "pax": 11
-            }
-          }
-        },
-        "byDayType": {
-          "5-9": {
-            "best": {
-              "tours": 1,
-              "pax": 11
-            }
-          }
-        }
-      }
-    },
-    "mgmt": {
-      "revenue": 220.0,
-      "vendorCost": 60.0,
-      "grossMargin": 39.0,
-      "byChannel": {
-        "web": {
-          "tours": 1,
-          "pax": 23,
-          "revenue": 0.0,
-          "vendorCost": 0.0,
-          "grossMargin": 0.0
-        },
-        "OTA": {
-          "tours": 1,
-          "pax": 11,
-          "revenue": 220.0,
-          "vendorCost": 60.0,
-          "grossMargin": 39.0
-        }
-      },
-      "bySource": {
-        "FST": {
-          "tours": 1,
-          "pax": 23,
-          "revenue": 0.0,
-          "vendorCost": 0.0,
-          "grossMargin": 0.0
-        },
-        "GYG": {
-          "tours": 1,
-          "pax": 11,
-          "revenue": 220.0,
-          "vendorCost": 60.0,
-          "grossMargin": 39.0
-        }
-      },
-      "byDow": {
-        "Sat": {
-          "tours": 2,
-          "pax": 34,
-          "revenue": 220.0,
-          "vendorCost": 60.0,
-          "grossMargin": 39.0
-        }
-      },
-      "byTime": {
-        "17": {
-          "tours": 1,
-          "pax": 23,
-          "revenue": 0.0,
-          "vendorCost": 0.0,
-          "grossMargin": 0.0
-        },
-        "10": {
-          "tours": 1,
-          "pax": 11,
-          "revenue": 220.0,
-          "vendorCost": 60.0,
-          "grossMargin": 39.0
-        }
-      },
-      "bySeason": {
-        "shoulder": {
-          "tours": 2,
-          "pax": 34,
-          "revenue": 220.0,
-          "vendorCost": 60.0,
-          "grossMargin": 39.0
-        }
-      },
-      "byPaxBand": {
-        "21-30": {
-          "tours": 1,
-          "pax": 23,
-          "revenue": 0.0,
-          "vendorCost": 0.0,
-          "grossMargin": 0.0
-        },
-        "11-20": {
-          "tours": 1,
-          "pax": 11,
-          "revenue": 220.0,
-          "vendorCost": 60.0,
-          "grossMargin": 39.0
-        }
-      },
-      "byWeek": {
-        "19": {
-          "tours": 2,
-          "pax": 34,
-          "revenue": 220.0,
-          "vendorCost": 60.0,
-          "grossMargin": 39.0
-        }
-      },
-      "byMonth": {
-        "5": {
-          "tours": 2,
-          "pax": 34,
-          "revenue": 220.0,
-          "vendorCost": 60.0,
-          "grossMargin": 39.0
-        }
-      }
-    }
-  },
-  {
-    "name": "Josipa Šiklić",
-    "city": "Unknown",
-    "stats": {
-      "eng": {
-        "free": {
-          "tours": 0,
-          "pax": 0
-        },
-        "paid": {
-          "tours": 1,
-          "pax": 28
-        },
-        "byType": {
-          "old": {
-            "tours": 1,
-            "pax": 28
-          }
-        },
-        "byMonth": {
-          "5": {
-            "name": "Svi",
-            "free": {
-              "tours": 0,
-              "pax": 0
-            },
-            "paid": {
-              "tours": 1,
-              "pax": 28
-            }
-          }
-        },
-        "byDay": {
-          "5-9": {
-            "free": {
-              "tours": 0,
-              "pax": 0
-            },
-            "paid": {
-              "tours": 1,
-              "pax": 28
-            }
-          }
-        },
-        "byMonthType": {
-          "5": {
-            "old": {
-              "tours": 1,
-              "pax": 28
-            }
-          }
-        },
-        "byDayType": {
-          "5-9": {
-            "old": {
-              "tours": 1,
-              "pax": 28
-            }
-          }
-        }
-      },
-      "esp": {
-        "free": {
-          "tours": 0,
-          "pax": 0
-        },
-        "paid": {
-          "tours": 0,
-          "pax": 0
-        },
-        "byType": {},
-        "byMonth": {},
-        "byDay": {},
-        "byMonthType": {},
-        "byDayType": {}
-      },
-      "fra": {
-        "free": {
-          "tours": 0,
-          "pax": 0
-        },
-        "paid": {
-          "tours": 0,
-          "pax": 0
-        },
-        "byType": {},
-        "byMonth": {},
-        "byDay": {},
-        "byMonthType": {},
-        "byDayType": {}
-      },
-      "all": {
-        "free": {
-          "tours": 0,
-          "pax": 0
-        },
-        "paid": {
-          "tours": 1,
-          "pax": 28
-        },
-        "byType": {
-          "old": {
-            "tours": 1,
-            "pax": 28
-          }
-        },
-        "byMonth": {
-          "5": {
-            "name": "Svi",
-            "free": {
-              "tours": 0,
-              "pax": 0
-            },
-            "paid": {
-              "tours": 1,
-              "pax": 28
-            }
-          }
-        },
-        "byDay": {
-          "5-9": {
-            "free": {
-              "tours": 0,
-              "pax": 0
-            },
-            "paid": {
-              "tours": 1,
-              "pax": 28
-            }
-          }
-        },
-        "byMonthType": {
-          "5": {
-            "old": {
-              "tours": 1,
-              "pax": 28
-            }
-          }
-        },
-        "byDayType": {
-          "5-9": {
-            "old": {
-              "tours": 1,
-              "pax": 28
-            }
-          }
-        }
-      }
-    },
-    "mgmt": {
-      "revenue": 250.0,
-      "vendorCost": 60.0,
-      "grossMargin": 127.5,
-      "byChannel": {
-        "web": {
-          "tours": 1,
-          "pax": 28,
-          "revenue": 250.0,
-          "vendorCost": 60.0,
-          "grossMargin": 127.5
-        }
-      },
-      "bySource": {
-        "FST": {
-          "tours": 1,
-          "pax": 28,
-          "revenue": 250.0,
-          "vendorCost": 60.0,
-          "grossMargin": 127.5
-        }
-      },
-      "byDow": {
-        "Sat": {
-          "tours": 1,
-          "pax": 28,
-          "revenue": 250.0,
-          "vendorCost": 60.0,
-          "grossMargin": 127.5
-        }
-      },
-      "byTime": {
-        "10": {
-          "tours": 1,
-          "pax": 28,
-          "revenue": 250.0,
-          "vendorCost": 60.0,
-          "grossMargin": 127.5
-        }
-      },
-      "bySeason": {
-        "shoulder": {
-          "tours": 1,
-          "pax": 28,
-          "revenue": 250.0,
-          "vendorCost": 60.0,
-          "grossMargin": 127.5
-        }
-      },
-      "byPaxBand": {
-        "21-30": {
-          "tours": 1,
-          "pax": 28,
-          "revenue": 250.0,
-          "vendorCost": 60.0,
-          "grossMargin": 127.5
-        }
-      },
-      "byWeek": {
-        "19": {
-          "tours": 1,
-          "pax": 28,
-          "revenue": 250.0,
-          "vendorCost": 60.0,
-          "grossMargin": 127.5
-        }
-      },
-      "byMonth": {
-        "5": {
-          "tours": 1,
-          "pax": 28,
-          "revenue": 250.0,
-          "vendorCost": 60.0,
-          "grossMargin": 127.5
         }
       }
     }

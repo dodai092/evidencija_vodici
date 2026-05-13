@@ -36,11 +36,11 @@ while i < len(args):
     elif args[i] == '--sheet' and i+1 < len(args): SHEET = args[i+1];      i += 2
     else: i += 1
 
-# Defaults — both years now read from Evidencija
+# Defaults — 2026 uses Evidencija, 2025 uses Evidencija_25
 if YEAR is None and SHEET is None:
     YEAR, SHEET = 2026, 'Evidencija'
 elif YEAR == 2025 and SHEET is None:
-    SHEET = 'Evidencija'
+    SHEET = 'Evidencija_25'
 elif YEAR == 2026 and SHEET is None:
     SHEET = 'Evidencija'
 elif SHEET is None:
@@ -56,6 +56,7 @@ GUIDE_ORDER = [
         'Darko Crnolatac', 'Luka Pelicarić', 'Vid Dorić', 'Diana Bolić',
         'Ivana Čakarić', 'Katarina Novoselac', 'Iva Pavlović', 'Nikolina Folnović',
         'Katija Crnčević', 'Kristina Božić', 'Ena Matacun', 'Nadir Ivanović',
+        'Antonio Sičić', 'Dora Mlinarek Dominik', 'Josipa Šiklić',
     ]),
     ('Dubrovnik', [
         'Marin Kalauz', 'Pero Kusalo', 'Andrea Rendulić', 'Sara Žanetić',

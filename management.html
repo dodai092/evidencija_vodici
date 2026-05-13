@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Management · FreeSpirit</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600&family=Inconsolata:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600&family=Inconsolata:wght@400;500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="guides.css">
     <style>
-        .mgmt-page { display: none; }
-        .mgmt-page.active { display: block; }
-        .nav-tab.mgmt-tab-active { color: var(--amber); border-bottom-color: var(--amber); }
+        .mgmt-page {
+            display: none;
+        }
+
+        .mgmt-page.active {
+            display: block;
+        }
+
+        .nav-tab.mgmt-tab-active {
+            color: var(--amber);
+            border-bottom-color: var(--amber);
+        }
 
         .kpi-grid {
             display: grid;
@@ -17,7 +29,12 @@
             gap: 16px;
             margin-bottom: 32px;
         }
-        @media (max-width: 1100px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        @media (max-width: 1100px) {
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
 
         .kpi-card {
             background: var(--card-bg);
@@ -25,128 +42,338 @@
             border-radius: var(--radius);
             padding: 20px 24px;
         }
+
         .kpi-card .kpi-label {
-            font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
-            text-transform: uppercase; color: var(--text2); margin-bottom: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text2);
+            margin-bottom: 8px;
         }
+
         .kpi-card .kpi-value {
-            font-family: var(--font-mono); font-size: 26px; font-weight: 500; color: var(--text);
+            font-family: var(--font-mono);
+            font-size: 26px;
+            font-weight: 500;
+            color: var(--text);
         }
-        .kpi-card .kpi-sub { font-size: 12px; color: var(--text3); margin-top: 4px; line-height: 1.6; }
-        .kpi-card.accent-green .kpi-value { color: var(--green); }
-        .kpi-card.accent-amber .kpi-value { color: var(--amber); }
+
+        .kpi-card .kpi-sub {
+            font-size: 12px;
+            color: var(--text3);
+            margin-top: 4px;
+            line-height: 1.6;
+        }
+
+        .kpi-card.accent-green .kpi-value {
+            color: var(--green);
+        }
+
+        .kpi-card.accent-amber .kpi-value {
+            color: var(--amber);
+        }
 
         .kpi-delta {
-            font-size: 11px; font-family: var(--font-mono); margin-top: 5px;
+            font-size: 11px;
+            font-family: var(--font-mono);
+            margin-top: 5px;
         }
-        .kpi-delta.delta-pos { color: var(--green); }
-        .kpi-delta.delta-neg { color: var(--delta-neg); }
-        .kpi-delta.delta-neu { color: var(--text3); }
 
-        .delta-pos { color: var(--green); }
-        .delta-neg { color: var(--delta-neg); }
-        .delta-neu { color: var(--text3); }
+        .kpi-delta.delta-pos {
+            color: var(--green);
+        }
+
+        .kpi-delta.delta-neg {
+            color: var(--delta-neg);
+        }
+
+        .kpi-delta.delta-neu {
+            color: var(--text3);
+        }
+
+        .delta-pos {
+            color: var(--green);
+        }
+
+        .delta-neg {
+            color: var(--delta-neg);
+        }
+
+        .delta-neu {
+            color: var(--text3);
+        }
 
         .city-pills {
-            display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
         }
+
         .city-pill {
-            padding: 5px 16px; border-radius: 20px; border: 1px solid var(--border-dark);
-            font-size: 12px; font-weight: 500; cursor: pointer;
-            background: var(--smoke); color: var(--text2);
+            padding: 5px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border-dark);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            background: var(--smoke);
+            color: var(--text2);
             transition: background 0.15s, color 0.15s;
         }
-        .city-pill.active { color: var(--white); border-color: transparent; }
-        .city-pill[data-city="all"].active    { background: var(--text); }
-        .city-pill[data-city="Zagreb"].active    { background: var(--zagreb); }
-        .city-pill[data-city="Dubrovnik"].active { background: var(--dubrovnik); }
-        .city-pill[data-city="Split"].active     { background: var(--split); }
-        .city-pill[data-city="Zadar"].active     { background: var(--zadar); }
+
+        .city-pill.active {
+            color: var(--white);
+            border-color: transparent;
+        }
+
+        .city-pill[data-city="all"].active {
+            background: var(--text);
+        }
+
+        .city-pill[data-city="Zagreb"].active {
+            background: var(--zagreb);
+        }
+
+        .city-pill[data-city="Dubrovnik"].active {
+            background: var(--dubrovnik);
+        }
+
+        .city-pill[data-city="Split"].active {
+            background: var(--split);
+        }
+
+        .city-pill[data-city="Zadar"].active {
+            background: var(--zadar);
+        }
 
         .mgmt-table {
-            width: 100%; border-collapse: collapse; font-size: 13px;
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
         }
-        .mgmt-table th, .mgmt-table td {
-            padding: 9px 12px; border-bottom: 1px solid var(--border); text-align: right;
-        }
-        .mgmt-table th:first-child, .mgmt-table td:first-child,
-        .mgmt-table th:nth-child(2), .mgmt-table td:nth-child(2) { text-align: left; }
-        .mgmt-table th {
-            font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
-            text-transform: uppercase; color: var(--text2);
-            background: var(--smoke); white-space: nowrap; position: sticky; top: 0;
-        }
-        .mgmt-table tr:hover td { background: var(--smoke); }
-        .mgmt-table .rank { color: var(--text3); font-size: 11px; width: 28px; }
-        .mgmt-table .guide-name { font-weight: 500; }
-        .mgmt-table td.pos { color: var(--green); font-weight: 600; }
-        .mgmt-table td.neg { color: var(--delta-neg); font-weight: 600; }
-        .mgmt-table td.neu { color: var(--text3); }
 
-        .sort-hdr { cursor: pointer; user-select: none; }
-        .sort-hdr:hover { color: var(--text); }
-        .sort-hdr.sorted-desc::after { content: ' ▾'; }
-        .sort-hdr.sorted-asc::after  { content: ' ▴'; }
+        .mgmt-table th,
+        .mgmt-table td {
+            padding: 9px 12px;
+            border-bottom: 1px solid var(--border);
+            text-align: right;
+        }
+
+        .mgmt-table th:first-child,
+        .mgmt-table td:first-child,
+        .mgmt-table th:nth-child(2),
+        .mgmt-table td:nth-child(2) {
+            text-align: left;
+        }
+
+        .mgmt-table th {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text2);
+            background: var(--smoke);
+            white-space: nowrap;
+            position: sticky;
+            top: 0;
+        }
+
+        .mgmt-table tr:hover td {
+            background: var(--smoke);
+        }
+
+        .mgmt-table .rank {
+            color: var(--text3);
+            font-size: 11px;
+            width: 28px;
+        }
+
+        .mgmt-table .guide-name {
+            font-weight: 500;
+        }
+
+        .mgmt-table td.pos {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .mgmt-table td.neg {
+            color: var(--delta-neg);
+            font-weight: 600;
+        }
+
+        .mgmt-table td.neu {
+            color: var(--text3);
+        }
+
+        .sort-hdr {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .sort-hdr:hover {
+            color: var(--text);
+        }
+
+        .sort-hdr.sorted-desc::after {
+            content: ' ▾';
+        }
+
+        .sort-hdr.sorted-asc::after {
+            content: ' ▴';
+        }
 
         .city-dot {
-            display: inline-block; width: 8px; height: 8px;
-            border-radius: 50%; margin-right: 6px; vertical-align: middle;
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 6px;
+            vertical-align: middle;
         }
 
-        small.yoy { font-size: 10px; font-family: var(--font-mono); line-height: 1.2; display: block; }
+        small.yoy {
+            font-size: 10px;
+            font-family: var(--font-mono);
+            line-height: 1.2;
+            display: block;
+        }
 
         .two-col {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
         }
-        @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+        @media (max-width: 900px) {
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+        }
 
         .chart-card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 20px 24px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px 24px;
         }
+
         .chart-card h3 {
-            font-family: var(--font-serif); font-size: 15px; font-weight: 400;
-            margin-bottom: 16px; color: var(--text);
+            font-family: var(--font-serif);
+            font-size: 15px;
+            font-weight: 400;
+            margin-bottom: 16px;
+            color: var(--text);
         }
-        .chart-wrap { position: relative; }
-        .chart-wrap.h200 { height: 200px; }
-        .chart-wrap.h240 { height: 240px; }
-        .chart-wrap.h280 { height: 280px; }
-        .chart-wrap.h320 { height: 320px; }
-        .chart-wrap.h360 { height: 360px; }
+
+        .chart-wrap {
+            position: relative;
+        }
+
+        .chart-wrap.h200 {
+            height: 200px;
+        }
+
+        .chart-wrap.h240 {
+            height: 240px;
+        }
+
+        .chart-wrap.h280 {
+            height: 280px;
+        }
+
+        .chart-wrap.h320 {
+            height: 320px;
+        }
+
+        .chart-wrap.h360 {
+            height: 360px;
+        }
 
         .donut-layout {
-            display: flex; gap: 20px; align-items: flex-start;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
         }
-        .donut-layout .chart-wrap { flex: 0 0 160px; height: 160px; }
-        .donut-layout .donut-legend { flex: 1; }
+
+        .donut-layout .chart-wrap {
+            flex: 0 0 160px;
+            height: 160px;
+        }
+
+        .donut-layout .donut-legend {
+            flex: 1;
+        }
 
         .leg-row {
-            display: grid; grid-template-columns: 14px 1fr auto auto auto;
-            gap: 6px 10px; align-items: center; padding: 5px 0;
-            border-bottom: 1px solid var(--border); font-size: 12px;
+            display: grid;
+            grid-template-columns: 14px 1fr auto auto auto;
+            gap: 6px 10px;
+            align-items: center;
+            padding: 5px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
         }
-        .leg-row:last-child { border-bottom: none; }
-        .leg-dot { width: 10px; height: 10px; border-radius: 50%; }
-        .leg-label { font-weight: 500; color: var(--text); }
-        .leg-val { color: var(--text2); font-family: var(--font-mono); font-size: 11px; }
-        .leg-pct { color: var(--text3); font-size: 11px; }
-        .leg-rev { color: var(--text); font-family: var(--font-mono); font-size: 11px; font-weight: 500; }
+
+        .leg-row:last-child {
+            border-bottom: none;
+        }
+
+        .leg-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .leg-label {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .leg-val {
+            color: var(--text2);
+            font-family: var(--font-mono);
+            font-size: 11px;
+        }
+
+        .leg-pct {
+            color: var(--text3);
+            font-size: 11px;
+        }
+
+        .leg-rev {
+            color: var(--text);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 500;
+        }
 
         .section-title {
-            font-family: var(--font-serif); font-size: 18px; font-weight: 400;
-            margin: 0 0 16px; color: var(--text);
+            font-family: var(--font-serif);
+            font-size: 18px;
+            font-weight: 400;
+            margin: 0 0 16px;
+            color: var(--text);
         }
+
         .table-card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: var(--radius); overflow: auto; margin-bottom: 24px;
-            max-height: 600px; overflow-y: auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: auto;
+            margin-bottom: 24px;
+            max-height: 600px;
+            overflow-y: auto;
         }
     </style>
     <script>
         if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark-mode');
     </script>
 </head>
+
 <body>
     <script>if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');</script>
 
@@ -163,20 +390,26 @@
             </div>
         </div>
         <div class="nav-actions">
-            <input type="date" id="mgmt-date-picker" value="2026-05-12"
-                onchange="updateMgmtDate(this.value)" class="date-picker-ui">
             <button class="theme-toggle-icon" id="theme-toggle" onclick="toggleMgmtTheme()" title="Toggle dark mode">
-                <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
                     <circle cx="12" cy="12" r="5"></circle>
-                    <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                    <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                 </svg>
-                <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                 </svg>
             </button>
+            <input type="date" id="mgmt-date-picker" value="2026-05-12" onchange="updateMgmtDate(this.value)"
+                class="date-picker-ui">
             <button class="print-btn" onclick="window.print()">&#8595; Print / Save PDF</button>
         </div>
     </div>
@@ -299,12 +532,16 @@
                             <th>Guide</th>
                             <th>City</th>
                             <th class="sort-hdr" data-col="freeTours" onclick="mgmtSort('freeTours')">Free</th>
-                            <th class="sort-hdr" data-col="paidTours" onclick="mgmtSort('paidTours')">Paid<br><small style="font-weight:400;letter-spacing:0">vs '25</small></th>
+                            <th class="sort-hdr" data-col="paidTours" onclick="mgmtSort('paidTours')">Paid<br><small
+                                    style="font-weight:400;letter-spacing:0">vs '25</small></th>
                             <th class="sort-hdr" data-col="avgPax" onclick="mgmtSort('avgPax')">Avg PAX</th>
-                            <th class="sort-hdr" data-col="revenue" onclick="mgmtSort('revenue')">Revenue<br><small style="font-weight:400;letter-spacing:0">vs '25</small></th>
-                            <th class="sort-hdr" data-col="commissionCost" onclick="mgmtSort('commissionCost')">Commission</th>
+                            <th class="sort-hdr" data-col="revenue" onclick="mgmtSort('revenue')">Revenue<br><small
+                                    style="font-weight:400;letter-spacing:0">vs '25</small></th>
+                            <th class="sort-hdr" data-col="commissionCost" onclick="mgmtSort('commissionCost')">
+                                Commission</th>
                             <th class="sort-hdr" data-col="vendorCost" onclick="mgmtSort('vendorCost')">Cost</th>
-                            <th class="sort-hdr sorted-desc" data-col="grossMargin" onclick="mgmtSort('grossMargin')">GM €<br><small style="font-weight:400;letter-spacing:0">vs '25</small></th>
+                            <th class="sort-hdr sorted-desc" data-col="grossMargin" onclick="mgmtSort('grossMargin')">GM
+                                €<br><small style="font-weight:400;letter-spacing:0">vs '25</small></th>
                             <th class="sort-hdr" data-col="gmPct" onclick="mgmtSort('gmPct')">GM %</th>
                             <th class="sort-hdr" data-col="avgGm" onclick="mgmtSort('avgGm')">GM/tour</th>
                         </tr>
@@ -320,7 +557,8 @@
         <div class="header">
             <div class="header-left">
                 <h1>Channels <span class="accent">&amp; Revenue</span></h1>
-                <p>Commission drain &middot; Direct vs OTA trend &middot; Source breakdown &middot; Tour type financials</p>
+                <p>Commission drain &middot; Direct vs OTA trend &middot; Source breakdown &middot; Tour type financials
+                </p>
             </div>
         </div>
         <div class="main">
@@ -348,9 +586,12 @@
                         <tr>
                             <th>Tour Type</th>
                             <th>Tours '26<br><small style="font-weight:400;letter-spacing:0">vs '25</small></th>
-                            <th>Avg PAX</th><th>Avg Unit Price</th>
-                            <th>Revenue</th><th>Commission</th>
-                            <th>GM €</th><th>GM %</th>
+                            <th>Avg PAX</th>
+                            <th>Avg Unit Price</th>
+                            <th>Revenue</th>
+                            <th>Commission</th>
+                            <th>GM €</th>
+                            <th>GM %</th>
                         </tr>
                     </thead>
                     <tbody id="tour-type-tbody"></tbody>
@@ -373,12 +614,14 @@
             <div class="two-col" style="margin-bottom:24px">
                 <div class="chart-card">
                     <h3>GM% by Guide Group Size — 2025 vs 2026</h3>
-                    <p style="font-size:11px;color:var(--text3);margin:-8px 0 12px">1–5 PAX = losing money in 2026. 11+ PAX = 36.8% GM.</p>
+                    <p style="font-size:11px;color:var(--text3);margin:-8px 0 12px">1–5 PAX = losing money in 2026. 11+
+                        PAX = 36.8% GM.</p>
                     <div class="chart-wrap h280"><canvas id="guide-paxband-gm"></canvas></div>
                 </div>
                 <div class="chart-card">
                     <h3>Tour Count by Guide Group Size — 2025 vs 2026</h3>
-                    <p style="font-size:11px;color:var(--text3);margin:-8px 0 12px">63% of 2026 paid tours are small-group (1–5 PAX), up from 54% in 2025.</p>
+                    <p style="font-size:11px;color:var(--text3);margin:-8px 0 12px">63% of 2026 paid tours are
+                        small-group (1–5 PAX), up from 54% in 2025.</p>
                     <div class="chart-wrap h280"><canvas id="guide-paxband-tours"></canvas></div>
                 </div>
             </div>
@@ -433,4 +676,5 @@
         }
     </script>
 </body>
+
 </html>

@@ -64,44 +64,78 @@ function guidesForCity(city) {
     return guideStats26.filter(g => city === 'all' || g.city === city);
 }
 
+function mgmtCutoffMonth() {
+    return parseInt(GLOBAL_DATE.split('-')[1]);
+}
+
+function _sumMgmtMonths(mgmt, cutoff) {
+    const acc = { revenue:0, vendorCost:0, grossMargin:0, tourCost:0,
+                  commissionCost:0, processingFee:0, vatAmount:0, amountBeforeTax:0 };
+    for (let m = 1; m <= cutoff; m++) {
+        const d = mgmt?.byMonth?.[String(m)] || {};
+        acc.revenue         += d.revenue         || 0;
+        acc.vendorCost      += d.vendorCost      || 0;
+        acc.grossMargin     += d.grossMargin     || 0;
+        acc.tourCost        += d.tourCost        || 0;
+        acc.commissionCost  += d.commissionCost  || 0;
+        acc.processingFee   += d.processingFee   || 0;
+        acc.vatAmount       += d.vatAmount       || 0;
+        acc.amountBeforeTax += d.amountBeforeTax || 0;
+    }
+    return acc;
+}
+
+function _sumStatMonths(statsAll, cutoff) {
+    let freeTours=0, paidTours=0, freePax=0, paidPax=0;
+    Object.entries(statsAll?.byMonth || {}).forEach(([mStr, mv]) => {
+        if (parseInt(mStr) <= cutoff) {
+            freeTours += mv.free.tours; paidTours += mv.paid.tours;
+            freePax   += mv.free.pax;  paidPax   += mv.paid.pax;
+        }
+    });
+    return { freeTours, paidTours, freePax, paidPax };
+}
+
 function computeFilteredKpis(city) {
+    const cutoff = mgmtCutoffMonth();
     return guidesForCity(city).reduce((acc, g) => {
-        acc.revenue          += g.mgmt.revenue;
-        acc.vendorCost       += g.mgmt.vendorCost;
-        acc.grossMargin      += g.mgmt.grossMargin;
-        acc.tourCost         += g.mgmt.tourCost || 0;
-        acc.commissionCost   += g.mgmt.commissionCost || 0;
-        acc.processingFee    += g.mgmt.processingFee || 0;
-        acc.vatAmount        += g.mgmt.vatAmount || 0;
-        acc.amountBeforeTax  += g.mgmt.amountBeforeTax || 0;
-        acc.freeTours        += g.stats.all.free.tours;
-        acc.paidTours        += g.stats.all.paid.tours;
-        acc.freePax          += g.stats.all.free.pax;
-        acc.paidPax          += g.stats.all.paid.pax;
+        const fin = _sumMgmtMonths(g.mgmt, cutoff);
+        const sts = _sumStatMonths(g.stats.all, cutoff);
+        acc.revenue         += fin.revenue;
+        acc.vendorCost      += fin.vendorCost;
+        acc.grossMargin     += fin.grossMargin;
+        acc.tourCost        += fin.tourCost;
+        acc.commissionCost  += fin.commissionCost;
+        acc.processingFee   += fin.processingFee;
+        acc.vatAmount       += fin.vatAmount;
+        acc.amountBeforeTax += fin.amountBeforeTax;
+        acc.freeTours  += sts.freeTours;  acc.paidTours += sts.paidTours;
+        acc.freePax    += sts.freePax;    acc.paidPax   += sts.paidPax;
         return acc;
-    }, { revenue: 0, vendorCost: 0, grossMargin: 0, tourCost: 0, commissionCost: 0,
-         processingFee: 0, vatAmount: 0, amountBeforeTax: 0,
-         freeTours: 0, paidTours: 0, freePax: 0, paidPax: 0 });
+    }, { revenue:0, vendorCost:0, grossMargin:0, tourCost:0, commissionCost:0,
+         processingFee:0, vatAmount:0, amountBeforeTax:0,
+         freeTours:0, paidTours:0, freePax:0, paidPax:0 });
 }
 
 function computeCity25(city) {
     if (typeof guideStats25 === 'undefined') return null;
+    const cutoff = mgmtCutoffMonth();
     const src = city === 'all' ? guideStats25 : guideStats25.filter(g => g.city === city);
     return src.reduce((acc, g) => {
         if (!g.mgmt) return acc;
-        acc.revenue         += g.mgmt.revenue;
-        acc.vendorCost      += g.mgmt.vendorCost;
-        acc.grossMargin     += g.mgmt.grossMargin;
-        acc.tourCost        += g.mgmt.tourCost || 0;
-        acc.commissionCost  += g.mgmt.commissionCost || 0;
-        acc.vatAmount       += g.mgmt.vatAmount || 0;
-        acc.paidTours       += g.stats.all.paid.tours;
-        acc.freeTours       += g.stats.all.free.tours;
-        acc.freePax         += g.stats.all.free.pax;
-        acc.paidPax         += g.stats.all.paid.pax;
+        const fin = _sumMgmtMonths(g.mgmt, cutoff);
+        const sts = _sumStatMonths(g.stats.all, cutoff);
+        acc.revenue        += fin.revenue;
+        acc.vendorCost     += fin.vendorCost;
+        acc.grossMargin    += fin.grossMargin;
+        acc.tourCost       += fin.tourCost;
+        acc.commissionCost += fin.commissionCost;
+        acc.vatAmount      += fin.vatAmount;
+        acc.paidTours += sts.paidTours; acc.freeTours += sts.freeTours;
+        acc.freePax   += sts.freePax;   acc.paidPax   += sts.paidPax;
         return acc;
-    }, { revenue: 0, vendorCost: 0, grossMargin: 0, tourCost: 0, commissionCost: 0,
-         vatAmount: 0, paidTours: 0, freeTours: 0, freePax: 0, paidPax: 0 });
+    }, { revenue:0, vendorCost:0, grossMargin:0, tourCost:0, commissionCost:0,
+         vatAmount:0, paidTours:0, freeTours:0, freePax:0, paidPax:0 });
 }
 
 // ── Chart helpers ─────────────────────────────────────────────────────────────
@@ -227,8 +261,8 @@ function renderPlKpis(city) {
 }
 
 function renderWaterfall() {
-    // Jan–Apr apples-to-apples comparison
-    const JAN_APR = ['1','2','3','4'];
+    const cutoff = mgmtCutoffMonth();
+    const JAN_APR = Array.from({length: cutoff}, (_, i) => String(i + 1));
     const has25 = typeof kpiTotals25 !== 'undefined' && kpiTotals25.mgmt;
     const m26 = kpiTotals26.mgmt.byMonth;
     const m25 = has25 ? kpiTotals25.mgmt.byMonth : {};
@@ -267,9 +301,11 @@ function renderWaterfall() {
     }
 
     const vals26 = [t26.revenue, -t26.commissionCost, -t26.vatAmount, -t26.vendorCost, -t26.tourCost, t26.grossMargin];
+    const MONTH_NAMES_SHORT = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
+    const rangeLabel = cutoff === 1 ? 'Jan' : `Jan–${MONTH_NAMES_SHORT[cutoff]}`;
     const datasets = [
         {
-            label: '2026 Jan–Apr',
+            label: `2026 ${rangeLabel}`,
             data: vals26,
             backgroundColor: vals26.map(v => v >= 0 ? c26 + 'cc' : cNeg + 'cc'),
             borderRadius: 4, borderSkipped: false,
@@ -278,7 +314,7 @@ function renderWaterfall() {
     if (t25) {
         const vals25 = [t25.revenue, -t25.commissionCost, -t25.vatAmount, -t25.vendorCost, -t25.tourCost, t25.grossMargin];
         datasets.unshift({
-            label: '2025 Jan–Apr',
+            label: `2025 ${rangeLabel}`,
             data: vals25,
             backgroundColor: vals25.map(v => v >= 0 ? c25 + 'aa' : cNeg + '66'),
             borderRadius: 4, borderSkipped: false,
@@ -303,7 +339,7 @@ function renderWaterfall() {
         el.innerHTML = `<table class="mgmt-table">
             <thead><tr>
                 <th>P&amp;L Item</th>
-                <th>2026 Jan–Apr</th><th>2025 Jan–Apr</th>
+                <th>2026 ${rangeLabel}</th><th>2025 ${rangeLabel}</th>
                 <th>Δ €</th><th>Δ %</th>
             </tr></thead>
             <tbody>${rows.map(([label, v26, v25, isPos]) => {
@@ -412,23 +448,27 @@ function initGuides() {
 
 function renderGuideTable() {
     const guides = guidesForCity(_activeCity);
+    const cutoff = mgmtCutoffMonth();
 
     const rows = guides.map(g => {
-        const m = g.mgmt;
-        const s = g.stats.all;
+        const fin = _sumMgmtMonths(g.mgmt, cutoff);
+        const sts = _sumStatMonths(g.stats.all, cutoff);
+        const m = fin;
         const gmPct = m.revenue > 0 ? (m.grossMargin / m.revenue * 100) : 0;
-        const avgGm = s.paid.tours > 0 ? (m.grossMargin / s.paid.tours) : 0;
-        const avgPax = s.paid.tours > 0 ? (s.paid.pax / s.paid.tours) : 0;
+        const avgGm = sts.paidTours > 0 ? (m.grossMargin / sts.paidTours) : 0;
+        const avgPax = sts.paidTours > 0 ? (sts.paidPax / sts.paidTours) : 0;
         const comm = m.commissionCost || 0;
 
         const g25 = get25(g.name);
-        const paid25 = g25 ? g25.stats.all.paid.tours : null;
-        const rev25  = g25?.mgmt ? g25.mgmt.revenue : null;
-        const gm25   = g25?.mgmt ? g25.mgmt.grossMargin : null;
+        const fin25 = g25?.mgmt ? _sumMgmtMonths(g25.mgmt, cutoff) : null;
+        const sts25 = g25 ? _sumStatMonths(g25.stats.all, cutoff) : null;
+        const paid25 = sts25 ? sts25.paidTours : null;
+        const rev25  = fin25 ? fin25.revenue : null;
+        const gm25   = fin25 ? fin25.grossMargin : null;
 
         return {
             name: g.name, city: g.city,
-            freeTours: s.free.tours, paidTours: s.paid.tours,
+            freeTours: sts.freeTours, paidTours: sts.paidTours,
             avgPax, revenue: m.revenue, vendorCost: m.vendorCost,
             commissionCost: comm,
             grossMargin: m.grossMargin, gmPct, avgGm,
@@ -798,6 +838,23 @@ function initOps() {
     });
 }
 
+// ── Date filter ───────────────────────────────────────────────────────────────
+
+function mgmtRefreshAll() {
+    if (MgmtPages.pl._init) {
+        renderPlKpis(_activeCity);
+        renderWaterfall();
+        renderMonthTrend();
+        renderBillingTrend();
+    }
+    if (MgmtPages.guides._init) renderGuideTable();
+}
+
+function updateMgmtDate(val) {
+    GLOBAL_DATE = val;
+    mgmtRefreshAll();
+}
+
 // ── Theme ─────────────────────────────────────────────────────────────────────
 
 function mgmtUpdateCharts() {
@@ -823,6 +880,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('theme-toggle');
     if (btn) btn.setAttribute('title', document.body.classList.contains('dark-mode') ? 'Switch to light mode' : 'Switch to dark mode');
     document.getElementById('footer-date').textContent = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    const picker = document.getElementById('mgmt-date-picker');
+    if (picker) { picker.value = GLOBAL_DATE; }
 
     initPl();
     MgmtPages.pl._init = true;

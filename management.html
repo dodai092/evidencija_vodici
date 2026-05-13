@@ -368,6 +368,93 @@
             max-height: 600px;
             overflow-y: auto;
         }
+
+        /* ── Sticky mini-KPI bar ─────────────────────────────── */
+        #sticky-kpi-bar {
+            position: fixed;
+            top: 56px; /* fallback; overridden by JS to match actual nav height */
+            left: 0;
+            right: 0;
+            height: 36px;
+            background: var(--nav-bg);
+            border-bottom: 1px solid var(--border-dark);
+            display: none;
+            align-items: center;
+            gap: 10px;
+            padding: 0 24px;
+            font-size: 12px;
+            font-family: var(--font-mono);
+            z-index: 200;
+        }
+        .skpi-label { font-size: 10px; text-transform: uppercase; letter-spacing: .06em; color: var(--text3); }
+        .skpi-sep   { color: var(--text3); }
+        .skpi-pct   { color: var(--green); font-weight: 600; }
+        .skpi-period{ color: var(--text3); font-size: 11px; margin-left: 4px; }
+
+        /* ── Insight callout strip ───────────────────────────── */
+        #insight-strip {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .insight-pill {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-family: var(--font-mono);
+            background: var(--smoke);
+            border: 1px solid var(--border);
+        }
+        .insight-pill.insight-pos { border-color: var(--green); color: var(--green); }
+        .insight-pill.insight-neg { border-color: var(--delta-neg); color: var(--delta-neg); }
+
+        /* ── Chart note ──────────────────────────────────────── */
+        .chart-note {
+            font-size: 11px;
+            color: var(--text3);
+            margin: -8px 0 0;
+            padding: 0 0 12px;
+        }
+
+        /* ── Keyboard shortcut overlay ───────────────────────── */
+        #shortcut-overlay {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-dark);
+            border-radius: var(--radius);
+            padding: 14px 18px;
+            font-size: 12px;
+            z-index: 300;
+            display: none;
+            box-shadow: 0 4px 16px rgba(0,0,0,.12);
+            min-width: 200px;
+        }
+        #shortcut-overlay table { border-collapse: collapse; width: 100%; }
+        #shortcut-overlay td { padding: 3px 8px 3px 0; color: var(--text2); }
+        #shortcut-overlay td:first-child {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            color: var(--text);
+            width: 32px;
+        }
+        #shortcut-overlay .overlay-title {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--text3);
+            margin-bottom: 8px;
+        }
+        #shortcut-overlay .overlay-close {
+            float: right;
+            cursor: pointer;
+            color: var(--text3);
+            font-size: 14px;
+            line-height: 1;
+        }
     </style>
     <script>
         if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark-mode');
@@ -383,10 +470,10 @@
                 alt="Free Spirit" style="height:28px;display:block;flex-shrink:0;margin-right:8px">
             <div class="nav-tabs">
                 <a class="nav-tab" href="index.html" style="text-decoration:none">Guide Production</a>
-                <div class="nav-tab active mgmt-tab-active" onclick="mgmtShowTab('pl',this)">P&amp;L</div>
-                <div class="nav-tab" onclick="mgmtShowTab('guides',this)">Guides</div>
-                <div class="nav-tab" onclick="mgmtShowTab('channels',this)">Channels</div>
-                <div class="nav-tab" onclick="mgmtShowTab('ops',this)">Operational</div>
+                <div id="tab-pl" class="nav-tab active mgmt-tab-active" onclick="mgmtShowTab('pl',this)">P&amp;L</div>
+                <div id="tab-guides" class="nav-tab" onclick="mgmtShowTab('guides',this)">Guides</div>
+                <div id="tab-channels" class="nav-tab" onclick="mgmtShowTab('channels',this)">Channels</div>
+                <div id="tab-ops" class="nav-tab" onclick="mgmtShowTab('ops',this)">Operational</div>
             </div>
         </div>
         <div class="nav-actions">
@@ -412,6 +499,30 @@
                 class="date-picker-ui">
             <button class="print-btn" onclick="window.print()">&#8595; Print / Save PDF</button>
         </div>
+    </div>
+
+    <!-- ── Sticky mini-KPI bar ──────────────────────────── -->
+    <div id="sticky-kpi-bar">
+        <span class="skpi-label">Revenue</span><span id="skpi-revenue">—</span>
+        <span class="skpi-sep">·</span>
+        <span class="skpi-label">Commission</span><span id="skpi-commission">—</span>
+        <span class="skpi-sep">·</span>
+        <span class="skpi-label">GM</span><span id="skpi-gm">—</span>
+        <span class="skpi-sep">·</span>
+        <span id="skpi-gmpct" class="skpi-pct">—</span>
+        <span class="skpi-sep">·</span>
+        <span id="skpi-period" class="skpi-period">—</span>
+    </div>
+
+    <!-- ── Keyboard shortcut overlay ────────────────────── -->
+    <div id="shortcut-overlay">
+        <div class="overlay-title">Keyboard shortcuts <span class="overlay-close" onclick="toggleShortcutOverlay()">✕</span></div>
+        <table>
+            <tr><td>1–4</td><td>Switch tabs</td></tr>
+            <tr><td>t</td><td>Toggle theme</td></tr>
+            <tr><td>d</td><td>Focus date picker</td></tr>
+            <tr><td>?</td><td>Show/hide this</td></tr>
+        </table>
     </div>
 
     <!-- ── P&L ───────────────────────────────────────────── -->
@@ -456,6 +567,7 @@
                     <div class="kpi-label">Tour Cost</div>
                     <div class="kpi-value" id="kpi-tour-cost">—</div>
                     <div class="kpi-sub">Internal tour costs</div>
+                    <div id="kpi-tour-cost-delta"></div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-label">VAT Amount</div>
@@ -466,6 +578,7 @@
                     <div class="kpi-label">Avg GM / Paid Tour</div>
                     <div class="kpi-value" id="kpi-avg-gm">—</div>
                     <div class="kpi-sub" id="kpi-avg-gm-sub">—</div>
+                    <div id="kpi-avg-gm-delta"></div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-label">Active Guides</div>
@@ -482,10 +595,12 @@
                 <div class="city-pill" data-city="Zadar" onclick="mgmtFilterCityPl('Zadar')">Zadar</div>
             </div>
 
+            <div id="insight-strip"></div>
+
             <!-- P&L Waterfall -->
             <div class="two-col" style="margin-bottom:24px">
                 <div class="chart-card">
-                    <h3>P&amp;L Breakdown — Jan–Apr 2025 vs 2026</h3>
+                    <h3 id="waterfall-chart-title">P&amp;L Breakdown — 2025 vs 2026</h3>
                     <div class="chart-wrap h320"><canvas id="waterfall-bar"></canvas></div>
                 </div>
                 <div class="chart-card">
@@ -570,8 +685,9 @@
 
             <h2 class="section-title">Direct Booking vs OTA Trend</h2>
             <div class="chart-card" style="margin-bottom:24px">
-                <h3>Direct (Web) vs OTA Revenue by Month — 2025 vs 2026</h3>
+                <h3>Direct (Web) vs OTA Revenue by Month — 2025 vs 2026 *</h3>
                 <div class="chart-wrap h280"><canvas id="direct-ota-line"></canvas></div>
+                <p class="chart-note">* Channel split approximated from each guide's full-season channel ratio</p>
             </div>
 
             <h2 class="section-title">OTA Source Detail</h2>

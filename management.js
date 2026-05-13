@@ -20,6 +20,11 @@ function mgmtShowTab(id, el) {
     document.getElementById('mgmt-' + id).classList.add('active');
     el.classList.add('active', 'mgmt-tab-active');
     _activeTab = id;
+    // Hide sticky bar when leaving P&L tab
+    if (id !== 'pl') {
+        const bar = document.getElementById('sticky-kpi-bar');
+        if (bar) bar.style.display = 'none';
+    }
     if (!MgmtPages[id]._init) {
         if (id === 'pl')       initPl();
         if (id === 'guides')   initGuides();
@@ -220,6 +225,26 @@ function initPl() {
     renderWaterfall();
     renderMonthTrend();
     renderBillingTrend();
+
+    // Sticky KPI bar — appears when the KPI grid scrolls out of view
+    _positionStickyBar();
+    window.addEventListener('resize', _positionStickyBar, { passive: true });
+
+    const kpiGrid = document.querySelector('#mgmt-pl .kpi-grid');
+    if (kpiGrid && 'IntersectionObserver' in window) {
+        const obs = new IntersectionObserver(([entry]) => {
+            if (_activeTab !== 'pl') return;
+            const bar = document.getElementById('sticky-kpi-bar');
+            if (bar) bar.style.display = entry.isIntersecting ? 'none' : 'flex';
+        }, { threshold: 0 });
+        obs.observe(kpiGrid);
+    }
+}
+
+function _positionStickyBar() {
+    const nav = document.querySelector('.nav');
+    const bar = document.getElementById('sticky-kpi-bar');
+    if (nav && bar) bar.style.top = nav.offsetHeight + 'px';
 }
 
 function renderPlKpis(city) {
@@ -258,6 +283,86 @@ function renderPlKpis(city) {
     document.getElementById('kpi-avg-gm-sub').textContent = `per paid tour (${fmt(k.paidTours)} tours)`;
     document.getElementById('kpi-guides').textContent     = fmt(guidesForCity(city).length);
     document.getElementById('kpi-guides-sub').textContent = city === 'all' ? 'across all cities' : city;
+
+    // Secondary KPI deltas
+    document.getElementById('kpi-tour-cost-delta').innerHTML = kpiDelta(k.tourCost, k25?.tourCost);
+    const avgGm25 = k25 && k25.paidTours > 0 ? k25.grossMargin / k25.paidTours : null;
+    document.getElementById('kpi-avg-gm-delta').innerHTML = kpiDelta(avgGm, avgGm25);
+
+    // Sticky mini-KPI bar values
+    const rangeLabel = getRangeLabel ? getRangeLabel() : '';
+    const sBar = document.getElementById('sticky-kpi-bar');
+    if (sBar) {
+        document.getElementById('skpi-revenue').textContent    = fmtEur(k.revenue);
+        document.getElementById('skpi-commission').textContent = fmtEur(k.commissionCost);
+        document.getElementById('skpi-gm').textContent         = fmtEur(k.grossMargin);
+        document.getElementById('skpi-gmpct').textContent      = gmPct.toFixed(1) + '% GM';
+        document.getElementById('skpi-period').textContent     = rangeLabel + ' 2026';
+    }
+
+    // Insight callouts
+    renderInsightCallouts(k, k25);
+}
+
+function renderInsightCallouts(k, k25) {
+    const el = document.getElementById('insight-strip');
+    if (!el || !k25) { if (el) el.innerHTML = ''; return; }
+
+    const gmPct26 = k.revenue > 0 ? k.grossMargin / k.revenue * 100 : 0;
+    const gmPct25 = k25.revenue > 0 ? k25.grossMargin / k25.revenue * 100 : 0;
+    const commPct26 = k.revenue > 0 ? k.commissionCost / k.revenue * 100 : 0;
+    const commPct25 = k25.revenue > 0 ? k25.commissionCost / k25.revenue * 100 : 0;
+    const avgGm26 = k.paidTours > 0 ? k.grossMargin / k.paidTours : 0;
+    const avgGm25 = k25.paidTours > 0 ? k25.grossMargin / k25.paidTours : 0;
+
+    const candidates = [
+        {
+            label: 'Revenue',
+            val: k.revenue - k25.revenue,
+            fmt: v => (v >= 0 ? '+' : '−') + '€' + fmt(Math.abs(v)),
+            pct: k25.revenue !== 0 ? (k.revenue - k25.revenue) / Math.abs(k25.revenue) * 100 : null,
+            positive: true,
+        },
+        {
+            label: 'Gross Margin',
+            val: k.grossMargin - k25.grossMargin,
+            fmt: v => (v >= 0 ? '+' : '−') + '€' + fmt(Math.abs(v)),
+            pct: k25.grossMargin !== 0 ? (k.grossMargin - k25.grossMargin) / Math.abs(k25.grossMargin) * 100 : null,
+            positive: true,
+        },
+        {
+            label: 'GM%',
+            val: gmPct26 - gmPct25,
+            fmt: v => (v >= 0 ? '+' : '') + v.toFixed(1) + 'pp margin',
+            pct: null,
+            positive: true,
+        },
+        {
+            label: 'Commission rate',
+            val: commPct26 - commPct25,
+            fmt: v => (v >= 0 ? '+' : '') + v.toFixed(1) + 'pp of rev',
+            pct: null,
+            positive: false,
+        },
+        {
+            label: 'Avg GM/tour',
+            val: avgGm26 - avgGm25,
+            fmt: v => (v >= 0 ? '+' : '−') + '€' + fmt(Math.abs(v)) + '/tour',
+            pct: null,
+            positive: true,
+        },
+    ];
+
+    candidates.sort((a, b) => Math.abs(b.pct ?? b.val) - Math.abs(a.pct ?? a.val));
+    const top = candidates.slice(0, 3);
+
+    el.innerHTML = top.map(c => {
+        const isGood = c.positive ? c.val >= 0 : c.val <= 0;
+        const cls = isGood ? 'insight-pos' : 'insight-neg';
+        const arrow = isGood ? '▲' : '▼';
+        const pctStr = c.pct !== null ? ` (${c.pct >= 0 ? '+' : ''}${c.pct.toFixed(1)}%)` : '';
+        return `<span class="insight-pill ${cls}">${arrow} ${c.label} ${c.fmt(c.val)}${pctStr} vs 2025</span>`;
+    }).join('');
 }
 
 function renderWaterfall() {
@@ -325,33 +430,39 @@ function renderWaterfall() {
         tooltipCb: { label: ctx => `${ctx.dataset.label}: €${fmt(Math.abs(ctx.parsed.y))}` }
     });
 
+    const titleEl = document.getElementById('waterfall-chart-title');
+    if (titleEl) titleEl.textContent = `P&L Breakdown — ${rangeLabel} 2025 vs 2026`;
+
     // Summary table below chart
     const el = document.getElementById('waterfall-summary');
-    if (el && t25) {
+    if (el) {
         const rows = [
-            ['Revenue',       t26.revenue,        t25.revenue,        true],
-            ['Commission',    -t26.commissionCost, -t25.commissionCost, false],
-            ['VAT',           -t26.vatAmount,      -t25.vatAmount,      false],
-            ['Vendor Cost',   -t26.vendorCost,     -t25.vendorCost,    false],
-            ['Tour Cost',     -t26.tourCost,       -t25.tourCost,      false],
-            ['Gross Margin',  t26.grossMargin,     t25.grossMargin,    true],
+            ['Revenue',       t26.revenue,        t25 ? t25.revenue        : null, true],
+            ['Commission',    -t26.commissionCost, t25 ? -t25.commissionCost : null, false],
+            ['VAT',           -t26.vatAmount,      t25 ? -t25.vatAmount      : null, false],
+            ['Vendor Cost',   -t26.vendorCost,     t25 ? -t25.vendorCost     : null, false],
+            ['Tour Cost',     -t26.tourCost,       t25 ? -t25.tourCost       : null, false],
+            ['Gross Margin',  t26.grossMargin,     t25 ? t25.grossMargin     : null, true],
         ];
+        const hasPrior = !!t25;
         el.innerHTML = `<table class="mgmt-table">
             <thead><tr>
                 <th>P&amp;L Item</th>
-                <th>2026 ${rangeLabel}</th><th>2025 ${rangeLabel}</th>
-                <th>Δ €</th><th>Δ %</th>
+                <th>2026 ${rangeLabel}</th>
+                ${hasPrior ? `<th>2025 ${rangeLabel}</th><th>Δ €</th><th>Δ %</th>` : ''}
             </tr></thead>
             <tbody>${rows.map(([label, v26, v25, isPos]) => {
-                const d = v26 - v25;
-                const pct = v25 !== 0 ? (d / Math.abs(v25) * 100) : null;
-                const cls = d > 0 ? (isPos ? 'pos' : 'neg') : d < 0 ? (isPos ? 'neg' : 'pos') : 'neu';
+                const hasDelta = hasPrior && v25 !== null;
+                const d = hasDelta ? v26 - v25 : null;
+                const pct = hasDelta && v25 !== 0 ? (d / Math.abs(v25) * 100) : null;
+                const cls = d !== null ? (d > 0 ? (isPos ? 'pos' : 'neg') : d < 0 ? (isPos ? 'neg' : 'pos') : 'neu') : '';
                 return `<tr>
                     <td><strong>${label}</strong></td>
                     <td class="${gmClass(v26)}">${fmtEur(v26)}</td>
+                    ${hasDelta ? `
                     <td>${fmtEur(v25)}</td>
                     <td class="${cls}">${d >= 0 ? '+' : '−'}€${fmt(Math.abs(d))}</td>
-                    <td class="${cls}">${pct !== null ? (d >= 0 ? '+' : '') + pct.toFixed(1) + '%' : '—'}</td>
+                    <td class="${cls}">${pct !== null ? (d >= 0 ? '+' : '') + pct.toFixed(1) + '%' : '—'}</td>` : ''}
                 </tr>`;
             }).join('')}</tbody>
         </table>`;
@@ -813,15 +924,8 @@ function initOps() {
         { label: '2026', data: pbLabels.map(k => pb26[k]?.tours || 0), backgroundColor: c26 + 'aa', borderRadius: 4, borderSkipped: false },
     ], { showLegend: true });
 
-    // Month revenue & GM trend
-    const m26 = mgmt26.byMonth; const m25 = mgmt25?.byMonth || {};
-    const allM = [...new Set([...Object.keys(m26), ...Object.keys(m25)])].map(Number).sort((a,b)=>a-b);
-    makeLineChart('month-line', allM.map(m => MONTH_SHORT[m]), [
-        { label: 'Revenue 2025', data: allM.map(m => m25[String(m)]?.revenue || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [5,3] },
-        { label: 'Revenue 2026', data: allM.map(m => m26[String(m)]?.revenue || 0), borderColor: '#8FA8BC', backgroundColor: '#8FA8BC22', tension: 0.3, fill: true },
-        { label: 'GM 2025', data: allM.map(m => m25[String(m)]?.grossMargin || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [2,2], borderWidth: 1.5 },
-        { label: 'GM 2026', data: allM.map(m => m26[String(m)]?.grossMargin || 0), borderColor: green, backgroundColor: 'transparent', tension: 0.3, borderWidth: 2 },
-    ]);
+    // Month revenue & GM trend — extracted so date picker can refresh it
+    renderOpsMonthLine();
 
     // Week trend
     const wk26 = mgmt26.byWeek;
@@ -838,6 +942,26 @@ function initOps() {
     });
 }
 
+function renderOpsMonthLine() {
+    const mgmt26 = kpiTotals26.mgmt;
+    const mgmt25 = typeof kpiTotals25 !== 'undefined' ? kpiTotals25.mgmt : null;
+    const s = getComputedStyle(document.body);
+    const c25 = s.getPropertyValue('--y25').trim();
+    const green = s.getPropertyValue('--green').trim();
+    const cutoff = mgmtCutoffMonth();
+    const m26 = mgmt26.byMonth; const m25 = mgmt25?.byMonth || {};
+    const allM = [...new Set([...Object.keys(m26), ...Object.keys(m25)])]
+        .map(Number)
+        .filter(m => m25[String(m)] || (m26[String(m)] && m <= cutoff))
+        .sort((a, b) => a - b);
+    makeLineChart('month-line', allM.map(m => MONTH_SHORT[m]), [
+        { label: 'Revenue 2025', data: allM.map(m => m25[String(m)]?.revenue || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [5,3] },
+        { label: 'Revenue 2026', data: allM.map(m => m26[String(m)]?.revenue || 0), borderColor: '#8FA8BC', backgroundColor: '#8FA8BC22', tension: 0.3, fill: true },
+        { label: 'GM 2025', data: allM.map(m => m25[String(m)]?.grossMargin || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [2,2], borderWidth: 1.5 },
+        { label: 'GM 2026', data: allM.map(m => m26[String(m)]?.grossMargin || 0), borderColor: green, backgroundColor: 'transparent', tension: 0.3, borderWidth: 2 },
+    ]);
+}
+
 // ── Date filter ───────────────────────────────────────────────────────────────
 
 function mgmtRefreshAll() {
@@ -848,6 +972,8 @@ function mgmtRefreshAll() {
         renderBillingTrend();
     }
     if (MgmtPages.guides._init) renderGuideTable();
+    if (MgmtPages.channels._init) renderDirectOtaTrend();
+    if (MgmtPages.ops._init) renderOpsMonthLine();
 }
 
 function updateMgmtDate(val) {
@@ -873,6 +999,13 @@ function mgmtUpdateCharts() {
     });
 }
 
+// ── Keyboard shortcuts ────────────────────────────────────────────────────────
+
+function toggleShortcutOverlay() {
+    const el = document.getElementById('shortcut-overlay');
+    if (el) el.style.display = el.style.display === 'block' ? 'none' : 'block';
+}
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -885,4 +1018,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initPl();
     MgmtPages.pl._init = true;
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', e => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        if (e.metaKey || e.ctrlKey || e.altKey) return;
+        const tabMap = { '1': 'pl', '2': 'guides', '3': 'channels', '4': 'ops' };
+        if (tabMap[e.key]) {
+            const tabEl = document.getElementById('tab-' + tabMap[e.key]);
+            if (tabEl) mgmtShowTab(tabMap[e.key], tabEl);
+            return;
+        }
+        if (e.key === 't') { toggleMgmtTheme(); return; }
+        if (e.key === 'd') { document.getElementById('mgmt-date-picker')?.focus(); return; }
+        if (e.key === '?') { toggleShortcutOverlay(); return; }
+        if (e.key === 'Escape') {
+            const overlay = document.getElementById('shortcut-overlay');
+            if (overlay && overlay.style.display === 'block') overlay.style.display = 'none';
+        }
+    });
 });

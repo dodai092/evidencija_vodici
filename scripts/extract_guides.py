@@ -165,38 +165,76 @@ def to_plain(stats):
 # ── Management stats helpers ──────────────────────────────────────────────────
 
 def _fin_entry():
-    return {'tours': 0, 'pax': 0, 'revenue': 0.0, 'vendorCost': 0.0, 'grossMargin': 0.0}
+    return {
+        'tours': 0, 'pax': 0,
+        'revenue': 0.0, 'vendorCost': 0.0, 'grossMargin': 0.0,
+        'tourCost': 0.0, 'commissionCost': 0.0,
+        'processingFee': 0.0, 'vatAmount': 0.0, 'amountBeforeTax': 0.0,
+    }
+
+_FIN_FIELDS = ('tours', 'pax', 'revenue', 'vendorCost', 'grossMargin',
+               'tourCost', 'commissionCost', 'processingFee', 'vatAmount', 'amountBeforeTax')
 
 def empty_mgmt():
     return {
-        'revenue': 0.0,
-        'vendorCost': 0.0,
-        'grossMargin': 0.0,
-        'byChannel': defaultdict(_fin_entry),
-        'bySource':  defaultdict(_fin_entry),
-        'byDow':     defaultdict(_fin_entry),   # Mon/Tue/Wed/Thu/Fri/Sat/Sun
-        'byTime':    defaultdict(_fin_entry),   # hour as string '10','11','15','17'…
-        'bySeason':  defaultdict(_fin_entry),   # low/mid/high/peak
-        'byPaxBand': defaultdict(_fin_entry),   # '1-4','5-10','11-20','21-30','30+'
-        'byWeek':    defaultdict(_fin_entry),   # week number as string
-        'byMonth':   defaultdict(_fin_entry),   # month number as string
+        'revenue': 0.0, 'vendorCost': 0.0, 'grossMargin': 0.0,
+        'tourCost': 0.0, 'commissionCost': 0.0,
+        'processingFee': 0.0, 'vatAmount': 0.0, 'amountBeforeTax': 0.0,
+        'byChannel':       defaultdict(_fin_entry),
+        'bySource':        defaultdict(_fin_entry),
+        'byDow':           defaultdict(_fin_entry),
+        'byTime':          defaultdict(_fin_entry),
+        'bySeason':        defaultdict(_fin_entry),
+        'byPaxBand':       defaultdict(_fin_entry),
+        'byWeek':          defaultdict(_fin_entry),
+        'byMonth':         defaultdict(_fin_entry),
+        'byBillingMethod': defaultdict(_fin_entry),
+        'byPaymentMethod': defaultdict(_fin_entry),
+        'byGuidePaxBand':  defaultdict(_fin_entry),
+        'byPriceType':     defaultdict(_fin_entry),
+        'byTourType':      defaultdict(_fin_entry),
     }
 
-def _add_fin(bucket, tours, pax, revenue, vendor_cost, gross_margin):
+_MGMT_DIMS = (
+    'byChannel', 'bySource', 'byDow', 'byTime', 'bySeason', 'byPaxBand', 'byWeek', 'byMonth',
+    'byBillingMethod', 'byPaymentMethod', 'byGuidePaxBand', 'byPriceType', 'byTourType',
+)
+
+def _add_fin(bucket, tours, pax, revenue, vendor_cost, gross_margin,
+             tour_cost=0.0, commission_cost=0.0, processing_fee=0.0,
+             vat_amount=0.0, amount_before_tax=0.0):
     bucket['tours'] += tours
     bucket['pax'] += pax
     bucket['revenue'] += revenue
     bucket['vendorCost'] += vendor_cost
     bucket['grossMargin'] += gross_margin
+    bucket['tourCost'] += tour_cost
+    bucket['commissionCost'] += commission_cost
+    bucket['processingFee'] += processing_fee
+    bucket['vatAmount'] += vat_amount
+    bucket['amountBeforeTax'] += amount_before_tax
 
 def add_mgmt_row(mgmt, pax, revenue, vendor_cost, gross_margin,
-                 channel, source, dow, time_hour, season, pax_band, week, month):
+                 channel, source, dow, time_hour, season, pax_band, week, month,
+                 tour_cost=0.0, commission_cost=0.0, processing_fee=0.0,
+                 vat_amount=0.0, amount_before_tax=0.0,
+                 billing_method=None, payment_method=None,
+                 guide_pax_band=None, price_type=None, tour_type=None):
     mgmt['revenue'] += revenue
     mgmt['vendorCost'] += vendor_cost
     mgmt['grossMargin'] += gross_margin
+    mgmt['tourCost'] += tour_cost
+    mgmt['commissionCost'] += commission_cost
+    mgmt['processingFee'] += processing_fee
+    mgmt['vatAmount'] += vat_amount
+    mgmt['amountBeforeTax'] += amount_before_tax
+
+    fin_kw = dict(tour_cost=tour_cost, commission_cost=commission_cost,
+                  processing_fee=processing_fee, vat_amount=vat_amount,
+                  amount_before_tax=amount_before_tax)
 
     def upd(bucket_dict, key):
-        _add_fin(bucket_dict[key], 1, pax, revenue, vendor_cost, gross_margin)
+        _add_fin(bucket_dict[key], 1, pax, revenue, vendor_cost, gross_margin, **fin_kw)
 
     if channel: upd(mgmt['byChannel'], channel)
     if source:  upd(mgmt['bySource'],  source)
@@ -206,6 +244,11 @@ def add_mgmt_row(mgmt, pax, revenue, vendor_cost, gross_margin,
     if pax_band: upd(mgmt['byPaxBand'], pax_band)
     if week is not None: upd(mgmt['byWeek'], str(int(week)))
     if month is not None: upd(mgmt['byMonth'], str(int(month)))
+    if billing_method: upd(mgmt['byBillingMethod'], billing_method)
+    if payment_method: upd(mgmt['byPaymentMethod'], payment_method)
+    if guide_pax_band: upd(mgmt['byGuidePaxBand'],  guide_pax_band)
+    if price_type:     upd(mgmt['byPriceType'],     price_type)
+    if tour_type:      upd(mgmt['byTourType'],      tour_type)
 
 def to_plain_mgmt(mgmt):
     def plain_bucket(d):
@@ -214,28 +257,28 @@ def to_plain_mgmt(mgmt):
                 for fk, fv in v.items()}
             for k, v in d.items()
         }
-    return {
-        'revenue':    round(mgmt['revenue'], 2),
-        'vendorCost': round(mgmt['vendorCost'], 2),
-        'grossMargin': round(mgmt['grossMargin'], 2),
-        'byChannel': plain_bucket(mgmt['byChannel']),
-        'bySource':  plain_bucket(mgmt['bySource']),
-        'byDow':     plain_bucket(mgmt['byDow']),
-        'byTime':    plain_bucket(mgmt['byTime']),
-        'bySeason':  plain_bucket(mgmt['bySeason']),
-        'byPaxBand': plain_bucket(mgmt['byPaxBand']),
-        'byWeek':    plain_bucket(mgmt['byWeek']),
-        'byMonth':   plain_bucket(mgmt['byMonth']),
+    out = {
+        'revenue':         round(mgmt['revenue'], 2),
+        'vendorCost':      round(mgmt['vendorCost'], 2),
+        'grossMargin':     round(mgmt['grossMargin'], 2),
+        'tourCost':        round(mgmt['tourCost'], 2),
+        'commissionCost':  round(mgmt['commissionCost'], 2),
+        'processingFee':   round(mgmt['processingFee'], 2),
+        'vatAmount':       round(mgmt['vatAmount'], 2),
+        'amountBeforeTax': round(mgmt['amountBeforeTax'], 2),
     }
+    for dim in _MGMT_DIMS:
+        out[dim] = plain_bucket(mgmt[dim])
+    return out
 
 def merge_mgmt(total, guide_mgmt):
-    total['revenue']     += guide_mgmt['revenue']
-    total['vendorCost']  += guide_mgmt['vendorCost']
-    total['grossMargin'] += guide_mgmt['grossMargin']
-    for dim in ('byChannel','bySource','byDow','byTime','bySeason','byPaxBand','byWeek','byMonth'):
+    for f in ('revenue', 'vendorCost', 'grossMargin', 'tourCost', 'commissionCost',
+              'processingFee', 'vatAmount', 'amountBeforeTax'):
+        total[f] += guide_mgmt[f]
+    for dim in _MGMT_DIMS:
         for k, v in guide_mgmt[dim].items():
             t = total[dim][k]
-            for fk in ('tours','pax','revenue','vendorCost','grossMargin'):
+            for fk in _FIN_FIELDS:
                 t[fk] += v[fk]
 
 # ── Data loading ──────────────────────────────────────────────────────────────
@@ -321,6 +364,16 @@ def main():
     C_WEEK     = optcol('Week')
     C_SEASON   = optcol('Season')
     C_PAXBAND  = optcol('Pax band')
+    C_BILLING     = optcol('Billing method')
+    C_PAYMENT     = optcol('Payment method')
+    C_TOUR_COST   = optcol('Tour cost')
+    C_COMM_COST   = optcol('Commission cost')
+    C_PROC_FEE    = optcol('Payment processing fee')
+    C_AMT_BT      = optcol('Amount before tax')
+    C_VAT_AMT     = optcol('VAT amount')
+    C_UNIT_PRICE  = optcol('Unit price')
+    C_PRICE_TYPE  = optcol('Price type')
+    C_GUIDE_PBAND = optcol('Guide pax band')
 
     HAS_MGMT = all(c is not None for c in (C_CHANNEL, C_CHARGED, C_VCOST, C_GM))
 
@@ -380,12 +433,27 @@ def main():
             season     = _val(row[C_SEASON]).lower() if C_SEASON is not None and _val(row[C_SEASON]) else None
             pax_band   = _val(row[C_PAXBAND]) if C_PAXBAND is not None else None
             week       = _float(row[C_WEEK]) if C_WEEK is not None else None
+            tour_cost       = _float(row[C_TOUR_COST])   if C_TOUR_COST   is not None else 0.0
+            commission_cost = _float(row[C_COMM_COST])   if C_COMM_COST   is not None else 0.0
+            processing_fee  = _float(row[C_PROC_FEE])    if C_PROC_FEE    is not None else 0.0
+            vat_amount      = _float(row[C_VAT_AMT])     if C_VAT_AMT     is not None else 0.0
+            amount_before_tax = _float(row[C_AMT_BT])    if C_AMT_BT      is not None else 0.0
+            billing_method  = _val(row[C_BILLING])       if C_BILLING     is not None else None
+            payment_method  = _val(row[C_PAYMENT])       if C_PAYMENT     is not None else None
+            guide_pax_band  = _val(row[C_GUIDE_PBAND])   if C_GUIDE_PBAND is not None else None
+            price_type      = _val(row[C_PRICE_TYPE])    if C_PRICE_TYPE  is not None else None
 
             booking_pax = raw_pax if raw_pax else pax
             add_mgmt_row(
                 mgmt_raw[vendor],
                 booking_pax, revenue, vendor_cost, gross_margin,
                 channel, source, dow, time_hour, season, pax_band, week, month,
+                tour_cost=tour_cost, commission_cost=commission_cost,
+                processing_fee=processing_fee, vat_amount=vat_amount,
+                amount_before_tax=amount_before_tax,
+                billing_method=billing_method, payment_method=payment_method,
+                guide_pax_band=guide_pax_band, price_type=price_type,
+                tour_type=tour if not is_free else None,
             )
 
     # Build output list following canonical order
@@ -443,9 +511,14 @@ def main():
         total_mgmt = empty_mgmt()
         for g in result:
             merge_mgmt(total_mgmt, g['mgmt'])
-        kpi['revenue']     = round(total_mgmt['revenue'], 2)
-        kpi['vendorCost']  = round(total_mgmt['vendorCost'], 2)
-        kpi['grossMargin'] = round(total_mgmt['grossMargin'], 2)
+        kpi['revenue']          = round(total_mgmt['revenue'], 2)
+        kpi['vendorCost']       = round(total_mgmt['vendorCost'], 2)
+        kpi['grossMargin']      = round(total_mgmt['grossMargin'], 2)
+        kpi['tourCost']         = round(total_mgmt['tourCost'], 2)
+        kpi['commissionCost']   = round(total_mgmt['commissionCost'], 2)
+        kpi['processingFee']    = round(total_mgmt['processingFee'], 2)
+        kpi['vatAmount']        = round(total_mgmt['vatAmount'], 2)
+        kpi['amountBeforeTax']  = round(total_mgmt['amountBeforeTax'], 2)
         kpi['mgmt'] = to_plain_mgmt(total_mgmt)
 
     def js(obj):

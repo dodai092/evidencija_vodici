@@ -156,8 +156,9 @@
                 alt="Free Spirit" style="height:28px;display:block;flex-shrink:0;margin-right:8px">
             <div class="nav-tabs">
                 <a class="nav-tab" href="index.html" style="text-decoration:none">Guide Production</a>
-                <div class="nav-tab active mgmt-tab-active" onclick="mgmtShowTab('overview',this)">Overview</div>
-                <div class="nav-tab" onclick="mgmtShowTab('channels',this)">Channels &amp; OTA</div>
+                <div class="nav-tab active mgmt-tab-active" onclick="mgmtShowTab('pl',this)">P&amp;L</div>
+                <div class="nav-tab" onclick="mgmtShowTab('guides',this)">Guides</div>
+                <div class="nav-tab" onclick="mgmtShowTab('channels',this)">Channels</div>
                 <div class="nav-tab" onclick="mgmtShowTab('ops',this)">Operational</div>
             </div>
         </div>
@@ -178,23 +179,29 @@
         </div>
     </div>
 
-    <!-- ── OVERVIEW ─────────────────────────────────────── -->
-    <div id="mgmt-overview" class="mgmt-page active">
+    <!-- ── P&L ───────────────────────────────────────────── -->
+    <div id="mgmt-pl" class="mgmt-page active">
         <div class="header">
             <div class="header-left">
-                <h1>Management <span class="accent">2026</span></h1>
-                <p>Revenue &middot; Costs &middot; Gross Margin &middot; Guide performance vs 2025</p>
+                <h1>P&amp;L <span class="accent">Overview</span></h1>
+                <p>Revenue &middot; Commission &middot; Costs &middot; Gross Margin — 2026 vs 2025</p>
             </div>
             <div class="header-right">
                 <div class="header-badge">Travel Year 2026 &middot; YTD</div>
             </div>
         </div>
         <div class="main">
+            <!-- Primary KPIs -->
             <div class="kpi-grid">
                 <div class="kpi-card">
-                    <div class="kpi-label">Revenue</div>
+                    <div class="kpi-label">Net Revenue</div>
                     <div class="kpi-value" id="kpi-revenue">—</div>
-                    <div class="kpi-sub" id="kpi-revenue-sub">Paid tours only</div>
+                    <div class="kpi-sub" id="kpi-revenue-sub">Charged amount</div>
+                </div>
+                <div class="kpi-card accent-amber">
+                    <div class="kpi-label">Commission Paid</div>
+                    <div class="kpi-value" id="kpi-commission">—</div>
+                    <div class="kpi-sub" id="kpi-commission-sub">OTA commissions</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-label">Vendor Cost</div>
@@ -204,23 +211,26 @@
                 <div class="kpi-card accent-green">
                     <div class="kpi-label">Gross Margin</div>
                     <div class="kpi-value" id="kpi-gm">—</div>
-                    <div class="kpi-sub"><span id="kpi-gmpct">—</span></div>
+                    <div class="kpi-sub" id="kpi-gmpct">—</div>
                     <div id="kpi-gm-delta"></div>
                 </div>
-                <div class="kpi-card accent-amber">
+            </div>
+            <!-- Secondary KPIs -->
+            <div class="kpi-grid" style="margin-bottom:24px">
+                <div class="kpi-card">
+                    <div class="kpi-label">Tour Cost</div>
+                    <div class="kpi-value" id="kpi-tour-cost">—</div>
+                    <div class="kpi-sub">Internal tour costs</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">VAT Amount</div>
+                    <div class="kpi-value" id="kpi-vat">—</div>
+                    <div class="kpi-sub">VAT paid</div>
+                </div>
+                <div class="kpi-card">
                     <div class="kpi-label">Avg GM / Paid Tour</div>
                     <div class="kpi-value" id="kpi-avg-gm">—</div>
-                    <div class="kpi-sub" id="kpi-avg-gm-sub">avg gross margin per paid tour</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-label">Paid Tours</div>
-                    <div class="kpi-value" id="kpi-paid-tours">—</div>
-                    <div class="kpi-sub" id="kpi-paid-sub">—</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-label">Total PAX</div>
-                    <div class="kpi-value" id="kpi-total-pax">—</div>
-                    <div class="kpi-sub" id="kpi-pax-sub">—</div>
+                    <div class="kpi-sub" id="kpi-avg-gm-sub">—</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-label">Active Guides</div>
@@ -230,13 +240,55 @@
             </div>
 
             <div class="city-pills">
-                <div class="city-pill active" data-city="all" onclick="mgmtFilterCity('all')">All cities</div>
-                <div class="city-pill" data-city="Zagreb" onclick="mgmtFilterCity('Zagreb')">Zagreb</div>
-                <div class="city-pill" data-city="Dubrovnik" onclick="mgmtFilterCity('Dubrovnik')">Dubrovnik</div>
-                <div class="city-pill" data-city="Split" onclick="mgmtFilterCity('Split')">Split</div>
-                <div class="city-pill" data-city="Zadar" onclick="mgmtFilterCity('Zadar')">Zadar</div>
+                <div class="city-pill active" data-city="all" onclick="mgmtFilterCityPl('all')">All cities</div>
+                <div class="city-pill" data-city="Zagreb" onclick="mgmtFilterCityPl('Zagreb')">Zagreb</div>
+                <div class="city-pill" data-city="Dubrovnik" onclick="mgmtFilterCityPl('Dubrovnik')">Dubrovnik</div>
+                <div class="city-pill" data-city="Split" onclick="mgmtFilterCityPl('Split')">Split</div>
+                <div class="city-pill" data-city="Zadar" onclick="mgmtFilterCityPl('Zadar')">Zadar</div>
             </div>
 
+            <!-- P&L Waterfall -->
+            <div class="two-col" style="margin-bottom:24px">
+                <div class="chart-card">
+                    <h3>P&amp;L Breakdown — Jan–Apr 2025 vs 2026</h3>
+                    <div class="chart-wrap h320"><canvas id="waterfall-bar"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <h3>Revenue &amp; GM by Month — 2025 vs 2026</h3>
+                    <div class="chart-wrap h320"><canvas id="month-gm-line"></canvas></div>
+                </div>
+            </div>
+
+            <div id="waterfall-summary" style="margin-bottom:24px"></div>
+
+            <!-- Billing method -->
+            <h2 class="section-title">Direct Booking vs OTA (Billing Method)</h2>
+            <div class="two-col">
+                <div class="chart-card">
+                    <h3>POS vs CPP — Revenue 2025 vs 2026</h3>
+                    <div class="chart-wrap h240"><canvas id="billing-bar"></canvas></div>
+                </div>
+                <div id="billing-stats" style="display:flex;flex-direction:column;gap:12px"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── GUIDES ─────────────────────────────────────── -->
+    <div id="mgmt-guides" class="mgmt-page">
+        <div class="header">
+            <div class="header-left">
+                <h1>Guide <span class="accent">Performance</span></h1>
+                <p>Per-guide financials &middot; Commission &middot; YoY comparison</p>
+            </div>
+        </div>
+        <div class="main">
+            <div class="city-pills">
+                <div class="city-pill active" data-city="all" onclick="mgmtFilterCityPl('all')">All cities</div>
+                <div class="city-pill" data-city="Zagreb" onclick="mgmtFilterCityPl('Zagreb')">Zagreb</div>
+                <div class="city-pill" data-city="Dubrovnik" onclick="mgmtFilterCityPl('Dubrovnik')">Dubrovnik</div>
+                <div class="city-pill" data-city="Split" onclick="mgmtFilterCityPl('Split')">Split</div>
+                <div class="city-pill" data-city="Zadar" onclick="mgmtFilterCityPl('Zadar')">Zadar</div>
+            </div>
             <div class="table-card">
                 <table class="mgmt-table">
                     <thead>
@@ -246,8 +298,9 @@
                             <th>City</th>
                             <th class="sort-hdr" data-col="freeTours" onclick="mgmtSort('freeTours')">Free</th>
                             <th class="sort-hdr" data-col="paidTours" onclick="mgmtSort('paidTours')">Paid<br><small style="font-weight:400;letter-spacing:0">vs '25</small></th>
-                            <th class="sort-hdr" data-col="totalPax" onclick="mgmtSort('totalPax')">PAX</th>
+                            <th class="sort-hdr" data-col="avgPax" onclick="mgmtSort('avgPax')">Avg PAX</th>
                             <th class="sort-hdr" data-col="revenue" onclick="mgmtSort('revenue')">Revenue<br><small style="font-weight:400;letter-spacing:0">vs '25</small></th>
+                            <th class="sort-hdr" data-col="commissionCost" onclick="mgmtSort('commissionCost')">Commission</th>
                             <th class="sort-hdr" data-col="vendorCost" onclick="mgmtSort('vendorCost')">Cost</th>
                             <th class="sort-hdr sorted-desc" data-col="grossMargin" onclick="mgmtSort('grossMargin')">GM €<br><small style="font-weight:400;letter-spacing:0">vs '25</small></th>
                             <th class="sort-hdr" data-col="gmPct" onclick="mgmtSort('gmPct')">GM %</th>
@@ -260,51 +313,45 @@
         </div>
     </div>
 
-    <!-- ── CHANNELS & OTA ─────────────────────────────── -->
+    <!-- ── CHANNELS ───────────────────────────────────── -->
     <div id="mgmt-channels" class="mgmt-page">
         <div class="header">
             <div class="header-left">
-                <h1>Channels <span class="accent">&amp; OTA</span></h1>
-                <p>Sales channel split &middot; OTA source breakdown &middot; Tour type 2025 vs 2026</p>
+                <h1>Channels <span class="accent">&amp; Revenue</span></h1>
+                <p>Commission drain &middot; Direct vs OTA trend &middot; Source breakdown &middot; Tour type financials</p>
             </div>
         </div>
         <div class="main">
-            <div class="two-col">
-                <div class="chart-card">
-                    <h3>Channel Split — Tours (2026)</h3>
-                    <div class="donut-layout">
-                        <div class="chart-wrap"><canvas id="channel-donut"></canvas></div>
-                        <div id="channel-legend" class="donut-legend"></div>
-                    </div>
-                </div>
-                <div class="chart-card">
-                    <h3>Channel Split — 2025 vs 2026</h3>
-                    <div class="chart-wrap h240"><canvas id="channel-cmp-bar"></canvas></div>
-                </div>
+            <h2 class="section-title">Commission Waterfall by Source</h2>
+            <div class="chart-card" style="margin-bottom:24px">
+                <h3>Revenue → Commission → Vendor Cost → Gross Margin per Source (2026)</h3>
+                <div class="chart-wrap h320"><canvas id="commission-wfall"></canvas></div>
             </div>
 
-            <div class="two-col">
-                <div class="chart-card">
-                    <h3>OTA Sources — Gross Margin (2026)</h3>
-                    <div class="chart-wrap h240"><canvas id="ota-bar"></canvas></div>
-                </div>
-                <div class="chart-card">
-                    <h3>OTA Source Detail — 2025 vs 2026</h3>
-                    <div id="ota-source-table"></div>
-                </div>
+            <h2 class="section-title">Direct Booking vs OTA Trend</h2>
+            <div class="chart-card" style="margin-bottom:24px">
+                <h3>Direct (Web) vs OTA Revenue by Month — 2025 vs 2026</h3>
+                <div class="chart-wrap h280"><canvas id="direct-ota-line"></canvas></div>
             </div>
 
-            <h2 class="section-title">Tour Type — 2025 vs 2026</h2>
+            <h2 class="section-title">OTA Source Detail</h2>
+            <div class="table-card" style="margin-bottom:24px">
+                <div id="ota-source-table"></div>
+            </div>
+
+            <h2 class="section-title">Tour Type — Financial Breakdown</h2>
             <div class="table-card">
                 <table class="mgmt-table">
                     <thead>
                         <tr>
                             <th>Tour Type</th>
-                            <th>Tours '26</th><th>Tours '25</th><th>Δ Tours</th>
-                            <th>PAX '26</th><th>Avg PAX</th>
+                            <th>Tours '26<br><small style="font-weight:400;letter-spacing:0">vs '25</small></th>
+                            <th>Avg PAX</th><th>Avg Unit Price</th>
+                            <th>Revenue</th><th>Commission</th>
+                            <th>GM €</th><th>GM %</th>
                         </tr>
                     </thead>
-                    <tbody id="type-channel-tbody"></tbody>
+                    <tbody id="tour-type-tbody"></tbody>
                 </table>
             </div>
         </div>
@@ -315,10 +362,25 @@
         <div class="header">
             <div class="header-left">
                 <h1>Operational <span class="accent">Insights</span></h1>
-                <p>2025 vs 2026 comparisons &middot; Week trends &middot; Revenue &amp; margin trajectory</p>
+                <p>Group size efficiency &middot; DOW &middot; Season &middot; Week trends</p>
             </div>
         </div>
         <div class="main">
+            <!-- Group size — the key profitability driver -->
+            <h2 class="section-title">Group Size Efficiency — The Key Driver</h2>
+            <div class="two-col" style="margin-bottom:24px">
+                <div class="chart-card">
+                    <h3>GM% by Guide Group Size — 2025 vs 2026</h3>
+                    <p style="font-size:11px;color:var(--text3);margin:-8px 0 12px">1–5 PAX = losing money in 2026. 11+ PAX = 36.8% GM.</p>
+                    <div class="chart-wrap h280"><canvas id="guide-paxband-gm"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <h3>Tour Count by Guide Group Size — 2025 vs 2026</h3>
+                    <p style="font-size:11px;color:var(--text3);margin:-8px 0 12px">63% of 2026 paid tours are small-group (1–5 PAX), up from 54% in 2025.</p>
+                    <div class="chart-wrap h280"><canvas id="guide-paxband-tours"></canvas></div>
+                </div>
+            </div>
+
             <div class="two-col">
                 <div class="chart-card">
                     <h3>Tours by Day of Week — 2025 vs 2026</h3>
@@ -335,7 +397,7 @@
                     <div class="chart-wrap h240"><canvas id="season-bar"></canvas></div>
                 </div>
                 <div class="chart-card">
-                    <h3>Tours by PAX Band — 2025 vs 2026</h3>
+                    <h3>Booking PAX Band — 2025 vs 2026</h3>
                     <div class="chart-wrap h240"><canvas id="paxband-bar"></canvas></div>
                 </div>
             </div>

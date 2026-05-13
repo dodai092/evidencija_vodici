@@ -30,14 +30,14 @@ function updateDateAsOf(val) {
 
     // Reset month dropdowns and filter state
     document.querySelectorAll('select[id^="month-filter-"]').forEach(sel => sel.value = 'all');
-    Page25.activeMonths = [];
-    Page26.activeMonths = [];
+    if (typeof Page25 !== 'undefined') Page25.activeMonths = [];
+    if (typeof Page26 !== 'undefined') Page26.activeMonths = [];
     if (typeof PageCmp !== 'undefined') PageCmp.activeMonths = [];
 
     // Refresh ALL initialized pages (not just active)
-    if (Page25._initialized)  Page25.renderAll();
-    if (Page26._initialized)  Page26.renderAll();
-    if (PageCmp._initialized) {
+    if (typeof Page25 !== 'undefined' && Page25._initialized)  Page25.renderAll();
+    if (typeof Page26 !== 'undefined' && Page26._initialized)  Page26.renderAll();
+    if (typeof PageCmp !== 'undefined' && PageCmp._initialized) {
         PageCmp.mergedGuides = PageCmp.buildMerged();
         PageCmp.renderAll();
     }

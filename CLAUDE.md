@@ -16,14 +16,19 @@ Source of truth is a local Excel file (`Copy of 1.1 Evidencija prodaje 26.xlsx`)
 
 ```bash
 source venv/bin/activate
-python3 extract_guides.py --year 2026 > data-2026.js
+python3 scripts/extract_guides.py --year 2026 > data-2026.js
 # Verify in browser, then:
 git add data-2026.js
 git commit -m "Update: guides data $(date +%Y-%m)"
 git push
 ```
 
-`extract_guides.py` reads the `helper_2026` sheet and auto-detects column positions from the header row. `data-2025.js` is a closed year — only touch it to correct historical data.
+`scripts/extract_guides.py` reads the `Evidencija` sheet (2026) or `Evidencija_25` sheet (2025) and auto-detects column positions from the header row. Both years use the same Excel file: `Copy of 1.1 Evidencija prodaje 26.xlsx`.
+
+To regenerate 2025 data (rarely needed — only to correct historical data):
+```bash
+python3 scripts/extract_guides.py --year 2025 > data-2025.js
+```
 
 ## Architecture
 
@@ -37,8 +42,12 @@ git push
 | `page-2025.js` | `Page25` object — renders TY2025 tab |
 | `page-2026.js` | `Page26` object — renders TY2026 tab |
 | `page-cmp.js` | `PageCmp` object — renders comparison tab + Chart.js instances |
-| `data-2025.js` | Static — exports `guideStats25`, `kpiTotals25` |
-| `data-2026.js` | Generated — exports `guideStats26`, `kpiTotals26` |
+| `data-2025.js` | Generated from Evidencija_25 — exports `guideStats25`, `kpiTotals25` (includes `mgmt` financial fields) |
+| `data-2026.js` | Generated from Evidencija — exports `guideStats26`, `kpiTotals26` (includes `mgmt` financial fields) |
+| `management.html` | Financial dashboard for internal use — 3 tabs: Overview, Channels & OTA, Operational. **Redesign to 4 tabs planned — see memory.** |
+| `management.js` | All JS for management.html |
+| `scripts/extract_guides.py` | Data extractor — reads Excel sheets, outputs JS. Supports --year 2025/2026. |
+| `scripts/append_guides.py` | Appends new guide data entries |
 
 ### Page module pattern
 

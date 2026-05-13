@@ -1,5 +1,5 @@
 """
-Extract per-guide stats and print JS data for guides.html.
+Extract per-guide stats and print JS data for guides.html / management.html.
 
 Usage:
   python3 extract_guides.py                          # 2026 data (Google Sheets or local Excel)
@@ -12,6 +12,8 @@ Data source priority:
   2. Local Excel fallback — requires openpyxl and the .xlsx file present
 
 Column positions are detected automatically from the header row.
+Each guide entry now includes a `mgmt` object with financial and operational breakdowns
+(revenue, vendor cost, gross margin, channel/source/DOW/time/season/pax-band/week splits).
 """
 
 import sys
@@ -34,15 +36,15 @@ while i < len(args):
     elif args[i] == '--sheet' and i+1 < len(args): SHEET = args[i+1];      i += 2
     else: i += 1
 
-# Defaults by year
+# Defaults — both years now read from Evidencija
 if YEAR is None and SHEET is None:
-    YEAR, SHEET = 2026, 'helper_2026'
+    YEAR, SHEET = 2026, 'Evidencija'
 elif YEAR == 2025 and SHEET is None:
     SHEET = 'Evidencija'
 elif YEAR == 2026 and SHEET is None:
-    SHEET = 'helper_2026'
+    SHEET = 'Evidencija'
 elif SHEET is None:
-    SHEET = 'helper_2026'
+    SHEET = 'Evidencija'
 
 CITY_MAP = {'zg': 'Zagreb', 'du': 'Dubrovnik', 'st': 'Split', 'zd': 'Zadar'}
 LANG_MAP = {'eng': 'eng', 'esp': 'esp', 'fra': 'fra'}
@@ -68,6 +70,8 @@ GUIDE_ORDER = [
         'Andrija Grubić', 'Iva Zaplatić', 'Matea Duka', 'Tonka Baričević',
     ]),
 ]
+
+# ── Production stats helpers ──────────────────────────────────────────────────
 
 def empty_stats():
     return {
@@ -106,7 +110,6 @@ def add_row(stats, is_free, tour_type, month, pax, day=None):
             stats['byDayType'][key][tour_type]['pax'] += pax
 
 def merge_stats(all_stats, lang_stats):
-    """Merge lang_stats into all_stats (for 'all' lang accumulation)."""
     for kind in ('free', 'paid'):
         all_stats[kind]['tours'] += lang_stats[kind]['tours']
         all_stats[kind]['pax'] += lang_stats[kind]['pax']
@@ -131,7 +134,6 @@ def merge_stats(all_stats, lang_stats):
             all_stats['byDayType'][d][t]['pax'] += v['pax']
 
 def to_plain(stats):
-    """Convert defaultdicts to plain dicts for JSON serialisation."""
     months_present = sorted(stats['byMonth'].keys())
     return {
         'free': stats['free'],
@@ -159,6 +161,84 @@ def to_plain(stats):
         },
     }
 
+# ── Management stats helpers ──────────────────────────────────────────────────
+
+def _fin_entry():
+    return {'tours': 0, 'pax': 0, 'revenue': 0.0, 'vendorCost': 0.0, 'grossMargin': 0.0}
+
+def empty_mgmt():
+    return {
+        'revenue': 0.0,
+        'vendorCost': 0.0,
+        'grossMargin': 0.0,
+        'byChannel': defaultdict(_fin_entry),
+        'bySource':  defaultdict(_fin_entry),
+        'byDow':     defaultdict(_fin_entry),   # Mon/Tue/Wed/Thu/Fri/Sat/Sun
+        'byTime':    defaultdict(_fin_entry),   # hour as string '10','11','15','17'…
+        'bySeason':  defaultdict(_fin_entry),   # low/mid/high/peak
+        'byPaxBand': defaultdict(_fin_entry),   # '1-4','5-10','11-20','21-30','30+'
+        'byWeek':    defaultdict(_fin_entry),   # week number as string
+        'byMonth':   defaultdict(_fin_entry),   # month number as string
+    }
+
+def _add_fin(bucket, tours, pax, revenue, vendor_cost, gross_margin):
+    bucket['tours'] += tours
+    bucket['pax'] += pax
+    bucket['revenue'] += revenue
+    bucket['vendorCost'] += vendor_cost
+    bucket['grossMargin'] += gross_margin
+
+def add_mgmt_row(mgmt, pax, revenue, vendor_cost, gross_margin,
+                 channel, source, dow, time_hour, season, pax_band, week, month):
+    mgmt['revenue'] += revenue
+    mgmt['vendorCost'] += vendor_cost
+    mgmt['grossMargin'] += gross_margin
+
+    def upd(bucket_dict, key):
+        _add_fin(bucket_dict[key], 1, pax, revenue, vendor_cost, gross_margin)
+
+    if channel: upd(mgmt['byChannel'], channel)
+    if source:  upd(mgmt['bySource'],  source)
+    if dow:     upd(mgmt['byDow'],     dow)
+    if time_hour is not None: upd(mgmt['byTime'], str(time_hour))
+    if season:  upd(mgmt['bySeason'],  season)
+    if pax_band: upd(mgmt['byPaxBand'], pax_band)
+    if week is not None: upd(mgmt['byWeek'], str(int(week)))
+    if month is not None: upd(mgmt['byMonth'], str(int(month)))
+
+def to_plain_mgmt(mgmt):
+    def plain_bucket(d):
+        return {
+            k: {fk: round(fv, 2) if isinstance(fv, float) else fv
+                for fk, fv in v.items()}
+            for k, v in d.items()
+        }
+    return {
+        'revenue':    round(mgmt['revenue'], 2),
+        'vendorCost': round(mgmt['vendorCost'], 2),
+        'grossMargin': round(mgmt['grossMargin'], 2),
+        'byChannel': plain_bucket(mgmt['byChannel']),
+        'bySource':  plain_bucket(mgmt['bySource']),
+        'byDow':     plain_bucket(mgmt['byDow']),
+        'byTime':    plain_bucket(mgmt['byTime']),
+        'bySeason':  plain_bucket(mgmt['bySeason']),
+        'byPaxBand': plain_bucket(mgmt['byPaxBand']),
+        'byWeek':    plain_bucket(mgmt['byWeek']),
+        'byMonth':   plain_bucket(mgmt['byMonth']),
+    }
+
+def merge_mgmt(total, guide_mgmt):
+    total['revenue']     += guide_mgmt['revenue']
+    total['vendorCost']  += guide_mgmt['vendorCost']
+    total['grossMargin'] += guide_mgmt['grossMargin']
+    for dim in ('byChannel','bySource','byDow','byTime','bySeason','byPaxBand','byWeek','byMonth'):
+        for k, v in guide_mgmt[dim].items():
+            t = total[dim][k]
+            for fk in ('tours','pax','revenue','vendorCost','grossMargin'):
+                t[fk] += v[fk]
+
+# ── Data loading ──────────────────────────────────────────────────────────────
+
 def _load_rows_from_url(url):
     import urllib.request
     with urllib.request.urlopen(url) as resp:
@@ -174,7 +254,6 @@ def _load_rows_from_excel(path, sheet_name):
     return list(all_rows[0]), [list(r) for r in all_rows[1:]]
 
 def _val(v):
-    """Normalise a cell value to a stripped string, or None if empty."""
     if v is None: return None
     s = str(v).strip()
     return s if s else None
@@ -184,16 +263,40 @@ def _int(v):
     try: return int(float(str(v).strip()))
     except (ValueError, TypeError): return None
 
+def _float(v):
+    if v is None: return 0.0
+    try: return float(str(v).strip())
+    except (ValueError, TypeError): return 0.0
+
+def _time_hour(v):
+    """Return the hour integer from a time cell, or None."""
+    if v is None: return None
+    if hasattr(v, 'hour'): return v.hour
+    s = str(v).strip()
+    if not s: return None
+    for fmt in ('%H:%M:%S', '%H:%M'):
+        try:
+            from datetime import datetime
+            return datetime.strptime(s, fmt).hour
+        except ValueError:
+            pass
+    return None
+
+# ── Main ──────────────────────────────────────────────────────────────────────
+
 def main():
     if SHEET_URL:
         headers, data_rows = _load_rows_from_url(SHEET_URL)
     else:
         headers, data_rows = _load_rows_from_excel(EXCEL_FILE, SHEET)
 
-    # Detect column positions from header row
     def col(name):
         try: return headers.index(name)
         except ValueError: raise ValueError(f'Column "{name}" not found. Headers: {headers}')
+
+    def optcol(name):
+        try: return headers.index(name)
+        except ValueError: return None
 
     C_TOUR    = col('Tour')
     C_CITY    = col('City')
@@ -202,11 +305,27 @@ def main():
     C_VENDOR  = col('Vendor')
     C_MONTH   = col('Month')
     C_PAX     = col('Total guide pax')
-    C_DATE    = col('Date') if 'Date' in headers else None
-    C_YEAR    = col('Year') if 'Year' in headers else None
+    C_DATE    = optcol('Date')
+    C_YEAR    = optcol('Year')
 
-    # raw[vendor][lang] = stats
-    raw = defaultdict(lambda: {lang: empty_stats() for lang in ('eng', 'esp', 'fra')})
+    # Management columns (present in Evidencija, may be absent in URL exports)
+    C_PAX_RAW  = optcol('Pax')
+    C_DAY      = optcol('Day')
+    C_TIME     = optcol('Time')
+    C_CHANNEL  = optcol('Sales channel')
+    C_SOURCE   = optcol('Sales source')
+    C_CHARGED  = optcol('Charged amount')
+    C_VCOST    = optcol('Vendor cost')
+    C_GM       = optcol('Gross margin')
+    C_WEEK     = optcol('Week')
+    C_SEASON   = optcol('Season')
+    C_PAXBAND  = optcol('Pax band')
+
+    HAS_MGMT = all(c is not None for c in (C_CHANNEL, C_CHARGED, C_VCOST, C_GM))
+
+    # raw[vendor][lang] = stats ; mgmt_raw[vendor] = mgmt
+    raw      = defaultdict(lambda: {lang: empty_stats() for lang in ('eng', 'esp', 'fra')})
+    mgmt_raw = defaultdict(empty_mgmt)
 
     for row in data_rows:
         vendor = _val(row[C_VENDOR])
@@ -216,7 +335,6 @@ def main():
         if tour_no != 1:
             continue
 
-        # Year filter: skip rows not matching the target year (when column exists)
         if C_YEAR is not None and YEAR is not None:
             row_year = _int(row[C_YEAR])
             if row_year and row_year != YEAR:
@@ -228,7 +346,7 @@ def main():
         pax   = _int(row[C_PAX]) or 0
 
         if lang not in ('eng', 'esp', 'fra'):
-            lang = 'eng'  # fallback
+            lang = 'eng'
         if month is None:
             continue
 
@@ -249,6 +367,26 @@ def main():
         is_free = (tour == 'free')
         add_row(raw[vendor][lang], is_free, tour, month, pax, day)
 
+        if HAS_MGMT:
+            raw_pax    = _int(row[C_PAX_RAW]) if C_PAX_RAW is not None else pax
+            revenue    = _float(row[C_CHARGED])
+            vendor_cost = _float(row[C_VCOST])
+            gross_margin = _float(row[C_GM])
+            channel    = _val(row[C_CHANNEL])
+            source     = _val(row[C_SOURCE])
+            dow        = _val(row[C_DAY]) if C_DAY is not None else None
+            time_hour  = _time_hour(row[C_TIME]) if C_TIME is not None else None
+            season     = _val(row[C_SEASON]).lower() if C_SEASON is not None and _val(row[C_SEASON]) else None
+            pax_band   = _val(row[C_PAXBAND]) if C_PAXBAND is not None else None
+            week       = _float(row[C_WEEK]) if C_WEEK is not None else None
+
+            booking_pax = raw_pax if raw_pax else pax
+            add_mgmt_row(
+                mgmt_raw[vendor],
+                booking_pax, revenue, vendor_cost, gross_margin,
+                channel, source, dow, time_hour, season, pax_band, week, month,
+            )
+
     # Build output list following canonical order
     result = []
     seen = set()
@@ -265,13 +403,11 @@ def main():
                 merge_stats(all_s, ls)
                 lang_stats[lang] = to_plain(ls)
             lang_stats['all'] = to_plain(all_s)
-            result.append({
-                'name': name,
-                'city': city,
-                'stats': lang_stats,
-            })
+            entry = {'name': name, 'city': city, 'stats': lang_stats}
+            if HAS_MGMT:
+                entry['mgmt'] = to_plain_mgmt(mgmt_raw[name])
+            result.append(entry)
 
-    # Append any guides not in canonical list (shouldn't happen, but safety net)
     for name in raw:
         if name in seen:
             continue
@@ -282,9 +418,12 @@ def main():
             merge_stats(all_s, ls)
             lang_stats[lang] = to_plain(ls)
         lang_stats['all'] = to_plain(all_s)
-        result.append({'name': name, 'city': 'Unknown', 'stats': lang_stats})
+        entry = {'name': name, 'city': 'Unknown', 'stats': lang_stats}
+        if HAS_MGMT:
+            entry['mgmt'] = to_plain_mgmt(mgmt_raw[name])
+        result.append(entry)
 
-    # KPI totals (across all guides, all langs)
+    # KPI totals
     total_free_tours = sum(g['stats']['all']['free']['tours'] for g in result)
     total_paid_tours = sum(g['stats']['all']['paid']['tours'] for g in result)
     total_free_pax   = sum(g['stats']['all']['free']['pax']   for g in result)
@@ -299,7 +438,15 @@ def main():
         'paidPax': total_paid_pax,
     }
 
-    # Output JS
+    if HAS_MGMT:
+        total_mgmt = empty_mgmt()
+        for g in result:
+            merge_mgmt(total_mgmt, g['mgmt'])
+        kpi['revenue']     = round(total_mgmt['revenue'], 2)
+        kpi['vendorCost']  = round(total_mgmt['vendorCost'], 2)
+        kpi['grossMargin'] = round(total_mgmt['grossMargin'], 2)
+        kpi['mgmt'] = to_plain_mgmt(total_mgmt)
+
     def js(obj):
         return json.dumps(obj, ensure_ascii=False, indent=2)
 

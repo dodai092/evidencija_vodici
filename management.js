@@ -101,6 +101,55 @@ function _sumStatMonths(statsAll, cutoff) {
     return { freeTours, paidTours, freePax, paidPax };
 }
 
+function filterMgmtByDate(mgmt, cutoffDate) {
+    if (!mgmt || !cutoffDate) return { revenue:0, vendorCost:0, grossMargin:0, tourCost:0, commissionCost:0, processingFee:0, vatAmount:0, amountBeforeTax:0 };
+
+    const [year, monthStr, dayStr] = cutoffDate.split('-');
+    const cutoffMonth = parseInt(monthStr);
+    const cutoffDay = parseInt(dayStr);
+
+    const acc = { revenue:0, vendorCost:0, grossMargin:0, tourCost:0, commissionCost:0, processingFee:0, vatAmount:0, amountBeforeTax:0 };
+    if (!mgmt.byDay) return acc;
+
+    for (const [key, val] of Object.entries(mgmt.byDay)) {
+        const [m, d] = key.split('-').map(Number);
+        if (m < cutoffMonth || (m === cutoffMonth && d <= cutoffDay)) {
+            acc.revenue += val.revenue || 0;
+            acc.vendorCost += val.vendorCost || 0;
+            acc.grossMargin += val.grossMargin || 0;
+            acc.tourCost += val.tourCost || 0;
+            acc.commissionCost += val.commissionCost || 0;
+            acc.processingFee += val.processingFee || 0;
+            acc.vatAmount += val.vatAmount || 0;
+            acc.amountBeforeTax += val.amountBeforeTax || 0;
+        }
+    }
+    return acc;
+}
+
+function filterStatsByDate(stats, cutoffDate) {
+    if (!stats || !cutoffDate) return { freeTours: 0, paidTours: 0, freePax: 0, paidPax: 0 };
+
+    const [year, monthStr, dayStr] = cutoffDate.split('-');
+    const cutoffMonth = parseInt(monthStr);
+    const cutoffDay = parseInt(dayStr);
+
+    let freeTours=0, paidTours=0, freePax=0, paidPax=0;
+
+    if (stats.byDay) {
+        for (const [key, val] of Object.entries(stats.byDay)) {
+            const [m, d] = key.split('-').map(Number);
+            if (m < cutoffMonth || (m === cutoffMonth && d <= cutoffDay)) {
+                freeTours += val.free?.tours || 0;
+                paidTours += val.paid?.tours || 0;
+                freePax += val.free?.pax || 0;
+                paidPax += val.paid?.pax || 0;
+            }
+        }
+    }
+    return { freeTours, paidTours, freePax, paidPax };
+}
+
 function computeFilteredKpis(city) {
     const cutoff = mgmtCutoffMonth();
     return guidesForCity(city).reduce((acc, g) => {

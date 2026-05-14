@@ -151,10 +151,9 @@ function filterStatsByDate(stats, cutoffDate) {
 }
 
 function computeFilteredKpis(city) {
-    const cutoff = mgmtCutoffMonth();
     return guidesForCity(city).reduce((acc, g) => {
-        const fin = _sumMgmtMonths(g.mgmt, cutoff);
-        const sts = _sumStatMonths(g.stats.all, cutoff);
+        const fin = filterMgmtByDate(g.mgmt, GLOBAL_DATE);
+        const sts = filterStatsByDate(g.stats.all, GLOBAL_DATE);
         acc.revenue         += fin.revenue;
         acc.vendorCost      += fin.vendorCost;
         acc.grossMargin     += fin.grossMargin;
@@ -173,12 +172,11 @@ function computeFilteredKpis(city) {
 
 function computeCity25(city) {
     if (typeof guideStats25 === 'undefined') return null;
-    const cutoff = mgmtCutoffMonth();
     const src = city === 'all' ? guideStats25 : guideStats25.filter(g => g.city === city);
     return src.reduce((acc, g) => {
         if (!g.mgmt) return acc;
-        const fin = _sumMgmtMonths(g.mgmt, cutoff);
-        const sts = _sumStatMonths(g.stats.all, cutoff);
+        const fin = filterMgmtByDate(g.mgmt, GLOBAL_DATE);
+        const sts = filterStatsByDate(g.stats.all, GLOBAL_DATE);
         acc.revenue        += fin.revenue;
         acc.vendorCost     += fin.vendorCost;
         acc.grossMargin    += fin.grossMargin;
@@ -419,17 +417,16 @@ function renderInsightCallouts(k, k25) {
 
 function renderPlGuideDrilldown(city) {
     const guides = guidesForCity(city);
-    const cutoff = mgmtCutoffMonth();
     const el = document.getElementById('pl-guide-drilldown');
     if (!el || guides.length === 0) return;
 
     // Build guide financials
     const rows = guides.map(g => {
-        const fin = _sumMgmtMonths(g.mgmt, cutoff);
-        const sts = _sumStatMonths(g.stats.all, cutoff);
+        const fin = filterMgmtByDate(g.mgmt, GLOBAL_DATE);
+        const sts = filterStatsByDate(g.stats.all, GLOBAL_DATE);
         const gmPct = fin.revenue > 0 ? (fin.grossMargin / fin.revenue * 100) : 0;
         const g25 = get25(g.name);
-        const fin25 = g25?.mgmt ? _sumMgmtMonths(g25.mgmt, cutoff) : null;
+        const fin25 = g25?.mgmt ? filterMgmtByDate(g25.mgmt, GLOBAL_DATE) : null;
         const dGm = fin25 ? fin.grossMargin - fin25.grossMargin : null;
         return {
             name: g.name,
@@ -475,27 +472,35 @@ function renderPlGuideDrilldown(city) {
 }
 
 function renderWaterfall() {
-    const cutoff = mgmtCutoffMonth();
-    const JAN_APR = Array.from({length: cutoff}, (_, i) => String(i + 1));
-    const has25 = typeof kpiTotals25 !== 'undefined' && kpiTotals25.mgmt;
-    const m26 = kpiTotals26.mgmt.byMonth;
-    const m25 = has25 ? kpiTotals25.mgmt.byMonth : {};
+    const has25 = typeof guideStats25 !== 'undefined';
 
-    function sumMonths(byMonth, months) {
-        return months.reduce((acc, m) => {
-            const d = byMonth[m] || {};
-            acc.revenue         += d.revenue         || 0;
-            acc.commissionCost  += d.commissionCost  || 0;
-            acc.vatAmount       += d.vatAmount       || 0;
-            acc.vendorCost      += d.vendorCost      || 0;
-            acc.tourCost        += d.tourCost        || 0;
-            acc.grossMargin     += d.grossMargin     || 0;
+    // Compute 2026 totals filtered by date
+    const t26 = guideStats26.reduce((acc, g) => {
+        const fin = filterMgmtByDate(g.mgmt, GLOBAL_DATE);
+        acc.revenue         += fin.revenue;
+        acc.commissionCost  += fin.commissionCost;
+        acc.vatAmount       += fin.vatAmount;
+        acc.vendorCost      += fin.vendorCost;
+        acc.tourCost        += fin.tourCost;
+        acc.grossMargin     += fin.grossMargin;
+        return acc;
+    }, { revenue:0, commissionCost:0, vatAmount:0, vendorCost:0, tourCost:0, grossMargin:0 });
+
+    // Compute 2025 totals filtered by date
+    let t25 = null;
+    if (has25) {
+        t25 = guideStats25.reduce((acc, g) => {
+            if (!g.mgmt) return acc;
+            const fin = filterMgmtByDate(g.mgmt, GLOBAL_DATE);
+            acc.revenue         += fin.revenue;
+            acc.commissionCost  += fin.commissionCost;
+            acc.vatAmount       += fin.vatAmount;
+            acc.vendorCost      += fin.vendorCost;
+            acc.tourCost        += fin.tourCost;
+            acc.grossMargin     += fin.grossMargin;
             return acc;
         }, { revenue:0, commissionCost:0, vatAmount:0, vendorCost:0, tourCost:0, grossMargin:0 });
     }
-
-    const t26 = sumMonths(m26, JAN_APR);
-    const t25 = has25 ? sumMonths(m25, JAN_APR) : null;
 
     const labels = ['Revenue', 'Commission', 'VAT', 'Vendor Cost', 'Tour Cost', 'Gross Margin'];
     const s = getComputedStyle(document.body);
@@ -516,6 +521,8 @@ function renderWaterfall() {
 
     const vals26 = [t26.revenue, -t26.commissionCost, -t26.vatAmount, -t26.vendorCost, -t26.tourCost, t26.grossMargin];
     const MONTH_NAMES_SHORT = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
+    const [year, monthStr, dayStr] = GLOBAL_DATE.split('-');
+    const cutoff = parseInt(monthStr);
     const rangeLabel = cutoff === 1 ? 'Jan' : `Jan–${MONTH_NAMES_SHORT[cutoff]}`;
     const datasets = [
         {
@@ -579,28 +586,88 @@ function renderWaterfall() {
 }
 
 function renderMonthTrend() {
-    const has25 = typeof kpiTotals25 !== 'undefined' && kpiTotals25.mgmt;
-    const m26 = kpiTotals26.mgmt.byMonth;
-    const m25 = has25 ? kpiTotals25.mgmt.byMonth : {};
+    const has25 = typeof guideStats25 !== 'undefined';
+    const [year, monthStr, dayStr] = GLOBAL_DATE.split('-');
+    const cutoffMonth = parseInt(monthStr);
+    const cutoffDay = parseInt(dayStr);
+
+    // Build monthly aggregates by filtering day data and summing
+    const m26 = {};
+    const m25 = {};
+
+    for (let m = 1; m <= cutoffMonth; m++) {
+        m26[m] = { revenue: 0, grossMargin: 0 };
+        if (has25) m25[m] = { revenue: 0, grossMargin: 0 };
+    }
+
+    // Aggregate 2026 by month from filtered guide data
+    guideStats26.forEach(g => {
+        if (!g.mgmt || !g.mgmt.byDay) return;
+        for (const [key, val] of Object.entries(g.mgmt.byDay)) {
+            const [m, d] = key.split('-').map(Number);
+            if (m < cutoffMonth || (m === cutoffMonth && d <= cutoffDay)) {
+                if (!m26[m]) m26[m] = { revenue: 0, grossMargin: 0 };
+                m26[m].revenue += val.revenue || 0;
+                m26[m].grossMargin += val.grossMargin || 0;
+            }
+        }
+    });
+
+    // Aggregate 2025 by month from filtered guide data
+    if (has25) {
+        guideStats25.forEach(g => {
+            if (!g.mgmt || !g.mgmt.byDay) return;
+            for (const [key, val] of Object.entries(g.mgmt.byDay)) {
+                const [m, d] = key.split('-').map(Number);
+                if (m < cutoffMonth || (m === cutoffMonth && d <= cutoffDay)) {
+                    if (!m25[m]) m25[m] = { revenue: 0, grossMargin: 0 };
+                    m25[m].revenue += val.revenue || 0;
+                    m25[m].grossMargin += val.grossMargin || 0;
+                }
+            }
+        });
+    }
+
+    const allM = Array.from({length: cutoffMonth}, (_, i) => i + 1);
     const MONTH_SHORT = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
-    const allM = [...new Set([...Object.keys(m26), ...Object.keys(m25)])].map(Number).sort((a,b)=>a-b);
     const s = getComputedStyle(document.body);
     const c25 = s.getPropertyValue('--y25').trim();
     const c26 = s.getPropertyValue('--y26').trim();
     makeLineChart('month-gm-line', allM.map(m => MONTH_SHORT[m]), [
-        { label: 'GM 2025', data: allM.map(m => m25[String(m)]?.grossMargin || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [5,3] },
-        { label: 'GM 2026', data: allM.map(m => m26[String(m)]?.grossMargin || 0), borderColor: c26, backgroundColor: c26 + '22', tension: 0.3, fill: true },
-        { label: 'Rev 2025', data: allM.map(m => m25[String(m)]?.revenue || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [2,2], borderWidth: 1.5 },
-        { label: 'Rev 2026', data: allM.map(m => m26[String(m)]?.revenue || 0), borderColor: '#8FA8BC', backgroundColor: 'transparent', tension: 0.3, borderWidth: 1.5 },
+        { label: 'GM 2025', data: allM.map(m => m25[m]?.grossMargin || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [5,3] },
+        { label: 'GM 2026', data: allM.map(m => m26[m]?.grossMargin || 0), borderColor: c26, backgroundColor: c26 + '22', tension: 0.3, fill: true },
+        { label: 'Rev 2025', data: allM.map(m => m25[m]?.revenue || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [2,2], borderWidth: 1.5 },
+        { label: 'Rev 2026', data: allM.map(m => m26[m]?.revenue || 0), borderColor: '#8FA8BC', backgroundColor: 'transparent', tension: 0.3, borderWidth: 1.5 },
     ]);
 }
 
 function renderBillingTrend() {
-    const has25 = typeof kpiTotals25 !== 'undefined' && kpiTotals25.mgmt;
-    if (!kpiTotals26.mgmt.byBillingMethod) return;
+    const has25 = typeof guideStats25 !== 'undefined';
+    const [year, monthStr, dayStr] = GLOBAL_DATE.split('-');
+    const cutoffMonth = parseInt(monthStr);
+    const cutoffDay = parseInt(dayStr);
 
-    const billing26 = kpiTotals26.mgmt.byBillingMethod;
-    const billing25 = has25 ? kpiTotals25.mgmt.byBillingMethod || {} : {};
+    function aggregateBillingByDate(guides) {
+        const billing = {POS: {revenue: 0, grossMargin: 0}, CPP: {revenue: 0, grossMargin: 0}};
+        guides.forEach(g => {
+            if (!g.mgmt || !g.mgmt.byBillingMethod) return;
+            for (const [method, data] of Object.entries(g.mgmt.byBillingMethod)) {
+                if (!billing[method]) billing[method] = {revenue: 0, grossMargin: 0};
+                // Approximate by taking the proportion of filtered data to full data
+                const fullTotal = filterMgmtByDate(g.mgmt, '9999-12-31');
+                const filteredTotal = filterMgmtByDate(g.mgmt, GLOBAL_DATE);
+                if (fullTotal.revenue > 0) {
+                    const ratio = filteredTotal.revenue / fullTotal.revenue;
+                    billing[method].revenue += (data.revenue || 0) * ratio;
+                    billing[method].grossMargin += (data.grossMargin || 0) * ratio;
+                }
+            }
+        });
+        return billing;
+    }
+
+    const billing26 = aggregateBillingByDate(guideStats26);
+    const billing25 = has25 ? aggregateBillingByDate(guideStats25) : {};
 
     const labels = ['POS', 'CPP'];
     const s = getComputedStyle(document.body);

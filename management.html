@@ -186,6 +186,19 @@
             background: var(--smoke);
         }
 
+        /* Row health indicators */
+        .mgmt-table tr.row-poor td {
+            background: rgba(212, 84, 90, 0.06);
+        }
+
+        .mgmt-table tr.row-warn td {
+            background: rgba(186, 117, 23, 0.07);
+        }
+
+        .mgmt-table tr.row-healthy td {
+            background: transparent;
+        }
+
         .mgmt-table .rank {
             color: var(--text3);
             font-size: 11px;
@@ -208,6 +221,17 @@
 
         .mgmt-table td.neu {
             color: var(--text3);
+        }
+
+        /* Warning/info banners */
+        .approx-banner {
+            padding: 8px 12px;
+            border-left: 3px solid var(--amber);
+            background: rgba(186, 117, 23, 0.05);
+            font-size: 11px;
+            color: var(--text2);
+            margin-bottom: 12px;
+            border-radius: 4px;
         }
 
         .sort-hdr {
@@ -575,6 +599,8 @@
 
             <div id="waterfall-summary" style="margin-bottom:24px"></div>
 
+            <div id="pl-guide-drilldown" style="margin-bottom:24px"></div>
+
             <!-- Billing method -->
             <h2 class="section-title">Direct Booking vs OTA (Billing Method)</h2>
             <div class="two-col">
@@ -618,6 +644,7 @@
                                     style="font-weight:400;letter-spacing:0">vs '25</small></th>
                             <th class="sort-hdr" data-col="commissionCost" onclick="mgmtSort('commissionCost')">
                                 Commission</th>
+                            <th class="sort-hdr" data-col="commPct" onclick="mgmtSort('commPct')">Comm%</th>
                             <th class="sort-hdr" data-col="vendorCost" onclick="mgmtSort('vendorCost')">Cost</th>
                             <th class="sort-hdr sorted-desc" data-col="grossMargin" onclick="mgmtSort('grossMargin')">GM
                                 €<br><small style="font-weight:400;letter-spacing:0">vs '25</small></th>
@@ -627,6 +654,9 @@
                     </thead>
                     <tbody id="guide-tbody"></tbody>
                 </table>
+            </div>
+            <div id="guide-legend" style="padding: 12px 0; font-size: 11px; color: var(--text2); margin-top: -8px;">
+                <!-- Rendered by renderGuideTable() -->
             </div>
         </div>
     </div>
@@ -649,9 +679,9 @@
 
             <h2 class="section-title">Direct Booking vs OTA Trend</h2>
             <div class="chart-card" style="margin-bottom:24px">
-                <h3>Direct (Web) vs OTA Revenue by Month — 2025 vs 2026 *</h3>
+                <h3>Direct (Web) vs OTA Revenue by Month — 2025 vs 2026</h3>
+                <div class="approx-banner">⚠ Approximate — channel split estimated from guide-level ratios, not per-booking data</div>
                 <div class="chart-wrap h280"><canvas id="direct-ota-line"></canvas></div>
-                <p class="chart-note">* Channel split approximated from each guide's full-season channel ratio</p>
             </div>
 
             <h2 class="section-title">OTA Source Detail</h2>
@@ -667,7 +697,8 @@
                             <th>Tour Type</th>
                             <th>Tours '26<br><small style="font-weight:400;letter-spacing:0">vs '25</small></th>
                             <th>Avg PAX</th>
-                            <th>Avg Unit Price</th>
+                            <th>Unit Price '26</th>
+                            <th>Unit Price '25<br><small style="font-weight:400;letter-spacing:0">Δ</small></th>
                             <th>Revenue</th>
                             <th>Commission</th>
                             <th>GM €</th>
@@ -697,6 +728,9 @@
                     <p style="font-size:11px;color:var(--text3);margin:-8px 0 12px">1–5 PAX = losing money in 2026. 11+
                         PAX = 36.8% GM.</p>
                     <div class="chart-wrap h280"><canvas id="guide-paxband-gm"></canvas></div>
+                    <div id="paxband-action-panel" style="margin-top: 16px; padding: 12px; background: rgba(186,117,23,0.06); border-radius: 4px; font-size: 12px; border-left: 3px solid var(--amber);">
+                        <!-- Rendered by renderPaxBandActionPanel() -->
+                    </div>
                 </div>
                 <div class="chart-card">
                     <h3>Tour Count by Guide Group Size — 2025 vs 2026</h3>

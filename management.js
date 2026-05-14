@@ -302,6 +302,9 @@ function renderPlKpis(city) {
 
     // Insight callouts
     renderInsightCallouts(k, k25);
+
+    // Guide drilldown
+    renderPlGuideDrilldown(city);
 }
 
 function renderInsightCallouts(k, k25) {
@@ -363,6 +366,63 @@ function renderInsightCallouts(k, k25) {
         const pctStr = c.pct !== null ? ` (${c.pct >= 0 ? '+' : ''}${c.pct.toFixed(1)}%)` : '';
         return `<span class="insight-pill ${cls}">${arrow} ${c.label} ${c.fmt(c.val)}${pctStr} vs 2025</span>`;
     }).join('');
+}
+
+function renderPlGuideDrilldown(city) {
+    const guides = guidesForCity(city);
+    const cutoff = mgmtCutoffMonth();
+    const el = document.getElementById('pl-guide-drilldown');
+    if (!el || guides.length === 0) return;
+
+    // Build guide financials
+    const rows = guides.map(g => {
+        const fin = _sumMgmtMonths(g.mgmt, cutoff);
+        const sts = _sumStatMonths(g.stats.all, cutoff);
+        const gmPct = fin.revenue > 0 ? (fin.grossMargin / fin.revenue * 100) : 0;
+        const g25 = get25(g.name);
+        const fin25 = g25?.mgmt ? _sumMgmtMonths(g25.mgmt, cutoff) : null;
+        const dGm = fin25 ? fin.grossMargin - fin25.grossMargin : null;
+        return {
+            name: g.name,
+            city: g.city,
+            revenue: fin.revenue,
+            grossMargin: fin.grossMargin,
+            gmPct,
+            dGm,
+        };
+    });
+
+    // Sort by GM descending, take top 10
+    rows.sort((a, b) => b.grossMargin - a.grossMargin);
+    const top10 = rows.slice(0, 10);
+
+    // Render compact table
+    el.innerHTML = `<div style="padding: 16px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px;">
+        <div style="font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 12px;">Top 10 Guides by Margin</div>
+        <table class="mgmt-table" style="font-size: 11px;">
+            <thead><tr>
+                <th>Guide</th>
+                <th>Revenue</th>
+                <th>GM €</th>
+                <th>GM%</th>
+                <th>vs 2025</th>
+            </tr></thead>
+            <tbody>
+                ${top10.map(r => {
+                    let rowClass = 'row-healthy';
+                    if (r.gmPct < 10 || (r.dGm !== null && r.dGm < -500)) rowClass = 'row-poor';
+                    else if (r.gmPct < 20) rowClass = 'row-warn';
+                    return `<tr class="${rowClass}">
+                        <td><strong>${r.name}</strong></td>
+                        <td>${fmtEur(r.revenue)}</td>
+                        <td class="${gmClass(r.grossMargin)}">${fmtEur(r.grossMargin)}</td>
+                        <td class="${gmClass(r.gmPct)}">${r.gmPct.toFixed(1)}%</td>
+                        <td>${dd(r.dGm, true)}</td>
+                    </tr>`;
+                }).join('')}
+            </tbody>
+        </table>
+    </div>`;
 }
 
 function renderWaterfall() {
@@ -526,13 +586,13 @@ function renderBillingTrend() {
                     <div>
                         <div style="font-size:10px;color:var(--text3)">2025 Revenue</div>
                         <div style="font-family:var(--font-mono);font-size:15px">${fmtEur(d25.revenue)}</div>
-                        <div style="font-size:11px;color:var(--text3)">GM: ${gm25pct.toFixed(1)}%</div>
+                        <div style="font-size:10px;color:var(--text3)">GM: ${gm25pct.toFixed(1)}%</div>
                     </div>
                     <div>
                         <div style="font-size:10px;color:var(--text3)">2026 Revenue</div>
                         <div style="font-family:var(--font-mono);font-size:15px">${fmtEur(d26.revenue)}</div>
-                        <div style="font-size:11px;color:var(--text3)">GM: <strong class="${gmClass(gm26pct)}">${gm26pct.toFixed(1)}%</strong></div>
-                        <div style="font-size:11px">${dd(revDelta, true)} vs 2025</div>
+                        <div style="font-size:14px;font-weight:600;color:var(--text);margin:4px 0">GM: <span class="${gmClass(gm26pct)}" style="font-size:16px;font-weight:700">${gm26pct.toFixed(1)}%</span></div>
+                        <div style="font-size:10px">${dd(revDelta, true)} vs 2025</div>
                     </div>
                 </div>
             </div>`;
@@ -569,6 +629,7 @@ function renderGuideTable() {
         const avgGm = sts.paidTours > 0 ? (m.grossMargin / sts.paidTours) : 0;
         const avgPax = sts.paidTours > 0 ? (sts.paidPax / sts.paidTours) : 0;
         const comm = m.commissionCost || 0;
+        const commPct = m.revenue > 0 ? (comm / m.revenue * 100) : 0;
 
         const g25 = get25(g.name);
         const fin25 = g25?.mgmt ? _sumMgmtMonths(g25.mgmt, cutoff) : null;
@@ -581,7 +642,7 @@ function renderGuideTable() {
             name: g.name, city: g.city,
             freeTours: sts.freeTours, paidTours: sts.paidTours,
             avgPax, revenue: m.revenue, vendorCost: m.vendorCost,
-            commissionCost: comm,
+            commissionCost: comm, commPct,
             grossMargin: m.grossMargin, gmPct, avgGm,
             paid25, rev25, gm25,
         };
@@ -594,7 +655,16 @@ function renderGuideTable() {
         const dPaid = r.paid25 !== null ? r.paidTours - r.paid25 : null;
         const dGm   = r.gm25   !== null ? r.grossMargin - r.gm25 : null;
         const dRev  = r.rev25  !== null ? r.revenue - r.rev25 : null;
-        return `<tr>
+        // Row health class: green if GM > 20% and growing, amber if 10–20%, red if < 10% or declining
+        let rowClass = 'row-healthy';
+        if (r.gmPct < 10 || (dGm !== null && dGm < -500)) rowClass = 'row-poor';
+        else if (r.gmPct < 20) rowClass = 'row-warn';
+        // Commission color: red if > 25%, amber if 15–25%, green if < 15%
+        let commClass = 'neu';
+        if (r.commPct > 25) commClass = 'neg';
+        else if (r.commPct >= 15) commClass = 'neu';
+        else commClass = 'pos';
+        return `<tr class="${rowClass}">
             <td class="rank">${i + 1}</td>
             <td class="guide-name">${r.name}</td>
             <td><span class="city-dot" style="background:${CITY_COLS[r.city] || '#999'}"></span>${r.city}</td>
@@ -603,12 +673,32 @@ function renderGuideTable() {
             <td>${r.avgPax > 0 ? r.avgPax.toFixed(1) : '—'}</td>
             <td>${fmtEur(r.revenue)}<br><small class="yoy">${dd(dRev, true)}</small></td>
             <td class="neg">${r.commissionCost > 0 ? fmtEur(-r.commissionCost) : '—'}</td>
+            <td class="${commClass}">${r.commPct > 0 ? r.commPct.toFixed(1) + '%' : '—'}</td>
             <td>${fmtEur(r.vendorCost)}</td>
             <td class="${gmClass(r.grossMargin)}">${fmtEur(r.grossMargin)}<br><small class="yoy">${dd(dGm, true)}</small></td>
             <td class="${gmClass(r.gmPct)}">${r.gmPct.toFixed(1)}%</td>
             <td class="${gmClass(r.avgGm)}">${fmtEur(r.avgGm)}</td>
         </tr>`;
     }).join('');
+
+    // Render legend
+    const legendEl = document.getElementById('guide-legend');
+    if (legendEl) {
+        legendEl.innerHTML = `
+            <span style="margin-right: 24px;">
+                <span style="display: inline-block; width: 8px; height: 8px; background: rgba(29,158,117,0.2); border-radius: 2px; margin-right: 6px; vertical-align: middle;"></span>
+                GM ≥ 20% & growing
+            </span>
+            <span style="margin-right: 24px;">
+                <span style="display: inline-block; width: 8px; height: 8px; background: rgba(186,117,23,0.1); border-radius: 2px; margin-right: 6px; vertical-align: middle;"></span>
+                GM 10–20%
+            </span>
+            <span>
+                <span style="display: inline-block; width: 8px; height: 8px; background: rgba(212,84,90,0.15); border-radius: 2px; margin-right: 6px; vertical-align: middle;"></span>
+                GM < 10% or declining
+            </span>
+        `;
+    }
 }
 
 function mgmtSort(col) {
@@ -780,6 +870,7 @@ function renderOtaSourceTable() {
             <th>Vendor Cost</th>
             <th>GM '26</th><th>GM%</th>
             <th>GM '25</th><th>Δ GM</th>
+            <th>Action</th>
         </tr></thead>
         <tbody>${srcKeys.map(k => {
             const d = srcData[k];
@@ -787,6 +878,14 @@ function renderOtaSourceTable() {
             const gmpct = d.revenue > 0 ? (d.grossMargin / d.revenue * 100) : 0;
             const commpct = d.revenue > 0 ? ((d.commissionCost||0) / d.revenue * 100) : 0;
             const dgm = d25 ? d.grossMargin - d25.grossMargin : null;
+
+            // Action lever logic
+            let action = '—';
+            if (d.tours < 5) action = '– Low volume';
+            else if (commpct > 25) action = '⚠ High commission';
+            else if (commpct < 15 && d.tours >= 20) action = '✓ Keep pushing';
+            else if (dgm !== null && dgm < -200) action = '↓ Declining';
+
             return `<tr>
                 <td><strong>${k}</strong></td>
                 <td>${fmt(d.tours)}</td>
@@ -798,6 +897,7 @@ function renderOtaSourceTable() {
                 <td class="${gmClass(gmpct)}">${gmpct.toFixed(1)}%</td>
                 <td>${d25 ? fmtEur(d25.grossMargin) : '—'}</td>
                 <td>${dd(dgm, true)}</td>
+                <td style="font-size:11px;color:var(--text2)">${action}</td>
             </tr>`;
         }).join('')}</tbody>
     </table>`;
@@ -818,12 +918,15 @@ function renderTourTypeTable() {
         const gmpct = d.revenue > 0 ? (d.grossMargin / d.revenue * 100) : 0;
         const avgPax = d.tours > 0 ? (d.pax / d.tours) : 0;
         const avgUnit = d.pax > 0 ? (d.revenue / d.pax) : 0;
+        const avgUnit25 = d25 && d25.pax > 0 ? (d25.revenue / d25.pax) : 0;
+        const dUnit = d25 ? avgUnit - avgUnit25 : null;
         const dTours = d25 ? d.tours - d25.tours : null;
         return `<tr>
             <td><strong>${t}</strong></td>
             <td>${fmt(d.tours)}<br><small class="yoy">${dd(dTours)}</small></td>
             <td>${avgPax > 0 ? avgPax.toFixed(1) : '—'}</td>
             <td>${avgUnit > 0 ? fmtEur(avgUnit) : '—'}</td>
+            <td>${avgUnit25 > 0 ? fmtEur(avgUnit25) : '—'}<br><small class="yoy">${dd(dUnit, true)}</small></td>
             <td>${fmtEur(d.revenue)}</td>
             <td class="neg">${d.commissionCost > 0 ? fmtEur(-d.commissionCost) : '—'}</td>
             <td class="${gmClass(d.grossMargin)}">${fmtEur(d.grossMargin)}</td>
@@ -898,7 +1001,17 @@ function initOps() {
     makeBarChart('dow-bar', dowLabels, [
         { label: '2025', data: dowLabels.map(d => dow25[d]?.tours || 0), backgroundColor: c25 + 'aa', borderRadius: 4, borderSkipped: false },
         { label: '2026', data: dowLabels.map(d => dow26[d]?.tours || 0), backgroundColor: c26 + 'aa', borderRadius: 4, borderSkipped: false },
-    ], { showLegend: true });
+    ], {
+        showLegend: true,
+        tooltipCb: {
+            afterLabel: ctx => {
+                const d = ctx.datasetIndex === 0 ? dow25[dowLabels[ctx.dataIndex]] : dow26[dowLabels[ctx.dataIndex]];
+                if (!d) return '';
+                const gmpct = d.revenue > 0 ? (d.grossMargin / d.revenue * 100).toFixed(1) : '—';
+                return `Revenue: €${fmt(d.revenue || 0)}\nGM%: ${gmpct}%`;
+            }
+        }
+    });
 
     // Time slots
     const time26 = mgmt26.byTime; const time25 = mgmt25?.byTime || {};
@@ -906,7 +1019,17 @@ function initOps() {
     makeBarChart('time-bar', timeKeys.map(h => `${h}:00`), [
         { label: '2025', data: timeKeys.map(h => time25[h]?.tours || 0), backgroundColor: c25 + 'aa', borderRadius: 4, borderSkipped: false },
         { label: '2026', data: timeKeys.map(h => time26[h]?.tours || 0), backgroundColor: c26 + 'aa', borderRadius: 4, borderSkipped: false },
-    ], { showLegend: true });
+    ], {
+        showLegend: true,
+        tooltipCb: {
+            afterLabel: ctx => {
+                const d = ctx.datasetIndex === 0 ? time25[timeKeys[ctx.dataIndex]] : time26[timeKeys[ctx.dataIndex]];
+                if (!d) return '';
+                const gmpct = d.revenue > 0 ? (d.grossMargin / d.revenue * 100).toFixed(1) : '—';
+                return `Revenue: €${fmt(d.revenue || 0)}\nGM%: ${gmpct}%`;
+            }
+        }
+    });
 
     // Season
     const sea26 = mgmt26.bySeason; const sea25 = mgmt25?.bySeason || {};
@@ -914,7 +1037,17 @@ function initOps() {
     makeBarChart('season-bar', seaLabels.map(k => k[0].toUpperCase() + k.slice(1)), [
         { label: '2025', data: seaLabels.map(k => sea25[k]?.tours || 0), backgroundColor: c25 + 'aa', borderRadius: 4, borderSkipped: false },
         { label: '2026', data: seaLabels.map(k => sea26[k]?.tours || 0), backgroundColor: c26 + 'aa', borderRadius: 4, borderSkipped: false },
-    ], { showLegend: true });
+    ], {
+        showLegend: true,
+        tooltipCb: {
+            afterLabel: ctx => {
+                const d = ctx.datasetIndex === 0 ? sea25[seaLabels[ctx.dataIndex]] : sea26[seaLabels[ctx.dataIndex]];
+                if (!d) return '';
+                const gmpct = d.revenue > 0 ? (d.grossMargin / d.revenue * 100).toFixed(1) : '—';
+                return `Revenue: €${fmt(d.revenue || 0)}\nGM%: ${gmpct}%`;
+            }
+        }
+    });
 
     // Booking PAX band (booking volume)
     const pb26 = mgmt26.byPaxBand; const pb25 = mgmt25?.byPaxBand || {};
@@ -927,15 +1060,32 @@ function initOps() {
     // Month revenue & GM trend — extracted so date picker can refresh it
     renderOpsMonthLine();
 
+    // PAX band action panel
+    renderPaxBandActionPanel();
+
     // Week trend
     const wk26 = mgmt26.byWeek;
+    const wk25 = mgmt25?.byWeek || {};
     const wkNums = Object.keys(wk26).map(Number).sort((a,b)=>a-b);
     const ax = axisDefaults();
-    makeLineChart('week-line', wkNums.map(w => 'Wk ' + w), [
+    const datasets = [
         { label: 'Tours', data: wkNums.map(w => wk26[String(w)].tours), borderColor: '#8FA8BC', backgroundColor: '#8FA8BC22', tension: 0.3, fill: true, yAxisID: 'yL' },
         { label: 'Revenue', data: wkNums.map(w => wk26[String(w)].revenue), borderColor: '#C49A8A', backgroundColor: 'transparent', tension: 0.3, yAxisID: 'yR' },
         { label: 'Gross Margin', data: wkNums.map(w => wk26[String(w)].grossMargin), borderColor: green, backgroundColor: 'transparent', tension: 0.3, borderDash: [4,3], yAxisID: 'yR' },
-    ], {
+    ];
+    if (Object.keys(wk25).length > 0) {
+        datasets.push({
+            label: 'Revenue 2025',
+            data: wkNums.map(w => wk25[String(w)]?.revenue || 0),
+            borderColor: c25,
+            backgroundColor: 'transparent',
+            tension: 0.3,
+            borderDash: [5,3],
+            borderWidth: 1.5,
+            yAxisID: 'yR',
+        });
+    }
+    makeLineChart('week-line', wkNums.map(w => 'Wk ' + w), datasets, {
         x:  ax,
         yL: { ...ax, position: 'left',  title: { display: true, text: 'Tours', color: ax.ticks.color } },
         yR: { ...ax, position: 'right', grid: { display: false }, title: { display: true, text: '€', color: ax.ticks.color } },
@@ -960,6 +1110,39 @@ function renderOpsMonthLine() {
         { label: 'GM 2025', data: allM.map(m => m25[String(m)]?.grossMargin || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [2,2], borderWidth: 1.5 },
         { label: 'GM 2026', data: allM.map(m => m26[String(m)]?.grossMargin || 0), borderColor: green, backgroundColor: 'transparent', tension: 0.3, borderWidth: 2 },
     ]);
+}
+
+function renderPaxBandActionPanel() {
+    const mgmt26 = kpiTotals26.mgmt;
+    const mgmt25 = typeof kpiTotals25 !== 'undefined' ? kpiTotals25.mgmt : null;
+    const gpb26 = mgmt26.byGuidePaxBand || {};
+    const gpb25 = mgmt25?.byGuidePaxBand || {};
+
+    // Calculate small group metrics
+    const smallGroup26 = gpb26['1-5'] || { tours: 0, revenue: 0, grossMargin: 0 };
+    const smallGroup25 = gpb25['1-5'] || { tours: 0, revenue: 0, grossMargin: 0 };
+
+    const totalTours26 = Object.values(gpb26).reduce((sum, g) => sum + (g.tours || 0), 0);
+    const totalTours25 = Object.values(gpb25).reduce((sum, g) => sum + (g.tours || 0), 0);
+
+    const smallGroupPct26 = totalTours26 > 0 ? (smallGroup26.tours / totalTours26 * 100) : 0;
+    const smallGroupPct25 = totalTours25 > 0 ? (smallGroup25.tours / totalTours25 * 100) : 0;
+    const pctChange = smallGroupPct26 - smallGroupPct25;
+
+    // Loss estimate: revenue at 0% margin (breakeven)
+    const lossFromSmallGroups = smallGroup26.grossMargin < 0 ? Math.abs(smallGroup26.grossMargin) : 0;
+
+    const el = document.getElementById('paxband-action-panel');
+    if (el) {
+        el.innerHTML = `
+            <div style="font-weight: 600; margin-bottom: 10px; color: var(--text);">Small Group Problem Summary</div>
+            <div style="color: var(--text2); line-height: 1.6; font-size: 11px;">
+                <div><strong>📊 Prevalence:</strong> ${smallGroupPct26.toFixed(0)}% of paid tours are 1–5 PAX (${smallGroup26.tours} tours)</div>
+                <div><strong>💰 Margin loss:</strong> €${fmt(lossFromSmallGroups)} total from small groups</div>
+                <div><strong>📈 Trend:</strong> ${pctChange > 0 ? '+' : ''}${pctChange.toFixed(1)}pp vs 2025 — getting ${pctChange > 0 ? 'worse' : 'better'}</div>
+            </div>
+        `;
+    }
 }
 
 // ── Date filter ───────────────────────────────────────────────────────────────

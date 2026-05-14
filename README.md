@@ -4,6 +4,8 @@ Internal dashboard tracking guide production statistics for FreeSpirit travel ag
 
 ## Tabs
 
+### Production Dashboard (index.html)
+
 | Tab | Content |
 |-----|---------|
 | **Vodiči 2025** | Full-year 2025 production per guide — free tours, paid tours, pax, monthly breakdown |
@@ -11,6 +13,18 @@ Internal dashboard tracking guide production statistics for FreeSpirit travel ag
 | **Usporedba** | Jan–May 2025 vs. 2026 side-by-side comparison with charts |
 
 Filters by city (Zagreb, Dubrovnik, Split, Zadar) and language (ENG, ESP, FRA) on each tab are independent.
+
+### Management Dashboard (management.html)
+
+**Financial analysis and operational insights — 5 tabs:**
+
+| Tab | Content |
+|-----|---------|
+| **P&L** | Revenue, costs, gross margin — KPIs, waterfall, monthly trend, billing methods |
+| **Guides** | Per-guide financial performance — sortable table with 2026 vs 2025 comparison |
+| **Channels** | OTA sources, commission analysis, direct vs. OTA trend, tour type breakdown |
+| **Operational** | Group size efficiency, DOW/season patterns, payment methods, weekly trends |
+| **Cities** | City comparison, tour type × city matrix, source distribution, language mix |
 
 ## Files
 

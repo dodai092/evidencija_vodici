@@ -11,7 +11,8 @@
 2. [Guides Tab](#guides-tab)
 3. [Channels Tab](#channels-tab)
 4. [Operational Tab](#operational-tab)
-5. [Data Source](#data-source)
+5. [Cities Tab](#cities-tab)
+6. [Data Source](#data-source)
 
 ---
 
@@ -432,6 +433,159 @@ Seven charts analyzing operational patterns: the key driver of profitability is 
 
 ---
 
+### Section: Payment Method Impact
+
+#### Stat Cards: Cash, Card, Bank Transfer
+
+**Type:** Three KPI cards  
+**Croatian Name:** Utjecaj Vrste Plaćanja
+
+**Each card shows:**
+- **Revenue** — Total revenue from that payment method (€)
+- **GM%** — Gross margin % for that method, with YoY delta vs 2025
+- **Tours** — Number of tours paid via that method
+
+**Examples:**
+- **Card:** €33,816 revenue, 13.9% GM (processing fees included)
+- **Bank Transfer:** €1,393 revenue (typically low-volume, institutional)
+- **Cash:** €995 revenue (minimal)
+
+**Excel columns used:**
+- `Payment method` → card, bank trf, cash
+- `Charged amount`, `Gross margin` per method
+
+---
+
+#### Chart: Revenue by Payment Method — 2025 vs 2026
+
+**Type:** Grouped bar chart  
+**What it shows:** Revenue comparison by payment method across both years
+
+**Bars displayed:**
+- Card 2025 vs Card 2026
+- Bank Transfer 2025 vs Bank Transfer 2026
+- Cash 2025 vs Cash 2026
+
+**Tooltip shows:** Gross margin amount (€) and GM% for each method
+
+**Key insight:** Card processing is your primary revenue channel. Understand which tours drive card vs. bank transfer bookings.
+
+---
+
+## Cities Tab
+
+### Overview
+**Croatian Name:** Gradovi (City Performance)  
+**Subtitle:** Revenue · Margin · Product mix by city
+
+A strategic overview of how each city (Zagreb, Dubrovnik, Split, Zadar) contributes to overall performance. Four sections: overview cards, tour-type breakdown by city, booking source distribution, and language mix.
+
+---
+
+### Section 1: City Overview — 2026 YTD
+
+**Type:** Four KPI cards (one per city)
+
+**Each card shows:**
+- **City name** — header
+- **Revenue** (€) — Total revenue for city YTD
+- **Gross Margin** — Amount (€) and percentage (%)
+- **Commission Rate** (%) — OTA commission as % of revenue
+- **Tours & PAX** — Paid tour count and total paid pax
+- **YoY Change** — ∆ GM (delta vs 2025, color-coded green/red)
+
+**Example (Zagreb):**
+```
+€87,450 revenue
+GM: €24,620 (28.1%)
+Commission: 22.3%
+156 tours · 2,840 pax
+∆ GM: +€3,200 (vs 2025)
+```
+
+**Use case:** Which city is your growth engine? Which needs attention?
+
+---
+
+### Section 2: Tour Type Performance by City
+
+**Type:** Heatmap table  
+**Croatian Name:** Vrsta Ture po Gradu
+
+**Rows:** All tour types present in data (war, food, best, war PR, food PR, old, big, etc.)  
+**Columns:** Zagreb, Dubrovnik, Split, Zadar, Total
+
+**Cell contents:** Two lines per cell
+- **First line:** Revenue (€)
+- **Second line:** Gross Margin % (bold)
+
+**Cell coloring (background heatmap):**
+- **Green** → GM% ≥ 25% (healthy margin)
+- **Amber** → GM% 10–25% (moderate margin)
+- **Red** → GM% < 10% (thin margin or unprofitable)
+- **Grey** → No data (tour type not offered in that city)
+
+**Bottom row:** Totals row showing aggregated revenue and GM% per city and grand total
+
+**Example insight:** War tours earn €12,340 (31.2% GM) in Split but only €4,200 (14.5% GM) in Zagreb — product-market fit varies by city.
+
+**Use case:** Where should you promote each tour type? Which cities need product diversification?
+
+---
+
+### Section 3: Booking Source Distribution by City
+
+**Type:** Detailed breakdown table  
+**Croatian Name:** Izvor Rezervacija po Gradu
+
+**Rows:** Top booking sources (FST, GYG, Viator, Airbnb, Civitatis, Musement, named individuals)  
+**Columns:** Zagreb, Dubrovnik, Split, Zadar
+
+**Cell contents:** Two lines per cell
+- **First line:** Revenue (€)
+- **Second line:** Commission % (background color reflects commission impact)
+
+**Cell background coloring:**
+- **Red-tinted** → Commission > 25% (high OTA drain)
+- **Orange-tinted** → Commission 15–25% (moderate OTA cost)
+- **Green-tinted** → Commission < 15% (low OTA cost, or direct/FST)
+
+**Use case:** Which city relies too heavily on expensive OTA platforms? Where should you push direct bookings?
+
+**Example:** GetYourGuide takes 30% commission in Dubrovnik but only 22% in Zadar — investigate pricing or customer sourcing differences.
+
+---
+
+### Section 4: Language Mix by City — Paid Tours
+
+**Type:** Stacked horizontal bar chart  
+**Croatian Name:** Jezična Razina po Gradu
+
+**Note:** This section shows **production volume only** (tours and pax counts). Revenue breakdown by language is not available in the current data structure.
+
+**Four bars (one per city):** Zagreb, Dubrovnik, Split, Zadar
+
+**Bar segments:** Three colors representing language distribution
+- **Blue** → English (eng) tours
+- **Orange** → Spanish (esp) tours  
+- **Light blue** → French (fra) tours
+
+**Each segment shows:** Percentage of that city's paid tours in that language
+
+**Tooltip on hover:** Exact tour count and pax count for that language in that city
+
+**Example (Split):**
+- 62% English (124 tours, 1,850 pax)
+- 28% Spanish (56 tours, 890 pax)
+- 10% French (20 tours, 310 pax)
+
+**Use case:**
+- Which languages should you hire guides in for each city?
+- Are foreign language tours underrepresented or oversupplied?
+- Where should you invest in additional language capacity?
+
+---
+
 ## Data Source
 
 ### Excel File
@@ -497,6 +651,7 @@ python3 scripts/extract_guides.py --year 2025 > data-2025.js
 - **2** — Jump to Guides tab
 - **3** — Jump to Channels tab
 - **4** — Jump to Operational tab
+- **5** — Jump to Cities tab
 - **T** — Toggle dark/light theme
 - **D** — Focus on date picker (for YTD cutoff)
 - **?** — Show shortcuts help overlay

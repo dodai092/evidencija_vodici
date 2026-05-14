@@ -44,8 +44,8 @@ python3 scripts/extract_guides.py --year 2025 > data-2025.js
 | `page-cmp.js` | `PageCmp` object — renders comparison tab + Chart.js instances |
 | `data-2025.js` | Generated from Evidencija_25 — exports `guideStats25`, `kpiTotals25` (includes `mgmt` financial fields) |
 | `data-2026.js` | Generated from Evidencija — exports `guideStats26`, `kpiTotals26` (includes `mgmt` financial fields) |
-| `management.html` | Financial dashboard for internal use — 3 tabs: Overview, Channels & OTA, Operational. **Redesign to 4 tabs planned — see memory.** |
-| `management.js` | All JS for management.html |
+| `management.html` | Financial dashboard for internal use — 5 tabs: P&L, Guides, Channels, Operational, Cities |
+| `management.js` | All JS for management.html — chart rendering, data aggregation, tab routing |
 | `scripts/extract_guides.py` | Data extractor — reads Excel sheets, outputs JS. Supports --year 2025/2026. |
 | `scripts/append_guides.py` | Appends new guide data entries |
 

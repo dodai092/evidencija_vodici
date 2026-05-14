@@ -735,11 +735,10 @@ function initGuides() {
 
 function renderGuideTable() {
     const guides = guidesForCity(_activeCity);
-    const cutoff = mgmtCutoffMonth();
 
     const rows = guides.map(g => {
-        const fin = _sumMgmtMonths(g.mgmt, cutoff);
-        const sts = _sumStatMonths(g.stats.all, cutoff);
+        const fin = filterMgmtByDate(g.mgmt, GLOBAL_DATE);
+        const sts = filterStatsByDate(g.stats.all, GLOBAL_DATE);
         const m = fin;
         const gmPct = m.revenue > 0 ? (m.grossMargin / m.revenue * 100) : 0;
         const avgGm = sts.paidTours > 0 ? (m.grossMargin / sts.paidTours) : 0;
@@ -748,8 +747,8 @@ function renderGuideTable() {
         const commPct = m.revenue > 0 ? (comm / m.revenue * 100) : 0;
 
         const g25 = get25(g.name);
-        const fin25 = g25?.mgmt ? _sumMgmtMonths(g25.mgmt, cutoff) : null;
-        const sts25 = g25 ? _sumStatMonths(g25.stats.all, cutoff) : null;
+        const fin25 = g25?.mgmt ? filterMgmtByDate(g25.mgmt, GLOBAL_DATE) : null;
+        const sts25 = g25 ? filterStatsByDate(g25.stats.all, GLOBAL_DATE) : null;
         const paid25 = sts25 ? sts25.paidTours : null;
         const rev25  = fin25 ? fin25.revenue : null;
         const gm25   = fin25 ? fin25.grossMargin : null;
@@ -889,72 +888,37 @@ function renderCommissionWaterfall() {
 }
 
 function renderDirectOtaTrend() {
-    const has25 = typeof kpiTotals25 !== 'undefined' && kpiTotals25.mgmt;
+    const has25 = typeof guideStats25 !== 'undefined';
     const MONTH_SHORT = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
+    const [year, monthStr, dayStr] = GLOBAL_DATE.split('-');
+    const cutoffMonth = parseInt(monthStr);
 
-    function monthlyBilling(mgmt) {
-        const out = {};
-        if (!mgmt?.byMonth) return out;
-        Object.entries(mgmt.byMonth).forEach(([m, d]) => {
-            out[m] = { revenue: d.revenue || 0 };
-        });
-        // byBillingMethod is global, not per-month; use byChannel as proxy
-        // POS = web channel (direct), CPP = OTA+B2B
-        return out;
-    }
-
-    // Build POS vs CPP by month from guide-level data
-    function posVsCppByMonth(stats26, year) {
-        const pos = {}, cpp = {};
-        const src = year === 25 ? (typeof guideStats25 !== 'undefined' ? guideStats25 : []) : stats26;
-        src.forEach(g => {
-            if (!g.mgmt?.byBillingMethod) return;
-            // We don't have per-month billing breakdown, so use byMonth × billing ratio
-            // Fallback: use channel web as POS proxy, other as CPP
-            const bm = g.mgmt.byBillingMethod;
-            Object.entries(g.mgmt.byMonth || {}).forEach(([m, d]) => {
-                pos[m] = (pos[m] || 0);
-                cpp[m] = (cpp[m] || 0);
-            });
-        });
-        return { pos, cpp };
-    }
-
-    // Direct approach: use kpiTotals26.mgmt.bySource and byMonth together
-    const m26 = kpiTotals26.mgmt.byMonth;
-    const m25 = has25 ? kpiTotals25.mgmt.byMonth : {};
-    const allM = [...new Set([...Object.keys(m26), ...Object.keys(m25)])].map(Number).sort((a,b)=>a-b);
-
-    // web channel = direct (POS-ish), OTA = CPP
-    const ch26 = kpiTotals26.mgmt.byChannel;
-    const ch25 = has25 ? kpiTotals25.mgmt.byChannel : {};
-
-    // Build per-month channel data from per-guide
+    // Build per-month channel data from per-guide, filtered by date
     const monthChannel26 = {};
-    guideStats26.forEach(g => {
-        Object.entries(g.mgmt?.byMonth || {}).forEach(([m, d]) => {
-            if (!monthChannel26[m]) monthChannel26[m] = { web: 0, ota: 0 };
-            // approximate: distribute by guide's overall channel ratio
-            const gTotal = g.mgmt.revenue || 1;
-            const webRatio = (g.mgmt.byChannel?.web?.revenue || 0) / gTotal;
-            const otaRatio = ((g.mgmt.byChannel?.OTA?.revenue || 0) + (g.mgmt.byChannel?.b2b?.revenue || 0)) / gTotal;
-            monthChannel26[m].web += (d.revenue || 0) * webRatio;
-            monthChannel26[m].ota += (d.revenue || 0) * otaRatio;
-        });
-    });
     const monthChannel25 = {};
-    if (has25) {
-        guideStats25.forEach(g => {
-            Object.entries(g.mgmt?.byMonth || {}).forEach(([m, d]) => {
-                if (!monthChannel25[m]) monthChannel25[m] = { web: 0, ota: 0 };
-                const gTotal = g.mgmt.revenue || 1;
-                const webRatio = (g.mgmt.byChannel?.web?.revenue || 0) / gTotal;
-                const otaRatio = ((g.mgmt.byChannel?.OTA?.revenue || 0) + (g.mgmt.byChannel?.b2b?.revenue || 0)) / gTotal;
-                monthChannel25[m].web += (d.revenue || 0) * webRatio;
-                monthChannel25[m].ota += (d.revenue || 0) * otaRatio;
+
+    function buildMonthChannelData(guides, monthChannelObj) {
+        guides.forEach(g => {
+            if (!g.mgmt?.byDay) return;
+            Object.entries(g.mgmt.byDay).forEach(([dayKey, dayVal]) => {
+                const [m, d] = dayKey.split('-').map(Number);
+                if (m < cutoffMonth || (m === cutoffMonth && d <= parseInt(dayStr))) {
+                    if (!monthChannelObj[m]) monthChannelObj[m] = { web: 0, ota: 0 };
+                    // approximate: distribute by guide's overall channel ratio
+                    const gTotal = g.mgmt.revenue || 1;
+                    const webRatio = (g.mgmt.byChannel?.web?.revenue || 0) / gTotal;
+                    const otaRatio = ((g.mgmt.byChannel?.OTA?.revenue || 0) + (g.mgmt.byChannel?.b2b?.revenue || 0)) / gTotal;
+                    monthChannelObj[m].web += (dayVal.revenue || 0) * webRatio;
+                    monthChannelObj[m].ota += (dayVal.revenue || 0) * otaRatio;
+                }
             });
         });
     }
+
+    buildMonthChannelData(guideStats26, monthChannel26);
+    if (has25) buildMonthChannelData(guideStats25, monthChannel25);
+
+    const allM = Array.from({length: cutoffMonth}, (_, i) => i + 1);
 
     const s = getComputedStyle(document.body);
     const c25 = s.getPropertyValue('--y25').trim();
@@ -1209,22 +1173,57 @@ function initOps() {
 }
 
 function renderOpsMonthLine() {
-    const mgmt26 = kpiTotals26.mgmt;
-    const mgmt25 = typeof kpiTotals25 !== 'undefined' ? kpiTotals25.mgmt : null;
+    const has25 = typeof guideStats25 !== 'undefined';
     const s = getComputedStyle(document.body);
     const c25 = s.getPropertyValue('--y25').trim();
     const green = s.getPropertyValue('--green').trim();
-    const cutoff = mgmtCutoffMonth();
-    const m26 = mgmt26.byMonth; const m25 = mgmt25?.byMonth || {};
-    const allM = [...new Set([...Object.keys(m26), ...Object.keys(m25)])]
-        .map(Number)
-        .filter(m => m25[String(m)] || (m26[String(m)] && m <= cutoff))
-        .sort((a, b) => a - b);
+    const [year, monthStr, dayStr] = GLOBAL_DATE.split('-');
+    const cutoffMonth = parseInt(monthStr);
+
+    // Build monthly aggregates by filtering day data
+    const m26 = {};
+    const m25 = {};
+
+    for (let m = 1; m <= cutoffMonth; m++) {
+        m26[m] = { revenue: 0, grossMargin: 0 };
+        if (has25) m25[m] = { revenue: 0, grossMargin: 0 };
+    }
+
+    // Aggregate 2026 by month from filtered guide data
+    guideStats26.forEach(g => {
+        if (!g.mgmt || !g.mgmt.byDay) return;
+        Object.entries(g.mgmt.byDay).forEach(([key, val]) => {
+            const [m, d] = key.split('-').map(Number);
+            if (m < cutoffMonth || (m === cutoffMonth && d <= parseInt(dayStr))) {
+                if (!m26[m]) m26[m] = { revenue: 0, grossMargin: 0 };
+                m26[m].revenue += val.revenue || 0;
+                m26[m].grossMargin += val.grossMargin || 0;
+            }
+        });
+    });
+
+    // Aggregate 2025 by month from filtered guide data
+    if (has25) {
+        guideStats25.forEach(g => {
+            if (!g.mgmt || !g.mgmt.byDay) return;
+            Object.entries(g.mgmt.byDay).forEach(([key, val]) => {
+                const [m, d] = key.split('-').map(Number);
+                if (m < cutoffMonth || (m === cutoffMonth && d <= parseInt(dayStr))) {
+                    if (!m25[m]) m25[m] = { revenue: 0, grossMargin: 0 };
+                    m25[m].revenue += val.revenue || 0;
+                    m25[m].grossMargin += val.grossMargin || 0;
+                }
+            });
+        });
+    }
+
+    const allM = Array.from({length: cutoffMonth}, (_, i) => i + 1);
+    const MONTH_SHORT = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
     makeLineChart('month-line', allM.map(m => MONTH_SHORT[m]), [
-        { label: 'Revenue 2025', data: allM.map(m => m25[String(m)]?.revenue || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [5,3] },
-        { label: 'Revenue 2026', data: allM.map(m => m26[String(m)]?.revenue || 0), borderColor: '#8FA8BC', backgroundColor: '#8FA8BC22', tension: 0.3, fill: true },
-        { label: 'GM 2025', data: allM.map(m => m25[String(m)]?.grossMargin || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [2,2], borderWidth: 1.5 },
-        { label: 'GM 2026', data: allM.map(m => m26[String(m)]?.grossMargin || 0), borderColor: green, backgroundColor: 'transparent', tension: 0.3, borderWidth: 2 },
+        { label: 'Revenue 2025', data: allM.map(m => m25[m]?.revenue || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [5,3] },
+        { label: 'Revenue 2026', data: allM.map(m => m26[m]?.revenue || 0), borderColor: '#8FA8BC', backgroundColor: '#8FA8BC22', tension: 0.3, fill: true },
+        { label: 'GM 2025', data: allM.map(m => m25[m]?.grossMargin || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [2,2], borderWidth: 1.5 },
+        { label: 'GM 2026', data: allM.map(m => m26[m]?.grossMargin || 0), borderColor: green, backgroundColor: 'transparent', tension: 0.3, borderWidth: 2 },
     ]);
 }
 

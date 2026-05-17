@@ -1045,7 +1045,12 @@ const PageCmp = {
             <div class="header-left">
                 <h1>Guide Comparison</h1>
                 <p><span class="ytd-range-label">Jan–May</span> 2025 vs. 2026 &middot; Production by guide</p>
-            </div>`;
+            </div>
+            <div class="header-right">
+                <div id="date-pov-cmp" class="mb-6"></div>
+                <div class="header-badge">Comparison YTD</div>
+            </div>
+        </div>`;
     },
 
     _buildKpisAndFilters() {
@@ -1312,10 +1317,6 @@ const PageCmp = {
             </div>
 
 `;
-    },
-
-    _buildGuides() {
-        return ``;
     },
 
     _buildGuides() {

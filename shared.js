@@ -32,6 +32,7 @@ function registerPage(name, page) {
 
 const _today = new Date();
 let GLOBAL_DATE = `${_today.getFullYear()}-${String(_today.getMonth()+1).padStart(2,'0')}-${String(_today.getDate()).padStart(2,'0')}`;
+let GLOBAL_LANGUAGE = 'en';
 
 // Initialize dark mode from localStorage once at page load
 (function initTheme() {
@@ -39,6 +40,11 @@ let GLOBAL_DATE = `${_today.getFullYear()}-${String(_today.getMonth()+1).padStar
         document.documentElement.classList.add('dark-mode');
         document.body.classList.add('dark-mode');
     }
+})();
+
+// Initialize language from localStorage once at page load
+(function initLanguage() {
+    GLOBAL_LANGUAGE = localStorage.getItem('language') || 'en';
 })();
 
 function safeName(n) { return n.replace(/[^a-zA-Z0-9]/g,'_'); }
@@ -147,6 +153,46 @@ function toggleTheme(onToggleComplete) {
             if (PAGES.PageCmp && PAGES.PageCmp._initialized) PAGES.PageCmp.updateCharts();
         }, 100);
     }
+}
+
+function toggleLanguage() {
+    GLOBAL_LANGUAGE = GLOBAL_LANGUAGE === 'en' ? 'hr' : 'en';
+    localStorage.setItem('language', GLOBAL_LANGUAGE);
+    updateLanguageButton();
+    updateNavigationLabels();
+
+    // Re-render all initialized pages
+    requestAnimationFrame(() => {
+        if (PAGES.Page25 && PAGES.Page25._initialized) PAGES.Page25.renderAll();
+        if (PAGES.Page26 && PAGES.Page26._initialized) PAGES.Page26.renderAll();
+        if (PAGES.PageCmp && PAGES.PageCmp._initialized) {
+            PAGES.PageCmp.mergedGuides = PAGES.PageCmp.buildMerged();
+            PAGES.PageCmp.renderAll();
+            PAGES.PageCmp.updateCharts();
+        }
+    });
+}
+
+function updateLanguageButton() {
+    const btn = document.getElementById('language-toggle');
+    if (btn) {
+        btn.textContent = GLOBAL_LANGUAGE === 'en' ? '🇭🇷' : '🇬🇧';
+        btn.setAttribute('title', GLOBAL_LANGUAGE === 'en'
+            ? 'Promijeni na Hrvatski'
+            : 'Switch to English');
+    }
+}
+
+function updateNavigationLabels() {
+    const tabs = {
+        'tab-25': t('nav.guides2025'),
+        'tab-26': t('nav.guides2026'),
+        'tab-cmp': t('nav.comparison'),
+    };
+    Object.entries(tabs).forEach(([id, text]) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+    });
 }
 
 function toggleSection(id) {

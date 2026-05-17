@@ -352,10 +352,10 @@ const Page25 = {
     },
 
     updateChart() {
-        const isDark = document.body.classList.contains('dark-mode');
-        const text3  = isDark ? '#888888' : '#999999';
-        const border = isDark ? '#333333' : '#e8e8e8';
-        const textColor = isDark ? '#eeeeee' : '#111111';
+        const colors = this.getChartColors();
+        const text3 = colors.text3;
+        const border = colors.border;
+        const textColor = colors.text;
 
         const lang = this.activeLang;
         const months = Array.from({length: 12}, (_, i) => i + 1);

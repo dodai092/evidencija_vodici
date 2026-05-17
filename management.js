@@ -330,24 +330,24 @@ function renderPlKpis(city) {
     }
 
     document.getElementById('kpi-revenue').textContent    = fmtEur(k.revenue);
-    document.getElementById('kpi-revenue-sub').innerHTML  = `GM: ${gmPct.toFixed(1)}% of revenue` + kpiDelta(k.revenue, k25?.revenue);
+    document.getElementById('kpi-revenue-sub').innerHTML  = `${t('management.gmOfRevenue')}: ${gmPct.toFixed(1)}% ${t('management.ofRevenue')}` + kpiDelta(k.revenue, k25?.revenue);
 
     document.getElementById('kpi-commission').textContent   = fmtEur(k.commissionCost);
-    document.getElementById('kpi-commission-sub').innerHTML = `${commPct.toFixed(1)}% of revenue` + kpiDelta(k.commissionCost, k25?.commissionCost);
+    document.getElementById('kpi-commission-sub').innerHTML = `${commPct.toFixed(1)}% ${t('management.ofRevenue')}` + kpiDelta(k.commissionCost, k25?.commissionCost);
 
     document.getElementById('kpi-vcost').textContent      = fmtEur(k.vendorCost);
-    document.getElementById('kpi-vcost-sub').innerHTML    = `Guide fees paid` + kpiDelta(k.vendorCost, k25?.vendorCost);
+    document.getElementById('kpi-vcost-sub').innerHTML    = t('management.guideFeesPaid') + kpiDelta(k.vendorCost, k25?.vendorCost);
 
     document.getElementById('kpi-gm').textContent         = fmtEur(k.grossMargin);
-    document.getElementById('kpi-gmpct').innerHTML        = `<span class="${gmClass(gmPct)}">${gmPct.toFixed(1)}% margin</span>`;
+    document.getElementById('kpi-gmpct').innerHTML        = `<span class="${gmClass(gmPct)}">${gmPct.toFixed(1)}% ${t('management.margin')}</span>`;
     document.getElementById('kpi-gm-delta').innerHTML     = kpiDelta(k.grossMargin, k25?.grossMargin);
 
     document.getElementById('kpi-tour-cost').textContent  = fmtEur(k.tourCost);
     document.getElementById('kpi-vat').textContent        = fmtEur(k.vatAmount);
     document.getElementById('kpi-avg-gm').textContent     = fmtEur(avgGm);
-    document.getElementById('kpi-avg-gm-sub').textContent = `per paid tour (${fmt(k.paidTours)} tours)`;
+    document.getElementById('kpi-avg-gm-sub').textContent = `${t('management.perPaidTour')} (${fmt(k.paidTours)} ${t('management.tours')})`;
     document.getElementById('kpi-guides').textContent     = fmt(guidesForCity(city).length);
-    document.getElementById('kpi-guides-sub').textContent = city === 'all' ? 'across all cities' : city;
+    document.getElementById('kpi-guides-sub').textContent = city === 'all' ? t('management.acrossAllCities') : city;
 
     // Secondary KPI deltas
     document.getElementById('kpi-tour-cost-delta').innerHTML = kpiDelta(k.tourCost, k25?.tourCost);
@@ -461,14 +461,14 @@ function renderPlGuideDrilldown(city) {
 
     // Render compact table
     el.innerHTML = `<div style="padding: 16px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px;">
-        <div style="font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 12px;">Top 10 Guides by Margin</div>
+        <div style="font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 12px;">${t('management.topGuidesMargin')}</div>
         <table class="mgmt-table" style="font-size: 11px;">
             <thead><tr>
-                <th>Guide</th>
-                <th>Revenue</th>
-                <th>GM €</th>
-                <th>GM%</th>
-                <th>vs 2025</th>
+                <th>${t('management.guide')}</th>
+                <th>${t('management.revenue')}</th>
+                <th>${t('management.gmEuro')}</th>
+                <th>${t('management.gmPercent')}</th>
+                <th>${t('management.vs2025')}</th>
             </tr></thead>
             <tbody>
                 ${top10.map(r => {
@@ -522,7 +522,7 @@ function renderWaterfall() {
         }, { revenue:0, commissionCost:0, vatAmount:0, vendorCost:0, tourCost:0, grossMargin:0 });
     }
 
-    const labels = ['Revenue', 'Commission', 'VAT', 'Vendor Cost', 'Tour Cost', 'Gross Margin'];
+    const labels = [t('management.revenue'), t('management.commission'), t('management.vat'), t('management.vendorCost'), t('management.tourCost'), t('management.grossMargin')];
     const { c25, c26, red: cNeg } = getThemeColors();
 
     function barColors(t) {
@@ -563,7 +563,7 @@ function renderWaterfall() {
     });
 
     const titleEl = document.getElementById('waterfall-chart-title');
-    if (titleEl) titleEl.textContent = `P&L Breakdown — ${rangeLabel} 2025 vs 2026`;
+    if (titleEl) titleEl.textContent = `${t('management.plBreakdown')} — ${rangeLabel} 2025 vs 2026`;
 
     // Summary table below chart
     const el = document.getElementById('waterfall-summary');
@@ -579,7 +579,7 @@ function renderWaterfall() {
         const hasPrior = !!t25;
         el.innerHTML = `<table class="mgmt-table">
             <thead><tr>
-                <th>P&amp;L Item</th>
+                <th>${t('management.plItem')}</th>
                 <th>2026 ${rangeLabel}</th>
                 ${hasPrior ? `<th>2025 ${rangeLabel}</th><th>Δ €</th><th>Δ %</th>` : ''}
             </tr></thead>
@@ -612,10 +612,10 @@ function renderMonthTrend() {
     const MONTH_SHORT = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
     const { c25, c26 } = getThemeColors();
     makeLineChart('month-gm-line', allM.map(m => MONTH_SHORT[m]), [
-        { label: 'GM 2025', data: allM.map(m => m25[m]?.grossMargin || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [5,3] },
-        { label: 'GM 2026', data: allM.map(m => m26[m]?.grossMargin || 0), borderColor: c26, backgroundColor: c26 + '22', tension: 0.3, fill: true },
-        { label: 'Rev 2025', data: allM.map(m => m25[m]?.revenue || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [2,2], borderWidth: 1.5 },
-        { label: 'Rev 2026', data: allM.map(m => m26[m]?.revenue || 0), borderColor: '#8FA8BC', backgroundColor: 'transparent', tension: 0.3, borderWidth: 1.5 },
+        { label: t('management.grossMargin') + ' 2025', data: allM.map(m => m25[m]?.grossMargin || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [5,3] },
+        { label: t('management.grossMargin') + ' 2026', data: allM.map(m => m26[m]?.grossMargin || 0), borderColor: c26, backgroundColor: c26 + '22', tension: 0.3, fill: true },
+        { label: t('management.revenue') + ' 2025', data: allM.map(m => m25[m]?.revenue || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [2,2], borderWidth: 1.5 },
+        { label: t('management.revenue') + ' 2026', data: allM.map(m => m26[m]?.revenue || 0), borderColor: '#8FA8BC', backgroundColor: 'transparent', tension: 0.3, borderWidth: 1.5 },
     ]);
 }
 
@@ -649,8 +649,8 @@ function renderBillingTrend() {
     const { c25, c26 } = getThemeColors();
 
     makeBarChart('billing-bar', labels, [
-        { label: '2025 Revenue', data: labels.map(k => billing25[k]?.revenue || 0), backgroundColor: c25 + 'aa', borderRadius: 4, borderSkipped: false },
-        { label: '2026 Revenue', data: labels.map(k => billing26[k]?.revenue || 0), backgroundColor: c26 + 'aa', borderRadius: 4, borderSkipped: false },
+        { label: '2025 ' + t('management.revenue'), data: labels.map(k => billing25[k]?.revenue || 0), backgroundColor: c25 + 'aa', borderRadius: 4, borderSkipped: false },
+        { label: '2026 ' + t('management.revenue'), data: labels.map(k => billing26[k]?.revenue || 0), backgroundColor: c26 + 'aa', borderRadius: 4, borderSkipped: false },
     ], { showLegend: true,
          tooltipCb: { afterLabel: ctx => {
             const key = labels[ctx.dataIndex];
@@ -674,21 +674,21 @@ function renderBillingTrend() {
                 <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);margin-bottom:8px">${label}</div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
                     <div>
-                        <div style="font-size:10px;color:var(--text3)">2025 Revenue</div>
+                        <div style="font-size:10px;color:var(--text3)">2025 ${t('management.revenue')}</div>
                         <div style="font-family:var(--font-mono);font-size:15px">${fmtEur(d25.revenue)}</div>
                         <div style="font-size:10px;color:var(--text3)">GM: ${gm25pct.toFixed(1)}%</div>
                     </div>
                     <div>
-                        <div style="font-size:10px;color:var(--text3)">2026 Revenue</div>
+                        <div style="font-size:10px;color:var(--text3)">2026 ${t('management.revenue')}</div>
                         <div style="font-family:var(--font-mono);font-size:15px">${fmtEur(d26.revenue)}</div>
                         <div style="font-size:14px;font-weight:600;color:var(--text);margin:4px 0">GM: <span class="${gmClass(gm26pct)}" style="font-size:16px;font-weight:700">${gm26pct.toFixed(1)}%</span></div>
-                        <div style="font-size:10px">${dd(revDelta, true)} vs 2025</div>
+                        <div style="font-size:10px">${dd(revDelta, true)} ${t('management.vs2025')}</div>
                     </div>
                 </div>
             </div>`;
         }
-        el.innerHTML = bstat('POS (Direct — Cash/Card)', billing25['POS']||{revenue:0,grossMargin:0}, billing26['POS']||{revenue:0,grossMargin:0})
-                     + bstat('CPP (OTA / Bank Transfer)', billing25['CPP']||{revenue:0,grossMargin:0}, billing26['CPP']||{revenue:0,grossMargin:0});
+        el.innerHTML = bstat(t('management.directCashCard'), billing25['POS']||{revenue:0,grossMargin:0}, billing26['POS']||{revenue:0,grossMargin:0})
+                     + bstat(t('management.otaBankTransfer'), billing25['CPP']||{revenue:0,grossMargin:0}, billing26['CPP']||{revenue:0,grossMargin:0});
     }
 }
 
@@ -825,7 +825,7 @@ function renderCommissionWaterfall() {
     // Stacked bar: Revenue | −Commission | −VendorCost | = GM
     makeBarChart('commission-wfall', srcKeys, [
         {
-            label: 'Gross Margin',
+            label: t('management.grossMargin'),
             data: srcKeys.map(k => {
                 const d = srcData[k]; return d.grossMargin;
             }),
@@ -833,13 +833,13 @@ function renderCommissionWaterfall() {
             borderRadius: 4, borderSkipped: false,
         },
         {
-            label: 'Commission',
+            label: t('management.commission'),
             data: srcKeys.map(k => -(srcData[k].commissionCost || 0)),
             backgroundColor: red + '88',
             borderRadius: 0, borderSkipped: false,
         },
         {
-            label: 'Vendor Cost',
+            label: t('management.vendorCost'),
             data: srcKeys.map(k => -srcData[k].vendorCost),
             backgroundColor: '#8FA8BC88',
             borderRadius: 0, borderSkipped: false,
@@ -892,10 +892,10 @@ function renderDirectOtaTrend() {
     const { c25, c26, green } = getThemeColors();
 
     makeLineChart('direct-ota-line', allM.map(m => MONTH_SHORT[m]), [
-        { label: 'Direct Rev 2025', data: allM.map(m => monthChannel25[String(m)]?.web || 0), borderColor: c25, borderDash: [5,3], backgroundColor: 'transparent', tension: 0.3 },
-        { label: 'Direct Rev 2026', data: allM.map(m => monthChannel26[String(m)]?.web || 0), borderColor: green, backgroundColor: green + '22', tension: 0.3, fill: true },
-        { label: 'OTA Rev 2025', data: allM.map(m => monthChannel25[String(m)]?.ota || 0), borderColor: c25, borderDash: [2,2], backgroundColor: 'transparent', tension: 0.3, borderWidth: 1.5 },
-        { label: 'OTA Rev 2026', data: allM.map(m => monthChannel26[String(m)]?.ota || 0), borderColor: '#C49A8A', backgroundColor: 'transparent', tension: 0.3, borderWidth: 1.5 },
+        { label: t('management.directRevenue') + ' 2025', data: allM.map(m => monthChannel25[String(m)]?.web || 0), borderColor: c25, borderDash: [5,3], backgroundColor: 'transparent', tension: 0.3 },
+        { label: t('management.directRevenue') + ' 2026', data: allM.map(m => monthChannel26[String(m)]?.web || 0), borderColor: green, backgroundColor: green + '22', tension: 0.3, fill: true },
+        { label: t('management.otaRevenue') + ' 2025', data: allM.map(m => monthChannel25[String(m)]?.ota || 0), borderColor: c25, borderDash: [2,2], backgroundColor: 'transparent', tension: 0.3, borderWidth: 1.5 },
+        { label: t('management.otaRevenue') + ' 2026', data: allM.map(m => monthChannel26[String(m)]?.ota || 0), borderColor: '#C49A8A', backgroundColor: 'transparent', tension: 0.3, borderWidth: 1.5 },
     ]);
 }
 
@@ -910,12 +910,12 @@ function renderOtaSourceTable() {
     if (!el) return;
     el.innerHTML = `<table class="mgmt-table">
         <thead><tr>
-            <th>Source</th>
-            <th>Tours '26</th><th>Revenue '26</th>
-            <th>Commission</th><th>Comm%</th>
-            <th>Vendor Cost</th>
-            <th>GM '26</th><th>GM%</th>
-            <th>GM '25</th><th>Δ GM</th>
+            <th>${t('management.sources')}</th>
+            <th>${t('management.tours')} '26</th><th>${t('management.revenue')} '26</th>
+            <th>${t('management.commission')}</th><th>${t('management.commissionPercent')}</th>
+            <th>${t('management.vendorCost')}</th>
+            <th>${t('management.grossMargin')} '26</th><th>${t('management.gmPercent')}</th>
+            <th>${t('management.grossMargin')} '25</th><th>Δ GM</th>
             <th>Action</th>
         </tr></thead>
         <tbody>${srcKeys.map(k => {
@@ -927,10 +927,10 @@ function renderOtaSourceTable() {
 
             // Action lever logic
             let action = '—';
-            if (d.tours < 5) action = '– Low volume';
-            else if (commpct > 25) action = '⚠ High commission';
-            else if (commpct < 15 && d.tours >= 20) action = '✓ Keep pushing';
-            else if (dgm !== null && dgm < -200) action = '↓ Declining';
+            if (d.tours < 5) action = t('management.lowVolume');
+            else if (commpct > 25) action = t('management.highCommission');
+            else if (commpct < 15 && d.tours >= 20) action = t('management.keepPushing');
+            else if (dgm !== null && dgm < -200) action = t('management.declining');
 
             return `<tr>
                 <td><strong>${k}</strong></td>
@@ -1001,14 +1001,14 @@ function initOps() {
 
     makeBarChart('guide-paxband-gm', gpLabels, [
         {
-            label: 'GM% 2025',
+            label: t('management.gmPercent') + ' 2025',
             data: gpLabels.map(k => {
                 const d = gpb25[k]; return d && d.revenue > 0 ? (d.grossMargin / d.revenue * 100) : 0;
             }),
             backgroundColor: c25 + 'aa', borderRadius: 4, borderSkipped: false,
         },
         {
-            label: 'GM% 2026',
+            label: t('management.gmPercent') + ' 2026',
             data: gpLabels.map(k => {
                 const d = gpb26[k]; return d && d.revenue > 0 ? (d.grossMargin / d.revenue * 100) : 0;
             }),
@@ -1033,8 +1033,8 @@ function initOps() {
 
     // Guide PAX band — tours count
     makeBarChart('guide-paxband-tours', gpLabels, [
-        { label: 'Tours 2025', data: gpLabels.map(k => gpb25[k]?.tours || 0), backgroundColor: c25 + 'aa', borderRadius: 4, borderSkipped: false },
-        { label: 'Tours 2026', data: gpLabels.map(k => gpb26[k]?.tours || 0), backgroundColor: c26 + 'aa', borderRadius: 4, borderSkipped: false },
+        { label: t('management.tours') + ' 2025', data: gpLabels.map(k => gpb25[k]?.tours || 0), backgroundColor: c25 + 'aa', borderRadius: 4, borderSkipped: false },
+        { label: t('management.tours') + ' 2026', data: gpLabels.map(k => gpb26[k]?.tours || 0), backgroundColor: c26 + 'aa', borderRadius: 4, borderSkipped: false },
     ], { showLegend: true });
 
     // Day-of-week
@@ -1111,13 +1111,13 @@ function initOps() {
     const wkNums = Object.keys(wk26).map(Number).sort((a,b)=>a-b);
     const ax = axisDefaults();
     const datasets = [
-        { label: 'Tours', data: wkNums.map(w => wk26[String(w)].tours), borderColor: '#8FA8BC', backgroundColor: '#8FA8BC22', tension: 0.3, fill: true, yAxisID: 'yL' },
-        { label: 'Revenue', data: wkNums.map(w => wk26[String(w)].revenue), borderColor: '#C49A8A', backgroundColor: 'transparent', tension: 0.3, yAxisID: 'yR' },
-        { label: 'Gross Margin', data: wkNums.map(w => wk26[String(w)].grossMargin), borderColor: green, backgroundColor: 'transparent', tension: 0.3, borderDash: [4,3], yAxisID: 'yR' },
+        { label: t('management.tours'), data: wkNums.map(w => wk26[String(w)].tours), borderColor: '#8FA8BC', backgroundColor: '#8FA8BC22', tension: 0.3, fill: true, yAxisID: 'yL' },
+        { label: t('management.revenue'), data: wkNums.map(w => wk26[String(w)].revenue), borderColor: '#C49A8A', backgroundColor: 'transparent', tension: 0.3, yAxisID: 'yR' },
+        { label: t('management.grossMargin'), data: wkNums.map(w => wk26[String(w)].grossMargin), borderColor: green, backgroundColor: 'transparent', tension: 0.3, borderDash: [4,3], yAxisID: 'yR' },
     ];
     if (Object.keys(wk25).length > 0) {
         datasets.push({
-            label: 'Revenue 2025',
+            label: t('management.revenue') + ' 2025',
             data: wkNums.map(w => wk25[String(w)]?.revenue || 0),
             borderColor: c25,
             backgroundColor: 'transparent',
@@ -1129,7 +1129,7 @@ function initOps() {
     }
     makeLineChart('week-line', wkNums.map(w => 'Wk ' + w), datasets, {
         x:  ax,
-        yL: { ...ax, position: 'left',  title: { display: true, text: 'Tours', color: ax.ticks.color } },
+        yL: { ...ax, position: 'left',  title: { display: true, text: t('management.tours'), color: ax.ticks.color } },
         yR: { ...ax, position: 'right', grid: { display: false }, title: { display: true, text: '€', color: ax.ticks.color } },
     });
 
@@ -1218,7 +1218,7 @@ function renderPaymentMethod() {
             const gm25 = d25.revenue > 0 ? (d25.grossMargin / d25.revenue * 100) : 0;
             const gmDelta = gm26 - gm25;
 
-            const label = method === 'bank trf' ? 'Bank Transfer' : method.charAt(0).toUpperCase() + method.slice(1);
+            const label = method === 'bank trf' ? t('management.bankTransfer') : t(`management.${method}`);
             container.innerHTML += `
                 <div class="kpi-card">
                     <div class="kpi-label">${label}</div>
@@ -1235,7 +1235,7 @@ function renderPaymentMethod() {
 
     // Payment method bar chart
     const methods = ['card', 'bank trf', 'cash'];
-    makeBarChart('payment-bar', methods.map(m => m.charAt(0).toUpperCase() + m.slice(1).replace(' trf', ' Trf')), [
+    makeBarChart('payment-bar', methods.map(m => m === 'bank trf' ? t('management.bankTransfer') : t(`management.${m}`)), [
         { label: '2025', data: methods.map(m => pm25?.[m]?.revenue || 0), backgroundColor: c25 + 'aa', borderRadius: 4, borderSkipped: false },
         { label: '2026', data: methods.map(m => pm26?.[m]?.revenue || 0), backgroundColor: c26 + 'aa', borderRadius: 4, borderSkipped: false },
     ], {
@@ -1383,9 +1383,9 @@ function renderCitiesTab() {
     });
 
     makeBarChart('lang-mix-chart', langLabels, [
-        { label: 'English', data: engData, backgroundColor: '#6B92B9', borderRadius: 4, borderSkipped: false },
-        { label: 'Spanish', data: espData, backgroundColor: '#D18C6D', borderRadius: 4, borderSkipped: false },
-        { label: 'French', data: fraData, backgroundColor: '#8FA8BC', borderRadius: 4, borderSkipped: false },
+        { label: t('management.english'), data: engData, backgroundColor: '#6B92B9', borderRadius: 4, borderSkipped: false },
+        { label: t('management.spanish'), data: espData, backgroundColor: '#D18C6D', borderRadius: 4, borderSkipped: false },
+        { label: t('management.french'), data: fraData, backgroundColor: '#8FA8BC', borderRadius: 4, borderSkipped: false },
     ], {
         horizontal: true,
         showLegend: true,
@@ -1394,7 +1394,7 @@ function renderCitiesTab() {
             afterLabel: ctx => {
                 const city = langLabels[ctx.dataIndex];
                 const langs = langByCity[city];
-                const langName = ['English', 'Spanish', 'French'][ctx.datasetIndex];
+                const langName = [t('management.english'), t('management.spanish'), t('management.french')][ctx.datasetIndex];
                 const langKey = ['eng', 'esp', 'fra'][ctx.datasetIndex];
                 return `${langs[langKey].tours} tours · ${langs[langKey].pax} pax`;
             }
@@ -1414,10 +1414,10 @@ function renderOpsMonthLine() {
     const allM = Array.from({length: cutoffMonth}, (_, i) => i + 1);
     const MONTH_SHORT = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
     makeLineChart('month-line', allM.map(m => MONTH_SHORT[m]), [
-        { label: 'Revenue 2025', data: allM.map(m => m25[m]?.revenue || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [5,3] },
-        { label: 'Revenue 2026', data: allM.map(m => m26[m]?.revenue || 0), borderColor: '#8FA8BC', backgroundColor: '#8FA8BC22', tension: 0.3, fill: true },
-        { label: 'GM 2025', data: allM.map(m => m25[m]?.grossMargin || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [2,2], borderWidth: 1.5 },
-        { label: 'GM 2026', data: allM.map(m => m26[m]?.grossMargin || 0), borderColor: green, backgroundColor: 'transparent', tension: 0.3, borderWidth: 2 },
+        { label: t('management.revenue') + ' 2025', data: allM.map(m => m25[m]?.revenue || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [5,3] },
+        { label: t('management.revenue') + ' 2026', data: allM.map(m => m26[m]?.revenue || 0), borderColor: '#8FA8BC', backgroundColor: '#8FA8BC22', tension: 0.3, fill: true },
+        { label: t('management.grossMargin') + ' 2025', data: allM.map(m => m25[m]?.grossMargin || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [2,2], borderWidth: 1.5 },
+        { label: t('management.grossMargin') + ' 2026', data: allM.map(m => m26[m]?.grossMargin || 0), borderColor: green, backgroundColor: 'transparent', tension: 0.3, borderWidth: 2 },
     ]);
 }
 
@@ -1444,11 +1444,11 @@ function renderPaxBandActionPanel() {
     const el = document.getElementById('paxband-action-panel');
     if (el) {
         el.innerHTML = `
-            <div style="font-weight: 600; margin-bottom: 10px; color: var(--text);">Small Group Problem Summary</div>
+            <div style="font-weight: 600; margin-bottom: 10px; color: var(--text);">${t('management.smallGroupProblem')}</div>
             <div style="color: var(--text2); line-height: 1.6; font-size: 11px;">
-                <div><strong>📊 Prevalence:</strong> ${smallGroupPct26.toFixed(0)}% of paid tours are 1–5 PAX (${smallGroup26.tours} tours)</div>
-                <div><strong>💰 Margin loss:</strong> €${fmt(lossFromSmallGroups)} total from small groups</div>
-                <div><strong>📈 Trend:</strong> ${pctChange > 0 ? '+' : ''}${pctChange.toFixed(1)}pp vs 2025 — getting ${pctChange > 0 ? 'worse' : 'better'}</div>
+                <div><strong>📊 ${t('management.prevalence')}:</strong> ${smallGroupPct26.toFixed(0)}% of paid tours are 1–5 PAX (${smallGroup26.tours} ${t('management.tours')})</div>
+                <div><strong>💰 ${t('management.marginLoss')}:</strong> €${fmt(lossFromSmallGroups)} total from small groups</div>
+                <div><strong>📈 ${t('management.trend')}:</strong> ${pctChange > 0 ? '+' : ''}${pctChange.toFixed(1)}pp ${t('management.vs2025')} — getting ${pctChange > 0 ? 'worse' : 'better'}</div>
             </div>
         `;
     }

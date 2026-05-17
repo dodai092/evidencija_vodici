@@ -1138,56 +1138,44 @@ function initOps() {
     renderPaymentMethod();
 }
 
-// ── Helper: Build tour type × city aggregation ─────────────────────────────────
+// ── City constants and helpers ────────────────────────────────────────────────────
 
-function buildTourTypeByCity() {
+const CITIES = ['Zagreb', 'Dubrovnik', 'Split', 'Zadar'];
+
+// Generic factory: aggregate guide mgmt dimension by city
+function buildDimensionByCity(dimensionKey, fields) {
     const result = {};
-    ['Zagreb', 'Dubrovnik', 'Split', 'Zadar'].forEach(city => {
-        result[city] = {};
-    });
+    CITIES.forEach(city => { result[city] = {}; });
 
     guideStats26.forEach(g => {
         const city = g.city;
         if (!result[city]) result[city] = {};
-        if (!g.mgmt?.byTourType) return;
+        const dim = g.mgmt?.[dimensionKey];
+        if (!dim) return;
 
-        Object.entries(g.mgmt.byTourType).forEach(([type, data]) => {
-            if (!result[city][type]) {
-                result[city][type] = { revenue: 0, grossMargin: 0, tours: 0 };
+        Object.entries(dim).forEach(([key, data]) => {
+            if (!result[city][key]) {
+                result[city][key] = Object.fromEntries(fields.map(f => [f, 0]));
             }
-            result[city][type].revenue += data.revenue || 0;
-            result[city][type].grossMargin += data.grossMargin || 0;
-            result[city][type].tours += data.tours || 0;
+            fields.forEach(f => {
+                result[city][key][f] += data[f] || 0;
+            });
         });
     });
 
     return result;
 }
 
+// ── Helper: Build tour type × city aggregation ─────────────────────────────────
+
+function buildTourTypeByCity() {
+    return buildDimensionByCity('byTourType', ['revenue', 'grossMargin', 'tours']);
+}
+
 // ── Helper: Build source × city aggregation ────────────────────────────────────
 
 function buildSourceByCity() {
-    const result = {};
-    ['Zagreb', 'Dubrovnik', 'Split', 'Zadar'].forEach(city => {
-        result[city] = {};
-    });
-
-    guideStats26.forEach(g => {
-        const city = g.city;
-        if (!result[city]) result[city] = {};
-        if (!g.mgmt?.bySource) return;
-
-        Object.entries(g.mgmt.bySource).forEach(([source, data]) => {
-            if (!result[city][source]) {
-                result[city][source] = { revenue: 0, commissionCost: 0, tours: 0 };
-            }
-            result[city][source].revenue += data.revenue || 0;
-            result[city][source].commissionCost += data.commissionCost || 0;
-            result[city][source].tours += data.tours || 0;
-        });
-    });
-
-    return result;
+    return buildDimensionByCity('bySource', ['revenue', 'commissionCost', 'tours']);
 }
 
 // ── Helper: Build language × city aggregation ──────────────────────────────────
@@ -1274,7 +1262,6 @@ function initCities() {
 }
 
 function renderCitiesTab() {
-    const CITIES = ['Zagreb', 'Dubrovnik', 'Split', 'Zadar'];
     const { c25, c26, green, red } = getThemeColors();
 
     // 1. City overview cards

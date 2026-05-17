@@ -1039,9 +1039,307 @@ const PageCmp = {
         this.renderAll();
     },
 
+
+    _buildHeader() {
+        return `        <div class="header">
+            <div class="header-left">
+                <h1>Guide Comparison</h1>
+                <p><span class="ytd-range-label">Jan–May</span> 2025 vs. 2026 &middot; Production by guide</p>
+            </div>`;
+    },
+
+    _buildKpisAndFilters() {
+        return `        <div class="main">
+            <div class="kpi-grid kpi-grid-4">
+                <div class="kpi hl-green">
+                    <div class="kpi-label">Free Tours – PAX Count YTD</div>
+                    <div class="kpi-delta">
+                        <span class="kpi-delta-abs" id="kd-free-abs-cmp">—</span>
+                        <span class="kpi-delta-pct" id="kd-free-pct-cmp">—</span>
+                    </div>
+                    <div class="kpi-2y">
+                        <div>
+                            <div class="kpi-2y-label">2025</div>
+                            <div class="kpi-2y-val" id="kv-free25-cmp">—</div>
+                        </div>
+                        <div>
+                            <div class="kpi-2y-label">2026</div>
+                            <div class="kpi-2y-val" id="kv-free26-cmp">—</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kpi hl-green">
+                    <div class="kpi-label">Avg PAX / Free Tour</div>
+                    <div class="kpi-delta">
+                        <span class="kpi-delta-abs" id="kd-avg-pax-abs-cmp">—</span>
+                        <span class="kpi-delta-pct" id="kd-avg-pax-pct-cmp">—</span>
+                    </div>
+                    <div class="kpi-2y">
+                        <div>
+                            <div class="kpi-2y-label">2025</div>
+                            <div class="kpi-2y-val" id="kv-avg-pax25-cmp">—</div>
+                        </div>
+                        <div>
+                            <div class="kpi-2y-label">2026</div>
+                            <div class="kpi-2y-val" id="kv-avg-pax26-cmp">—</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kpi hl-blue">
+                    <div class="kpi-label">Paid Tours – Count YTD</div>
+                    <div class="kpi-delta">
+                        <span class="kpi-delta-abs" id="kd-paid-abs-cmp">—</span>
+                        <span class="kpi-delta-pct" id="kd-paid-pct-cmp">—</span>
+                    </div>
+                    <div class="kpi-2y">
+                        <div>
+                            <div class="kpi-2y-label">2025</div>
+                            <div class="kpi-2y-val" id="kv-paid25-cmp">—</div>
+                        </div>
+                        <div>
+                            <div class="kpi-2y-label">2026</div>
+                            <div class="kpi-2y-val" id="kv-paid26-cmp">—</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kpi hl-teal">
+                    <div class="kpi-label">Active Guides</div>
+                    <div class="kpi-delta">
+                        <span class="kpi-delta-abs" id="kd-guides-abs-cmp">—</span>
+                        <span class="kpi-delta-pct" id="kd-guides-pct-cmp">—</span>
+                    </div>
+                    <div class="kpi-2y">
+                        <div>
+                            <div class="kpi-2y-label">2025</div>
+                            <div class="kpi-2y-val" id="kv-guides25-cmp">—</div>
+                        </div>
+                        <div>
+                            <div class="kpi-2y-label">2026</div>
+                            <div class="kpi-2y-val" id="kv-guides26-cmp">—</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-area">
+                <div class="filter-group">
+                    <label for="city-filter-cmp">City</label>
+                    <select class="filter-select" id="city-filter-cmp" onchange="PageCmp.filterCity(this.value)">
+                        <option value="all">All</option>
+                        <option value="Zagreb">Zagreb</option>
+                        <option value="Dubrovnik">Dubrovnik</option>
+                        <option value="Split">Split</option>
+                        <option value="Zadar">Zadar</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="lang-filter-cmp">Language</label>
+                    <select class="filter-select" id="lang-filter-cmp" onchange="PageCmp.filterLang(this.value)">
+                        <option value="all">All</option>
+                        <option value="eng">🇬🇧 ENG</option>
+                        <option value="esp">🇪🇸 ESP</option>
+                        <option value="fra">🇫🇷 FRA</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="month-filter-cmp">Mo.</label>
+                    <select class="filter-select" id="month-filter-cmp" onchange="PageCmp.filterMonth(this.value)">
+                        <option value="all">All</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+
+            `;
+    },
+
+    _buildFreeTours() {
+        return `            <!-- ── FREE TOURS SECTION ──────────────────────────── -->
+            <div class="section-divider" onclick="toggleSection('free-section-body')">
+                <span>Free Tours</span>
+                <span class="section-chevron">▾</span>
+            </div>
+            <div id="free-section-body" class="section-body">
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="chart-card-title">Free PAX by City</div>
+                        <div class="chart-container">
+                            <canvas id="cityChart-cmp"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-card-title">Avg PAX per Free Tour — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
+                        <div class="chart-container">
+                            <canvas id="avgFreePaxCmpChart-cmp"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="chart-card-title">Cumulative Free PAX Trend (<span class="ytd-range-label">Jan–May</span>)</div>
+                        <div class="chart-container">
+                            <canvas id="monthlyChart-cmp"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="chart-card-title">Free PAX by City — Cumulative (<span class="ytd-range-label">Jan–May</span>)</div>
+                        <div id="city-monthly-badges-cmp" class="city-monthly-badges"></div>
+                        <div class="chart-container">
+                            <canvas id="cityMonthlyChart-cmp"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="charts-row">
+                    <div id="monthly-pax-table-cmp"></div>
+                </div>
+            </div>
+
+`;
+    },
+
+    _buildPaidTours() {
+        return `            <!-- ── PAID TOURS SECTION ──────────────────────────── -->
+            <div class="section-divider" onclick="toggleSection('paid-section-body')">
+                <span>Paid Tours</span>
+                <span class="section-chevron">▾</span>
+            </div>
+            <div id="paid-section-body" class="section-body">
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="chart-card-title">Paid Tours by City</div>
+                        <div class="chart-container">
+                            <canvas id="paidCityChart-cmp"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-card-title">Cumulative Paid Tours Trend (<span class="ytd-range-label">Jan–May</span>)</div>
+                        <div class="chart-container">
+                            <canvas id="paidChart-cmp"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="charts-row">
+                    <div class="chart-card type-chart-card">
+                        <div class="chart-card-title">Private Paid Tours by Type — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
+                        <div class="type-chart-filters">
+                            <div class="type-filter-row">
+                                <span class="type-filter-label">City</span>
+                                <div id="private-city-pills-cmp" class="pill-group">
+                                    <button class="pill active" onclick="PageCmp.filterPrivateCity('all',this)">All</button>
+                                    <button class="pill" onclick="PageCmp.filterPrivateCity('Zagreb',this)">Zagreb</button>
+                                    <button class="pill" onclick="PageCmp.filterPrivateCity('Dubrovnik',this)">Dubrovnik</button>
+                                    <button class="pill" onclick="PageCmp.filterPrivateCity('Split',this)">Split</button>
+                                    <button class="pill" onclick="PageCmp.filterPrivateCity('Zadar',this)">Zadar</button>
+                                </div>
+                            </div>
+                            <div class="type-filter-row">
+                                <span class="type-filter-label">Type</span>
+                                <div id="private-type-pills-cmp" class="pill-group">
+                                    <button class="pill active" onclick="PageCmp.filterPrivateType('all',this)">All</button>
+                                    <button class="pill" onclick="PageCmp.filterPrivateType('war PR',this)">war PR</button>
+                                    <button class="pill" onclick="PageCmp.filterPrivateType('food PR',this)">food PR</button>
+                                    <button class="pill" onclick="PageCmp.filterPrivateType('best',this)">best</button>
+                                    <button class="pill" onclick="PageCmp.filterPrivateType('old',this)">old</button>
+                                    <button class="pill" onclick="PageCmp.filterPrivateType('big',this)">big</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="privatePaidChart-cmp"></canvas>
+                        </div>
+                        <div id="private-type-table-cmp"></div>
+                    </div>
+                </div>
+                <div class="charts-row">
+                    <div class="chart-card type-chart-card">
+                        <div class="chart-card-title">Avg PAX per Paid Tour Type — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
+                        <div class="type-chart-filters">
+                            <div class="type-filter-row">
+                                <span class="type-filter-label">Type</span>
+                                <div id="avg-type-pills-cmp" class="pill-group">
+                                    <button class="pill active" onclick="PageCmp.filterAvgType('all',this)">All</button>
+                                    <button class="pill" onclick="PageCmp.filterAvgType('war',this)">war</button>
+                                    <button class="pill" onclick="PageCmp.filterAvgType('food',this)">food</button>
+                                    <button class="pill" onclick="PageCmp.filterAvgType('best',this)">best</button>
+                                    <button class="pill" onclick="PageCmp.filterAvgType('war PR',this)">war PR</button>
+                                    <button class="pill" onclick="PageCmp.filterAvgType('food PR',this)">food PR</button>
+                                    <button class="pill" onclick="PageCmp.filterAvgType('old',this)">old</button>
+                                    <button class="pill" onclick="PageCmp.filterAvgType('big',this)">big</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="warAvgChart-cmp"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="charts-row">
+                    <div class="chart-card type-chart-card">
+                        <div class="chart-card-title">Shared Paid Tours by Type — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
+                        <div class="type-chart-filters">
+                            <div class="type-filter-row">
+                                <span class="type-filter-label">City</span>
+                                <div id="shared-city-pills-cmp" class="pill-group">
+                                    <button class="pill active" onclick="PageCmp.filterSharedCity('all',this)">All</button>
+                                    <button class="pill" onclick="PageCmp.filterSharedCity('Zagreb',this)">Zagreb</button>
+                                    <button class="pill" onclick="PageCmp.filterSharedCity('Dubrovnik',this)">Dubrovnik</button>
+                                    <button class="pill" onclick="PageCmp.filterSharedCity('Split',this)">Split</button>
+                                    <button class="pill" onclick="PageCmp.filterSharedCity('Zadar',this)">Zadar</button>
+                                </div>
+                            </div>
+                            <div class="type-filter-row">
+                                <span class="type-filter-label">Type</span>
+                                <div id="shared-type-pills-cmp" class="pill-group">
+                                    <button class="pill active" onclick="PageCmp.filterSharedType('all',this)">All</button>
+                                    <button class="pill" onclick="PageCmp.filterSharedType('war',this)">war</button>
+                                    <button class="pill" onclick="PageCmp.filterSharedType('food',this)">food</button>
+                                    <button class="pill" onclick="PageCmp.filterSharedType('best',this)">best</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="sharedPaidChart-cmp"></canvas>
+                        </div>
+                        <div id="shared-type-table-cmp"></div>
+                    </div>
+                </div>
+            </div>
+
+`;
+    },
+
+    _buildGuides() {
+        return ``;
+    },
+
+    _buildGuides() {
+        return `            <div class="section-divider" onclick="toggleSection('guides-body-cmp')">
+                <span>Guides</span>
+                <span class="section-chevron">▾</span>
+            </div>
+            <div id="guides-body-cmp" class="section-body">
+                <div id="guide-sections-cmp"></div>
+            </div>
+        </div>`;
+    },
+
     init() {
         if (this._initialized) return;
         this._initialized = true;
+
+        document.getElementById('page-cmp').innerHTML =
+            this._buildHeader() +
+            this._buildKpisAndFilters() +
+            this._buildFreeTours() +
+            this._buildPaidTours() +
+            this._buildGuides();
+
         const now = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
         const datePov = this._el('date-pov');
         if (datePov) datePov.textContent = now;

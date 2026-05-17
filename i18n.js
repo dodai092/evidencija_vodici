@@ -54,6 +54,18 @@ const TRANSLATIONS = {
       sharedPaidTours: 'Shared Paid Tours by Type',
       avgPaxByType: 'Avg PAX per Paid Tour Type',
       freePaxByMonthAndCity: 'Free PAX by Month and City',
+      freePaxByCity25: 'Free PAX by City — 2025',
+      avgPaxPerTourMonth25: 'Avg PAX per Free Tour — by month 2025',
+      paidToursByCity25: 'Paid Tours by City — 2025',
+      privatePaidTours25: 'Paid Tours (Private) by Type — 2025',
+      sharedPaidTours25: 'Paid Tours (Shared) by Type — 2025',
+      freePaxByCity26: 'Free PAX by City — 2026',
+      avgPaxPerTourMonth26: 'Avg PAX per Free Tour — by month 2026',
+      paidToursByCity26: 'Paid Tours by City — 2026',
+      privatePaidTours26: 'Paid Tours (Private) by Type — 2026',
+      sharedPaidTours26: 'Paid Tours (Shared) by Type — 2026',
+      freePaxByMonthAndCity25: 'Free PAX by Month and City — 2025',
+      freePaxByMonthAndCity26: 'Free PAX by Month and City — 2026',
     },
     table: {
       month: 'Mo.',
@@ -187,6 +199,18 @@ const TRANSLATIONS = {
       sharedPaidTours: 'Zajedničke plaćene ture po vrsti',
       avgPaxByType: 'Prosječan PAX po vrsti plaćene ture',
       freePaxByMonthAndCity: 'Besplatni PAX po mjesecu i gradu',
+      freePaxByCity25: 'Besplatni PAX po gradu — 2025',
+      avgPaxPerTourMonth25: 'Prosječan PAX po besplatnoj turi — po mjesecu 2025',
+      paidToursByCity25: 'Plaćene ture po gradu — 2025',
+      privatePaidTours25: 'Plaćene ture (Privatne) po vrsti — 2025',
+      sharedPaidTours25: 'Plaćene ture (Zajedničke) po vrsti — 2025',
+      freePaxByCity26: 'Besplatni PAX po gradu — 2026',
+      avgPaxPerTourMonth26: 'Prosječan PAX po besplatnoj turi — po mjesecu 2026',
+      paidToursByCity26: 'Plaćene ture po gradu — 2026',
+      privatePaidTours26: 'Plaćene ture (Privatne) po vrsti — 2026',
+      sharedPaidTours26: 'Plaćene ture (Zajedničke) po vrsti — 2026',
+      freePaxByMonthAndCity25: 'Besplatni PAX po mjesecu i gradu — 2025',
+      freePaxByMonthAndCity26: 'Besplatni PAX po mjesecu i gradu — 2026',
     },
     table: {
       month: 'Mj.',
@@ -274,6 +298,20 @@ function t(key) {
     val = val?.[k];
   }
   return val || key;
+}
+
+function tOpposite(key) {
+  const keys = key.split('.');
+  const oppositeLanguage = GLOBAL_LANGUAGE === 'en' ? 'hr' : 'en';
+  let val = TRANSLATIONS[oppositeLanguage];
+  for (const k of keys) {
+    val = val?.[k];
+  }
+  return val || key;
+}
+
+function titleAttr(key) {
+  return ` title="${tOpposite(key)}"`;
 }
 
 // Initialize on DOM ready

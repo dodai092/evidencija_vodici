@@ -690,7 +690,7 @@ const PageCmp = {
         const hasPartial = data.some(r => r.isPartial);
 
         const html = `<div class="chart-card">
-            <div class="chart-card-title">${t('charts.freePaxByMonthAndCity')} — <span class="ytd-range-label">${getRangeLabel()}</span> 2025 vs. 2026</div>
+            <div class="chart-card-title"${titleAttr('charts.freePaxByMonthAndCity')}>${t('charts.freePaxByMonthAndCity')} — <span class="ytd-range-label">${getRangeLabel()}</span> 2025 vs. 2026</div>
             <div class="mpax-wrap">
             <table class="mpax-table">
                 <thead>
@@ -1171,13 +1171,13 @@ const PageCmp = {
             <div id="free-section-body" class="section-body">
                 <div class="charts-row">
                     <div class="chart-card">
-                        <div class="chart-card-title">${t('charts.freePaxByCity')}</div>
+                        <div class="chart-card-title"${titleAttr('charts.freePaxByCity')}>${t('charts.freePaxByCity')}</div>
                         <div class="chart-container">
                             <canvas id="cityChart-cmp"></canvas>
                         </div>
                     </div>
                     <div class="chart-card">
-                        <div class="chart-card-title">${t('charts.avgFreePaxCmp')} — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
+                        <div class="chart-card-title"${titleAttr('charts.avgFreePaxCmp')}>${t('charts.avgFreePaxCmp')} — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
                         <div class="chart-container">
                             <canvas id="avgFreePaxCmpChart-cmp"></canvas>
                         </div>
@@ -1185,7 +1185,7 @@ const PageCmp = {
                 </div>
                 <div class="charts-row">
                     <div class="chart-card">
-                        <div class="chart-card-title">${t('charts.cumulativeFreePax')} (<span class="ytd-range-label">Jan–May</span>)</div>
+                        <div class="chart-card-title"${titleAttr('charts.cumulativeFreePax')}>${t('charts.cumulativeFreePax')} (<span class="ytd-range-label">Jan–May</span>)</div>
                         <div class="chart-container">
                             <canvas id="monthlyChart-cmp"></canvas>
                         </div>
@@ -1193,7 +1193,7 @@ const PageCmp = {
                 </div>
                 <div class="charts-row">
                     <div class="chart-card">
-                        <div class="chart-card-title">${t('charts.cityMonthlyCumulative')} (<span class="ytd-range-label">Jan–May</span>)</div>
+                        <div class="chart-card-title"${titleAttr('charts.cityMonthlyCumulative')}>${t('charts.cityMonthlyCumulative')} (<span class="ytd-range-label">Jan–May</span>)</div>
                         <div id="city-monthly-badges-cmp" class="city-monthly-badges"></div>
                         <div class="chart-container">
                             <canvas id="cityMonthlyChart-cmp"></canvas>
@@ -1217,13 +1217,13 @@ const PageCmp = {
             <div id="paid-section-body" class="section-body">
                 <div class="charts-row">
                     <div class="chart-card">
-                        <div class="chart-card-title">${t('charts.paidToursByCity')}</div>
+                        <div class="chart-card-title"${titleAttr('charts.paidToursByCity')}>${t('charts.paidToursByCity')}</div>
                         <div class="chart-container">
                             <canvas id="paidCityChart-cmp"></canvas>
                         </div>
                     </div>
                     <div class="chart-card">
-                        <div class="chart-card-title">${t('charts.cumulativePaidTours')} (<span class="ytd-range-label">Jan–May</span>)</div>
+                        <div class="chart-card-title"${titleAttr('charts.cumulativePaidTours')}>${t('charts.cumulativePaidTours')} (<span class="ytd-range-label">Jan–May</span>)</div>
                         <div class="chart-container">
                             <canvas id="paidChart-cmp"></canvas>
                         </div>
@@ -1231,7 +1231,7 @@ const PageCmp = {
                 </div>
                 <div class="charts-row">
                     <div class="chart-card type-chart-card">
-                        <div class="chart-card-title">${t('charts.privatePaidTours')} — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
+                        <div class="chart-card-title"${titleAttr('charts.privatePaidTours')}>${t('charts.privatePaidTours')} — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
                                 <span class="type-filter-label">${t('labels.city')}</span>
@@ -1263,7 +1263,7 @@ const PageCmp = {
                 </div>
                 <div class="charts-row">
                     <div class="chart-card type-chart-card">
-                        <div class="chart-card-title">${t('charts.avgPaxByType')} — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
+                        <div class="chart-card-title"${titleAttr('charts.avgPaxByType')}>${t('charts.avgPaxByType')} — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
                                 <span class="type-filter-label">${t('labels.type')}</span>
@@ -1286,7 +1286,7 @@ const PageCmp = {
                 </div>
                 <div class="charts-row">
                     <div class="chart-card type-chart-card">
-                        <div class="chart-card-title">${t('charts.sharedPaidTours')} — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
+                        <div class="chart-card-title"${titleAttr('charts.sharedPaidTours')}>${t('charts.sharedPaidTours')} — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
                                 <span class="type-filter-label">${t('labels.city')}</span>

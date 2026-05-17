@@ -223,7 +223,7 @@ const Page26 = {
         const hasPartial = data.some(r => r.isPartial);
 
         const html = `<div class="chart-card">
-            <div class="chart-card-title">${t('labels.freePax')} ${t('labels.byMonth')} and City — 2026</div>
+            <div class="chart-card-title"${titleAttr('charts.freePaxByMonthAndCity26')}>${t('charts.freePaxByMonthAndCity26')}</div>
             <div class="mpax-wrap">
             <table class="mpax-table">
                 <thead><tr><th class="mpax-month-head">${t('table.month')}</th>${cityHeaders}</tr></thead>
@@ -561,11 +561,11 @@ const Page26 = {
             <div id="free-section-body-26" class="section-body">
                 <div class="charts-row">
                     <div class="chart-card">
-                        <div class="chart-card-title">${t('labels.freePax')} by City — 2026</div>
+                        <div class="chart-card-title"${titleAttr('charts.freePaxByCity26')}>${t('charts.freePaxByCity26')}</div>
                         <div class="chart-container"><canvas id="cityChart-26"></canvas></div>
                     </div>
                     <div class="chart-card">
-                        <div class="chart-card-title">${t('labels.avgPaxPerTour')} — by month 2026</div>
+                        <div class="chart-card-title"${titleAttr('charts.avgPaxPerTourMonth26')}>${t('charts.avgPaxPerTourMonth26')}</div>
                         <div class="chart-container"><canvas id="avgFreePaxChart-26"></canvas></div>
                     </div>
                 </div>
@@ -583,13 +583,13 @@ const Page26 = {
             <div id="paid-section-body-26" class="section-body">
                 <div class="charts-row">
                     <div class="chart-card">
-                        <div class="chart-card-title">${t('labels.paidTours')} by City — 2026</div>
+                        <div class="chart-card-title"${titleAttr('charts.paidToursByCity26')}>${t('charts.paidToursByCity26')}</div>
                         <div class="chart-container"><canvas id="paidCityChart-26"></canvas></div>
                     </div>
                 </div>
                 <div class="charts-row">
                     <div class="chart-card type-chart-card">
-                        <div class="chart-card-title">${t('charts.privatePaidTours')} — 2026</div>
+                        <div class="chart-card-title"${titleAttr('charts.privatePaidTours26')}>${t('charts.privatePaidTours26')}</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
                                 <span class="type-filter-label">${t('labels.type')}</span>
@@ -609,7 +609,7 @@ const Page26 = {
                 </div>
                 <div class="charts-row">
                     <div class="chart-card type-chart-card">
-                        <div class="chart-card-title">${t('charts.sharedPaidTours')} — 2026</div>
+                        <div class="chart-card-title"${titleAttr('charts.sharedPaidTours26')}>${t('charts.sharedPaidTours26')}</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
                                 <span class="type-filter-label">${t('labels.type')}</span>

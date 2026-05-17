@@ -208,7 +208,7 @@ const Page25 = {
         const totalCells = citiesToShow.map(c => `<td>${fmtN(totals[c])}</td>`).join('');
 
         const html = `<div class="chart-card">
-            <div class="chart-card-title">${t('labels.freePax')} by Month and City — 2025</div>
+            <div class="chart-card-title"${titleAttr('charts.freePaxByMonthAndCity')}>${t('charts.freePaxByMonthAndCity')}</div>
             <div class="mpax-wrap">
             <table class="mpax-table">
                 <thead><tr><th class="mpax-month-head">${t('table.month')}</th>${cityHeaders}</tr></thead>
@@ -524,11 +524,11 @@ const Page25 = {
             <div id="free-section-body-25" class="section-body">
                 <div class="charts-row">
                     <div class="chart-card">
-                        <div class="chart-card-title">${t('labels.freePax')} ${t('sections.byCity')} — 2025</div>
+                        <div class="chart-card-title"${titleAttr('charts.freePaxByCity25')}>${t('charts.freePaxByCity25')}</div>
                         <div class="chart-container"><canvas id="cityChart-25"></canvas></div>
                     </div>
                     <div class="chart-card">
-                        <div class="chart-card-title">${t('labels.avgPaxPerTour')} — by month 2025</div>
+                        <div class="chart-card-title"${titleAttr('charts.avgPaxPerTourMonth25')}>${t('charts.avgPaxPerTourMonth25')}</div>
                         <div class="chart-container"><canvas id="avgFreePaxChart-25"></canvas></div>
                     </div>
                 </div>
@@ -546,13 +546,13 @@ const Page25 = {
             <div id="paid-section-body-25" class="section-body">
                 <div class="charts-row">
                     <div class="chart-card">
-                        <div class="chart-card-title">${t('sections.paidTours')} ${t('sections.byCity')} — 2025</div>
+                        <div class="chart-card-title"${titleAttr('charts.paidToursByCity25')}>${t('charts.paidToursByCity25')}</div>
                         <div class="chart-container"><canvas id="paidCityChart-25"></canvas></div>
                     </div>
                 </div>
                 <div class="charts-row">
                     <div class="chart-card type-chart-card">
-                        <div class="chart-card-title">${t('sections.paidTours')} (Private) ${t('sections.byType')} — 2025</div>
+                        <div class="chart-card-title"${titleAttr('charts.privatePaidTours25')}>${t('charts.privatePaidTours25')}</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
                                 <span class="type-filter-label">${t('labels.type')}</span>
@@ -572,7 +572,7 @@ const Page25 = {
                 </div>
                 <div class="charts-row">
                     <div class="chart-card type-chart-card">
-                        <div class="chart-card-title">${t('sections.paidTours')} (Shared) ${t('sections.byType')} — 2025</div>
+                        <div class="chart-card-title"${titleAttr('charts.sharedPaidTours25')}>${t('charts.sharedPaidTours25')}</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
                                 <span class="type-filter-label">${t('labels.type')}</span>

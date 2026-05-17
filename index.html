@@ -11,15 +11,9 @@
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600&family=Inconsolata:wght@400;500&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="guides.css">
-    <script>
-        if (localStorage.getItem('theme') === 'dark') {
-            document.documentElement.classList.add('dark-mode');
-        }
-    </script>
 </head>
 
 <body>
-    <script>if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');</script>
 
     <!-- ── SHARED NAV ──────────────────────────────────────────── -->
     <div class="nav">
@@ -681,9 +675,6 @@
             const el = document.getElementById('shortcut-overlay');
             if (el) el.style.display = el.style.display === 'block' ? 'none' : 'block';
         }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('theme') === 'dark') {
                 document.body.classList.add('dark-mode');
             }
             updateThemeButton();

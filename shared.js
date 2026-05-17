@@ -6,6 +6,14 @@ const MONTH_NAMES_HR = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',
 const _today = new Date();
 let GLOBAL_DATE = `${_today.getFullYear()}-${String(_today.getMonth()+1).padStart(2,'0')}-${String(_today.getDate()).padStart(2,'0')}`;
 
+// Initialize dark mode from localStorage once at page load
+(function initTheme() {
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+        document.body.classList.add('dark-mode');
+    }
+})();
+
 function safeName(n) { return n.replace(/[^a-zA-Z0-9]/g,'_'); }
 function fmtN(v) { return Math.round(v).toLocaleString('en-GB'); }
 
@@ -92,20 +100,26 @@ function filteredStats(st, months) {
     }, { freeTours: 0, freePax: 0, paidTours: 0, paidPax: 0 });
 }
 
-function toggleTheme() {
-    const isDark = document.body.classList.toggle('dark-mode');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    updateThemeButton();
-    setTimeout(() => {
-        if (typeof Page25 !== 'undefined' && Page25._initialized) Page25.updateChart();
-        if (typeof Page26 !== 'undefined' && Page26._initialized) Page26.updateChart();
-        if (typeof PageCmp !== 'undefined' && PageCmp._initialized) PageCmp.updateCharts();
-    }, 100);
+function updateThemeButton(isDark) {
+    const btn = document.getElementById('theme-toggle');
+    if (btn) btn.setAttribute('title', isDark ? 'Switch to light mode' : 'Switch to dark mode');
 }
 
-function updateThemeButton() {
-    const btn = document.getElementById('theme-toggle');
-    if (btn) btn.setAttribute('title', document.body.classList.contains('dark-mode') ? 'Switch to light mode' : 'Switch to dark mode');
+function toggleTheme(onToggleComplete) {
+    const isDark = document.body.classList.toggle('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    updateThemeButton(isDark);
+
+    if (onToggleComplete) {
+        setTimeout(onToggleComplete, 100);
+    } else {
+        // Default: update all page charts if no callback provided
+        setTimeout(() => {
+            if (typeof Page25 !== 'undefined' && Page25._initialized) Page25.updateChart();
+            if (typeof Page26 !== 'undefined' && Page26._initialized) Page26.updateChart();
+            if (typeof PageCmp !== 'undefined' && PageCmp._initialized) PageCmp.updateCharts();
+        }, 100);
+    }
 }
 
 function toggleSection(id) {

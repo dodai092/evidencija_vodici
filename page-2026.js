@@ -491,3 +491,4 @@ const Page26 = {
         this.renderAll();
     }
 };
+registerPage('Page26', Page26);

@@ -16,6 +16,20 @@ const CSS = {
     DARK_MODE: 'dark-mode',
 };
 
+// Page registry — formal definition of available page modules
+const PAGES = {
+    Page25: null,
+    Page26: null,
+    PageCmp: null,
+};
+
+// Initialize page registry (pages will register themselves when loaded)
+function registerPage(name, page) {
+    if (PAGES.hasOwnProperty(name)) {
+        PAGES[name] = page;
+    }
+}
+
 const _today = new Date();
 let GLOBAL_DATE = `${_today.getFullYear()}-${String(_today.getMonth()+1).padStart(2,'0')}-${String(_today.getDate()).padStart(2,'0')}`;
 
@@ -56,17 +70,17 @@ function updateDateAsOf(val) {
 
     // Reset month dropdowns and filter state
     document.querySelectorAll('select[id^="month-filter-"]').forEach(sel => sel.value = 'all');
-    if (typeof Page25 !== 'undefined') Page25.activeMonths = [];
-    if (typeof Page26 !== 'undefined') Page26.activeMonths = [];
-    if (typeof PageCmp !== 'undefined') PageCmp.activeMonths = [];
+    Object.values(PAGES).forEach(page => {
+        if (page) page.activeMonths = [];
+    });
 
     // Refresh ALL initialized pages (not just active)
     requestAnimationFrame(() => {
-        if (typeof Page25 !== 'undefined' && Page25._initialized)  Page25.renderAll();
-        if (typeof Page26 !== 'undefined' && Page26._initialized)  Page26.renderAll();
-        if (typeof PageCmp !== 'undefined' && PageCmp._initialized) {
-            PageCmp.mergedGuides = PageCmp.buildMerged();
-            PageCmp.renderAll();
+        if (PAGES.Page25 && PAGES.Page25._initialized) PAGES.Page25.renderAll();
+        if (PAGES.Page26 && PAGES.Page26._initialized) PAGES.Page26.renderAll();
+        if (PAGES.PageCmp && PAGES.PageCmp._initialized) {
+            PAGES.PageCmp.mergedGuides = PAGES.PageCmp.buildMerged();
+            PAGES.PageCmp.renderAll();
         }
     });
 }
@@ -128,9 +142,9 @@ function toggleTheme(onToggleComplete) {
     } else {
         // Default: update all page charts if no callback provided
         setTimeout(() => {
-            if (typeof Page25 !== 'undefined' && Page25._initialized) Page25.updateChart();
-            if (typeof Page26 !== 'undefined' && Page26._initialized) Page26.updateChart();
-            if (typeof PageCmp !== 'undefined' && PageCmp._initialized) PageCmp.updateCharts();
+            if (PAGES.Page25 && PAGES.Page25._initialized) PAGES.Page25.updateChart();
+            if (PAGES.Page26 && PAGES.Page26._initialized) PAGES.Page26.updateChart();
+            if (PAGES.PageCmp && PAGES.PageCmp._initialized) PAGES.PageCmp.updateCharts();
         }, 100);
     }
 }
@@ -151,8 +165,8 @@ function showPage(id, tab) {
     if (id === 'page-25')  tab.classList.add(CSS.NAV_Y25);
     if (id === 'page-26')  tab.classList.add(CSS.NAV_Y26);
     if (id === 'page-cmp') tab.classList.add(CSS.NAV_CMP);
-    if (id === 'page-25'  && !Page25._initialized)  Page25.init();
-    if (id === 'page-26'  && !Page26._initialized)   Page26.init();
-    if (id === 'page-cmp' && !PageCmp._initialized)  PageCmp.init();
-    else if (id === 'page-cmp') setTimeout(() => PageCmp.updateCharts(), 50);
+    if (id === 'page-25'  && PAGES.Page25 && !PAGES.Page25._initialized)  PAGES.Page25.init();
+    if (id === 'page-26'  && PAGES.Page26 && !PAGES.Page26._initialized)  PAGES.Page26.init();
+    if (id === 'page-cmp' && PAGES.PageCmp && !PAGES.PageCmp._initialized)  PAGES.PageCmp.init();
+    else if (id === 'page-cmp' && PAGES.PageCmp) setTimeout(() => PAGES.PageCmp.updateCharts(), 50);
 }

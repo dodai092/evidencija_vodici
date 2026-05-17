@@ -447,3 +447,4 @@ const Page25 = {
         this.renderAll();
     }
 };
+registerPage('Page25', Page25);

@@ -1049,3 +1049,4 @@ const PageCmp = {
         this.renderAll();
     }
 };
+registerPage('PageCmp', PageCmp);

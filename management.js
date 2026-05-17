@@ -627,18 +627,18 @@ function renderBillingTrend() {
         const billing = {POS: {revenue: 0, grossMargin: 0}, CPP: {revenue: 0, grossMargin: 0}};
         guides.forEach(g => {
             if (!g.mgmt || !g.mgmt.byBillingMethod) return;
+            const fullRevenue = g.mgmt.revenue || 0;
+            if (fullRevenue === 0) return;
+            const filtered = filterMgmtByDate(g.mgmt, GLOBAL_DATE);
+            const ratio = filtered.revenue / fullRevenue;
             for (const [method, data] of Object.entries(g.mgmt.byBillingMethod)) {
                 if (!billing[method]) billing[method] = {revenue: 0, grossMargin: 0};
-                // Approximate by taking the proportion of filtered data to full data
-                const fullTotal = filterMgmtByDate(g.mgmt, '9999-12-31');
-                const filteredTotal = filterMgmtByDate(g.mgmt, GLOBAL_DATE);
-                if (fullTotal.revenue > 0) {
-                    const ratio = filteredTotal.revenue / fullTotal.revenue;
-                    billing[method].revenue += (data.revenue || 0) * ratio;
-                    billing[method].grossMargin += (data.grossMargin || 0) * ratio;
-                }
+                billing[method].revenue += (data.revenue || 0) * ratio;
+                billing[method].grossMargin += (data.grossMargin || 0) * ratio;
             }
         });
+        // Billing method data lacks day-level breakdown, so we apply the filtered/full revenue ratio
+        // as a proxy. This assumes billing method mix is uniform across days — an approximation.
         return billing;
     }
 

@@ -89,16 +89,16 @@ const PageCmp = {
             `<span class="city-pill" style="background:${col}18;color:${col}">${m.city}</span>` +
             `</div>` +
             `<table class="gc-cmp-table"><tbody>` +
-            `<tr><td class="label">Free t</td><td class="v25">${ytd25 ? ytd25.freeTours : '—'}</td>` +
+            `<tr><td class="label">${t('labels.freeT')}</td><td class="v25">${ytd25 ? ytd25.freeTours : '—'}</td>` +
             `<td class="v26">${ytd26 ? ytd26.freeTours : '—'}</td>` +
             `<td class="delta">${ytd25 && ytd26 ? this.fmtDelta(ytd25.freeTours, ytd26.freeTours) : '—'}</td></tr>` +
-            `<tr><td class="label">Free p</td><td class="v25">${ytd25 ? ytd25.freePax : '—'}</td>` +
+            `<tr><td class="label">${t('labels.freeP')}</td><td class="v25">${ytd25 ? ytd25.freePax : '—'}</td>` +
             `<td class="v26">${ytd26 ? ytd26.freePax : '—'}</td>` +
             `<td class="delta">${ytd25 && ytd26 ? this.fmtDelta(ytd25.freePax, ytd26.freePax) : '—'}</td></tr>` +
-            `<tr><td class="label">$ t</td><td class="v25">${ytd25 ? ytd25.paidTours : '—'}</td>` +
+            `<tr><td class="label">${t('labels.paidT')}</td><td class="v25">${ytd25 ? ytd25.paidTours : '—'}</td>` +
             `<td class="v26">${ytd26 ? ytd26.paidTours : '—'}</td>` +
             `<td class="delta">${ytd25 && ytd26 ? this.fmtDelta(ytd25.paidTours, ytd26.paidTours) : '—'}</td></tr>` +
-            `<tr><td class="label">$ p</td><td class="v25">${ytd25 ? ytd25.paidPax : '—'}</td>` +
+            `<tr><td class="label">${t('labels.paidP')}</td><td class="v25">${ytd25 ? ytd25.paidPax : '—'}</td>` +
             `<td class="v26">${ytd26 ? ytd26.paidPax : '—'}</td>` +
             `<td class="delta">${ytd25 && ytd26 ? this.fmtDelta(ytd25.paidPax, ytd26.paidPax) : '—'}</td></tr>` +
             `</tbody></table>` +
@@ -690,20 +690,20 @@ const PageCmp = {
         const hasPartial = data.some(r => r.isPartial);
 
         const html = `<div class="chart-card">
-            <div class="chart-card-title">Free PAX by Month and City — <span class="ytd-range-label">${getRangeLabel()}</span> 2025 vs. 2026</div>
+            <div class="chart-card-title">${t('charts.freePaxByMonthAndCity')} — <span class="ytd-range-label">${getRangeLabel()}</span> 2025 vs. 2026</div>
             <div class="mpax-wrap">
             <table class="mpax-table">
                 <thead>
-                    <tr><th class="mpax-month-head" rowspan="2">Mo.</th>${cityHeaders}</tr>
+                    <tr><th class="mpax-month-head" rowspan="2">${t('labels.mo')}</th>${cityHeaders}</tr>
                     <tr>${subHeaders}</tr>
                 </thead>
                 <tbody>
                     ${bodyRows}
-                    <tr class="mpax-total"><td class="mpax-month">Total</td>${totalCells}</tr>
+                    <tr class="mpax-total"><td class="mpax-month">${t('labels.total')}</td>${totalCells}</tr>
                 </tbody>
             </table>
             </div>
-            ${hasPartial ? `<div class="mpax-note">* Partial month — data through ${GLOBAL_DATE}</div>` : ''}
+            ${hasPartial ? `<div class="mpax-note">* ${t('labels.partial')} — ${t('labels.dataThrough')} ${GLOBAL_DATE}</div>` : ''}
         </div>`;
 
         const el = document.getElementById('monthly-pax-table-cmp');
@@ -828,9 +828,9 @@ const PageCmp = {
         const paxPrimary   = primaryMetric === 'pax';
 
         const groupHeaders = [
-            `<th colspan="4" class="mpax-metric-head${toursPrimary ? ' mpax-metric-primary' : ''}">Tours</th>`,
-            `<th colspan="4" class="mpax-metric-head${paxPrimary   ? ' mpax-metric-primary' : ''}">PAX</th>`,
-            `<th colspan="4" class="mpax-metric-head">Avg PAX</th>`,
+            `<th colspan="4" class="mpax-metric-head${toursPrimary ? ' mpax-metric-primary' : ''}">${t('table.tours')}</th>`,
+            `<th colspan="4" class="mpax-metric-head${paxPrimary   ? ' mpax-metric-primary' : ''}">${t('table.pax')}</th>`,
+            `<th colspan="4" class="mpax-metric-head">${t('labels.avgPaxPerTour')}</th>`,
         ].join('');
 
         const subRow = `<th class="mpax-sub-head">'25</th><th class="mpax-sub-head">'26</th><th class="mpax-sub-head">±</th><th class="mpax-sub-head">±%</th>`;
@@ -851,18 +851,18 @@ const PageCmp = {
         };
 
         const bodyRows = rows.map(r => makeRow(MONTH_NAMES[r.m], r.t25, r.t26, r.p25, r.p26, r.avg25, r.avg26, r.isPartial, false)).join('');
-        const totalRow = makeRow('Total', totT25, totT26, totP25, totP26, totAvg25, totAvg26, false, true);
+        const totalRow = makeRow(t('labels.total'), totT25, totT26, totP25, totP26, totAvg25, totAvg26, false, true);
         const hasPartial = rows.some(r => r.isPartial);
 
         const html = `<div class="mpax-wrap" style="margin-top:16px">
             <table class="mpax-table">
                 <thead>
-                    <tr><th class="mpax-month-head" rowspan="2">Mo.</th>${groupHeaders}</tr>
+                    <tr><th class="mpax-month-head" rowspan="2">${t('labels.mo')}</th>${groupHeaders}</tr>
                     <tr>${subHeaders}</tr>
                 </thead>
                 <tbody>${bodyRows}${totalRow}</tbody>
             </table>
-            ${hasPartial ? `<div class="mpax-note">* Partial month — data through ${GLOBAL_DATE}</div>` : ''}
+            ${hasPartial ? `<div class="mpax-note">* ${t('labels.partial')} — ${t('labels.dataThrough')} ${GLOBAL_DATE}</div>` : ''}
         </div>`;
 
         const el = document.getElementById(containerId);
@@ -1043,12 +1043,12 @@ const PageCmp = {
     _buildHeader() {
         return `        <div class="header">
             <div class="header-left">
-                <h1>Guide Comparison</h1>
-                <p><span class="ytd-range-label">Jan–May</span> 2025 vs. 2026 &middot; Production by guide</p>
+                <h1>${t('sections.guideComparison')}</h1>
+                <p><span class="ytd-range-label">Jan–May</span> 2025 vs. 2026 &middot; ${t('sections.productionByGuide')}</p>
             </div>
             <div class="header-right">
                 <div id="date-pov-cmp" class="mb-6"></div>
-                <div class="header-badge">Comparison YTD</div>
+                <div class="header-badge">${t('sections.comparisonYtd')}</div>
             </div>
         </div>`;
     },
@@ -1057,7 +1057,7 @@ const PageCmp = {
         return `        <div class="main">
             <div class="kpi-grid kpi-grid-4">
                 <div class="kpi hl-green">
-                    <div class="kpi-label">Free Tours – PAX Count YTD</div>
+                    <div class="kpi-label">${t('labels.freeToursPaxCountYtd')}</div>
                     <div class="kpi-delta">
                         <span class="kpi-delta-abs" id="kd-free-abs-cmp">—</span>
                         <span class="kpi-delta-pct" id="kd-free-pct-cmp">—</span>
@@ -1074,7 +1074,7 @@ const PageCmp = {
                     </div>
                 </div>
                 <div class="kpi hl-green">
-                    <div class="kpi-label">Avg PAX / Free Tour</div>
+                    <div class="kpi-label">${t('labels.avgPaxPerFreeTour')}</div>
                     <div class="kpi-delta">
                         <span class="kpi-delta-abs" id="kd-avg-pax-abs-cmp">—</span>
                         <span class="kpi-delta-pct" id="kd-avg-pax-pct-cmp">—</span>
@@ -1091,7 +1091,7 @@ const PageCmp = {
                     </div>
                 </div>
                 <div class="kpi hl-blue">
-                    <div class="kpi-label">Paid Tours – Count YTD</div>
+                    <div class="kpi-label">${t('labels.paidToursCountYtd')}</div>
                     <div class="kpi-delta">
                         <span class="kpi-delta-abs" id="kd-paid-abs-cmp">—</span>
                         <span class="kpi-delta-pct" id="kd-paid-pct-cmp">—</span>
@@ -1108,7 +1108,7 @@ const PageCmp = {
                     </div>
                 </div>
                 <div class="kpi hl-teal">
-                    <div class="kpi-label">Active Guides</div>
+                    <div class="kpi-label">${t('labels.activeGuides')}</div>
                     <div class="kpi-delta">
                         <span class="kpi-delta-abs" id="kd-guides-abs-cmp">—</span>
                         <span class="kpi-delta-pct" id="kd-guides-pct-cmp">—</span>
@@ -1128,9 +1128,9 @@ const PageCmp = {
 
             <div class="filter-area">
                 <div class="filter-group">
-                    <label for="city-filter-cmp">City</label>
+                    <label for="city-filter-cmp">${t('labels.city')}</label>
                     <select class="filter-select" id="city-filter-cmp" onchange="PageCmp.filterCity(this.value)">
-                        <option value="all">All</option>
+                        <option value="all">${t('labels.all')}</option>
                         <option value="Zagreb">Zagreb</option>
                         <option value="Dubrovnik">Dubrovnik</option>
                         <option value="Split">Split</option>
@@ -1138,18 +1138,18 @@ const PageCmp = {
                     </select>
                 </div>
                 <div class="filter-group">
-                    <label for="lang-filter-cmp">Language</label>
+                    <label for="lang-filter-cmp">${t('labels.language')}</label>
                     <select class="filter-select" id="lang-filter-cmp" onchange="PageCmp.filterLang(this.value)">
-                        <option value="all">All</option>
+                        <option value="all">${t('labels.all')}</option>
                         <option value="eng">🇬🇧 ENG</option>
                         <option value="esp">🇪🇸 ESP</option>
                         <option value="fra">🇫🇷 FRA</option>
                     </select>
                 </div>
                 <div class="filter-group">
-                    <label for="month-filter-cmp">Mo.</label>
+                    <label for="month-filter-cmp">${t('labels.mo')}</label>
                     <select class="filter-select" id="month-filter-cmp" onchange="PageCmp.filterMonth(this.value)">
-                        <option value="all">All</option>
+                        <option value="all">${t('labels.all')}</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -1165,19 +1165,19 @@ const PageCmp = {
     _buildFreeTours() {
         return `            <!-- ── FREE TOURS SECTION ──────────────────────────── -->
             <div class="section-divider" onclick="toggleSection('free-section-body')">
-                <span>Free Tours</span>
+                <span>${t('sections.freeTours')}</span>
                 <span class="section-chevron">▾</span>
             </div>
             <div id="free-section-body" class="section-body">
                 <div class="charts-row">
                     <div class="chart-card">
-                        <div class="chart-card-title">Free PAX by City</div>
+                        <div class="chart-card-title">${t('charts.freePaxByCity')}</div>
                         <div class="chart-container">
                             <canvas id="cityChart-cmp"></canvas>
                         </div>
                     </div>
                     <div class="chart-card">
-                        <div class="chart-card-title">Avg PAX per Free Tour — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
+                        <div class="chart-card-title">${t('charts.avgFreePaxCmp')} — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
                         <div class="chart-container">
                             <canvas id="avgFreePaxCmpChart-cmp"></canvas>
                         </div>
@@ -1185,7 +1185,7 @@ const PageCmp = {
                 </div>
                 <div class="charts-row">
                     <div class="chart-card">
-                        <div class="chart-card-title">Cumulative Free PAX Trend (<span class="ytd-range-label">Jan–May</span>)</div>
+                        <div class="chart-card-title">${t('charts.cumulativeFreePax')} (<span class="ytd-range-label">Jan–May</span>)</div>
                         <div class="chart-container">
                             <canvas id="monthlyChart-cmp"></canvas>
                         </div>
@@ -1193,7 +1193,7 @@ const PageCmp = {
                 </div>
                 <div class="charts-row">
                     <div class="chart-card">
-                        <div class="chart-card-title">Free PAX by City — Cumulative (<span class="ytd-range-label">Jan–May</span>)</div>
+                        <div class="chart-card-title">${t('charts.cityMonthlyCumulative')} (<span class="ytd-range-label">Jan–May</span>)</div>
                         <div id="city-monthly-badges-cmp" class="city-monthly-badges"></div>
                         <div class="chart-container">
                             <canvas id="cityMonthlyChart-cmp"></canvas>
@@ -1211,19 +1211,19 @@ const PageCmp = {
     _buildPaidTours() {
         return `            <!-- ── PAID TOURS SECTION ──────────────────────────── -->
             <div class="section-divider" onclick="toggleSection('paid-section-body')">
-                <span>Paid Tours</span>
+                <span>${t('sections.paidTours')}</span>
                 <span class="section-chevron">▾</span>
             </div>
             <div id="paid-section-body" class="section-body">
                 <div class="charts-row">
                     <div class="chart-card">
-                        <div class="chart-card-title">Paid Tours by City</div>
+                        <div class="chart-card-title">${t('charts.paidToursByCity')}</div>
                         <div class="chart-container">
                             <canvas id="paidCityChart-cmp"></canvas>
                         </div>
                     </div>
                     <div class="chart-card">
-                        <div class="chart-card-title">Cumulative Paid Tours Trend (<span class="ytd-range-label">Jan–May</span>)</div>
+                        <div class="chart-card-title">${t('charts.cumulativePaidTours')} (<span class="ytd-range-label">Jan–May</span>)</div>
                         <div class="chart-container">
                             <canvas id="paidChart-cmp"></canvas>
                         </div>
@@ -1231,12 +1231,12 @@ const PageCmp = {
                 </div>
                 <div class="charts-row">
                     <div class="chart-card type-chart-card">
-                        <div class="chart-card-title">Private Paid Tours by Type — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
+                        <div class="chart-card-title">${t('charts.privatePaidTours')} — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
-                                <span class="type-filter-label">City</span>
+                                <span class="type-filter-label">${t('labels.city')}</span>
                                 <div id="private-city-pills-cmp" class="pill-group">
-                                    <button class="pill active" onclick="PageCmp.filterPrivateCity('all',this)">All</button>
+                                    <button class="pill active" onclick="PageCmp.filterPrivateCity('all',this)">${t('labels.all')}</button>
                                     <button class="pill" onclick="PageCmp.filterPrivateCity('Zagreb',this)">Zagreb</button>
                                     <button class="pill" onclick="PageCmp.filterPrivateCity('Dubrovnik',this)">Dubrovnik</button>
                                     <button class="pill" onclick="PageCmp.filterPrivateCity('Split',this)">Split</button>
@@ -1244,9 +1244,9 @@ const PageCmp = {
                                 </div>
                             </div>
                             <div class="type-filter-row">
-                                <span class="type-filter-label">Type</span>
+                                <span class="type-filter-label">${t('labels.type')}</span>
                                 <div id="private-type-pills-cmp" class="pill-group">
-                                    <button class="pill active" onclick="PageCmp.filterPrivateType('all',this)">All</button>
+                                    <button class="pill active" onclick="PageCmp.filterPrivateType('all',this)">${t('labels.all')}</button>
                                     <button class="pill" onclick="PageCmp.filterPrivateType('war PR',this)">war PR</button>
                                     <button class="pill" onclick="PageCmp.filterPrivateType('food PR',this)">food PR</button>
                                     <button class="pill" onclick="PageCmp.filterPrivateType('best',this)">best</button>
@@ -1263,12 +1263,12 @@ const PageCmp = {
                 </div>
                 <div class="charts-row">
                     <div class="chart-card type-chart-card">
-                        <div class="chart-card-title">Avg PAX per Paid Tour Type — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
+                        <div class="chart-card-title">${t('charts.avgPaxByType')} — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
-                                <span class="type-filter-label">Type</span>
+                                <span class="type-filter-label">${t('labels.type')}</span>
                                 <div id="avg-type-pills-cmp" class="pill-group">
-                                    <button class="pill active" onclick="PageCmp.filterAvgType('all',this)">All</button>
+                                    <button class="pill active" onclick="PageCmp.filterAvgType('all',this)">${t('labels.all')}</button>
                                     <button class="pill" onclick="PageCmp.filterAvgType('war',this)">war</button>
                                     <button class="pill" onclick="PageCmp.filterAvgType('food',this)">food</button>
                                     <button class="pill" onclick="PageCmp.filterAvgType('best',this)">best</button>
@@ -1286,12 +1286,12 @@ const PageCmp = {
                 </div>
                 <div class="charts-row">
                     <div class="chart-card type-chart-card">
-                        <div class="chart-card-title">Shared Paid Tours by Type — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
+                        <div class="chart-card-title">${t('charts.sharedPaidTours')} — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
-                                <span class="type-filter-label">City</span>
+                                <span class="type-filter-label">${t('labels.city')}</span>
                                 <div id="shared-city-pills-cmp" class="pill-group">
-                                    <button class="pill active" onclick="PageCmp.filterSharedCity('all',this)">All</button>
+                                    <button class="pill active" onclick="PageCmp.filterSharedCity('all',this)">${t('labels.all')}</button>
                                     <button class="pill" onclick="PageCmp.filterSharedCity('Zagreb',this)">Zagreb</button>
                                     <button class="pill" onclick="PageCmp.filterSharedCity('Dubrovnik',this)">Dubrovnik</button>
                                     <button class="pill" onclick="PageCmp.filterSharedCity('Split',this)">Split</button>
@@ -1299,9 +1299,9 @@ const PageCmp = {
                                 </div>
                             </div>
                             <div class="type-filter-row">
-                                <span class="type-filter-label">Type</span>
+                                <span class="type-filter-label">${t('labels.type')}</span>
                                 <div id="shared-type-pills-cmp" class="pill-group">
-                                    <button class="pill active" onclick="PageCmp.filterSharedType('all',this)">All</button>
+                                    <button class="pill active" onclick="PageCmp.filterSharedType('all',this)">${t('labels.all')}</button>
                                     <button class="pill" onclick="PageCmp.filterSharedType('war',this)">war</button>
                                     <button class="pill" onclick="PageCmp.filterSharedType('food',this)">food</button>
                                     <button class="pill" onclick="PageCmp.filterSharedType('best',this)">best</button>
@@ -1321,7 +1321,7 @@ const PageCmp = {
 
     _buildGuides() {
         return `            <div class="section-divider" onclick="toggleSection('guides-body-cmp')">
-                <span>Guides</span>
+                <span>${t('sections.guides')}</span>
                 <span class="section-chevron">▾</span>
             </div>
             <div id="guides-body-cmp" class="section-body">

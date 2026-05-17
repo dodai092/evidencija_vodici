@@ -94,9 +94,11 @@ function toggleTheme() {
     const isDark = document.body.classList.toggle('dark-mode');
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
     updateThemeButton();
-    if (typeof PageCmp !== 'undefined' && PageCmp._initialized) {
-        setTimeout(() => PageCmp.updateCharts(), 100);
-    }
+    setTimeout(() => {
+        if (typeof Page25 !== 'undefined' && Page25._initialized) Page25.updateChart();
+        if (typeof Page26 !== 'undefined' && Page26._initialized) Page26.updateChart();
+        if (typeof PageCmp !== 'undefined' && PageCmp._initialized) PageCmp.updateCharts();
+    }, 100);
 }
 
 function updateThemeButton() {

@@ -1514,6 +1514,13 @@ function updateManagementTabs() {
     const el = document.getElementById(id);
     if (el) el.textContent = text;
   });
+
+  // Re-render the active tab to refresh all t() calls
+  if (_activeTab === 'pl') renderPlKpis('all');
+  else if (_activeTab === 'guides') renderGuideTable();
+  else if (_activeTab === 'channels') { renderCommissionWaterfall(); renderDirectOtaTrend(); renderOtaSourceTable(); renderTourTypeTable(); }
+  else if (_activeTab === 'ops') renderPlKpis('all');
+  else if (_activeTab === 'cities') renderCitiesTab();
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────

@@ -162,11 +162,18 @@ function toggleLanguage(onToggleComplete) {
     updateNavigationLabels();
     if (typeof updateManagementTabs === 'function') updateManagementTabs();
 
-    // Re-render all initialized pages
+    // Rebuild structure for all initialized pages to re-evaluate all t() calls
     requestAnimationFrame(() => {
-        if (PAGES.Page25 && PAGES.Page25._initialized) PAGES.Page25.renderAll();
-        if (PAGES.Page26 && PAGES.Page26._initialized) PAGES.Page26.renderAll();
+        if (PAGES.Page25 && PAGES.Page25._initialized) {
+            PAGES.Page25.rebuildStructure();
+            PAGES.Page25.renderAll();
+        }
+        if (PAGES.Page26 && PAGES.Page26._initialized) {
+            PAGES.Page26.rebuildStructure();
+            PAGES.Page26.renderAll();
+        }
         if (PAGES.PageCmp && PAGES.PageCmp._initialized) {
+            PAGES.PageCmp.rebuildStructure();
             PAGES.PageCmp.mergedGuides = PAGES.PageCmp.buildMerged();
             PAGES.PageCmp.renderAll();
             PAGES.PageCmp.updateCharts();

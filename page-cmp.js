@@ -1330,10 +1330,24 @@ const PageCmp = {
         </div>`;
     },
 
-    init() {
-        if (this._initialized) return;
-        this._initialized = true;
+    _destroyCharts() {
+        [this.cityChartInstance, this.monthlyChartInstance, this.paidChartInstance,
+         this.cityMonthlyChartInstance, this.privatePaidChartInstance, this.sharedPaidChartInstance,
+         this.warAvgChartInstance, this.avgFreePaxCmpChartInstance].forEach(chart => {
+            if (chart) try { chart.destroy(); } catch(e) {}
+        });
+        this.cityChartInstance = null;
+        this.monthlyChartInstance = null;
+        this.paidChartInstance = null;
+        this.cityMonthlyChartInstance = null;
+        this.privatePaidChartInstance = null;
+        this.sharedPaidChartInstance = null;
+        this.warAvgChartInstance = null;
+        this.avgFreePaxCmpChartInstance = null;
+    },
 
+    rebuildStructure() {
+        this._destroyCharts();
         document.getElementById('page-cmp').innerHTML =
             this._buildHeader() +
             this._buildKpisAndFilters() +
@@ -1344,6 +1358,12 @@ const PageCmp = {
         const now = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
         const datePov = this._el('date-pov');
         if (datePov) datePov.textContent = now;
+    },
+
+    init() {
+        if (this._initialized) return;
+        this._initialized = true;
+        this.rebuildStructure();
         this.mergedGuides = this.buildMerged();
         this.renderAll();
     }

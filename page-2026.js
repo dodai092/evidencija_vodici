@@ -639,10 +639,20 @@ const Page26 = {
         </div>`;
     },
 
-    init() {
-        if (this._initialized) return;
-        this._initialized = true;
+    _destroyCharts() {
+        [this.chartInstance, this.cityChartInstance, this.paidCityChartInstance,
+         this.privatePaidChartInstance, this.sharedPaidChartInstance].forEach(chart => {
+            if (chart) try { chart.destroy(); } catch(e) {}
+        });
+        this.chartInstance = null;
+        this.cityChartInstance = null;
+        this.paidCityChartInstance = null;
+        this.privatePaidChartInstance = null;
+        this.sharedPaidChartInstance = null;
+    },
 
+    rebuildStructure() {
+        this._destroyCharts();
         document.getElementById('page-26').innerHTML =
             this._buildHeader() +
             this._buildFilters() +
@@ -654,6 +664,12 @@ const Page26 = {
         const fmt = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
         const datePov = this._el('date-pov');
         if (datePov) datePov.textContent = fmt;
+    },
+
+    init() {
+        if (this._initialized) return;
+        this._initialized = true;
+        this.rebuildStructure();
         this.renderAll();
     }
 };

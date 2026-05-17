@@ -267,8 +267,6 @@ const TRANSLATIONS = {
   }
 };
 
-let GLOBAL_LANGUAGE = localStorage.getItem('language') || 'en';
-
 function t(key) {
   const keys = key.split('.');
   let val = TRANSLATIONS[GLOBAL_LANGUAGE];

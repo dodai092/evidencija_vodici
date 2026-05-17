@@ -523,8 +523,8 @@ function renderWaterfall() {
 
     const vals26 = [t26.revenue, -t26.commissionCost, -t26.vatAmount, -t26.vendorCost, -t26.tourCost, t26.grossMargin];
     const MONTH_NAMES_SHORT = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
-    const { month: cutoff } = parseGlobalDate();
-    const rangeLabel = cutoff === 1 ? 'Jan' : `Jan–${MONTH_NAMES_SHORT[cutoff]}`;
+    const { month: cutoffMonth, day: cutoffDay } = parseGlobalDate();
+    const rangeLabel = cutoffMonth === 1 ? 'Jan' : `Jan–${MONTH_NAMES_SHORT[cutoffMonth]}`;
     const datasets = [
         {
             label: `2026 ${rangeLabel}`,

@@ -155,11 +155,12 @@ function toggleTheme(onToggleComplete) {
     }
 }
 
-function toggleLanguage() {
+function toggleLanguage(onToggleComplete) {
     GLOBAL_LANGUAGE = GLOBAL_LANGUAGE === 'en' ? 'hr' : 'en';
     localStorage.setItem('language', GLOBAL_LANGUAGE);
     updateLanguageButton();
     updateNavigationLabels();
+    if (typeof updateManagementTabs === 'function') updateManagementTabs();
 
     // Re-render all initialized pages
     requestAnimationFrame(() => {
@@ -170,6 +171,7 @@ function toggleLanguage() {
             PAGES.PageCmp.renderAll();
             PAGES.PageCmp.updateCharts();
         }
+        if (onToggleComplete) onToggleComplete();
     });
 }
 

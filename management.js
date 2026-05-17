@@ -1502,6 +1502,20 @@ function toggleShortcutOverlay() {
     if (el) el.style.display = el.style.display === 'block' ? 'none' : 'block';
 }
 
+function updateManagementTabs() {
+  const tabs = {
+    'tab-pl': t('management.profitAndLoss'),
+    'tab-guides': t('management.guides'),
+    'tab-channels': t('management.channels'),
+    'tab-ops': t('management.operational'),
+    'tab-cities': t('management.cities'),
+  };
+  Object.entries(tabs).forEach(([id, text]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  });
+}
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -1514,6 +1528,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initPl();
     MgmtPages.pl._init = true;
+    updateManagementTabs();
 
     // Keyboard shortcuts
     document.addEventListener('keydown', e => {

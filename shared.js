@@ -170,3 +170,43 @@ function showPage(id, tab) {
     if (id === 'page-cmp' && PAGES.PageCmp && !PAGES.PageCmp._initialized)  PAGES.PageCmp.init();
     else if (id === 'page-cmp' && PAGES.PageCmp) setTimeout(() => PAGES.PageCmp.updateCharts(), 50);
 }
+
+const KEYBOARD_SHORTCUTS = {
+    '1': () => {
+        const tab = document.getElementById('tab-25');
+        if (tab) showPage('page-25', tab);
+    },
+    '2': () => {
+        const tab = document.getElementById('tab-26');
+        if (tab) showPage('page-26', tab);
+    },
+    '3': () => {
+        const tab = document.getElementById('tab-cmp');
+        if (tab) showPage('page-cmp', tab);
+    },
+    '4': () => {
+        window.location.href = 'management.html';
+    },
+    't': () => toggleTheme(),
+    'd': () => {
+        const picker = document.getElementById('cutoff-picker');
+        if (picker) picker.focus();
+    },
+    '?': () => toggleShortcutOverlay(),
+    'Escape': () => {
+        const overlay = document.getElementById('shortcut-overlay');
+        if (overlay && overlay.style.display === 'block') overlay.style.display = 'none';
+    },
+};
+
+function initKeyboardShortcuts() {
+    document.addEventListener('keydown', e => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        if (e.metaKey || e.ctrlKey || e.altKey) return;
+        const handler = KEYBOARD_SHORTCUTS[e.key];
+        if (handler) {
+            handler();
+            e.preventDefault();
+        }
+    });
+}

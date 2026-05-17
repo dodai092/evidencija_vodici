@@ -686,21 +686,7 @@
             Page25.init();
 
             // Keyboard shortcuts
-            document.addEventListener('keydown', e => {
-                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-                if (e.metaKey || e.ctrlKey || e.altKey) return;
-                if (e.key === '1') { showPage('page-25', document.getElementById('tab-25')); return; }
-                if (e.key === '2') { showPage('page-26', document.getElementById('tab-26')); return; }
-                if (e.key === '3') { showPage('page-cmp', document.getElementById('tab-cmp')); return; }
-                if (e.key === '4') { window.location.href = 'management.html'; return; }
-                if (e.key === 't') { toggleTheme(); return; }
-                if (e.key === 'd') { document.getElementById('cutoff-picker')?.focus(); return; }
-                if (e.key === '?') { toggleShortcutOverlay(); return; }
-                if (e.key === 'Escape') {
-                    const overlay = document.getElementById('shortcut-overlay');
-                    if (overlay && overlay.style.display === 'block') overlay.style.display = 'none';
-                }
-            });
+            initKeyboardShortcuts();
         });
     </script>
 

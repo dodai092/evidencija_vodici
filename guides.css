@@ -1451,3 +1451,56 @@ body.dark-mode .filter-select {
     font-size: 14px;
     line-height: 1;
 }
+/* ── Utility Classes ─────────────────────────────── */
+.mb-8  { margin-bottom: 8px; }
+.mb-12 { margin-bottom: 12px; }
+.mb-16 { margin-bottom: 16px; }
+.mb-24 { margin-bottom: 24px; }
+.mb-32 { margin-bottom: 32px; }
+
+.mt-8  { margin-top: 8px; }
+.mt-12 { margin-top: 12px; }
+.mt-16 { margin-top: 16px; }
+.mt-32 { margin-top: 32px; }
+
+.flex-row      { display: flex; flex-direction: row; }
+.flex-col      { display: flex; flex-direction: column; }
+.flex-center   { display: flex; align-items: center; }
+.flex-gap-0    { gap: 0; }
+.flex-gap-12   { gap: 12px; }
+
+.text-decoration-none { text-decoration: none; }
+
+.yoy-sub {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0;
+    font-family: var(--font-mono);
+}
+
+.section-desc {
+    font-size: 12px;
+    color: var(--text3);
+    margin-bottom: 16px;
+}
+
+.table-scroll {
+    overflow-x: auto;
+    margin-bottom: 32px;
+}
+
+.img-nav {
+    height: 28px;
+    display: block;
+    flex-shrink: 0;
+    margin-right: 8px;
+}
+
+.approx-banner {
+    margin-top: 16px;
+    padding: 12px;
+    background: rgba(186, 117, 23, 0.06);
+    border-radius: 4px;
+    font-size: 12px;
+    border-left: 3px solid var(--amber);
+}

@@ -126,7 +126,6 @@ function t(key) {
 
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
-  GLOBAL_LANGUAGE = localStorage.getItem('language') || 'en';
   if (typeof updateLanguageButton === 'function') updateLanguageButton();
   if (typeof updateNavigationLabels === 'function') updateNavigationLabels();
 });

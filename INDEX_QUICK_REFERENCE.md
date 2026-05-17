@@ -237,4 +237,88 @@ After completing all quick wins:
 
 ---
 
+---
+
+## ⚠️ GOTCHAS FROM TODAY (AVOID THESE!)
+
+### 1. **Large Files Are Hard to Edit**
+- index.html is 708 lines (147 KB) - can't read entire file at once with Read tool
+- Use `sed` to read specific sections: `sed -n '20,30p' index.html`
+- Use `grep -n` to find line numbers first
+
+### 2. **CSS File Merges Are Risky**
+- When I merged management.html CSS into guides.css, I accidentally replaced the beginning
+- **Root cause:** Extracted indented CSS (lines 15-445) instead of un-indented content
+- **Lesson:** Always preserve original file structure when merging
+- **Solution:** Extract to temp file, clean formatting, then insert at specific point
+
+### 3. **Removing Blocks Affects Adjacent Elements**
+- When I used `sed -i '' '14,447d'` to remove `<style>` block, it also removed closing `</head>`
+- **Lesson:** Be precise with line numbers - check context before/after
+- **Solution:** Verify with `sed -n 'XXX,YYYp'` first to see exact content
+
+### 4. **Sed Chaining Doesn't Work as Expected**
+- Tried: `sed -i '' 's/old1/new1/g' 's/old2/new2/g'` — FAILED
+- Works: Run each sed command separately (one per line)
+- Or use: `sed -i '' -e 's/old1/new1/g' -e 's/old2/new2/g'`
+
+### 5. **File Paths with Spaces Need Quotes**
+- Failed: `sed -i '' 14,18d /Users/antunzebec/Work/...`
+- Success: Use backticks or quotes around path, or cd first
+- Best practice: Use relative paths when possible: `sed -i '' '14,18d' management.html`
+
+### 6. **Git Restore Can Save You**
+- If a sed command corrupts a file, you can recover:
+  - `git restore guides.css` (undo all changes to file)
+  - `git show HEAD~1:guides.css > backup.css` (get previous version)
+  - Always commit before risky operations
+
+### 7. **Test Syntax Before Publishing**
+- Always run `node -c filename.js` after JS changes
+- Always check for CSS brace balance: `grep -c '{' vs grep -c '}'`
+- Preview sed results before applying: `sed -n 'X,Yp' file` shows what will be affected
+
+---
+
+## 🛡️ SAFETY CHECKLIST
+
+Before making changes to index.html:
+- [ ] Create backup: `cp index.html index.html.bak`
+- [ ] Preview sed changes: `sed -n 'X,Yp' index.html` (don't use -i flag)
+- [ ] Make changes to a test file first
+- [ ] Verify syntax: no HTML validator needed, but check in browser
+- [ ] Test all filters, keyboard shortcuts, page navigation
+- [ ] Commit frequently with descriptive messages
+- [ ] If something breaks: `git restore filename` to revert instantly
+
+---
+
+## 📝 COMMON PATTERNS IN FILES
+
+### Finding Line Numbers:
+```bash
+# Find line number of a pattern
+grep -n "pattern" filename
+
+# See context around pattern
+sed -n '50,60p' filename
+
+# Find between two patterns
+sed -n '/start-pattern/,/end-pattern/p' filename
+```
+
+### Replacing Patterns:
+```bash
+# Preview first (no -i flag)
+sed 's/old/new/' filename
+
+# Then apply
+sed -i '' 's/old/new/g' filename
+
+# Multiple replacements
+sed -i '' -e 's/old1/new1/g' -e 's/old2/new2/g' filename
+```
+
+---
+
 **Ready to start?** Begin with the 6 inline style replacements (10 minutes) to build momentum! 🚀

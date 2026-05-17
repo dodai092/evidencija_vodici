@@ -271,5 +271,97 @@ Multiple responsive breakpoints mixed throughout styles and HTML
 ---
 
 **Status:** Ready for implementation
-**Estimated Time:** 1-2 hours for high-priority fixes
-**Complexity Level:** MEDIUM (careful refactoring needed)
+**Estimated Time:** 30-45 minutes for high-priority fixes (quick wins)
+**Complexity Level:** LOW-MEDIUM (mostly find-and-replace)
+
+---
+
+## 🚨 LESSONS LEARNED (from today's CSS consolidation)
+
+### Critical Gotchas to Avoid:
+
+1. **CSS Merge Data Loss**
+   - When merging CSS files, indentation matters
+   - **What happened:** Extracted lines 15-445 with indentation, lost original CSS variables
+   - **Fix:** Always extract clean (unindented) CSS, preserve original structure
+   - **For index.html:** Use sed with care, preview first with `sed -n 'X,Yp'`
+
+2. **Large Files Are Difficult to Edit**
+   - index.html is 708 lines — can't use Read tool to view whole file
+   - **Solution:** Use `sed -n '50,60p' index.html` to preview sections
+   - **Always:** Use `grep -n "pattern"` to find line numbers first
+
+3. **Sed Operations Are Destructive**
+   - Once you use `sed -i ''`, changes are permanent
+   - **Safety:** Always run without `-i` flag first to preview
+   - **Backup:** Create `.bak` file before making changes
+   - **Recovery:** `git restore filename` to revert
+
+4. **Block Removal Affects Adjacent Elements**
+   - When removing `<style>` block (lines 14-447), the `</head>` tag also got deleted
+   - **Lesson:** Verify context lines before running deletion
+   - **Solution:** Check with `sed -n '13,450p'` to see surrounding content
+
+5. **String Replacements Can Be Fragile**
+   - Tried chaining multiple sed commands → FAILED
+   - **What works:** Run each sed command on separate lines
+   - **Better:** Use `-e` flag for multiple expressions: `sed -i '' -e 's/a/b/g' -e 's/c/d/g'`
+
+6. **HTML Structure Assumptions**
+   - Don't assume HTML structure is obvious — it changes over time
+   - **Check:** Verify IDs and selectors match before using in JavaScript
+   - **Example:** If you change `id="city-filter-25"`, page-2025.js breaks (uses `_el('city-filter')`)
+
+---
+
+## 📋 PRE-FLIGHT CHECKLIST (Before Starting Session)
+
+- [ ] Read this plan + quick reference
+- [ ] Review gotchas section above
+- [ ] Understand that inline styles are the quick win
+- [ ] Know the 6 style replacements (see quick reference table)
+- [ ] Have guides.css open to add `.mb-6` class
+- [ ] Understand keyboard shortcut extraction is optional (but recommended)
+- [ ] Know you can always `git restore filename` if something breaks
+- [ ] Plan to commit after each major change
+
+---
+
+## 🔄 WORKFLOW FOR NEXT SESSION
+
+1. **Make one change at a time**
+   - Replace inline styles (takes 2 min each)
+   - Test in browser (30 sec)
+   - Commit (1 min)
+   - **Total:** 3 min per change, only 6 changes needed
+
+2. **Test immediately after each commit**
+   - Hard refresh browser (Cmd+Shift+R)
+   - Verify all filters work
+   - Check nothing broke
+
+3. **If something breaks**
+   - Don't panic: `git restore filename`
+   - Start over, smaller steps
+   - Ask what went wrong
+
+4. **Commit frequently**
+   - Don't try to do everything in one commit
+   - Each change = one commit
+   - Easier to roll back if needed
+
+---
+
+## 📊 SUCCESS INDICATORS
+
+You'll know you're done when:
+- ✅ All 6 inline styles replaced with classes
+- ✅ index.html has 0 style= attributes
+- ✅ `.mb-6` class added to guides.css
+- ✅ Keyboard shortcuts still work (1,2,3,4,t,d,?,Esc)
+- ✅ All filters work (city, language, month)
+- ✅ Page switching works
+- ✅ Theme toggle works
+- ✅ No console errors
+
+

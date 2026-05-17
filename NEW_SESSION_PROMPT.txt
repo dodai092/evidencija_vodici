@@ -1,0 +1,74 @@
+NEXT SESSION: index.html Simplification
+
+GOAL:
+Simplify index.html (708 lines) by removing inline styles and extracting keyboard shortcuts.
+Expected result: 30-50 lines removed, 0 inline styles, code more maintainable.
+
+TIME ESTIMATE: 30-45 minutes (just the quick wins)
+
+QUICK START:
+1. Open INDEX_QUICK_REFERENCE.md
+2. Follow the "Quick Wins" section exactly
+3. Do them one at a time (10 min each):
+   - Add .mb-6 utility class to guides.css
+   - Replace 6 inline styles (copy-paste from table)
+4. Test after each change (hard refresh: Cmd+Shift+R)
+5. Commit after each change
+
+WHAT YOU'LL DO:
+1. Replace 6 inline style= attributes with class names
+2. Optionally: Extract keyboard shortcut handler to shared.js
+3. Test everything works
+4. Commit changes to GitHub
+
+FILES TO MODIFY:
+- index.html (remove 6 inline styles)
+- guides.css (add .mb-6 class)
+- shared.js (optional: add keyboard shortcuts)
+
+KEY POINTS:
+✓ This is 100% refactoring — no functionality changes
+✓ Very low risk — can always `git restore filename` if needed
+✓ Do quick wins first (inline styles) to build momentum
+✓ Test in browser after each change
+✓ Commit frequently (one change per commit)
+
+GOTCHAS TO AVOID:
+⚠ Large files hard to read — use `sed -n '50,60p' file` to preview
+⚠ Never chain sed commands — run each separately
+⚠ Always preview sed changes before applying: `sed -n 'X,Yp' file` (no -i flag)
+⚠ File paths with spaces — use cd or relative paths
+⚠ When removing HTML blocks, verify you're not deleting adjacent elements
+⚠ Test keyboard shortcuts after extracting (1,2,3,4,t,d,?,Esc)
+
+TESTING CHECKLIST:
+After each change:
+□ Hard refresh browser (Cmd+Shift+R)
+□ Try keyboard shortcuts (1,2,3,4,t,d,?,Esc)
+□ Change filters (city, language, month)
+□ Switch pages (tabs)
+□ Toggle theme
+□ Check browser console for errors
+
+SAFETY NET:
+If something breaks:
+  git restore filename            # Undo changes to one file
+  git reset --hard HEAD          # Undo all changes since last commit
+
+DOCUMENTATION:
+- INDEX_SIMPLIFICATION_PLAN.md — Full analysis with 6 opportunities
+- INDEX_QUICK_REFERENCE.md — Copy-paste code snippets ready to use
+
+SUCCESS LOOKS LIKE:
+✅ index.html with 0 inline styles
+✅ guides.css with .mb-6 utility class
+✅ All tests passing (filters, navigation, shortcuts, theme)
+✅ 30-50 lines removed
+✅ Code cleaner and more maintainable
+
+OPTIONAL NEXT STEPS (if feeling confident):
+1. Extract keyboard shortcuts to shared.js (10-15 min)
+2. Generate filter options dynamically from CITIES constant (15 min)
+3. Event delegation for filter changes (20 min)
+
+Ready? Start with the inline styles (10 minutes, very safe).

@@ -40,12 +40,14 @@ function updateDateAsOf(val) {
     if (typeof PageCmp !== 'undefined') PageCmp.activeMonths = [];
 
     // Refresh ALL initialized pages (not just active)
-    if (typeof Page25 !== 'undefined' && Page25._initialized)  Page25.renderAll();
-    if (typeof Page26 !== 'undefined' && Page26._initialized)  Page26.renderAll();
-    if (typeof PageCmp !== 'undefined' && PageCmp._initialized) {
-        PageCmp.mergedGuides = PageCmp.buildMerged();
-        PageCmp.renderAll();
-    }
+    requestAnimationFrame(() => {
+        if (typeof Page25 !== 'undefined' && Page25._initialized)  Page25.renderAll();
+        if (typeof Page26 !== 'undefined' && Page26._initialized)  Page26.renderAll();
+        if (typeof PageCmp !== 'undefined' && PageCmp._initialized) {
+            PageCmp.mergedGuides = PageCmp.buildMerged();
+            PageCmp.renderAll();
+        }
+    });
 }
 
 function filteredStats(st, months) {

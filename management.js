@@ -523,8 +523,7 @@ function renderWaterfall() {
 
     const vals26 = [t26.revenue, -t26.commissionCost, -t26.vatAmount, -t26.vendorCost, -t26.tourCost, t26.grossMargin];
     const MONTH_NAMES_SHORT = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
-    const [year, monthStr, dayStr] = GLOBAL_DATE.split('-');
-    const cutoff = parseInt(monthStr);
+    const { month: cutoff } = parseGlobalDate();
     const rangeLabel = cutoff === 1 ? 'Jan' : `Jan–${MONTH_NAMES_SHORT[cutoff]}`;
     const datasets = [
         {
@@ -589,9 +588,7 @@ function renderWaterfall() {
 
 function renderMonthTrend() {
     const has25 = typeof guideStats25 !== 'undefined';
-    const [year, monthStr, dayStr] = GLOBAL_DATE.split('-');
-    const cutoffMonth = parseInt(monthStr);
-    const cutoffDay = parseInt(dayStr);
+    const { month: cutoffMonth, day: cutoffDay } = parseGlobalDate();
 
     // Build monthly aggregates by filtering day data and summing
     const m26 = {};
@@ -645,9 +642,7 @@ function renderMonthTrend() {
 
 function renderBillingTrend() {
     const has25 = typeof guideStats25 !== 'undefined';
-    const [year, monthStr, dayStr] = GLOBAL_DATE.split('-');
-    const cutoffMonth = parseInt(monthStr);
-    const cutoffDay = parseInt(dayStr);
+    const { month: cutoffMonth, day: cutoffDay } = parseGlobalDate();
 
     function aggregateBillingByDate(guides) {
         const billing = {POS: {revenue: 0, grossMargin: 0}, CPP: {revenue: 0, grossMargin: 0}};
@@ -892,8 +887,7 @@ function renderCommissionWaterfall() {
 function renderDirectOtaTrend() {
     const has25 = typeof guideStats25 !== 'undefined';
     const MONTH_SHORT = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
-    const [year, monthStr, dayStr] = GLOBAL_DATE.split('-');
-    const cutoffMonth = parseInt(monthStr);
+    const { month: cutoffMonth, day: cutoffDay } = parseGlobalDate();
 
     // Build per-month channel data from per-guide, filtered by date
     const monthChannel26 = {};
@@ -904,7 +898,7 @@ function renderDirectOtaTrend() {
             if (!g.mgmt?.byDay) return;
             Object.entries(g.mgmt.byDay).forEach(([dayKey, dayVal]) => {
                 const [m, d] = dayKey.split('-').map(Number);
-                if (m < cutoffMonth || (m === cutoffMonth && d <= parseInt(dayStr))) {
+                if (m < cutoffMonth || (m === cutoffMonth && d <= cutoffDay)) {
                     if (!monthChannelObj[m]) monthChannelObj[m] = { web: 0, ota: 0 };
                     // approximate: distribute by guide's overall channel ratio
                     const gTotal = g.mgmt.revenue || 1;
@@ -1469,8 +1463,7 @@ function renderOpsMonthLine() {
     const s = getComputedStyle(document.body);
     const c25 = s.getPropertyValue('--y25').trim();
     const green = s.getPropertyValue('--green').trim();
-    const [year, monthStr, dayStr] = GLOBAL_DATE.split('-');
-    const cutoffMonth = parseInt(monthStr);
+    const { month: cutoffMonth, day: cutoffDay } = parseGlobalDate();
 
     // Build monthly aggregates by filtering day data
     const m26 = {};
@@ -1486,7 +1479,7 @@ function renderOpsMonthLine() {
         if (!g.mgmt || !g.mgmt.byDay) return;
         Object.entries(g.mgmt.byDay).forEach(([key, val]) => {
             const [m, d] = key.split('-').map(Number);
-            if (m < cutoffMonth || (m === cutoffMonth && d <= parseInt(dayStr))) {
+            if (m < cutoffMonth || (m === cutoffMonth && d <= cutoffDay)) {
                 if (!m26[m]) m26[m] = { revenue: 0, grossMargin: 0 };
                 m26[m].revenue += val.revenue || 0;
                 m26[m].grossMargin += val.grossMargin || 0;
@@ -1500,7 +1493,7 @@ function renderOpsMonthLine() {
             if (!g.mgmt || !g.mgmt.byDay) return;
             Object.entries(g.mgmt.byDay).forEach(([key, val]) => {
                 const [m, d] = key.split('-').map(Number);
-                if (m < cutoffMonth || (m === cutoffMonth && d <= parseInt(dayStr))) {
+                if (m < cutoffMonth || (m === cutoffMonth && d <= cutoffDay)) {
                     if (!m25[m]) m25[m] = { revenue: 0, grossMargin: 0 };
                     m25[m].revenue += val.revenue || 0;
                     m25[m].grossMargin += val.grossMargin || 0;

@@ -13,6 +13,11 @@ function getCutoffMonth() {
     return parseInt(GLOBAL_DATE.split('-')[1]);
 }
 
+function parseGlobalDate() {
+    const [y, m, d] = GLOBAL_DATE.split('-');
+    return { year: parseInt(y), month: parseInt(m), day: parseInt(d) };
+}
+
 function getRangeLabel() {
     const m = getCutoffMonth();
     if (m === 1) return 'Jan';

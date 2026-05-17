@@ -1245,7 +1245,7 @@ function renderPaymentMethod() {
     const mgmt25 = typeof kpiTotals25 !== 'undefined' ? kpiTotals25.mgmt : null;
     const pm26 = mgmt26.byPaymentMethod || {};
     const pm25 = mgmt25?.byPaymentMethod || {};
-    const { c25, c26, green } = getThemeColors();
+    const { c25, c26 } = getThemeColors();
 
     // Payment method stat boxes
     const container = document.getElementById('payment-stats-container');

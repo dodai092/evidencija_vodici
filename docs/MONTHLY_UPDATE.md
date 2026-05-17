@@ -78,22 +78,17 @@ The **Usporedba** tab will show them as a new guide (no 2025 comparison row), gr
 
 ## Updating the comparison date range
 
-The comparison tab currently shows **January–May** (months 1–5). To extend it to June after June data is available, edit the `ytd()` function in `page-cmp.js`:
+The comparison tab currently shows **January–May** (months 1–5). To extend it to June after June data is available, edit `page-cmp.js`:
 
-```js
-// Change this line:
-for (let m = 1; m <= 5; m++) {
-// To:
-for (let m = 1; m <= 6; m++) {
-```
-
-Also update the subtitle in `index.html`:
+1. In the `_buildHeader()` method, update the subtitle text:
 ```html
 <!-- Change: -->
-<p>Sij&ndash;Svi 2025 vs. 2026 &middot; ...</p>
+<p><span class="ytd-range-label">Jan–May</span> 2025 vs. 2026 &middot; ...</p>
 <!-- To: -->
-<p>Sij&ndash;Lip 2025 vs. 2026 &middot; ...</p>
+<p><span class="ytd-range-label">Jan–Jun</span> 2025 vs. 2026 &middot; ...</p>
 ```
+
+2. If you're also adding June data processing, look for any month loops (`m <= 5`) and update them to `m <= 6`.
 
 ---
 

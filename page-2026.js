@@ -481,9 +481,175 @@ const Page26 = {
         if (arrow) arrow.classList.toggle('open');
     },
 
+    _buildHeader() {
+        return `<div class="header">
+            <div class="header-left">
+                <h1>Guides <span class="accent">2026</span></h1>
+                <p>Tour production by guide &middot; Free vs. Paid &middot; <span class="ytd-range-label">Jan–May</span></p>
+            </div>
+            <div class="header-right">
+                <div id="date-pov-26" class="mb-6"></div>
+                <div class="header-badge">Travel Year 2026 &middot; YTD</div>
+            </div>
+        </div>`;
+    },
+
+    _buildFilters() {
+        return `<div class="main">
+            <div class="filter-area">
+                <div class="filter-group">
+                    <label for="city-filter-26">City</label>
+                    <select class="filter-select" id="city-filter-26" onchange="Page26.filterCity(this.value)">
+                        <option value="all">All</option>
+                        <option value="Zagreb">Zagreb</option>
+                        <option value="Dubrovnik">Dubrovnik</option>
+                        <option value="Split">Split</option>
+                        <option value="Zadar">Zadar</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="lang-filter-26">Language</label>
+                    <select class="filter-select" id="lang-filter-26" onchange="Page26.filterLang(this.value)">
+                        <option value="all">All</option>
+                        <option value="eng">🇬🇧 ENG</option>
+                        <option value="esp">🇪🇸 ESP</option>
+                        <option value="fra">🇫🇷 FRA</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="month-filter-26">Mo.</label>
+                    <select class="filter-select" id="month-filter-26" onchange="Page26.filterMonth(this.value)">
+                        <option value="all">All</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="kpi-grid kpi-grid-4">
+                <div class="kpi hl-green">
+                    <div class="kpi-label">Free Tours – PAX Count YTD</div>
+                    <div class="kpi-value" id="kv-free-26">—</div>
+                    <div class="kpi-sub" id="kv-free-pax-26">— t</div>
+                </div>
+                <div class="kpi hl-green">
+                    <div class="kpi-label">Avg PAX / Free Tour</div>
+                    <div class="kpi-value" id="kv-avg-pax-26">—</div>
+                    <div class="kpi-sub">pax per tour</div>
+                </div>
+                <div class="kpi hl-blue">
+                    <div class="kpi-label">Paid Tours – Count YTD</div>
+                    <div class="kpi-value" id="kv-paid-26">—</div>
+                    <div class="kpi-sub" id="kv-paid-pax-26">— pax</div>
+                </div>
+                <div class="kpi hl-teal">
+                    <div class="kpi-label">Active Guides</div>
+                    <div class="kpi-value" id="kv-guides-26">—</div>
+                    <div class="kpi-sub">in 2026</div>
+                </div>
+            </div>`;
+    },
+
+    _buildFreeTours() {
+        return `<div class="section-divider" onclick="toggleSection('free-section-body-26')">
+                <span>Free Tours</span>
+                <span class="section-chevron">▾</span>
+            </div>
+            <div id="free-section-body-26" class="section-body">
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="chart-card-title">Free PAX by City — 2026</div>
+                        <div class="chart-container"><canvas id="cityChart-26"></canvas></div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-card-title">Avg PAX per Free Tour — by month 2026</div>
+                        <div class="chart-container"><canvas id="avgFreePaxChart-26"></canvas></div>
+                    </div>
+                </div>
+                <div class="charts-row">
+                    <div id="monthly-pax-table-26"></div>
+                </div>
+            </div>`;
+    },
+
+    _buildPaidTours() {
+        return `<div class="section-divider" onclick="toggleSection('paid-section-body-26')">
+                <span>Paid Tours</span>
+                <span class="section-chevron">▾</span>
+            </div>
+            <div id="paid-section-body-26" class="section-body">
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="chart-card-title">Paid Tours by City — 2026</div>
+                        <div class="chart-container"><canvas id="paidCityChart-26"></canvas></div>
+                    </div>
+                </div>
+                <div class="charts-row">
+                    <div class="chart-card type-chart-card">
+                        <div class="chart-card-title">Private Paid Tours by Type — 2026</div>
+                        <div class="type-chart-filters">
+                            <div class="type-filter-row">
+                                <span class="type-filter-label">Type</span>
+                                <div id="private-type-pills-26" class="pill-group">
+                                    <button class="pill active" onclick="Page26.filterPrivateType('all',this)">All</button>
+                                    <button class="pill" onclick="Page26.filterPrivateType('war PR',this)">war PR</button>
+                                    <button class="pill" onclick="Page26.filterPrivateType('food PR',this)">food PR</button>
+                                    <button class="pill" onclick="Page26.filterPrivateType('best',this)">best</button>
+                                    <button class="pill" onclick="Page26.filterPrivateType('old',this)">old</button>
+                                    <button class="pill" onclick="Page26.filterPrivateType('big',this)">big</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-container"><canvas id="privatePaidChart-26"></canvas></div>
+                        <div id="private-type-table-26"></div>
+                    </div>
+                </div>
+                <div class="charts-row">
+                    <div class="chart-card type-chart-card">
+                        <div class="chart-card-title">Shared Paid Tours by Type — 2026</div>
+                        <div class="type-chart-filters">
+                            <div class="type-filter-row">
+                                <span class="type-filter-label">Type</span>
+                                <div id="shared-type-pills-26" class="pill-group">
+                                    <button class="pill active" onclick="Page26.filterSharedType('all',this)">All</button>
+                                    <button class="pill" onclick="Page26.filterSharedType('war',this)">war</button>
+                                    <button class="pill" onclick="Page26.filterSharedType('food',this)">food</button>
+                                    <button class="pill" onclick="Page26.filterSharedType('best',this)">best</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-container"><canvas id="sharedPaidChart-26"></canvas></div>
+                        <div id="shared-type-table-26"></div>
+                    </div>
+                </div>
+            </div>`;
+    },
+
+    _buildGuides() {
+        return `<div class="section-divider" onclick="toggleSection('guides-body-26')">
+                <span>Guides</span>
+                <span class="section-chevron">▾</span>
+            </div>
+            <div id="guides-body-26" class="section-body">
+                <div id="guide-sections-26"></div>
+            </div>
+        </div>`;
+    },
+
     init() {
         if (this._initialized) return;
         this._initialized = true;
+
+        document.getElementById('page-26').innerHTML =
+            this._buildHeader() +
+            this._buildFilters() +
+            this._buildFreeTours() +
+            this._buildPaidTours() +
+            this._buildGuides();
+
         const d = new Date(GLOBAL_DATE);
         const fmt = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
         const datePov = this._el('date-pov');

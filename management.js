@@ -218,6 +218,16 @@ function tooltipDefaults() {
     };
 }
 
+function getThemeColors() {
+    const s = getComputedStyle(document.body);
+    return {
+        c25:   s.getPropertyValue('--y25').trim(),
+        c26:   s.getPropertyValue('--y26').trim(),
+        green: s.getPropertyValue('--green').trim(),
+        red:   s.getPropertyValue('--delta-neg').trim() || '#D4545A',
+    };
+}
+
 function makeBarChart(canvasId, labels, datasets, opts = {}) {
     destroyChart(canvasId);
     const ctx = document.getElementById(canvasId)?.getContext('2d');
@@ -505,10 +515,7 @@ function renderWaterfall() {
     }
 
     const labels = ['Revenue', 'Commission', 'VAT', 'Vendor Cost', 'Tour Cost', 'Gross Margin'];
-    const s = getComputedStyle(document.body);
-    const c25 = s.getPropertyValue('--y25').trim();
-    const c26 = s.getPropertyValue('--y26').trim();
-    const cNeg = s.getPropertyValue('--delta-neg').trim() || '#D4545A';
+    const { c25, c26, red: cNeg } = getThemeColors();
 
     function barColors(t) {
         return [
@@ -629,9 +636,7 @@ function renderMonthTrend() {
 
     const allM = Array.from({length: cutoffMonth}, (_, i) => i + 1);
     const MONTH_SHORT = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
-    const s = getComputedStyle(document.body);
-    const c25 = s.getPropertyValue('--y25').trim();
-    const c26 = s.getPropertyValue('--y26').trim();
+    const { c25, c26 } = getThemeColors();
     makeLineChart('month-gm-line', allM.map(m => MONTH_SHORT[m]), [
         { label: 'GM 2025', data: allM.map(m => m25[m]?.grossMargin || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [5,3] },
         { label: 'GM 2026', data: allM.map(m => m26[m]?.grossMargin || 0), borderColor: c26, backgroundColor: c26 + '22', tension: 0.3, fill: true },
@@ -667,9 +672,7 @@ function renderBillingTrend() {
     const billing25 = has25 ? aggregateBillingByDate(guideStats25) : {};
 
     const labels = ['POS', 'CPP'];
-    const s = getComputedStyle(document.body);
-    const c25 = s.getPropertyValue('--y25').trim();
-    const c26 = s.getPropertyValue('--y26').trim();
+    const { c25, c26 } = getThemeColors();
 
     makeBarChart('billing-bar', labels, [
         { label: '2025 Revenue', data: labels.map(k => billing25[k]?.revenue || 0), backgroundColor: c25 + 'aa', borderRadius: 4, borderSkipped: false },
@@ -844,10 +847,7 @@ function renderCommissionWaterfall() {
 
     if (!srcKeys.length) return;
 
-    const s = getComputedStyle(document.body);
-    const green = s.getPropertyValue('--green').trim();
-    const red   = s.getPropertyValue('--delta-neg').trim() || '#D4545A';
-    const c26   = s.getPropertyValue('--y26').trim();
+    const { green, red, c26 } = getThemeColors();
 
     // Stacked bar: Revenue | −Commission | −VendorCost | = GM
     makeBarChart('commission-wfall', srcKeys, [
@@ -916,10 +916,7 @@ function renderDirectOtaTrend() {
 
     const allM = Array.from({length: cutoffMonth}, (_, i) => i + 1);
 
-    const s = getComputedStyle(document.body);
-    const c25 = s.getPropertyValue('--y25').trim();
-    const c26 = s.getPropertyValue('--y26').trim();
-    const green = s.getPropertyValue('--green').trim();
+    const { c25, c26, green } = getThemeColors();
 
     makeLineChart('direct-ota-line', allM.map(m => MONTH_SHORT[m]), [
         { label: 'Direct Rev 2025', data: allM.map(m => monthChannel25[String(m)]?.web || 0), borderColor: c25, borderDash: [5,3], backgroundColor: 'transparent', tension: 0.3 },
@@ -1022,11 +1019,7 @@ const MONTH_SHORT  = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:
 function initOps() {
     const mgmt26 = kpiTotals26.mgmt;
     const mgmt25 = typeof kpiTotals25 !== 'undefined' ? kpiTotals25.mgmt : null;
-    const s = getComputedStyle(document.body);
-    const c25 = s.getPropertyValue('--y25').trim();
-    const c26 = s.getPropertyValue('--y26').trim();
-    const green = s.getPropertyValue('--green').trim();
-    const red   = s.getPropertyValue('--delta-neg').trim() || '#D4545A';
+    const { c25, c26, green, red } = getThemeColors();
 
     // Guide PAX band — GM% (THE KEY CHART)
     const gpb26 = mgmt26.byGuidePaxBand || {};
@@ -1252,10 +1245,7 @@ function renderPaymentMethod() {
     const mgmt25 = typeof kpiTotals25 !== 'undefined' ? kpiTotals25.mgmt : null;
     const pm26 = mgmt26.byPaymentMethod || {};
     const pm25 = mgmt25?.byPaymentMethod || {};
-    const s = getComputedStyle(document.body);
-    const c25 = s.getPropertyValue('--y25').trim();
-    const c26 = s.getPropertyValue('--y26').trim();
-    const green = s.getPropertyValue('--green').trim();
+    const { c25, c26, green } = getThemeColors();
 
     // Payment method stat boxes
     const container = document.getElementById('payment-stats-container');
@@ -1311,11 +1301,7 @@ function initCities() {
 
 function renderCitiesTab() {
     const CITIES = ['Zagreb', 'Dubrovnik', 'Split', 'Zadar'];
-    const s = getComputedStyle(document.body);
-    const c25 = s.getPropertyValue('--y25').trim();
-    const c26 = s.getPropertyValue('--y26').trim();
-    const green = s.getPropertyValue('--green').trim();
-    const red = s.getPropertyValue('--delta-neg').trim() || '#D4545A';
+    const { c25, c26, green, red } = getThemeColors();
 
     // 1. City overview cards
     let cardsHtml = '';
@@ -1460,9 +1446,7 @@ function renderCitiesTab() {
 
 function renderOpsMonthLine() {
     const has25 = typeof guideStats25 !== 'undefined';
-    const s = getComputedStyle(document.body);
-    const c25 = s.getPropertyValue('--y25').trim();
-    const green = s.getPropertyValue('--green').trim();
+    const { c25, green } = getThemeColors();
     const { month: cutoffMonth, day: cutoffDay } = parseGlobalDate();
 
     // Build monthly aggregates by filtering day data

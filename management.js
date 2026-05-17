@@ -21,7 +21,6 @@ function mgmtShowTab(id, el) {
     document.getElementById('mgmt-' + id).classList.add('active');
     el.classList.add('active', 'mgmt-tab-active');
     _activeTab = id;
-    // Hide sticky bar when leaving P&L tab
     if (id !== 'pl') {
         const bar = document.getElementById('sticky-kpi-bar');
         if (bar) bar.style.display = 'none';
@@ -292,7 +291,7 @@ function initPl() {
     renderMonthTrend();
     renderBillingTrend();
 
-    // Sticky KPI bar — appears when the KPI grid scrolls out of view
+    // Sticky bar position on resize
     _positionStickyBar();
     window.addEventListener('resize', _positionStickyBar, { passive: true });
 
@@ -369,7 +368,6 @@ function renderPlKpis(city) {
     // Insight callouts
     renderInsightCallouts(k, k25);
 
-    // Guide drilldown
     renderPlGuideDrilldown(city);
 }
 
@@ -607,7 +605,6 @@ function renderMonthTrend() {
     const has25 = typeof guideStats25 !== 'undefined';
     const { month: cutoffMonth, day: cutoffDay } = parseGlobalDate();
 
-    // Build monthly aggregates from day-level data with date filtering
     const m26 = buildMonthlyFromDays(guideStats26, cutoffMonth, cutoffDay);
     const m25 = has25 ? buildMonthlyFromDays(guideStats25, cutoffMonth, cutoffDay) : {};
 
@@ -773,7 +770,6 @@ function renderGuideTable() {
         </tr>`;
     }).join('');
 
-    // Render legend
     const legendEl = document.getElementById('guide-legend');
     if (legendEl) {
         legendEl.innerHTML = `

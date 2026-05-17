@@ -675,6 +675,8 @@
             const el = document.getElementById('shortcut-overlay');
             if (el) el.style.display = el.style.display === 'block' ? 'none' : 'block';
         }
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('theme') === 'dark') {
                 document.body.classList.add('dark-mode');
             }
             updateThemeButton();

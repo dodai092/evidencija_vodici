@@ -1882,3 +1882,7 @@ grid-template-columns: 1fr;
     color: var(--text2);
     margin-top: -8px;
 }
+
+.mb-6 {
+    margin-bottom: 6px;
+}

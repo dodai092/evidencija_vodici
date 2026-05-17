@@ -489,3 +489,17 @@
     font-size: 12px;
     border-left: 3px solid var(--amber);
 }
+
+/* ── Additional Typography ──────────────────────────── */
+.guide-legend {
+    font-size: 11px;
+    color: var(--text3);
+    margin: -8px 0 12px;
+}
+
+.legend-header {
+    padding: 12px 0;
+    font-size: 11px;
+    color: var(--text2);
+    margin-top: -8px;
+}

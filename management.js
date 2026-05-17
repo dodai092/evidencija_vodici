@@ -493,8 +493,12 @@ function renderPlGuideDrilldown(city) {
 function renderWaterfall() {
     const has25 = typeof guideStats25 !== 'undefined';
 
+    // Pre-filter guides with mgmt data before iteration
+    const guides26 = guideStats26.filter(g => g.mgmt);
+    const guides25 = has25 ? guideStats25.filter(g => g.mgmt) : [];
+
     // Compute 2026 totals filtered by date
-    const t26 = guideStats26.reduce((acc, g) => {
+    const t26 = guides26.reduce((acc, g) => {
         const fin = filterMgmtByDate(g.mgmt, GLOBAL_DATE);
         acc.revenue         += fin.revenue;
         acc.commissionCost  += fin.commissionCost;
@@ -508,8 +512,7 @@ function renderWaterfall() {
     // Compute 2025 totals filtered by date
     let t25 = null;
     if (has25) {
-        t25 = guideStats25.reduce((acc, g) => {
-            if (!g.mgmt) return acc;
+        t25 = guides25.reduce((acc, g) => {
             const fin = filterMgmtByDate(g.mgmt, GLOBAL_DATE);
             acc.revenue         += fin.revenue;
             acc.commissionCost  += fin.commissionCost;

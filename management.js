@@ -152,8 +152,9 @@ function filterStatsByDate(stats, cutoffDate) {
     return { freeTours, paidTours, freePax, paidPax };
 }
 
-function computeFilteredKpis(city) {
-    return guidesForCity(city).reduce((acc, g) => {
+function computeKpisForGuides(guides) {
+    return guides.reduce((acc, g) => {
+        if (!g.mgmt) return acc;
         const fin = filterMgmtByDate(g.mgmt, GLOBAL_DATE);
         const sts = filterStatsByDate(g.stats.all, GLOBAL_DATE);
         acc.revenue         += fin.revenue;
@@ -172,24 +173,14 @@ function computeFilteredKpis(city) {
          freeTours:0, paidTours:0, freePax:0, paidPax:0 });
 }
 
+function computeFilteredKpis(city) {
+    return computeKpisForGuides(guidesForCity(city));
+}
+
 function computeCity25(city) {
     if (typeof guideStats25 === 'undefined') return null;
     const src = city === 'all' ? guideStats25 : guideStats25.filter(g => g.city === city);
-    return src.reduce((acc, g) => {
-        if (!g.mgmt) return acc;
-        const fin = filterMgmtByDate(g.mgmt, GLOBAL_DATE);
-        const sts = filterStatsByDate(g.stats.all, GLOBAL_DATE);
-        acc.revenue        += fin.revenue;
-        acc.vendorCost     += fin.vendorCost;
-        acc.grossMargin    += fin.grossMargin;
-        acc.tourCost       += fin.tourCost;
-        acc.commissionCost += fin.commissionCost;
-        acc.vatAmount      += fin.vatAmount;
-        acc.paidTours += sts.paidTours; acc.freeTours += sts.freeTours;
-        acc.freePax   += sts.freePax;   acc.paidPax   += sts.paidPax;
-        return acc;
-    }, { revenue:0, vendorCost:0, grossMargin:0, tourCost:0, commissionCost:0,
-         vatAmount:0, paidTours:0, freeTours:0, freePax:0, paidPax:0 });
+    return computeKpisForGuides(src);
 }
 
 // ── Chart helpers ─────────────────────────────────────────────────────────────

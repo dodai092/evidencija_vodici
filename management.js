@@ -183,6 +183,22 @@ function computeCity25(city) {
     return computeKpisForGuides(src);
 }
 
+function buildMonthlyFromDays(guides, cutoffMonth, cutoffDay, fields = ['revenue', 'grossMargin']) {
+    const init = () => Object.fromEntries(fields.map(f => [f, 0]));
+    const result = {};
+    for (let m = 1; m <= cutoffMonth; m++) result[m] = init();
+    guides.forEach(g => {
+        if (!g.mgmt?.byDay) return;
+        for (const [key, val] of Object.entries(g.mgmt.byDay)) {
+            const [m, d] = key.split('-').map(Number);
+            if (m < cutoffMonth || (m === cutoffMonth && d <= cutoffDay)) {
+                fields.forEach(f => { result[m][f] += val[f] || 0; });
+            }
+        }
+    });
+    return result;
+}
+
 // ── Chart helpers ─────────────────────────────────────────────────────────────
 
 let _charts = {};
@@ -588,42 +604,9 @@ function renderMonthTrend() {
     const has25 = typeof guideStats25 !== 'undefined';
     const { month: cutoffMonth, day: cutoffDay } = parseGlobalDate();
 
-    // Build monthly aggregates by filtering day data and summing
-    const m26 = {};
-    const m25 = {};
-
-    for (let m = 1; m <= cutoffMonth; m++) {
-        m26[m] = { revenue: 0, grossMargin: 0 };
-        if (has25) m25[m] = { revenue: 0, grossMargin: 0 };
-    }
-
-    // Aggregate 2026 by month from filtered guide data
-    guideStats26.forEach(g => {
-        if (!g.mgmt || !g.mgmt.byDay) return;
-        for (const [key, val] of Object.entries(g.mgmt.byDay)) {
-            const [m, d] = key.split('-').map(Number);
-            if (m < cutoffMonth || (m === cutoffMonth && d <= cutoffDay)) {
-                if (!m26[m]) m26[m] = { revenue: 0, grossMargin: 0 };
-                m26[m].revenue += val.revenue || 0;
-                m26[m].grossMargin += val.grossMargin || 0;
-            }
-        }
-    });
-
-    // Aggregate 2025 by month from filtered guide data
-    if (has25) {
-        guideStats25.forEach(g => {
-            if (!g.mgmt || !g.mgmt.byDay) return;
-            for (const [key, val] of Object.entries(g.mgmt.byDay)) {
-                const [m, d] = key.split('-').map(Number);
-                if (m < cutoffMonth || (m === cutoffMonth && d <= cutoffDay)) {
-                    if (!m25[m]) m25[m] = { revenue: 0, grossMargin: 0 };
-                    m25[m].revenue += val.revenue || 0;
-                    m25[m].grossMargin += val.grossMargin || 0;
-                }
-            }
-        });
-    }
+    // Build monthly aggregates from day-level data with date filtering
+    const m26 = buildMonthlyFromDays(guideStats26, cutoffMonth, cutoffDay);
+    const m25 = has25 ? buildMonthlyFromDays(guideStats25, cutoffMonth, cutoffDay) : {};
 
     const allM = Array.from({length: cutoffMonth}, (_, i) => i + 1);
     const MONTH_SHORT = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
@@ -1440,42 +1423,9 @@ function renderOpsMonthLine() {
     const { c25, green } = getThemeColors();
     const { month: cutoffMonth, day: cutoffDay } = parseGlobalDate();
 
-    // Build monthly aggregates by filtering day data
-    const m26 = {};
-    const m25 = {};
-
-    for (let m = 1; m <= cutoffMonth; m++) {
-        m26[m] = { revenue: 0, grossMargin: 0 };
-        if (has25) m25[m] = { revenue: 0, grossMargin: 0 };
-    }
-
-    // Aggregate 2026 by month from filtered guide data
-    guideStats26.forEach(g => {
-        if (!g.mgmt || !g.mgmt.byDay) return;
-        Object.entries(g.mgmt.byDay).forEach(([key, val]) => {
-            const [m, d] = key.split('-').map(Number);
-            if (m < cutoffMonth || (m === cutoffMonth && d <= cutoffDay)) {
-                if (!m26[m]) m26[m] = { revenue: 0, grossMargin: 0 };
-                m26[m].revenue += val.revenue || 0;
-                m26[m].grossMargin += val.grossMargin || 0;
-            }
-        });
-    });
-
-    // Aggregate 2025 by month from filtered guide data
-    if (has25) {
-        guideStats25.forEach(g => {
-            if (!g.mgmt || !g.mgmt.byDay) return;
-            Object.entries(g.mgmt.byDay).forEach(([key, val]) => {
-                const [m, d] = key.split('-').map(Number);
-                if (m < cutoffMonth || (m === cutoffMonth && d <= cutoffDay)) {
-                    if (!m25[m]) m25[m] = { revenue: 0, grossMargin: 0 };
-                    m25[m].revenue += val.revenue || 0;
-                    m25[m].grossMargin += val.grossMargin || 0;
-                }
-            });
-        });
-    }
+    // Build monthly aggregates from day-level data with date filtering
+    const m26 = buildMonthlyFromDays(guideStats26, cutoffMonth, cutoffDay);
+    const m25 = has25 ? buildMonthlyFromDays(guideStats25, cutoffMonth, cutoffDay) : {};
 
     const allM = Array.from({length: cutoffMonth}, (_, i) => i + 1);
     const MONTH_SHORT = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};

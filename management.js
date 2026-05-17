@@ -16,10 +16,10 @@ let _sortCol = 'grossMargin';
 let _sortDir = -1;
 
 function mgmtShowTab(id, el) {
-    document.querySelectorAll('.mgmt-page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active','mgmt-tab-active'));
-    document.getElementById('mgmt-' + id).classList.add('active');
-    el.classList.add('active', 'mgmt-tab-active');
+    document.querySelectorAll(`.${CSS.MGMT_PAGE}`).forEach(p => p.classList.remove(CSS.ACTIVE));
+    document.querySelectorAll(`.${CSS.NAV_TAB}`).forEach(t => t.classList.remove(CSS.ACTIVE, CSS.MGMT_TAB_ACTIVE));
+    document.getElementById('mgmt-' + id).classList.add(CSS.ACTIVE);
+    el.classList.add(CSS.ACTIVE, CSS.MGMT_TAB_ACTIVE);
     _activeTab = id;
     if (id !== 'pl') {
         const bar = document.getElementById('sticky-kpi-bar');

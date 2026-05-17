@@ -3,6 +3,19 @@ const CITY_CLS  = { Zagreb:'zagreb', Dubrovnik:'dubrovnik', Split:'split', Zadar
 const CITIES    = ['Zagreb','Dubrovnik','Split','Zadar'];
 const MONTH_NAMES_HR = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
 
+// CSS class names — single source of truth for navigation and tab styling
+const CSS = {
+    ACTIVE: 'active',
+    NAV_Y25: 'y25',
+    NAV_Y26: 'y26',
+    NAV_CMP: 'cmp',
+    PAGE: 'page',
+    MGMT_PAGE: 'mgmt-page',
+    NAV_TAB: 'nav-tab',
+    MGMT_TAB_ACTIVE: 'mgmt-tab-active',
+    DARK_MODE: 'dark-mode',
+};
+
 const _today = new Date();
 let GLOBAL_DATE = `${_today.getFullYear()}-${String(_today.getMonth()+1).padStart(2,'0')}-${String(_today.getDate()).padStart(2,'0')}`;
 
@@ -106,7 +119,7 @@ function updateThemeButton(isDark) {
 }
 
 function toggleTheme(onToggleComplete) {
-    const isDark = document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.toggle(CSS.DARK_MODE);
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
     updateThemeButton(isDark);
 
@@ -131,13 +144,13 @@ function toggleSection(id) {
 }
 
 function showPage(id, tab) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active','y25','y26','cmp'));
-    document.getElementById(id).classList.add('active');
-    tab.classList.add('active');
-    if (id === 'page-25')  tab.classList.add('y25');
-    if (id === 'page-26')  tab.classList.add('y26');
-    if (id === 'page-cmp') tab.classList.add('cmp');
+    document.querySelectorAll(`.${CSS.PAGE}`).forEach(p => p.classList.remove(CSS.ACTIVE));
+    document.querySelectorAll(`.${CSS.NAV_TAB}`).forEach(t => t.classList.remove(CSS.ACTIVE, CSS.NAV_Y25, CSS.NAV_Y26, CSS.NAV_CMP));
+    document.getElementById(id).classList.add(CSS.ACTIVE);
+    tab.classList.add(CSS.ACTIVE);
+    if (id === 'page-25')  tab.classList.add(CSS.NAV_Y25);
+    if (id === 'page-26')  tab.classList.add(CSS.NAV_Y26);
+    if (id === 'page-cmp') tab.classList.add(CSS.NAV_CMP);
     if (id === 'page-25'  && !Page25._initialized)  Page25.init();
     if (id === 'page-26'  && !Page26._initialized)   Page26.init();
     if (id === 'page-cmp' && !PageCmp._initialized)  PageCmp.init();

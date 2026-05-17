@@ -1139,8 +1139,6 @@ function initOps() {
 
 // ── City constants and helpers ────────────────────────────────────────────────────
 
-const CITIES = ['Zagreb', 'Dubrovnik', 'Split', 'Zadar'];
-
 // Generic factory: aggregate guide mgmt dimension by city
 function buildDimensionByCity(dimensionKey, fields) {
     const result = {};

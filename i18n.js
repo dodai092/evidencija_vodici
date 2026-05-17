@@ -29,6 +29,11 @@ const TRANSLATIONS = {
       avgPaxFreeTour: 'Avg PAX / Free Tour',
       paidToursCount: 'Paid Tours – Count',
       paxPerTour: 'pax per tour',
+      byMonth: 'by Month',
+      ytdRange: 'Jan–May',
+      travelYear2026: 'Travel Year 2026',
+      ytd: 'YTD',
+      partial: 'Partial month',
     },
     charts: {
       freePaxByCity: 'Free PAX by City',
@@ -96,6 +101,11 @@ const TRANSLATIONS = {
       avgPaxFreeTour: 'Prosječan PAX / Besplatna tura',
       paidToursCount: 'Plaćene ture – Broj',
       paxPerTour: 'pax po turi',
+      byMonth: 'po mjesecu',
+      ytdRange: 'Jan–Maj',
+      travelYear2026: 'Putna godina 2026',
+      ytd: 'YTD',
+      partial: 'Dijelom mjesec',
     },
     charts: {
       freePaxByCity: 'Besplatni PAX po gradu',

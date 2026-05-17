@@ -75,13 +75,13 @@ const Page26 = {
             `</div>` +
             `<div class="gc-stats">` +
             `<div class="gc-half">` +
-            `<div class="gc-stat-label">Free Tours</div>` +
+            `<div class="gc-stat-label">${t('labels.freeTours')}</div>` +
             `<div class="gc-stat-num" style="color:var(--green)">${fs.freeTours}</div>` +
             `<div class="gc-stat-sub">${fs.freePax} pax</div>` +
             `</div>` +
             `<div class="gc-divider"></div>` +
             `<div class="gc-half" style="text-align:right">` +
-            `<div class="gc-stat-label">Paid Tours</div>` +
+            `<div class="gc-stat-label">${t('labels.paidTours')}</div>` +
             `<div class="gc-stat-num" style="color:${col}">${fs.paidTours}</div>` +
             `<div class="gc-stat-sub">${fs.paidPax} pax</div>` +
             `</div>` +
@@ -89,20 +89,20 @@ const Page26 = {
             `</div>` +
             `${typeBarsHtml}` +
             `<div class="monthly-toggle" onclick="Page26.toggleMonthly('${sid}')">` +
-            `<span class="mt-arrow" id="mta-${sid}">&#9660;</span> Monthly` +
+            `<span class="mt-arrow" id="mta-${sid}">&#9660;</span> ${t('labels.monthly')}` +
             `</div>` +
             `<div class="monthly-table" id="mt-${sid}">` +
             `<table>` +
             `<thead><tr>` +
-            `<th>Mo.</th>` +
-            `<th class="num" style="color:var(--green)">Free t</th>` +
-            `<th class="num">Free p</th>` +
+            `<th>${t('table.month')}</th>` +
+            `<th class="num" style="color:var(--green)">${t('table.free')} t</th>` +
+            `<th class="num">${t('table.free')} p</th>` +
             `<th class="num" style="color:var(--teal)">$ t</th>` +
             `<th class="num">$ p</th>` +
             `</tr></thead>` +
             `<tbody>${monthRowsHtml}</tbody>` +
             `<tfoot><tr>` +
-            `<td>Total</td>` +
+            `<td>${t('labels.total')}</td>` +
             `<td class="num free-col">${fs.freeTours}</td>` +
             `<td class="num">${fs.freePax}</td>` +
             `<td class="num paid-col">${fs.paidTours}</td>` +
@@ -172,8 +172,8 @@ const Page26 = {
             } catch(e) { console.error(e); }
         };
 
-        makeBar('cityChart-26', 'cityChartInstance', citiesToShow.map(c => freePaxByCity[c]), 'PAX', 'pax');
-        makeBar('paidCityChart-26', 'paidCityChartInstance', citiesToShow.map(c => paidToursByCity[c]), 'Tours', 'tours');
+        makeBar('cityChart-26', 'cityChartInstance', citiesToShow.map(c => freePaxByCity[c]), t('table.pax'), t('table.pax').toLowerCase());
+        makeBar('paidCityChart-26', 'paidCityChartInstance', citiesToShow.map(c => paidToursByCity[c]), t('table.tours'), t('table.tours').toLowerCase());
     },
 
     renderMonthlyTable() {
@@ -223,17 +223,17 @@ const Page26 = {
         const hasPartial = data.some(r => r.isPartial);
 
         const html = `<div class="chart-card">
-            <div class="chart-card-title">Free PAX by Month and City — 2026</div>
+            <div class="chart-card-title">${t('labels.freePax')} ${t('labels.byMonth')} and City — 2026</div>
             <div class="mpax-wrap">
             <table class="mpax-table">
-                <thead><tr><th class="mpax-month-head">Mo.</th>${cityHeaders}</tr></thead>
+                <thead><tr><th class="mpax-month-head">${t('table.month')}</th>${cityHeaders}</tr></thead>
                 <tbody>
                     ${bodyRows}
                     <tr class="mpax-total"><td class="mpax-month">Total</td>${totalCells}</tr>
                 </tbody>
             </table>
             </div>
-            ${hasPartial ? `<div class="mpax-note">* Partial month — data through ${GLOBAL_DATE}</div>` : ''}
+            ${hasPartial ? `<div class="mpax-note">* ${t('labels.partial')} — data through ${GLOBAL_DATE}</div>` : ''}
         </div>`;
 
         const el = document.getElementById('monthly-pax-table-26');
@@ -317,11 +317,11 @@ const Page26 = {
                         layout: { padding: { top: 20 } },
                         plugins: {
                             legend: { display: false },
-                            tooltip: { callbacks: { afterLabel: item => { const p = item.dataset._paxData?.[item.dataIndex]; return p ? `PAX: ${p}` : ''; } } }
+                            tooltip: { callbacks: { afterLabel: item => { const p = item.dataset._paxData?.[item.dataIndex]; return p ? `${t('table.pax')}: ${p}` : ''; } } }
                         },
                         scales: {
                             x: { ticks: { color: colors.text3, font: { size: 11 } }, grid: { color: colors.border } },
-                            y: { title: { display: true, text: 'Tours', color: colors.text3, font: { size: 10 } }, ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
+                            y: { title: { display: true, text: t('table.tours'), color: colors.text3, font: { size: 10 } }, ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
                         }
                     },
                     plugins: [paxLabelPlugin()]
@@ -343,15 +343,15 @@ const Page26 = {
             const html = `<div class="mpax-wrap" style="margin-top:16px">
                 <table class="mpax-table">
                     <thead><tr>
-                        <th class="mpax-month-head">Mo.</th>
-                        <th class="mpax-metric-head">Tours</th>
-                        <th class="mpax-metric-head">PAX</th>
-                        <th class="mpax-metric-head">Avg PAX</th>
+                        <th class="mpax-month-head">${t('table.month')}</th>
+                        <th class="mpax-metric-head">${t('table.tours')}</th>
+                        <th class="mpax-metric-head">${t('table.pax')}</th>
+                        <th class="mpax-metric-head">Avg ${t('table.pax')}</th>
                     </tr></thead>
                     <tbody>
                         ${bodyRows}
                         <tr class="mpax-total">
-                            <td class="mpax-month">Total</td>
+                            <td class="mpax-month">${t('labels.total')}</td>
                             <td>${totT || '—'}</td><td>${totP || '—'}</td>
                             <td>${totT > 0 ? (totP / totT).toFixed(1) : '—'}</td>
                         </tr>
@@ -429,7 +429,7 @@ const Page26 = {
                 responsive: true, maintainAspectRatio: false,
                 plugins: {
                     legend: { display: true, labels: { color: textColor, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 12 } },
-                    tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} PAX/tour` } }
+                    tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} ${t('table.pax')}/tour` } }
                 },
                 scales: {
                     x: { ticks: { color: text3 }, grid: { color: border } },
@@ -484,12 +484,12 @@ const Page26 = {
     _buildHeader() {
         return `<div class="header">
             <div class="header-left">
-                <h1>Guides <span class="accent">2026</span></h1>
-                <p>Tour production by guide &middot; Free vs. Paid &middot; <span class="ytd-range-label">Jan–May</span></p>
+                <h1>${t('labels.guides')} <span class="accent">2026</span></h1>
+                <p>Tour production by guide &middot; ${t('labels.freeTours')} vs. ${t('labels.paidTours')} &middot; <span class="ytd-range-label">${t('labels.ytdRange')}</span></p>
             </div>
             <div class="header-right">
                 <div id="date-pov-26" class="mb-6"></div>
-                <div class="header-badge">Travel Year 2026 &middot; YTD</div>
+                <div class="header-badge">${t('labels.travelYear2026')} &middot; ${t('labels.ytd')}</div>
             </div>
         </div>`;
     },
@@ -498,9 +498,9 @@ const Page26 = {
         return `<div class="main">
             <div class="filter-area">
                 <div class="filter-group">
-                    <label for="city-filter-26">City</label>
+                    <label for="city-filter-26">${t('labels.city')}</label>
                     <select class="filter-select" id="city-filter-26" onchange="Page26.filterCity(this.value)">
-                        <option value="all">All</option>
+                        <option value="all">${t('labels.all')}</option>
                         <option value="Zagreb">Zagreb</option>
                         <option value="Dubrovnik">Dubrovnik</option>
                         <option value="Split">Split</option>
@@ -508,18 +508,18 @@ const Page26 = {
                     </select>
                 </div>
                 <div class="filter-group">
-                    <label for="lang-filter-26">Language</label>
+                    <label for="lang-filter-26">${t('labels.language')}</label>
                     <select class="filter-select" id="lang-filter-26" onchange="Page26.filterLang(this.value)">
-                        <option value="all">All</option>
+                        <option value="all">${t('labels.all')}</option>
                         <option value="eng">🇬🇧 ENG</option>
                         <option value="esp">🇪🇸 ESP</option>
                         <option value="fra">🇫🇷 FRA</option>
                     </select>
                 </div>
                 <div class="filter-group">
-                    <label for="month-filter-26">Mo.</label>
+                    <label for="month-filter-26">${t('table.month')}</label>
                     <select class="filter-select" id="month-filter-26" onchange="Page26.filterMonth(this.value)">
-                        <option value="all">All</option>
+                        <option value="all">${t('labels.all')}</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -531,41 +531,41 @@ const Page26 = {
 
             <div class="kpi-grid kpi-grid-4">
                 <div class="kpi hl-green">
-                    <div class="kpi-label">Free Tours – PAX Count YTD</div>
+                    <div class="kpi-label">${t('labels.freeToursPaxCount')} YTD</div>
                     <div class="kpi-value" id="kv-free-26">—</div>
                     <div class="kpi-sub" id="kv-free-pax-26">— t</div>
                 </div>
                 <div class="kpi hl-green">
-                    <div class="kpi-label">Avg PAX / Free Tour</div>
+                    <div class="kpi-label">${t('labels.avgPaxFreeTour')}</div>
                     <div class="kpi-value" id="kv-avg-pax-26">—</div>
-                    <div class="kpi-sub">pax per tour</div>
+                    <div class="kpi-sub">${t('labels.paxPerTour')}</div>
                 </div>
                 <div class="kpi hl-blue">
-                    <div class="kpi-label">Paid Tours – Count YTD</div>
+                    <div class="kpi-label">${t('labels.paidToursCount')} YTD</div>
                     <div class="kpi-value" id="kv-paid-26">—</div>
                     <div class="kpi-sub" id="kv-paid-pax-26">— pax</div>
                 </div>
                 <div class="kpi hl-teal">
-                    <div class="kpi-label">Active Guides</div>
+                    <div class="kpi-label">${t('labels.activeGuides')}</div>
                     <div class="kpi-value" id="kv-guides-26">—</div>
-                    <div class="kpi-sub">in 2026</div>
+                    <div class="kpi-sub">${t('labels.in2026')}</div>
                 </div>
             </div>`;
     },
 
     _buildFreeTours() {
         return `<div class="section-divider" onclick="toggleSection('free-section-body-26')">
-                <span>Free Tours</span>
+                <span>${t('sections.freeTours')}</span>
                 <span class="section-chevron">▾</span>
             </div>
             <div id="free-section-body-26" class="section-body">
                 <div class="charts-row">
                     <div class="chart-card">
-                        <div class="chart-card-title">Free PAX by City — 2026</div>
+                        <div class="chart-card-title">${t('labels.freePax')} by City — 2026</div>
                         <div class="chart-container"><canvas id="cityChart-26"></canvas></div>
                     </div>
                     <div class="chart-card">
-                        <div class="chart-card-title">Avg PAX per Free Tour — by month 2026</div>
+                        <div class="chart-card-title">${t('labels.avgPaxPerTour')} — by month 2026</div>
                         <div class="chart-container"><canvas id="avgFreePaxChart-26"></canvas></div>
                     </div>
                 </div>
@@ -577,24 +577,24 @@ const Page26 = {
 
     _buildPaidTours() {
         return `<div class="section-divider" onclick="toggleSection('paid-section-body-26')">
-                <span>Paid Tours</span>
+                <span>${t('sections.paidTours')}</span>
                 <span class="section-chevron">▾</span>
             </div>
             <div id="paid-section-body-26" class="section-body">
                 <div class="charts-row">
                     <div class="chart-card">
-                        <div class="chart-card-title">Paid Tours by City — 2026</div>
+                        <div class="chart-card-title">${t('labels.paidTours')} by City — 2026</div>
                         <div class="chart-container"><canvas id="paidCityChart-26"></canvas></div>
                     </div>
                 </div>
                 <div class="charts-row">
                     <div class="chart-card type-chart-card">
-                        <div class="chart-card-title">Private Paid Tours by Type — 2026</div>
+                        <div class="chart-card-title">${t('charts.privatePaidTours')} — 2026</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
-                                <span class="type-filter-label">Type</span>
+                                <span class="type-filter-label">${t('labels.type')}</span>
                                 <div id="private-type-pills-26" class="pill-group">
-                                    <button class="pill active" onclick="Page26.filterPrivateType('all',this)">All</button>
+                                    <button class="pill active" onclick="Page26.filterPrivateType('all',this)">${t('labels.all')}</button>
                                     <button class="pill" onclick="Page26.filterPrivateType('war PR',this)">war PR</button>
                                     <button class="pill" onclick="Page26.filterPrivateType('food PR',this)">food PR</button>
                                     <button class="pill" onclick="Page26.filterPrivateType('best',this)">best</button>
@@ -609,12 +609,12 @@ const Page26 = {
                 </div>
                 <div class="charts-row">
                     <div class="chart-card type-chart-card">
-                        <div class="chart-card-title">Shared Paid Tours by Type — 2026</div>
+                        <div class="chart-card-title">${t('charts.sharedPaidTours')} — 2026</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
-                                <span class="type-filter-label">Type</span>
+                                <span class="type-filter-label">${t('labels.type')}</span>
                                 <div id="shared-type-pills-26" class="pill-group">
-                                    <button class="pill active" onclick="Page26.filterSharedType('all',this)">All</button>
+                                    <button class="pill active" onclick="Page26.filterSharedType('all',this)">${t('labels.all')}</button>
                                     <button class="pill" onclick="Page26.filterSharedType('war',this)">war</button>
                                     <button class="pill" onclick="Page26.filterSharedType('food',this)">food</button>
                                     <button class="pill" onclick="Page26.filterSharedType('best',this)">best</button>
@@ -630,7 +630,7 @@ const Page26 = {
 
     _buildGuides() {
         return `<div class="section-divider" onclick="toggleSection('guides-body-26')">
-                <span>Guides</span>
+                <span>${t('labels.guides')}</span>
                 <span class="section-chevron">▾</span>
             </div>
             <div id="guides-body-26" class="section-body">

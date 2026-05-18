@@ -1,4 +1,8 @@
-/* management.js — FreeSpirit Management Dashboard */
+import {
+    CITIES, CITY_COLS, CSS,
+    parseGlobalDate, getRangeLabel, filteredStats,
+} from '../../shared.js';
+import { t } from '../../i18n.js';
 
 // ── Tab routing ───────────────────────────────────────────────────────────────
 
@@ -15,9 +19,9 @@ let _activeCity = 'all';
 let _sortCol = 'grossMargin';
 let _sortDir = -1;
 
-function mgmtShowTab(id, el) {
+export function mgmtShowTab(id, el) {
     document.querySelectorAll(`.${CSS.MGMT_PAGE}`).forEach(p => p.classList.remove(CSS.ACTIVE));
-    document.querySelectorAll(`.${CSS.NAV_TAB}`).forEach(t => t.classList.remove(CSS.ACTIVE, CSS.MGMT_TAB_ACTIVE));
+    document.querySelectorAll(`.${CSS.NAV_TAB}`).forEach(tp => tp.classList.remove(CSS.ACTIVE, CSS.MGMT_TAB_ACTIVE));
     document.getElementById('mgmt-' + id).classList.add(CSS.ACTIVE);
     el.classList.add(CSS.ACTIVE, CSS.MGMT_TAB_ACTIVE);
     _activeTab = id;
@@ -71,7 +75,7 @@ function guidesForCity(city) {
 }
 
 function mgmtCutoffMonth() {
-    return parseInt(GLOBAL_DATE.split('-')[1]);
+    return parseInt(window.GLOBAL_DATE.split('-')[1]);
 }
 
 function _sumMgmtMonths(mgmt, cutoff) {
@@ -105,7 +109,7 @@ function _sumStatMonths(statsAll, cutoff) {
 function filterMgmtByDate(mgmt, cutoffDate) {
     if (!mgmt || !cutoffDate) return { revenue:0, vendorCost:0, grossMargin:0, tourCost:0, commissionCost:0, processingFee:0, vatAmount:0, amountBeforeTax:0 };
 
-    const [year, monthStr, dayStr] = cutoffDate.split('-');
+    const [, monthStr, dayStr] = cutoffDate.split('-');
     const cutoffMonth = parseInt(monthStr);
     const cutoffDay = parseInt(dayStr);
 
@@ -131,7 +135,7 @@ function filterMgmtByDate(mgmt, cutoffDate) {
 function filterStatsByDate(stats, cutoffDate) {
     if (!stats || !cutoffDate) return { freeTours: 0, paidTours: 0, freePax: 0, paidPax: 0 };
 
-    const [year, monthStr, dayStr] = cutoffDate.split('-');
+    const [, monthStr, dayStr] = cutoffDate.split('-');
     const cutoffMonth = parseInt(monthStr);
     const cutoffDay = parseInt(dayStr);
 
@@ -154,8 +158,8 @@ function filterStatsByDate(stats, cutoffDate) {
 function computeKpisForGuides(guides) {
     return guides.reduce((acc, g) => {
         if (!g.mgmt) return acc;
-        const fin = filterMgmtByDate(g.mgmt, GLOBAL_DATE);
-        const sts = filterStatsByDate(g.stats.all, GLOBAL_DATE);
+        const fin = filterMgmtByDate(g.mgmt, window.GLOBAL_DATE);
+        const sts = filterStatsByDate(g.stats.all, window.GLOBAL_DATE);
         acc.revenue         += fin.revenue;
         acc.vendorCost      += fin.vendorCost;
         acc.grossMargin     += fin.grossMargin;
@@ -291,7 +295,6 @@ function initPl() {
     renderMonthTrend();
     renderBillingTrend();
 
-    // Sticky bar position on resize
     _positionStickyBar();
     window.addEventListener('resize', _positionStickyBar, { passive: true });
 
@@ -349,12 +352,10 @@ function renderPlKpis(city) {
     document.getElementById('kpi-guides').textContent     = fmt(guidesForCity(city).length);
     document.getElementById('kpi-guides-sub').textContent = city === 'all' ? t('management.acrossAllCities') : city;
 
-    // Secondary KPI deltas
     document.getElementById('kpi-tour-cost-delta').innerHTML = kpiDelta(k.tourCost, k25?.tourCost);
     const avgGm25 = k25 && k25.paidTours > 0 ? k25.grossMargin / k25.paidTours : null;
     document.getElementById('kpi-avg-gm-delta').innerHTML = kpiDelta(avgGm, avgGm25);
 
-    // Sticky mini-KPI bar values
     const rangeLabel = getRangeLabel ? getRangeLabel() : '';
     const sBar = document.getElementById('sticky-kpi-bar');
     if (sBar) {
@@ -365,9 +366,7 @@ function renderPlKpis(city) {
         document.getElementById('skpi-period').textContent     = rangeLabel + ' 2026';
     }
 
-    // Insight callouts
     renderInsightCallouts(k, k25);
-
     renderPlGuideDrilldown(city);
 }
 
@@ -437,13 +436,12 @@ function renderPlGuideDrilldown(city) {
     const el = document.getElementById('pl-guide-drilldown');
     if (!el || guides.length === 0) return;
 
-    // Build guide financials
     const rows = guides.map(g => {
-        const fin = filterMgmtByDate(g.mgmt, GLOBAL_DATE);
-        const sts = filterStatsByDate(g.stats.all, GLOBAL_DATE);
+        const fin = filterMgmtByDate(g.mgmt, window.GLOBAL_DATE);
+        const sts = filterStatsByDate(g.stats.all, window.GLOBAL_DATE);
         const gmPct = fin.revenue > 0 ? (fin.grossMargin / fin.revenue * 100) : 0;
         const g25 = get25(g.name);
-        const fin25 = g25?.mgmt ? filterMgmtByDate(g25.mgmt, GLOBAL_DATE) : null;
+        const fin25 = g25?.mgmt ? filterMgmtByDate(g25.mgmt, window.GLOBAL_DATE) : null;
         const dGm = fin25 ? fin.grossMargin - fin25.grossMargin : null;
         return {
             name: g.name,
@@ -455,11 +453,9 @@ function renderPlGuideDrilldown(city) {
         };
     });
 
-    // Sort by GM descending, take top 10
     rows.sort((a, b) => b.grossMargin - a.grossMargin);
     const top10 = rows.slice(0, 10);
 
-    // Render compact table
     el.innerHTML = `<div style="padding: 16px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px;">
         <div style="font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 12px;">${t('management.topGuidesMargin')}</div>
         <table class="mgmt-table" style="font-size: 11px;">
@@ -491,13 +487,11 @@ function renderPlGuideDrilldown(city) {
 function renderWaterfall() {
     const has25 = typeof guideStats25 !== 'undefined';
 
-    // Pre-filter guides with mgmt data before iteration
     const guides26 = guideStats26.filter(g => g.mgmt);
     const guides25 = has25 ? guideStats25.filter(g => g.mgmt) : [];
 
-    // Compute 2026 totals filtered by date
     const t26 = guides26.reduce((acc, g) => {
-        const fin = filterMgmtByDate(g.mgmt, GLOBAL_DATE);
+        const fin = filterMgmtByDate(g.mgmt, window.GLOBAL_DATE);
         acc.revenue         += fin.revenue;
         acc.commissionCost  += fin.commissionCost;
         acc.vatAmount       += fin.vatAmount;
@@ -507,11 +501,10 @@ function renderWaterfall() {
         return acc;
     }, { revenue:0, commissionCost:0, vatAmount:0, vendorCost:0, tourCost:0, grossMargin:0 });
 
-    // Compute 2025 totals filtered by date
     let t25 = null;
     if (has25) {
         t25 = guides25.reduce((acc, g) => {
-            const fin = filterMgmtByDate(g.mgmt, GLOBAL_DATE);
+            const fin = filterMgmtByDate(g.mgmt, window.GLOBAL_DATE);
             acc.revenue         += fin.revenue;
             acc.commissionCost  += fin.commissionCost;
             acc.vatAmount       += fin.vatAmount;
@@ -524,17 +517,6 @@ function renderWaterfall() {
 
     const labels = [t('management.revenue'), t('management.commission'), t('management.vat'), t('management.vendorCost'), t('management.tourCost'), t('management.grossMargin')];
     const { c25, c26, red: cNeg } = getThemeColors();
-
-    function barColors(t) {
-        return [
-            t.revenue >= 0 ? c26 : cNeg,
-            cNeg,
-            cNeg,
-            cNeg,
-            cNeg,
-            t.grossMargin >= 0 ? c26 : cNeg,
-        ];
-    }
 
     const vals26 = [t26.revenue, -t26.commissionCost, -t26.vatAmount, -t26.vendorCost, -t26.tourCost, t26.grossMargin];
     const MONTH_NAMES_SHORT = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
@@ -565,7 +547,6 @@ function renderWaterfall() {
     const titleEl = document.getElementById('waterfall-chart-title');
     if (titleEl) titleEl.textContent = `${t('management.plBreakdown')} — ${rangeLabel} 2025 vs 2026`;
 
-    // Summary table below chart
     const el = document.getElementById('waterfall-summary');
     if (el) {
         const rows = [
@@ -621,7 +602,6 @@ function renderMonthTrend() {
 
 function renderBillingTrend() {
     const has25 = typeof guideStats25 !== 'undefined';
-    const { month: cutoffMonth } = parseGlobalDate();
 
     function aggregateBillingByDate(guides) {
         const billing = {POS: {revenue: 0, grossMargin: 0}, CPP: {revenue: 0, grossMargin: 0}};
@@ -629,7 +609,7 @@ function renderBillingTrend() {
             if (!g.mgmt || !g.mgmt.byBillingMethod) return;
             const fullRevenue = g.mgmt.revenue || 0;
             if (fullRevenue === 0) return;
-            const filtered = filterMgmtByDate(g.mgmt, GLOBAL_DATE);
+            const filtered = filterMgmtByDate(g.mgmt, window.GLOBAL_DATE);
             const ratio = filtered.revenue / fullRevenue;
             for (const [method, data] of Object.entries(g.mgmt.byBillingMethod)) {
                 if (!billing[method]) billing[method] = {revenue: 0, grossMargin: 0};
@@ -637,8 +617,6 @@ function renderBillingTrend() {
                 billing[method].grossMargin += (data.grossMargin || 0) * ratio;
             }
         });
-        // Billing method data lacks day-level breakdown, so we apply the filtered/full revenue ratio
-        // as a proxy. This assumes billing method mix is uniform across days — an approximation.
         return billing;
     }
 
@@ -663,7 +641,6 @@ function renderBillingTrend() {
          }}
     });
 
-    // POS vs CPP stat boxes
     const el = document.getElementById('billing-stats');
     if (el) {
         function bstat(label, d25, d26) {
@@ -692,7 +669,7 @@ function renderBillingTrend() {
     }
 }
 
-function mgmtFilterCityPl(city) {
+export function mgmtFilterCityPl(city) {
     _activeCity = city;
     document.querySelectorAll('.city-pill').forEach(p => {
         p.classList.toggle('active', p.dataset.city === city);
@@ -711,8 +688,8 @@ function renderGuideTable() {
     const guides = guidesForCity(_activeCity);
 
     const rows = guides.map(g => {
-        const fin = filterMgmtByDate(g.mgmt, GLOBAL_DATE);
-        const sts = filterStatsByDate(g.stats.all, GLOBAL_DATE);
+        const fin = filterMgmtByDate(g.mgmt, window.GLOBAL_DATE);
+        const sts = filterStatsByDate(g.stats.all, window.GLOBAL_DATE);
         const m = fin;
         const gmPct = m.revenue > 0 ? (m.grossMargin / m.revenue * 100) : 0;
         const avgGm = sts.paidTours > 0 ? (m.grossMargin / sts.paidTours) : 0;
@@ -721,8 +698,8 @@ function renderGuideTable() {
         const commPct = m.revenue > 0 ? (comm / m.revenue * 100) : 0;
 
         const g25 = get25(g.name);
-        const fin25 = g25?.mgmt ? filterMgmtByDate(g25.mgmt, GLOBAL_DATE) : null;
-        const sts25 = g25 ? filterStatsByDate(g25.stats.all, GLOBAL_DATE) : null;
+        const fin25 = g25?.mgmt ? filterMgmtByDate(g25.mgmt, window.GLOBAL_DATE) : null;
+        const sts25 = g25 ? filterStatsByDate(g25.stats.all, window.GLOBAL_DATE) : null;
         const paid25 = sts25 ? sts25.paidTours : null;
         const rev25  = fin25 ? fin25.revenue : null;
         const gm25   = fin25 ? fin25.grossMargin : null;
@@ -744,11 +721,9 @@ function renderGuideTable() {
         const dPaid = r.paid25 !== null ? r.paidTours - r.paid25 : null;
         const dGm   = r.gm25   !== null ? r.grossMargin - r.gm25 : null;
         const dRev  = r.rev25  !== null ? r.revenue - r.rev25 : null;
-        // Row health class: green if GM > 20% and growing, amber if 10–20%, red if < 10% or declining
         let rowClass = 'row-healthy';
         if (r.gmPct < 10 || (dGm !== null && dGm < -500)) rowClass = 'row-poor';
         else if (r.gmPct < 20) rowClass = 'row-warn';
-        // Commission color: red if > 25%, amber if 15–25%, green if < 15%
         let commClass = 'neu';
         if (r.commPct > 25) commClass = 'neg';
         else if (r.commPct >= 15) commClass = 'neu';
@@ -789,7 +764,7 @@ function renderGuideTable() {
     }
 }
 
-function mgmtSort(col) {
+export function mgmtSort(col) {
     if (_sortCol === col) _sortDir *= -1;
     else { _sortCol = col; _sortDir = -1; }
     document.querySelectorAll('.sort-hdr').forEach(th => {
@@ -822,7 +797,6 @@ function renderCommissionWaterfall() {
 
     const { green, red, c26 } = getThemeColors();
 
-    // Stacked bar: Revenue | −Commission | −VendorCost | = GM
     makeBarChart('commission-wfall', srcKeys, [
         {
             label: t('management.grossMargin'),
@@ -862,7 +836,6 @@ function renderDirectOtaTrend() {
     const MONTH_SHORT = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
     const { month: cutoffMonth, day: cutoffDay } = parseGlobalDate();
 
-    // Build per-month channel data from per-guide, filtered by date
     const monthChannel26 = {};
     const monthChannel25 = {};
 
@@ -873,7 +846,6 @@ function renderDirectOtaTrend() {
                 const [m, d] = dayKey.split('-').map(Number);
                 if (m < cutoffMonth || (m === cutoffMonth && d <= cutoffDay)) {
                     if (!monthChannelObj[m]) monthChannelObj[m] = { web: 0, ota: 0 };
-                    // approximate: distribute by guide's overall channel ratio
                     const gTotal = g.mgmt.revenue || 1;
                     const webRatio = (g.mgmt.byChannel?.web?.revenue || 0) / gTotal;
                     const otaRatio = ((g.mgmt.byChannel?.OTA?.revenue || 0) + (g.mgmt.byChannel?.b2b?.revenue || 0)) / gTotal;
@@ -925,7 +897,6 @@ function renderOtaSourceTable() {
             const commpct = d.revenue > 0 ? ((d.commissionCost||0) / d.revenue * 100) : 0;
             const dgm = d25 ? d.grossMargin - d25.grossMargin : null;
 
-            // Action lever logic
             let action = '—';
             if (d.tours < 5) action = t('management.lowVolume');
             else if (commpct > 25) action = t('management.highCommission');
@@ -958,9 +929,9 @@ function renderTourTypeTable() {
 
     const el = document.getElementById('tour-type-tbody');
     if (!el) return;
-    el.innerHTML = typeKeys.map(t => {
-        const d = byType26[t];
-        const d25 = byType25[t];
+    el.innerHTML = typeKeys.map(tk => {
+        const d = byType26[tk];
+        const d25 = byType25[tk];
         const gmpct = d.revenue > 0 ? (d.grossMargin / d.revenue * 100) : 0;
         const avgPax = d.tours > 0 ? (d.pax / d.tours) : 0;
         const avgUnit = d.pax > 0 ? (d.revenue / d.pax) : 0;
@@ -968,7 +939,7 @@ function renderTourTypeTable() {
         const dUnit = d25 ? avgUnit - avgUnit25 : null;
         const dTours = d25 ? d.tours - d25.tours : null;
         return `<tr>
-            <td><strong>${t}</strong></td>
+            <td><strong>${tk}</strong></td>
             <td>${fmt(d.tours)}<br><small class="yoy">${dd(dTours)}</small></td>
             <td>${avgPax > 0 ? avgPax.toFixed(1) : '—'}</td>
             <td>${avgUnit > 0 ? fmtEur(avgUnit) : '—'}</td>
@@ -994,7 +965,6 @@ function initOps() {
     const mgmt25 = typeof kpiTotals25 !== 'undefined' ? kpiTotals25.mgmt : null;
     const { c25, c26, green, red } = getThemeColors();
 
-    // Guide PAX band — GM% (THE KEY CHART)
     const gpb26 = mgmt26.byGuidePaxBand || {};
     const gpb25 = mgmt25?.byGuidePaxBand || {};
     const gpLabels = GUIDE_PBAND_ORDER.filter(k => gpb26[k] || gpb25[k]);
@@ -1031,13 +1001,11 @@ function initOps() {
         }
     });
 
-    // Guide PAX band — tours count
     makeBarChart('guide-paxband-tours', gpLabels, [
         { label: t('management.tours') + ' 2025', data: gpLabels.map(k => gpb25[k]?.tours || 0), backgroundColor: c25 + 'aa', borderRadius: 4, borderSkipped: false },
         { label: t('management.tours') + ' 2026', data: gpLabels.map(k => gpb26[k]?.tours || 0), backgroundColor: c26 + 'aa', borderRadius: 4, borderSkipped: false },
     ], { showLegend: true });
 
-    // Day-of-week
     const dow26 = mgmt26.byDow; const dow25 = mgmt25?.byDow || {};
     const dowLabels = DOW_ORDER.filter(d => dow26[d] || dow25[d]);
     makeBarChart('dow-bar', dowLabels, [
@@ -1055,7 +1023,6 @@ function initOps() {
         }
     });
 
-    // Time slots
     const time26 = mgmt26.byTime; const time25 = mgmt25?.byTime || {};
     const timeKeys = [...new Set([...Object.keys(time26), ...Object.keys(time25)])].sort((a,b) => parseInt(a)-parseInt(b));
     makeBarChart('time-bar', timeKeys.map(h => `${h}:00`), [
@@ -1073,7 +1040,6 @@ function initOps() {
         }
     });
 
-    // Season
     const sea26 = mgmt26.bySeason; const sea25 = mgmt25?.bySeason || {};
     const seaLabels = SEASON_ORDER.filter(k => sea26[k] || sea25[k]);
     makeBarChart('season-bar', seaLabels.map(k => k[0].toUpperCase() + k.slice(1)), [
@@ -1091,7 +1057,6 @@ function initOps() {
         }
     });
 
-    // Booking PAX band (booking volume)
     const pb26 = mgmt26.byPaxBand; const pb25 = mgmt25?.byPaxBand || {};
     const pbLabels = PAXBAND_ORDER.filter(k => pb26[k] || pb25[k]);
     makeBarChart('paxband-bar', pbLabels, [
@@ -1099,13 +1064,9 @@ function initOps() {
         { label: '2026', data: pbLabels.map(k => pb26[k]?.tours || 0), backgroundColor: c26 + 'aa', borderRadius: 4, borderSkipped: false },
     ], { showLegend: true });
 
-    // Month revenue & GM trend — extracted so date picker can refresh it
     renderOpsMonthLine();
-
-    // PAX band action panel
     renderPaxBandActionPanel();
 
-    // Week trend
     const wk26 = mgmt26.byWeek;
     const wk25 = mgmt25?.byWeek || {};
     const wkNums = Object.keys(wk26).map(Number).sort((a,b)=>a-b);
@@ -1133,13 +1094,11 @@ function initOps() {
         yR: { ...ax, position: 'right', grid: { display: false }, title: { display: true, text: '€', color: ax.ticks.color } },
     });
 
-    // Payment method section
     renderPaymentMethod();
 }
 
 // ── City constants and helpers ────────────────────────────────────────────────────
 
-// Generic factory: aggregate guide mgmt dimension by city
 function buildDimensionByCity(dimensionKey, fields) {
     const result = {};
     CITIES.forEach(city => { result[city] = {}; });
@@ -1163,19 +1122,13 @@ function buildDimensionByCity(dimensionKey, fields) {
     return result;
 }
 
-// ── Helper: Build tour type × city aggregation ─────────────────────────────────
-
 function buildTourTypeByCity() {
     return buildDimensionByCity('byTourType', ['revenue', 'grossMargin', 'tours']);
 }
 
-// ── Helper: Build source × city aggregation ────────────────────────────────────
-
 function buildSourceByCity() {
     return buildDimensionByCity('bySource', ['revenue', 'commissionCost', 'tours']);
 }
-
-// ── Helper: Build language × city aggregation ──────────────────────────────────
 
 function buildLangByCity() {
     const result = {};
@@ -1187,7 +1140,7 @@ function buildLangByCity() {
         const city = g.city;
         ['eng', 'esp', 'fra'].forEach(lang => {
             if (g.stats?.[lang]) {
-                const langStats = filterStatsByDate(g.stats[lang], GLOBAL_DATE);
+                const langStats = filterStatsByDate(g.stats[lang], window.GLOBAL_DATE);
                 result[city][lang].tours += langStats.paidTours || 0;
                 result[city][lang].pax += langStats.paidPax || 0;
             }
@@ -1197,8 +1150,6 @@ function buildLangByCity() {
     return result;
 }
 
-// ── Payment Method Rendering ───────────────────────────────────────────────────
-
 function renderPaymentMethod() {
     const mgmt26 = kpiTotals26.mgmt;
     const mgmt25 = typeof kpiTotals25 !== 'undefined' ? kpiTotals25.mgmt : null;
@@ -1206,7 +1157,6 @@ function renderPaymentMethod() {
     const pm25 = mgmt25?.byPaymentMethod || {};
     const { c25, c26 } = getThemeColors();
 
-    // Payment method stat boxes
     const container = document.getElementById('payment-stats-container');
     if (container) {
         container.innerHTML = '';
@@ -1233,7 +1183,6 @@ function renderPaymentMethod() {
         });
     }
 
-    // Payment method bar chart
     const methods = ['card', 'bank trf', 'cash'];
     makeBarChart('payment-bar', methods.map(m => m === 'bank trf' ? t('management.bankTransfer') : t(`management.${m}`)), [
         { label: '2025', data: methods.map(m => pm25?.[m]?.revenue || 0), backgroundColor: c25 + 'aa', borderRadius: 4, borderSkipped: false },
@@ -1261,7 +1210,6 @@ function initCities() {
 function renderCitiesTab() {
     const { c25, c26, green, red } = getThemeColors();
 
-    // 1. City overview cards
     let cardsHtml = '';
     CITIES.forEach(city => {
         const k26 = computeFilteredKpis(city);
@@ -1286,7 +1234,6 @@ function renderCitiesTab() {
     const cardContainer = document.getElementById('city-cards-container');
     if (cardContainer) cardContainer.innerHTML = cardsHtml;
 
-    // 2. Tour type × city matrix
     const ttByCity = buildTourTypeByCity();
     const allTourTypes = new Set();
     Object.values(ttByCity).forEach(cityData => {
@@ -1323,7 +1270,6 @@ function renderCitiesTab() {
         ttHtml += '</tr>';
     });
 
-    // Add totals row
     ttHtml += '<tr style="border-top: 2px solid var(--border); font-weight: 600">';
     ttHtml += '<td>Total</td>';
     CITIES.forEach(city => {
@@ -1334,12 +1280,10 @@ function renderCitiesTab() {
     const grandGm = grandTotal > 0 ? (Object.values(cityTotals).reduce((a, v) => a + v.grossMargin, 0) / grandTotal * 100) : 0;
     ttHtml += `<td class="pos">€${fmt(grandTotal)}<br>${grandGm.toFixed(1)}%</td>`;
     ttHtml += '</tr>';
-
     ttHtml += '</tbody>';
     const ttTable = document.getElementById('tourtype-city-table');
     if (ttTable) ttTable.innerHTML = ttHtml;
 
-    // 3. Source × city breakdown
     const srcByCity = buildSourceByCity();
     const allSources = new Set();
     Object.values(srcByCity).forEach(cityData => {
@@ -1367,7 +1311,6 @@ function renderCitiesTab() {
     const srcTable = document.getElementById('source-city-table');
     if (srcTable) srcTable.innerHTML = srcHtml;
 
-    // 4. Language mix bar chart
     const langByCity = buildLangByCity();
     const langLabels = CITIES;
     const engData = [];
@@ -1394,7 +1337,6 @@ function renderCitiesTab() {
             afterLabel: ctx => {
                 const city = langLabels[ctx.dataIndex];
                 const langs = langByCity[city];
-                const langName = [t('management.english'), t('management.spanish'), t('management.french')][ctx.datasetIndex];
                 const langKey = ['eng', 'esp', 'fra'][ctx.datasetIndex];
                 return `${langs[langKey].tours} tours · ${langs[langKey].pax} pax`;
             }
@@ -1407,12 +1349,10 @@ function renderOpsMonthLine() {
     const { c25, green } = getThemeColors();
     const { month: cutoffMonth, day: cutoffDay } = parseGlobalDate();
 
-    // Build monthly aggregates from day-level data with date filtering
     const m26 = buildMonthlyFromDays(guideStats26, cutoffMonth, cutoffDay);
     const m25 = has25 ? buildMonthlyFromDays(guideStats25, cutoffMonth, cutoffDay) : {};
 
     const allM = Array.from({length: cutoffMonth}, (_, i) => i + 1);
-    const MONTH_SHORT = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
     makeLineChart('month-line', allM.map(m => MONTH_SHORT[m]), [
         { label: t('management.revenue') + ' 2025', data: allM.map(m => m25[m]?.revenue || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [5,3] },
         { label: t('management.revenue') + ' 2026', data: allM.map(m => m26[m]?.revenue || 0), borderColor: '#8FA8BC', backgroundColor: '#8FA8BC22', tension: 0.3, fill: true },
@@ -1427,7 +1367,6 @@ function renderPaxBandActionPanel() {
     const gpb26 = mgmt26.byGuidePaxBand || {};
     const gpb25 = mgmt25?.byGuidePaxBand || {};
 
-    // Calculate small group metrics
     const smallGroup26 = gpb26['1-5'] || { tours: 0, revenue: 0, grossMargin: 0 };
     const smallGroup25 = gpb25['1-5'] || { tours: 0, revenue: 0, grossMargin: 0 };
 
@@ -1438,7 +1377,6 @@ function renderPaxBandActionPanel() {
     const smallGroupPct25 = totalTours25 > 0 ? (smallGroup25.tours / totalTours25 * 100) : 0;
     const pctChange = smallGroupPct26 - smallGroupPct25;
 
-    // Loss estimate: revenue at 0% margin (breakeven)
     const lossFromSmallGroups = smallGroup26.grossMargin < 0 ? Math.abs(smallGroup26.grossMargin) : 0;
 
     const el = document.getElementById('paxband-action-panel');
@@ -1456,7 +1394,7 @@ function renderPaxBandActionPanel() {
 
 // ── Date filter ───────────────────────────────────────────────────────────────
 
-function mgmtRefreshAll() {
+export function mgmtRefreshAll() {
     if (MgmtPages.pl._init) {
         renderPlKpis(_activeCity);
         renderWaterfall();
@@ -1472,14 +1410,14 @@ function mgmtRefreshAll() {
     if (MgmtPages.cities._init) renderCitiesTab();
 }
 
-function updateMgmtDate(val) {
-    GLOBAL_DATE = val;
+export function updateMgmtDate(val) {
+    window.GLOBAL_DATE = val;
     mgmtRefreshAll();
 }
 
 // ── Theme ─────────────────────────────────────────────────────────────────────
 
-function mgmtUpdateCharts() {
+export function mgmtUpdateCharts() {
     const ax = axisDefaults();
     const tt = tooltipDefaults();
     Object.values(_charts).forEach(c => {
@@ -1495,6 +1433,28 @@ function mgmtUpdateCharts() {
     });
 }
 
+// ── Language ──────────────────────────────────────────────────────────────────
+
+export function updateManagementTabs() {
+    const tabs = {
+        'tab-pl':       t('management.profitAndLoss'),
+        'tab-guides':   t('management.guides'),
+        'tab-channels': t('management.channels'),
+        'tab-ops':      t('management.operational'),
+        'tab-cities':   t('management.cities'),
+    };
+    Object.entries(tabs).forEach(([id, text]) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+    });
+
+    if (_activeTab === 'pl') renderPlKpis('all');
+    else if (_activeTab === 'guides') renderGuideTable();
+    else if (_activeTab === 'channels') { renderCommissionWaterfall(); renderDirectOtaTrend(); renderOtaSourceTable(); renderTourTypeTable(); }
+    else if (_activeTab === 'ops') renderPlKpis('all');
+    else if (_activeTab === 'cities') renderCitiesTab();
+}
+
 // ── Keyboard shortcuts ────────────────────────────────────────────────────────
 
 function toggleShortcutOverlay() {
@@ -1502,42 +1462,28 @@ function toggleShortcutOverlay() {
     if (el) el.style.display = el.style.display === 'block' ? 'none' : 'block';
 }
 
-function updateManagementTabs() {
-  const tabs = {
-    'tab-pl': t('management.profitAndLoss'),
-    'tab-guides': t('management.guides'),
-    'tab-channels': t('management.channels'),
-    'tab-ops': t('management.operational'),
-    'tab-cities': t('management.cities'),
-  };
-  Object.entries(tabs).forEach(([id, text]) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = text;
-  });
-
-  // Re-render the active tab to refresh all t() calls
-  if (_activeTab === 'pl') renderPlKpis('all');
-  else if (_activeTab === 'guides') renderGuideTable();
-  else if (_activeTab === 'channels') { renderCommissionWaterfall(); renderDirectOtaTrend(); renderOtaSourceTable(); renderTourTypeTable(); }
-  else if (_activeTab === 'ops') renderPlKpis('all');
-  else if (_activeTab === 'cities') renderCitiesTab();
-}
-
 // ── Init ──────────────────────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
-    if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');
-    const btn = document.getElementById('theme-toggle');
-    if (btn) btn.setAttribute('title', document.body.classList.contains('dark-mode') ? 'Switch to light mode' : 'Switch to dark mode');
+    if (!document.getElementById('mgmt-pl')) return;
+
     document.getElementById('footer-date').textContent = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
     const picker = document.getElementById('mgmt-date-picker');
-    if (picker) { picker.value = GLOBAL_DATE; }
+    if (picker) { picker.value = window.GLOBAL_DATE; }
 
     initPl();
     MgmtPages.pl._init = true;
     updateManagementTabs();
 
-    // Keyboard shortcuts
+    // Expose globals needed by management.html inline handlers
+    window.mgmtShowTab       = mgmtShowTab;
+    window.mgmtFilterCityPl  = mgmtFilterCityPl;
+    window.mgmtSort          = mgmtSort;
+    window.updateMgmtDate    = updateMgmtDate;
+    window.mgmtUpdateCharts  = mgmtUpdateCharts;
+    window.updateManagementTabs = updateManagementTabs;
+    window.toggleShortcutOverlay = toggleShortcutOverlay;
+
     document.addEventListener('keydown', e => {
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
         if (e.metaKey || e.ctrlKey || e.altKey) return;
@@ -1547,7 +1493,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (tabEl) mgmtShowTab(tabMap[e.key], tabEl);
             return;
         }
-        if (e.key === 't') { toggleMgmtTheme(); return; }
+        if (e.key === 't') { window.toggleTheme && window.toggleTheme(() => mgmtUpdateCharts()); return; }
         if (e.key === 'd') { document.getElementById('mgmt-date-picker')?.focus(); return; }
         if (e.key === '?') { toggleShortcutOverlay(); return; }
         if (e.key === 'Escape') {

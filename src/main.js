@@ -75,10 +75,14 @@ window._toggleTheme        = toggleTheme;
 import { Page25 } from './pages/page-2025.js';
 import { Page26 } from './pages/page-2026.js';
 import { PageCmp } from './pages/page-cmp/index.js';
+import { updateManagementTabs } from './pages/management/index.js';
 
 window.Page25 = Page25;
 window.Page26 = Page26;
 window.PageCmp = PageCmp;
+
+// Needed by toggleLanguage in theme.js before management DOMContentLoaded fires
+window.updateManagementTabs = updateManagementTabs;
 
 // ── Post-load init ────────────────────────────────────────────────────────────
 

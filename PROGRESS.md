@@ -13,7 +13,7 @@
 | 2 | Convert `shared.js`, `i18n.js`, extract `theme.js` | ✅ Done |
 | 3 | Convert `page-2025.js`, `page-2026.js` | ✅ Done |
 | 4 | Split `page-cmp.js` → 3 sub-modules | ✅ Done |
-| 5 | Split `management.js` → 5 tab files | ⏳ Pending |
+| 5 | Split `management.js` → 5 tab files | ✅ Done |
 | 6 | Merge `management.html` as tab in `index.html` | ⏳ Pending |
 | 7 | Cleanup + update `CLAUDE.md` | ⏳ Pending |
 

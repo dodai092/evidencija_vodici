@@ -74,9 +74,11 @@ window._toggleTheme        = toggleTheme;
 
 import { Page25 } from './pages/page-2025.js';
 import { Page26 } from './pages/page-2026.js';
+import { PageCmp } from './pages/page-cmp/index.js';
 
 window.Page25 = Page25;
 window.Page26 = Page26;
+window.PageCmp = PageCmp;
 
 // ── Post-load init ────────────────────────────────────────────────────────────
 

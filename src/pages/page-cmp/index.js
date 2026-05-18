@@ -1,4 +1,11 @@
-const PageCmp = {
+import {
+    CITIES, CITY_COLS, CITY_CLS,
+    fmtN, filteredStats, getCutoffMonth, getRangeLabel,
+    toggleSection, registerPage, safeName,
+} from '../../shared.js';
+import { t, titleAttr } from '../../i18n.js';
+
+export const PageCmp = {
     activeCity: 'all',
     activeLang: 'all',
     activeMonths: [],
@@ -157,7 +164,6 @@ const PageCmp = {
         this._el('kv-guides25').textContent = g25;
         this._el('kv-guides26').textContent = g26;
 
-        // Avg PAX per free tour KPI
         let ft25 = 0, ft26 = 0;
         fc.forEach(m => {
             if (m.g25) { const s = filteredStats(m.g25.stats[this.activeLang], this.activeMonths); ft25 += s.freeTours; }
@@ -182,6 +188,7 @@ const PageCmp = {
     },
 
     updateCharts() {
+        const self = this;
         const fc = this.mergedGuides.filter(m => this.activeCity === 'all' || m.city === this.activeCity);
         const colors = this.getChartColors();
         const rangeLabel = getRangeLabel();
@@ -211,14 +218,14 @@ const PageCmp = {
                 const xAxis = chart.scales.x;
                 const ds0 = chart.data.datasets[0].data;
                 const ds1 = chart.data.datasets[1].data;
-                const chartColors = PageCmp.getChartColors();
+                const chartColors = self.getChartColors();
                 ctx.save();
                 chart.data.labels.forEach((_, i) => {
                     const v25 = ds0[i] || 0, v26 = ds1[i] || 0;
                     const d = v26 - v25;
-                    const pct = v25 > 0 ? ((d/v25)*100).toFixed(0) : (v26 > 0 ? '\u221E' : '0');
+                    const pct = v25 > 0 ? ((d/v25)*100).toFixed(0) : (v26 > 0 ? '∞' : '0');
                     const sign = d > 0 ? '+' : '';
-                    const arrow = d > 0 ? '\u25B2' : d < 0 ? '\u25BC' : '=';
+                    const arrow = d > 0 ? '▲' : d < 0 ? '▼' : '=';
                     const color = d > 0 ? '#1D9E75' : d < 0 ? '#D4545A' : '#999';
                     const x = xAxis.getPixelForValue(i);
                     const y = xAxis.bottom + 12;
@@ -278,7 +285,7 @@ const PageCmp = {
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     layout: { padding: { bottom: 45, right: 55 } },
-                    plugins: { 
+                    plugins: {
                         legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
                     },
                     scales: {
@@ -295,20 +302,18 @@ const PageCmp = {
         const selectedMonths = Array.from({length: maxMonth}, (_, i) => i + 1);
         const months = selectedMonths.map(m => MONTH_NAMES[m]);
 
-        // Update chart title labels to reflect effective range
         const effectiveLabel = maxMonth === 1 ? MONTH_NAMES[1] : `${MONTH_NAMES[1]}–${MONTH_NAMES[maxMonth]}`;
         document.querySelectorAll('#page-cmp .ytd-range-label').forEach(el => el.textContent = effectiveLabel);
         const monthData25 = [], monthData26 = [];
         const paidMonthData25 = [], paidMonthData26 = [];
 
         const cutoffMonth = getCutoffMonth();
-        const cutoffDay   = parseInt(GLOBAL_DATE.split('-')[2]);
+        const cutoffDay   = parseInt(window.GLOBAL_DATE.split('-')[2]);
 
         selectedMonths.forEach(i => {
             let fd25 = 0, fd26 = 0, pd25 = 0, pd26 = 0;
 
             if (i < cutoffMonth) {
-                // Complete month — read byMonth aggregate
                 fc.forEach(m => {
                     const mo25 = m.g25?.stats[this.activeLang]?.byMonth?.[String(i)];
                     if (mo25) { fd25 += mo25.free.pax || 0; pd25 += mo25.paid.tours || 0; }
@@ -316,7 +321,6 @@ const PageCmp = {
                     if (mo26) { fd26 += mo26.free.pax || 0; pd26 += mo26.paid.tours || 0; }
                 });
             } else if (i === cutoffMonth) {
-                // Partial month — sum byDay entries for days 1 through cutoffDay
                 for (let d = 1; d <= cutoffDay; d++) {
                     const key = `${i}-${d}`;
                     fc.forEach(m => {
@@ -351,9 +355,9 @@ const PageCmp = {
                 const last1 = ds1[ds1.length - 1] || 0;
                 if (last0 === 0 && last1 === 0) return;
                 const d = last1 - last0;
-                const pct = last0 > 0 ? ((d/last0)*100).toFixed(0) : (last1 > 0 ? '\u221E' : '0');
+                const pct = last0 > 0 ? ((d/last0)*100).toFixed(0) : (last1 > 0 ? '∞' : '0');
                 const sign = d >= 0 ? '+' : '';
-                const arrow = d > 0 ? '\u25B2' : d < 0 ? '\u25BC' : '=';
+                const arrow = d > 0 ? '▲' : d < 0 ? '▼' : '=';
                 const color = d > 0 ? '#1D9E75' : d < 0 ? '#D4545A' : '#999';
                 ctx.save();
                 ctx.fillStyle = color;
@@ -371,14 +375,14 @@ const PageCmp = {
                 const xAxis = chart.scales.x;
                 const ds0 = chart.data.datasets[0].data;
                 const ds1 = chart.data.datasets[1].data;
-                const chartColors = PageCmp.getChartColors();
+                const chartColors = self.getChartColors();
                 ctx.save();
                 chart.data.labels.forEach((_, i) => {
                     const v25 = ds0[i] || 0, v26 = ds1[i] || 0;
                     const d = v26 - v25;
-                    const pct = v25 > 0 ? ((d/v25)*100).toFixed(0) : (v26 > 0 ? '\u221E' : '0');
+                    const pct = v25 > 0 ? ((d/v25)*100).toFixed(0) : (v26 > 0 ? '∞' : '0');
                     const sign = d > 0 ? '+' : '';
-                    const arrow = d > 0 ? '\u25B2' : d < 0 ? '\u25BC' : '=';
+                    const arrow = d > 0 ? '▲' : d < 0 ? '▼' : '=';
                     const color = d > 0 ? '#1D9E75' : d < 0 ? '#D4545A' : '#999';
                     const x = xAxis.getPixelForValue(i);
                     const y = xAxis.bottom + 12;
@@ -411,7 +415,7 @@ const PageCmp = {
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     layout: { padding: { bottom: 45, right: 55 } },
-                    plugins: { 
+                    plugins: {
                         legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
                     },
                     scales: {
@@ -438,7 +442,7 @@ const PageCmp = {
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     layout: { padding: { bottom: 45, right: 55 } },
-                    plugins: { 
+                    plugins: {
                         legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
                     },
                     scales: {
@@ -451,7 +455,7 @@ const PageCmp = {
         } catch(e) { console.error("Paid Chart Error:", e); }
 
         try {
-            const cutoffDay = parseInt(GLOBAL_DATE.split('-')[2]);
+            const cutoffDay = parseInt(window.GLOBAL_DATE.split('-')[2]);
             const cityMonthly25 = {};
             const cityMonthly26 = {};
             CITIES.forEach(c => { cityMonthly25[c] = []; cityMonthly26[c] = []; });
@@ -502,7 +506,6 @@ const PageCmp = {
                 });
             });
 
-            // Build summary badges
             const badgesEl = document.getElementById('city-monthly-badges-cmp');
             if (badgesEl) {
                 badgesEl.innerHTML = CITIES.map(city => {
@@ -548,7 +551,6 @@ const PageCmp = {
             });
         } catch(e) { console.error("City Monthly Chart Error:", e); }
 
-        // Avg PAX per free tour by month: 2025 vs 2026
         try {
             const avgFree25 = [], avgFree26 = [];
             selectedMonths.forEach(i => {
@@ -607,7 +609,7 @@ const PageCmp = {
 
     renderMonthlyTable() {
         const cutoffMonth = getCutoffMonth();
-        const cutoffDay   = parseInt(GLOBAL_DATE.split('-')[2]);
+        const cutoffDay   = parseInt(window.GLOBAL_DATE.split('-')[2]);
         const MONTH_NAMES = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
 
         const months = this.activeMonths.length > 0
@@ -621,12 +623,12 @@ const PageCmp = {
                 return st.byMonth?.[String(m)]?.free?.pax || 0;
             } else if (m === cutoffMonth) {
                 if (st.byDay) {
-                    let t = 0;
+                    let tot = 0;
                     for (let d = 1; d <= cutoffDay; d++) {
                         const dy = st.byDay[`${m}-${d}`];
-                        if (dy) t += dy.free?.pax || 0;
+                        if (dy) tot += dy.free?.pax || 0;
                     }
-                    return t;
+                    return tot;
                 }
                 return st.byMonth?.[String(m)]?.free?.pax || 0;
             }
@@ -703,7 +705,7 @@ const PageCmp = {
                 </tbody>
             </table>
             </div>
-            ${hasPartial ? `<div class="mpax-note">* ${t('labels.partial')} — ${t('labels.dataThrough')} ${GLOBAL_DATE}</div>` : ''}
+            ${hasPartial ? `<div class="mpax-note">* ${t('labels.partial')} — ${t('labels.dataThrough')} ${window.GLOBAL_DATE}</div>` : ''}
         </div>`;
 
         const el = document.getElementById('monthly-pax-table-cmp');
@@ -749,7 +751,7 @@ const PageCmp = {
 
     _getTypeMonthData(city, types, primaryKey, year) {
         const cutoffMonth = getCutoffMonth();
-        const cutoffDay   = parseInt(GLOBAL_DATE.split('-')[2]);
+        const cutoffDay   = parseInt(window.GLOBAL_DATE.split('-')[2]);
         const maxMonth    = this.activeMonths.length > 0 ? Math.max(...this.activeMonths) : cutoffMonth;
         const fc = this.mergedGuides.filter(m => city === 'all' || m.city === city);
 
@@ -763,8 +765,8 @@ const PageCmp = {
                     if (!g) return;
                     const bmt = g.stats[this.activeLang]?.byMonthType?.[String(mo)];
                     if (!bmt) return;
-                    types.forEach(t => {
-                        const td = bmt[t];
+                    types.forEach(tp => {
+                        const td = bmt[tp];
                         if (td) { primary += td[primaryKey] || 0; secondary += td[secondaryKey] || 0; }
                     });
                 });
@@ -776,8 +778,8 @@ const PageCmp = {
                         if (!g) return;
                         const bdt = g.stats[this.activeLang]?.byDayType?.[key];
                         if (!bdt) return;
-                        types.forEach(t => {
-                            const td = bdt[t];
+                        types.forEach(tp => {
+                            const td = bdt[tp];
                             if (td) { primary += td[primaryKey] || 0; secondary += td[secondaryKey] || 0; }
                         });
                     });
@@ -862,7 +864,7 @@ const PageCmp = {
                 </thead>
                 <tbody>${bodyRows}${totalRow}</tbody>
             </table>
-            ${hasPartial ? `<div class="mpax-note">* ${t('labels.partial')} — ${t('labels.dataThrough')} ${GLOBAL_DATE}</div>` : ''}
+            ${hasPartial ? `<div class="mpax-note">* ${t('labels.partial')} — ${t('labels.dataThrough')} ${window.GLOBAL_DATE}</div>` : ''}
         </div>`;
 
         const el = document.getElementById(containerId);
@@ -870,6 +872,7 @@ const PageCmp = {
     },
 
     updatePaidTypeCharts() {
+        const self = this;
         const colors   = this.getChartColors();
         const MONTH_NAMES = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
         const cutoffMonth = getCutoffMonth();
@@ -877,7 +880,7 @@ const PageCmp = {
         const months   = Array.from({length: maxMonth}, (_, i) => MONTH_NAMES[i + 1]);
 
         const rangeLabel = getRangeLabel();
-        const cutoffDay  = parseInt(GLOBAL_DATE.split('-')[2]);
+        const cutoffDay  = parseInt(window.GLOBAL_DATE.split('-')[2]);
 
         const secondaryLabelPlugin = (secondaryKey) => ({
             id: 'secondaryLabel',
@@ -896,7 +899,7 @@ const PageCmp = {
                         const val = secArr[i] || 0;
                         if (val === 0) return;
                         const label = secondaryKey === 'pax' ? `${val}p` : `${val}t`;
-                        ctx.fillStyle = PageCmp.getChartColors().text3;
+                        ctx.fillStyle = self.getChartColors().text3;
                         ctx.fillText(label, bar.x, bar.y - 4);
                     });
                 });
@@ -966,7 +969,6 @@ const PageCmp = {
         buildTypeChart('sharedPaidChart-cmp', 'sharedPaidChartInstance', this.activeSharedCity, this.activeSharedType, this.SHARED_TYPES, 'tours');
         this.renderPaidTypeTable('shared-type-table-cmp', this.activeSharedCity, this.activeSharedType, this.SHARED_TYPES, 'pax');
 
-        // Average PAX per paid tour type by month (2025 vs 2026)
         const fc = this.mergedGuides.filter(m => this.activeCity === 'all' || m.city === this.activeCity);
         const typesToShow = this.activeAvgType === 'all' ? this.ALL_PAID_TYPES : [this.activeAvgType];
 
@@ -977,7 +979,7 @@ const PageCmp = {
                     const g = year === 25 ? m.g25 : m.g26;
                     const bmt = g?.stats[this.activeLang]?.byMonthType?.[String(mo)];
                     if (!bmt) return;
-                    types.forEach(t => { const d = bmt[t]; if (d) { pax += d.pax || 0; tours += d.tours || 0; } });
+                    types.forEach(tp => { const d = bmt[tp]; if (d) { pax += d.pax || 0; tours += d.tours || 0; } });
                 });
             } else if (mo === cutoffMonth) {
                 for (let d = 1; d <= cutoffDay; d++) {
@@ -986,7 +988,7 @@ const PageCmp = {
                         const g = year === 25 ? m.g25 : m.g26;
                         const bdt = g?.stats[this.activeLang]?.byDayType?.[key];
                         if (!bdt) return;
-                        types.forEach(t => { const td = bdt[t]; if (td) { pax += td.pax || 0; tours += td.tours || 0; } });
+                        types.forEach(tp => { const td = bdt[tp]; if (td) { pax += td.pax || 0; tours += td.tours || 0; } });
                     });
                 }
             }
@@ -1038,7 +1040,6 @@ const PageCmp = {
         this.mergedGuides = this.buildMerged();
         this.renderAll();
     },
-
 
     _buildHeader() {
         return `        <div class="header">
@@ -1368,4 +1369,5 @@ const PageCmp = {
         this.renderAll();
     }
 };
+
 registerPage('PageCmp', PageCmp);

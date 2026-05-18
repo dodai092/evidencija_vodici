@@ -21,7 +21,7 @@ let _sortDir = -1;
 
 export function mgmtShowTab(id, el) {
     document.querySelectorAll(`.${CSS.MGMT_PAGE}`).forEach(p => p.classList.remove(CSS.ACTIVE));
-    document.querySelectorAll(`.${CSS.NAV_TAB}`).forEach(tp => tp.classList.remove(CSS.ACTIVE, CSS.MGMT_TAB_ACTIVE));
+    document.querySelectorAll(`.mgmt-subnav .${CSS.NAV_TAB}`).forEach(tp => tp.classList.remove(CSS.ACTIVE, CSS.MGMT_TAB_ACTIVE));
     document.getElementById('mgmt-' + id).classList.add(CSS.ACTIVE);
     el.classList.add(CSS.ACTIVE, CSS.MGMT_TAB_ACTIVE);
     _activeTab = id;
@@ -1455,50 +1455,17 @@ export function updateManagementTabs() {
     else if (_activeTab === 'cities') renderCitiesTab();
 }
 
-// ── Keyboard shortcuts ────────────────────────────────────────────────────────
+// ── Page object ───────────────────────────────────────────────────────────────
 
-function toggleShortcutOverlay() {
-    const el = document.getElementById('shortcut-overlay');
-    if (el) el.style.display = el.style.display === 'block' ? 'none' : 'block';
-}
-
-// ── Init ──────────────────────────────────────────────────────────────────────
-
-document.addEventListener('DOMContentLoaded', () => {
-    if (!document.getElementById('mgmt-pl')) return;
-
-    document.getElementById('footer-date').textContent = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-    const picker = document.getElementById('mgmt-date-picker');
-    if (picker) { picker.value = window.GLOBAL_DATE; }
-
-    initPl();
-    MgmtPages.pl._init = true;
-    updateManagementTabs();
-
-    // Expose globals needed by management.html inline handlers
-    window.mgmtShowTab       = mgmtShowTab;
-    window.mgmtFilterCityPl  = mgmtFilterCityPl;
-    window.mgmtSort          = mgmtSort;
-    window.updateMgmtDate    = updateMgmtDate;
-    window.mgmtUpdateCharts  = mgmtUpdateCharts;
-    window.updateManagementTabs = updateManagementTabs;
-    window.toggleShortcutOverlay = toggleShortcutOverlay;
-
-    document.addEventListener('keydown', e => {
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-        if (e.metaKey || e.ctrlKey || e.altKey) return;
-        const tabMap = { '1': 'pl', '2': 'guides', '3': 'channels', '4': 'ops', '5': 'cities' };
-        if (tabMap[e.key]) {
-            const tabEl = document.getElementById('tab-' + tabMap[e.key]);
-            if (tabEl) mgmtShowTab(tabMap[e.key], tabEl);
-            return;
-        }
-        if (e.key === 't') { window.toggleTheme && window.toggleTheme(() => mgmtUpdateCharts()); return; }
-        if (e.key === 'd') { document.getElementById('mgmt-date-picker')?.focus(); return; }
-        if (e.key === '?') { toggleShortcutOverlay(); return; }
-        if (e.key === 'Escape') {
-            const overlay = document.getElementById('shortcut-overlay');
-            if (overlay && overlay.style.display === 'block') overlay.style.display = 'none';
-        }
-    });
-});
+export const PageMgmt = {
+    _initialized: false,
+    init() {
+        const footerDate = document.getElementById('footer-date');
+        if (footerDate) footerDate.textContent = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+        const picker = document.getElementById('cutoff-picker');
+        if (picker) picker.value = window.GLOBAL_DATE;
+        const tabEl = document.getElementById('tab-pl');
+        if (tabEl) mgmtShowTab('pl', tabEl);
+        this._initialized = true;
+    },
+};

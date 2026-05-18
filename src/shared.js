@@ -19,6 +19,7 @@ export const PAGES = {
     Page25: null,
     Page26: null,
     PageCmp: null,
+    PageMgmt: null,
 };
 
 export function registerPage(name, page) {
@@ -73,6 +74,7 @@ export function updateDateAsOf(val) {
             PAGES.PageCmp.mergedGuides = PAGES.PageCmp.buildMerged();
             PAGES.PageCmp.renderAll();
         }
+        if (window.mgmtRefreshAll) window.mgmtRefreshAll();
     });
 }
 
@@ -125,7 +127,7 @@ export function toggleSection(id) {
 
 export function showPage(id, tab) {
     document.querySelectorAll(`.${CSS.PAGE}`).forEach(p => p.classList.remove(CSS.ACTIVE));
-    document.querySelectorAll(`.${CSS.NAV_TAB}`).forEach(t => t.classList.remove(CSS.ACTIVE, CSS.NAV_Y25, CSS.NAV_Y26, CSS.NAV_CMP));
+    document.querySelectorAll(`.nav-tabs .${CSS.NAV_TAB}`).forEach(t => t.classList.remove(CSS.ACTIVE, CSS.NAV_Y25, CSS.NAV_Y26, CSS.NAV_CMP));
     document.getElementById(id).classList.add(CSS.ACTIVE);
     tab.classList.add(CSS.ACTIVE);
     if (id === 'page-25')  tab.classList.add(CSS.NAV_Y25);
@@ -135,6 +137,10 @@ export function showPage(id, tab) {
     if (id === 'page-26'  && PAGES.Page26 && !PAGES.Page26._initialized)  PAGES.Page26.init();
     if (id === 'page-cmp' && PAGES.PageCmp && !PAGES.PageCmp._initialized)  PAGES.PageCmp.init();
     else if (id === 'page-cmp' && PAGES.PageCmp) setTimeout(() => PAGES.PageCmp.updateCharts(), 50);
+    if (id === 'page-mgmt' && PAGES.PageMgmt) {
+        if (!PAGES.PageMgmt._initialized) PAGES.PageMgmt.init();
+        else if (window.mgmtRefreshAll) window.mgmtRefreshAll();
+    }
 }
 
 export const KEYBOARD_SHORTCUTS = {
@@ -151,7 +157,8 @@ export const KEYBOARD_SHORTCUTS = {
         if (tab) showPage('page-cmp', tab);
     },
     '4': () => {
-        window.location.href = 'management.html';
+        const tab = document.getElementById('tab-mgmt');
+        if (tab) showPage('page-mgmt', tab);
     },
     't': () => window._toggleTheme && window._toggleTheme(),
     'd': () => {

@@ -30,6 +30,7 @@ export function toggleTheme(onToggleComplete) {
             if (PAGES.Page25 && PAGES.Page25._initialized) PAGES.Page25.updateChart();
             if (PAGES.Page26 && PAGES.Page26._initialized) PAGES.Page26.updateChart();
             if (PAGES.PageCmp && PAGES.PageCmp._initialized) PAGES.PageCmp.updateCharts();
+            if (window.mgmtUpdateCharts) window.mgmtUpdateCharts();
         }, 100);
     }
 }
@@ -80,6 +81,7 @@ export function toggleLanguage(onToggleComplete) {
             PAGES.PageCmp.renderAll();
             PAGES.PageCmp.updateCharts();
         }
+        if (window.mgmtUpdateCharts) window.mgmtUpdateCharts();
         if (onToggleComplete) onToggleComplete();
     });
 }

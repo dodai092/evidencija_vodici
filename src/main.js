@@ -75,14 +75,26 @@ window._toggleTheme        = toggleTheme;
 import { Page25 } from './pages/page-2025.js';
 import { Page26 } from './pages/page-2026.js';
 import { PageCmp } from './pages/page-cmp/index.js';
-import { updateManagementTabs } from './pages/management/index.js';
+import {
+    mgmtShowTab, mgmtFilterCityPl, mgmtSort,
+    updateMgmtDate, mgmtUpdateCharts, mgmtRefreshAll,
+    updateManagementTabs,
+    PageMgmt,
+} from './pages/management/index.js';
 
 window.Page25 = Page25;
 window.Page26 = Page26;
 window.PageCmp = PageCmp;
 
-// Needed by toggleLanguage in theme.js before management DOMContentLoaded fires
+window.mgmtShowTab          = mgmtShowTab;
+window.mgmtFilterCityPl     = mgmtFilterCityPl;
+window.mgmtSort             = mgmtSort;
+window.updateMgmtDate       = updateMgmtDate;
+window.mgmtUpdateCharts     = mgmtUpdateCharts;
+window.mgmtRefreshAll       = mgmtRefreshAll;
 window.updateManagementTabs = updateManagementTabs;
+
+PAGES.PageMgmt = PageMgmt;
 
 // ── Post-load init ────────────────────────────────────────────────────────────
 

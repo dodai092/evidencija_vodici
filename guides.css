@@ -1351,6 +1351,17 @@ body.dark-mode .filter-select {
 
 /* ── MANAGEMENT Dashboard Styles ──────────────────────────── */
 
+.mgmt-subnav {
+    display: flex;
+    gap: 2px;
+    padding: 0 24px;
+    background: var(--nav-bg);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 56px;
+    z-index: 100;
+}
+
 .mgmt-page {
     display: none;
 }

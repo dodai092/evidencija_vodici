@@ -4,3 +4,5 @@ __pycache__/
 *.xlsx
 *.pyc
 .superpowers/
+dist/
+node_modules/

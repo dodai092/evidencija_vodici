@@ -72,6 +72,12 @@ window.updateNavigationLabels = updateNavigationLabels;
 // Used by KEYBOARD_SHORTCUTS 't' handler without circular import
 window._toggleTheme        = toggleTheme;
 
+import { Page25 } from './pages/page-2025.js';
+import { Page26 } from './pages/page-2026.js';
+
+window.Page25 = Page25;
+window.Page26 = Page26;
+
 // ── Post-load init ────────────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {

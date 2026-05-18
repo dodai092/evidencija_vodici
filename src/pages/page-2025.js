@@ -1,4 +1,7 @@
-const Page25 = {
+import { CITY_COLS, CITY_CLS, CITIES, MONTH_NAMES_HR, filteredStats, safeName, fmtN, getCutoffMonth, registerPage } from '../shared.js';
+import { t, titleAttr } from '../i18n.js';
+
+export const Page25 = {
     activeCity: 'all',
     activeLang: 'all',
     activeMonths: [],
@@ -233,7 +236,7 @@ const Page25 = {
                 .forEach(g => {
                     const bmt = g.stats[lang]?.byMonthType?.[String(mo)];
                     if (!bmt) return;
-                    types.forEach(t => { const td = bmt[t]; if (td) { tours += td.tours||0; pax += td.pax||0; } });
+                    types.forEach(tp => { const td = bmt[tp]; if (td) { tours += td.tours||0; pax += td.pax||0; } });
                 });
             return { tours, pax };
         });
@@ -353,13 +356,8 @@ const Page25 = {
 
     updateChart() {
         const colors = this.getChartColors();
-        const text3 = colors.text3;
-        const border = colors.border;
-        const textColor = colors.text;
-
         const lang = this.activeLang;
         const months = Array.from({length: 12}, (_, i) => i + 1);
-
         const citiesToShow = this.activeCity === 'all' ? CITIES : [this.activeCity];
         const datasets = citiesToShow.map(city => {
             const guides = guideStats25.filter(g => g.city === city);
@@ -384,12 +382,12 @@ const Page25 = {
             options: {
                 responsive: true, maintainAspectRatio: false,
                 plugins: {
-                    legend: { display: true, labels: { color: textColor, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 12 } },
+                    legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 12 } },
                     tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} ${t('table.pax')}/tour` } }
                 },
                 scales: {
-                    x: { ticks: { color: text3 }, grid: { color: border } },
-                    y: { ticks: { color: text3 }, grid: { color: border }, beginAtZero: true }
+                    x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
+                    y: { ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
                 }
             }
         });
@@ -414,20 +412,9 @@ const Page25 = {
         this._el('kv-paid-pax').textContent  = fmtN(paidPax) + ' pax';
     },
 
-    filterCity(city) {
-        this.activeCity = city;
-        this.renderAll();
-    },
-
-    filterLang(lang) {
-        this.activeLang = lang;
-        this.renderAll();
-    },
-
-    filterMonth(m) {
-        this.activeMonths = m === 'all' ? [] : [parseInt(m)];
-        this.renderAll();
-    },
+    filterCity(city) { this.activeCity = city; this.renderAll(); },
+    filterLang(lang) { this.activeLang = lang; this.renderAll(); },
+    filterMonth(m)   { this.activeMonths = m === 'all' ? [] : [parseInt(m)]; this.renderAll(); },
 
     toggleMonthly(sid) {
         const table = document.getElementById('mt-' + sid);
@@ -476,18 +463,7 @@ const Page25 = {
                     <label for="month-filter-25">${t('table.month')}</label>
                     <select class="filter-select" id="month-filter-25" onchange="Page25.filterMonth(this.value)">
                         <option value="all">${t('labels.all')}</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
+                        ${Array.from({length:12},(_,i)=>`<option value="${i+1}">${i+1}</option>`).join('')}
                     </select>
                 </div>
             </div>
@@ -623,7 +599,7 @@ const Page25 = {
             this._buildPaidTours() +
             this._buildGuides();
 
-        const d = new Date(GLOBAL_DATE);
+        const d = new Date(window.GLOBAL_DATE);
         const fmt = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
         const datePov = this._el('date-pov');
         if (datePov) datePov.textContent = fmt;
@@ -636,4 +612,5 @@ const Page25 = {
         this.renderAll();
     }
 };
+
 registerPage('Page25', Page25);

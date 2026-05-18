@@ -1,4 +1,7 @@
-const Page26 = {
+import { CITY_COLS, CITY_CLS, CITIES, MONTH_NAMES_HR, filteredStats, safeName, fmtN, getCutoffMonth, registerPage } from '../shared.js';
+import { t, titleAttr } from '../i18n.js';
+
+export const Page26 = {
     activeCity: 'all',
     activeLang: 'all',
     activeMonths: [],
@@ -180,7 +183,7 @@ const Page26 = {
         const lang = this.activeLang;
         const MONTH_NAMES = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
         const cutoffMonth = getCutoffMonth();
-        const cutoffDay   = parseInt(GLOBAL_DATE.split('-')[2]);
+        const cutoffDay   = parseInt(window.GLOBAL_DATE.split('-')[2]);
         const months = this.activeMonths.length > 0 ? this.activeMonths : Array.from({length: cutoffMonth}, (_, i) => i + 1);
         const citiesToShow = this.activeCity === 'all' ? CITIES : [this.activeCity];
 
@@ -190,9 +193,9 @@ const Page26 = {
             if (m < cutoffMonth) return st.byMonth?.[String(m)]?.free?.pax || 0;
             if (m === cutoffMonth) {
                 if (st.byDay) {
-                    let t = 0;
-                    for (let d = 1; d <= cutoffDay; d++) { t += st.byDay[`${m}-${d}`]?.free?.pax || 0; }
-                    return t;
+                    let total = 0;
+                    for (let d = 1; d <= cutoffDay; d++) { total += st.byDay[`${m}-${d}`]?.free?.pax || 0; }
+                    return total;
                 }
                 return st.byMonth?.[String(m)]?.free?.pax || 0;
             }
@@ -233,7 +236,7 @@ const Page26 = {
                 </tbody>
             </table>
             </div>
-            ${hasPartial ? `<div class="mpax-note">* ${t('labels.partial')} — data through ${GLOBAL_DATE}</div>` : ''}
+            ${hasPartial ? `<div class="mpax-note">* ${t('labels.partial')} — data through ${window.GLOBAL_DATE}</div>` : ''}
         </div>`;
 
         const el = document.getElementById('monthly-pax-table-26');
@@ -243,7 +246,7 @@ const Page26 = {
     _getTypeMonthData(types) {
         const lang = this.activeLang;
         const cutoffMonth = getCutoffMonth();
-        const cutoffDay   = parseInt(GLOBAL_DATE.split('-')[2]);
+        const cutoffDay   = parseInt(window.GLOBAL_DATE.split('-')[2]);
         const maxMonth = this.activeMonths.length > 0 ? Math.max(...this.activeMonths) : cutoffMonth;
         const fc = guideStats26.filter(g => this.activeCity === 'all' || g.city === this.activeCity);
 
@@ -253,7 +256,7 @@ const Page26 = {
                 fc.forEach(g => {
                     const bmt = g.stats[lang]?.byMonthType?.[String(mo)];
                     if (!bmt) return;
-                    types.forEach(t => { const td = bmt[t]; if (td) { tours += td.tours||0; pax += td.pax||0; } });
+                    types.forEach(tp => { const td = bmt[tp]; if (td) { tours += td.tours||0; pax += td.pax||0; } });
                 });
             } else if (mo === cutoffMonth) {
                 for (let d = 1; d <= cutoffDay; d++) {
@@ -261,7 +264,7 @@ const Page26 = {
                     fc.forEach(g => {
                         const bdt = g.stats[lang]?.byDayType?.[key];
                         if (!bdt) return;
-                        types.forEach(t => { const td = bdt[t]; if (td) { tours += td.tours||0; pax += td.pax||0; } });
+                        types.forEach(tp => { const td = bdt[tp]; if (td) { tours += td.tours||0; pax += td.pax||0; } });
                     });
                 }
             }
@@ -385,16 +388,12 @@ const Page26 = {
 
     updateChart() {
         const colors = this.getChartColors();
-        const text3 = colors.text3;
-        const border = colors.border;
-        const textColor = colors.text;
-
         const cutoffMonth = getCutoffMonth();
-        const cutoffDay   = parseInt(GLOBAL_DATE.split('-')[2]);
+        const cutoffDay   = parseInt(window.GLOBAL_DATE.split('-')[2]);
         const lang = this.activeLang;
         const months = Array.from({length: cutoffMonth}, (_, i) => i + 1);
-
         const citiesToShow = this.activeCity === 'all' ? CITIES : [this.activeCity];
+
         const datasets = citiesToShow.map(city => {
             const guides = guideStats26.filter(g => g.city === city);
             const data = months.map(m => {
@@ -428,12 +427,12 @@ const Page26 = {
             options: {
                 responsive: true, maintainAspectRatio: false,
                 plugins: {
-                    legend: { display: true, labels: { color: textColor, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 12 } },
+                    legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 12 } },
                     tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} ${t('table.pax')}/tour` } }
                 },
                 scales: {
-                    x: { ticks: { color: text3 }, grid: { color: border } },
-                    y: { ticks: { color: text3 }, grid: { color: border }, beginAtZero: true }
+                    x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
+                    y: { ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
                 }
             }
         });
@@ -458,20 +457,9 @@ const Page26 = {
         this._el('kv-paid-pax').textContent  = fmtN(paidPax) + ' pax';
     },
 
-    filterCity(city) {
-        this.activeCity = city;
-        this.renderAll();
-    },
-
-    filterLang(lang) {
-        this.activeLang = lang;
-        this.renderAll();
-    },
-
-    filterMonth(m) {
-        this.activeMonths = m === 'all' ? [] : [parseInt(m)];
-        this.renderAll();
-    },
+    filterCity(city) { this.activeCity = city; this.renderAll(); },
+    filterLang(lang) { this.activeLang = lang; this.renderAll(); },
+    filterMonth(m)   { this.activeMonths = m === 'all' ? [] : [parseInt(m)]; this.renderAll(); },
 
     toggleMonthly(sid) {
         const table = document.getElementById('mt-' + sid);
@@ -660,7 +648,7 @@ const Page26 = {
             this._buildPaidTours() +
             this._buildGuides();
 
-        const d = new Date(GLOBAL_DATE);
+        const d = new Date(window.GLOBAL_DATE);
         const fmt = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
         const datePov = this._el('date-pov');
         if (datePov) datePov.textContent = fmt;
@@ -673,4 +661,5 @@ const Page26 = {
         this.renderAll();
     }
 };
+
 registerPage('Page26', Page26);

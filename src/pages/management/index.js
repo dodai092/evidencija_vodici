@@ -114,7 +114,7 @@ function filterMgmtByDate(mgmt, cutoffDate) {
     const cutoffDay = parseInt(dayStr);
 
     const acc = { revenue:0, vendorCost:0, grossMargin:0, tourCost:0, commissionCost:0, processingFee:0, vatAmount:0, amountBeforeTax:0 };
-    if (!mgmt.byDay) return acc;
+    if (!mgmt.byDay) return _sumMgmtMonths(mgmt, cutoffMonth);
 
     for (const [key, val] of Object.entries(mgmt.byDay)) {
         const [m, d] = key.split('-').map(Number);

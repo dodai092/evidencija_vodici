@@ -10,7 +10,7 @@
 | # | Step | Status |
 |---|------|--------|
 | 1 | Bootstrap esbuild | ✅ Done |
-| 2 | Convert `shared.js`, `i18n.js`, extract `theme.js` | ⏳ Pending |
+| 2 | Convert `shared.js`, `i18n.js`, extract `theme.js` | ✅ Done |
 | 3 | Convert `page-2025.js`, `page-2026.js` | ⏳ Pending |
 | 4 | Split `page-cmp.js` → 3 sub-modules | ⏳ Pending |
 | 5 | Split `management.js` → 5 tab files | ⏳ Pending |
@@ -32,3 +32,17 @@
 - [x] Verify: `npm run build` completes in 2ms ⚡, `dist/app.js` is 15 bytes
 
 **Result:** App unchanged, build pipeline wired. Ready for Step 2.
+
+## Step 2 — Convert `shared.js`, `i18n.js`, extract `theme.js`
+
+**Goal:** Three modules live in `src/`. Old root-level files deleted.
+
+- [x] Create `src/shared.js` — all exports, added `getGlobalDate`/`setGlobalDate`/`getGlobalLanguage`/`setGlobalLanguage` getters/setters
+- [x] Create `src/i18n.js` — `TRANSLATIONS`, `t`, `tOpposite`, `titleAttr`; imports live `GLOBAL_LANGUAGE` from shared
+- [x] Create `src/theme.js` — `initTheme`, `initLanguage`, `toggleTheme`, `toggleLanguage`, `updateLanguageButton`, `updateNavigationLabels`
+- [x] Update `src/main.js` — imports all three modules, runs init, exposes `window.*` globals including `Object.defineProperty` for live `GLOBAL_DATE`/`GLOBAL_LANGUAGE` reads from legacy script tags
+- [x] Remove `<script src="i18n.js">` and `<script src="shared.js">` from `index.html`
+- [x] `git rm shared.js i18n.js`
+- [x] Verify: `npm run build` → 21.8kb in 1ms ⚡
+
+**Result:** `shared.js` and `i18n.js` fully migrated. `theme.js` extracted as new module. Root files deleted.

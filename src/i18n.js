@@ -1,4 +1,6 @@
-const TRANSLATIONS = {
+import { GLOBAL_LANGUAGE } from './shared.js';
+
+export const TRANSLATIONS = {
   en: {
     nav: {
       guides2025: 'Guides 2025',
@@ -291,7 +293,7 @@ const TRANSLATIONS = {
   }
 };
 
-function t(key) {
+export function t(key) {
   const keys = key.split('.');
   let val = TRANSLATIONS[GLOBAL_LANGUAGE];
   for (const k of keys) {
@@ -300,7 +302,7 @@ function t(key) {
   return val || key;
 }
 
-function tOpposite(key) {
+export function tOpposite(key) {
   const keys = key.split('.');
   const oppositeLanguage = GLOBAL_LANGUAGE === 'en' ? 'hr' : 'en';
   let val = TRANSLATIONS[oppositeLanguage];
@@ -310,12 +312,6 @@ function tOpposite(key) {
   return val || key;
 }
 
-function titleAttr(key) {
+export function titleAttr(key) {
   return ` title="${tOpposite(key)}"`;
 }
-
-// Initialize on DOM ready
-document.addEventListener('DOMContentLoaded', () => {
-  if (typeof updateLanguageButton === 'function') updateLanguageButton();
-  if (typeof updateNavigationLabels === 'function') updateNavigationLabels();
-});

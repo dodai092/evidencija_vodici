@@ -1,9 +1,12 @@
 {
   "scripts": {
-    "build": "esbuild src/main.js --bundle --outfile=dist/app.js --format=iife",
-    "dev":   "esbuild src/main.js --bundle --outfile=dist/app.js --format=iife --watch"
+    "build":      "esbuild src/main.js --bundle --outfile=dist/app.js --format=iife",
+    "dev":        "esbuild src/main.js --bundle --outfile=dist/app.js --format=iife --watch",
+    "test":       "vitest run",
+    "test:watch": "vitest"
   },
   "devDependencies": {
-    "esbuild": "^0.25.0"
+    "esbuild": "^0.25.0",
+    "vitest": "^4.1.6"
   }
 }

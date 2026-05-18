@@ -2,7 +2,7 @@
 
 ## Overview
 
-When new monthly data is entered in the Excel file, regenerating the dashboard takes two commands and a git push.
+When new monthly data is entered in the Excel file, regenerating the dashboard takes a few commands and a git push.
 
 ---
 
@@ -11,9 +11,10 @@ When new monthly data is entered in the Excel file, regenerating the dashboard t
 | File | Role |
 |------|------|
 | `Copy of 1.1 Evidencija prodaje 26.xlsx` | Source of truth — all tour data lives here |
-| `extract_guides.py` | Reads the Excel file, outputs JS data |
+| `scripts/extract_guides.py` | Reads the Excel file, outputs JS data |
 | `data-2026.js` | Generated data file consumed by `index.html` |
-| `index.html` | The site — never needs to be edited |
+| `dist/app.js` | Bundled JS app — must be rebuilt and committed after any source change |
+| `index.html` | The site shell — never needs to be edited for data updates |
 
 ---
 
@@ -28,13 +29,11 @@ Open `Copy of 1.1 Evidencija prodaje 26.xlsx` and add the new month's tour rows 
 From the `evidencija/` directory:
 
 ```bash
-cd /path/to/evidencija
-
 # Activate the virtual environment (first time only, or if not active)
 source venv/bin/activate
 
 # Extract and overwrite data-2026.js
-python3 extract_guides.py --year 2026 > data-2026.js
+python3 scripts/extract_guides.py --year 2026 > data-2026.js
 ```
 
 This reads the `helper_2026` sheet and outputs a fresh `data-2026.js` with updated `guideStats26` and `kpiTotals26`.
@@ -48,10 +47,18 @@ Open `index.html` in a browser and check:
 - The new month appears in each guide's monthly breakdown (click "Mjesečno" to expand)
 - The **Usporedba** tab reflects the updated data in charts and comparison tables
 
-### 4. Push to GitHub Pages
+### 4. Rebuild the bundle
 
 ```bash
-git add data-2026.js
+npm run build
+```
+
+This regenerates `dist/app.js` from the source files in `src/`. The built file must be committed — GitHub Pages serves it directly.
+
+### 5. Push to GitHub Pages
+
+```bash
+git add data-2026.js dist/app.js
 git commit -m "Update: guides data $(date +%Y-%m)"
 git push
 ```
@@ -63,7 +70,7 @@ GitHub Pages deploys automatically. The site is live within ~1 minute.
 ## What does NOT need to change
 
 - `index.html` — never edit this for data updates
-- `guides.css`, `shared.js`, `page-2025.js`, `page-2026.js`, `page-cmp.js` — logic files, edit only for feature changes
+- `guides.css`, `src/shared.js`, `src/pages/page-2025.js`, `src/pages/page-2026.js`, `src/pages/page-cmp/index.js` — logic files, edit only for feature changes
 - `data-2025.js` — 2025 is a closed year; only update if correcting historical data
 
 ---
@@ -78,7 +85,7 @@ The **Usporedba** tab will show them as a new guide (no 2025 comparison row), gr
 
 ## Updating the comparison date range
 
-The comparison tab currently shows **January–May** (months 1–5). To extend it to June after June data is available, edit `page-cmp.js`:
+The comparison tab currently shows **January–May** (months 1–5). To extend it to June after June data is available, edit `src/pages/page-cmp/index.js`:
 
 1. In the `_buildHeader()` method, update the subtitle text:
 ```html
@@ -90,6 +97,8 @@ The comparison tab currently shows **January–May** (months 1–5). To extend i
 
 2. If you're also adding June data processing, look for any month loops (`m <= 5`) and update them to `m <= 6`.
 
+3. After editing, run `npm run build` and commit `dist/app.js` along with the source change.
+
 ---
 
 ## Troubleshooting
@@ -99,3 +108,5 @@ The comparison tab currently shows **January–May** (months 1–5). To extend i
 **Guide missing from output** — the guide's name in the Excel sheet may have a typo or extra space. Names must match exactly across rows.
 
 **`ModuleNotFoundError: openpyxl`** — run `pip install openpyxl` inside the venv, or activate the venv with `source venv/bin/activate` before running the script.
+
+**Site is blank on GitHub Pages** — `dist/app.js` was not committed. Run `npm run build`, then `git add dist/app.js` and push.

@@ -1,8 +1,8 @@
 # FreeSpirit Management Dashboard — Complete Guide
 
-**Version:** 1.0  
+**Version:** 1.1  
 **Last Updated:** May 2026  
-**File:** `management.html`
+**Location:** Tab 4 (Management) in `index.html`
 
 ---
 
@@ -647,11 +647,10 @@ python3 scripts/extract_guides.py --year 2025 > data-2025.js
 ## Navigation & Features
 
 ### Keyboard Shortcuts
-- **1** — Jump to P&L tab
-- **2** — Jump to Guides tab
-- **3** — Jump to Channels tab
-- **4** — Jump to Operational tab
-- **5** — Jump to Cities tab
+- **1** — Switch to 2025 tab
+- **2** — Switch to 2026 tab
+- **3** — Switch to Comparison tab
+- **4** — Switch to Management tab (this dashboard)
 - **T** — Toggle dark/light theme
 - **D** — Focus on date picker (for YTD cutoff)
 - **?** — Show shortcuts help overlay

@@ -111,6 +111,13 @@
       return acc;
     }, { freeTours: 0, freePax: 0, paidTours: 0, paidPax: 0 });
   }
+  function toggleSection(id) {
+    const body = document.getElementById(id);
+    if (!body) return;
+    const collapsed = body.classList.toggle("collapsed");
+    const chevron = body.previousElementSibling?.querySelector(".section-chevron");
+    if (chevron) chevron.textContent = collapsed ? "\u25B8" : "\u25BE";
+  }
   function showPage(id, tab) {
     document.querySelectorAll(`.${CSS.PAGE}`).forEach((p) => p.classList.remove(CSS.ACTIVE));
     document.querySelectorAll(`.nav-tabs .${CSS.NAV_TAB}`).forEach((t2) => t2.classList.remove(CSS.ACTIVE, CSS.NAV_Y25, CSS.NAV_Y26, CSS.NAV_CMP));
@@ -4490,6 +4497,9 @@ GM%: ${gmpct}%`;
   PAGES.Page26 = Page26;
   PAGES.PageCmp = PageCmp;
   PAGES.PageMgmt = PageMgmt;
+  window.Page25 = Page25;
+  window.Page26 = Page26;
+  window.toggleSection = toggleSection;
   registerThemeChangeCallback(() => {
     mgmtUpdateCharts();
   });

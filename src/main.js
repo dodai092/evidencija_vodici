@@ -1,7 +1,7 @@
 import {
     PAGES,
     getGlobalDate,
-    updateDateAsOf, showPage,
+    updateDateAsOf, showPage, toggleSection,
 } from './shared.js';
 
 import {
@@ -29,6 +29,12 @@ PAGES.Page25   = Page25;
 PAGES.Page26   = Page26;
 PAGES.PageCmp  = PageCmp;
 PAGES.PageMgmt = PageMgmt;
+
+// Page modules generate HTML strings with inline onclick/onchange attributes
+// that reference these by name — they must be on window to be callable from the DOM.
+window.Page25        = Page25;
+window.Page26        = Page26;
+window.toggleSection = toggleSection;
 
 // ── Register callbacks (theme.js -> main.js to avoid circular dependency) ────
 

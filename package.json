@@ -1,11 +1,13 @@
 {
   "scripts": {
-    "build":      "esbuild src/main.js --bundle --outfile=dist/app.js --format=iife",
-    "dev":        "esbuild src/main.js --bundle --outfile=dist/app.js --format=iife --watch",
-    "test":       "vitest run",
-    "test:watch": "vitest"
+    "build": "esbuild src/main.js --bundle --outfile=dist/app.js --format=iife",
+    "dev": "esbuild src/main.js --bundle --outfile=dist/app.js --format=iife --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:smoke": "playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "esbuild": "^0.25.0",
     "vitest": "^4.1.6"
   }

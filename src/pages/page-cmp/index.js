@@ -1,9 +1,16 @@
 import {
     CITIES, CITY_COLS, CITY_CLS,
-    fmtN, filteredStats, getCutoffMonth, getRangeLabel,
+    fmtN, filteredStats, getCutoffMonth, getGlobalDate, getRangeLabel,
     toggleSection, registerPage, safeName,
 } from '../../shared.js';
 import { t, titleAttr } from '../../i18n.js';
+import {
+    createFreePaxCityChart, createPaidCityChart,
+    createMonthlyFreePaxChart, createMonthlyPaidChart,
+    createCityMonthlyChart, createAvgFreePaxChart,
+    createPaidTypeChart, createWarAvgChart,
+    updateChartColors,
+} from './charts.js';
 
 export const PageCmp = {
     activeCity: 'all',
@@ -11,6 +18,7 @@ export const PageCmp = {
     activeMonths: [],
     mergedGuides: [],
     cityChartInstance: null,
+    paidCityChartInstance: null,
     monthlyChartInstance: null,
     paidChartInstance: null,
     cityMonthlyChartInstance: null,
@@ -246,55 +254,13 @@ export const PageCmp = {
         try {
             if (this.cityChartInstance) this.cityChartInstance.destroy();
             const cityCtx = this._el('cityChart').getContext('2d');
-            this.cityChartInstance = new Chart(cityCtx, {
-                type: 'bar',
-                data: {
-                    labels: CITIES,
-                    datasets: [
-                        { label: `${rangeLabel} 2025`, data: CITIES.map(c => cityData25[c]), backgroundColor: CITIES.map(c => CITY_COLS[c] + '80'), borderRadius: 4 },
-                        { label: `${rangeLabel} 2026`, data: CITIES.map(c => cityData26[c]), backgroundColor: CITIES.map(c => CITY_COLS[c]), borderRadius: 4 }
-                    ]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    layout: { padding: { bottom: 45, right: 55 } },
-                    plugins: {
-                        legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
-                    },
-                    scales: {
-                        x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
-                        y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
-                    }
-                },
-                plugins: [cityDeltaPlugin]
-            });
+            this.cityChartInstance = createFreePaxCityChart(cityCtx, CITIES, cityData25, cityData26, cityDeltaPlugin, colors, rangeLabel);
         } catch(e) { console.error("City Chart Error:", e); }
 
         try {
             if (this.paidCityChartInstance) this.paidCityChartInstance.destroy();
             const paidCityCtx = this._el('paidCityChart').getContext('2d');
-            this.paidCityChartInstance = new Chart(paidCityCtx, {
-                type: 'bar',
-                data: {
-                    labels: CITIES,
-                    datasets: [
-                        { label: `${rangeLabel} 2025`, data: CITIES.map(c => paidCityData25[c]), backgroundColor: CITIES.map(c => CITY_COLS[c] + '80'), borderRadius: 4 },
-                        { label: `${rangeLabel} 2026`, data: CITIES.map(c => paidCityData26[c]), backgroundColor: CITIES.map(c => CITY_COLS[c]), borderRadius: 4 }
-                    ]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    layout: { padding: { bottom: 45, right: 55 } },
-                    plugins: {
-                        legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
-                    },
-                    scales: {
-                        x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
-                        y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
-                    }
-                },
-                plugins: [cityDeltaPlugin]
-            });
+            this.paidCityChartInstance = createPaidCityChart(paidCityCtx, CITIES, paidCityData25, paidCityData26, cityDeltaPlugin, colors, rangeLabel);
         } catch(e) { console.error("Paid City Chart Error:", e); }
 
         const MONTH_NAMES = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
@@ -308,7 +274,7 @@ export const PageCmp = {
         const paidMonthData25 = [], paidMonthData26 = [];
 
         const cutoffMonth = getCutoffMonth();
-        const cutoffDay   = parseInt(window.GLOBAL_DATE.split('-')[2]);
+        const cutoffDay   = parseInt(getGlobalDate().split('-')[2]);
 
         selectedMonths.forEach(i => {
             let fd25 = 0, fd26 = 0, pd25 = 0, pd26 = 0;
@@ -403,59 +369,17 @@ export const PageCmp = {
         try {
             if (this.monthlyChartInstance) this.monthlyChartInstance.destroy();
             const monthCtx = this._el('monthlyChart').getContext('2d');
-            this.monthlyChartInstance = new Chart(monthCtx, {
-                type: 'line',
-                data: {
-                    labels: months,
-                    datasets: [
-                        { label: `${rangeLabel} 2025`, data: cumMonthData25, borderColor: colors.y25, backgroundColor: colors.y25 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 },
-                        { label: `${rangeLabel} 2026`, data: cumMonthData26, borderColor: colors.y26, backgroundColor: colors.y26 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 }
-                    ]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    layout: { padding: { bottom: 45, right: 55 } },
-                    plugins: {
-                        legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
-                    },
-                    scales: {
-                        x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
-                        y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
-                    }
-                },
-                plugins: [deltaOverlay, monthDeltaPlugin]
-            });
+            this.monthlyChartInstance = createMonthlyFreePaxChart(monthCtx, months, cumMonthData25, cumMonthData26, deltaOverlay, monthDeltaPlugin, colors, rangeLabel);
         } catch(e) { console.error("Monthly Chart Error:", e); }
 
         try {
             if (this.paidChartInstance) this.paidChartInstance.destroy();
             const paidCtx = this._el('paidChart').getContext('2d');
-            this.paidChartInstance = new Chart(paidCtx, {
-                type: 'line',
-                data: {
-                    labels: months,
-                    datasets: [
-                        { label: `${rangeLabel} 2025`, data: cumPaidMonthData25, borderColor: colors.y25, backgroundColor: colors.y25 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 },
-                        { label: `${rangeLabel} 2026`, data: cumPaidMonthData26, borderColor: colors.y26, backgroundColor: colors.y26 + '33', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 }
-                    ]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    layout: { padding: { bottom: 45, right: 55 } },
-                    plugins: {
-                        legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
-                    },
-                    scales: {
-                        x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
-                        y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
-                    }
-                },
-                plugins: [deltaOverlay, monthDeltaPlugin]
-            });
+            this.paidChartInstance = createMonthlyPaidChart(paidCtx, months, cumPaidMonthData25, cumPaidMonthData26, deltaOverlay, monthDeltaPlugin, colors, rangeLabel);
         } catch(e) { console.error("Paid Chart Error:", e); }
 
         try {
-            const cutoffDay = parseInt(window.GLOBAL_DATE.split('-')[2]);
+            const cutoffDay = parseInt(getGlobalDate().split('-')[2]);
             const cityMonthly25 = {};
             const cityMonthly26 = {};
             CITIES.forEach(c => { cityMonthly25[c] = []; cityMonthly26[c] = []; });
@@ -527,28 +451,7 @@ export const PageCmp = {
 
             if (this.cityMonthlyChartInstance) this.cityMonthlyChartInstance.destroy();
             const cmCtx = this._el('cityMonthlyChart').getContext('2d');
-            this.cityMonthlyChartInstance = new Chart(cmCtx, {
-                type: 'line',
-                data: { labels: months, datasets },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            labels: {
-                                color: colors.text,
-                                font: { size: 10, family: "'Montserrat',sans-serif" },
-                                boxWidth: 12, padding: 12,
-                                filter: item => !item.text.includes('2025')
-                            }
-                        }
-                    },
-                    scales: {
-                        x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
-                        y: { ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
-                    }
-                }
-            });
+            this.cityMonthlyChartInstance = createCityMonthlyChart(cmCtx, months, datasets, colors);
         } catch(e) { console.error("City Monthly Chart Error:", e); }
 
         try {
@@ -580,36 +483,29 @@ export const PageCmp = {
             if (this.avgFreePaxCmpChartInstance) this.avgFreePaxCmpChartInstance.destroy();
             const afCtx = document.getElementById('avgFreePaxCmpChart-cmp')?.getContext('2d');
             if (afCtx) {
-                this.avgFreePaxCmpChartInstance = new Chart(afCtx, {
-                    type: 'line',
-                    data: {
-                        labels: months,
-                        datasets: [
-                            { label: `${rangeLabel} 2025`, data: avgFree25, borderColor: colors.y25, backgroundColor: colors.y25 + '22', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4, spanGaps: false },
-                            { label: `${rangeLabel} 2026`, data: avgFree26, borderColor: colors.y26, backgroundColor: colors.y26 + '22', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4, spanGaps: false },
-                        ]
-                    },
-                    options: {
-                        responsive: true, maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } },
-                            tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} PAX/tour` } }
-                        },
-                        scales: {
-                            x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
-                            y: { ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
-                        }
-                    }
-                });
+                this.avgFreePaxCmpChartInstance = createAvgFreePaxChart(afCtx, months, avgFree25, avgFree26, colors, rangeLabel);
             }
         } catch(e) { console.error('Avg free PAX cmp chart error:', e); }
 
         this.updatePaidTypeCharts();
+
+        // Update theme colors on all chart instances
+        updateChartColors([
+            this.cityChartInstance,
+            this.paidCityChartInstance,
+            this.monthlyChartInstance,
+            this.paidChartInstance,
+            this.cityMonthlyChartInstance,
+            this.avgFreePaxCmpChartInstance,
+            this.privatePaidChartInstance,
+            this.sharedPaidChartInstance,
+            this.warAvgChartInstance,
+        ]);
     },
 
     renderMonthlyTable() {
         const cutoffMonth = getCutoffMonth();
-        const cutoffDay   = parseInt(window.GLOBAL_DATE.split('-')[2]);
+        const cutoffDay   = parseInt(getGlobalDate().split('-')[2]);
         const MONTH_NAMES = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
 
         const months = this.activeMonths.length > 0
@@ -705,7 +601,7 @@ export const PageCmp = {
                 </tbody>
             </table>
             </div>
-            ${hasPartial ? `<div class="mpax-note">* ${t('labels.partial')} — ${t('labels.dataThrough')} ${window.GLOBAL_DATE}</div>` : ''}
+            ${hasPartial ? `<div class="mpax-note">* ${t('labels.partial')} — ${t('labels.dataThrough')} ${getGlobalDate()}</div>` : ''}
         </div>`;
 
         const el = document.getElementById('monthly-pax-table-cmp');
@@ -751,7 +647,7 @@ export const PageCmp = {
 
     _getTypeMonthData(city, types, primaryKey, year) {
         const cutoffMonth = getCutoffMonth();
-        const cutoffDay   = parseInt(window.GLOBAL_DATE.split('-')[2]);
+        const cutoffDay   = parseInt(getGlobalDate().split('-')[2]);
         const maxMonth    = this.activeMonths.length > 0 ? Math.max(...this.activeMonths) : cutoffMonth;
         const fc = this.mergedGuides.filter(m => city === 'all' || m.city === city);
 
@@ -864,7 +760,7 @@ export const PageCmp = {
                 </thead>
                 <tbody>${bodyRows}${totalRow}</tbody>
             </table>
-            ${hasPartial ? `<div class="mpax-note">* ${t('labels.partial')} — ${t('labels.dataThrough')} ${window.GLOBAL_DATE}</div>` : ''}
+            ${hasPartial ? `<div class="mpax-note">* ${t('labels.partial')} — ${t('labels.dataThrough')} ${getGlobalDate()}</div>` : ''}
         </div>`;
 
         const el = document.getElementById(containerId);
@@ -880,7 +776,7 @@ export const PageCmp = {
         const months   = Array.from({length: maxMonth}, (_, i) => MONTH_NAMES[i + 1]);
 
         const rangeLabel = getRangeLabel();
-        const cutoffDay  = parseInt(window.GLOBAL_DATE.split('-')[2]);
+        const cutoffDay  = parseInt(getGlobalDate().split('-')[2]);
 
         const secondaryLabelPlugin = (secondaryKey) => ({
             id: 'secondaryLabel',
@@ -934,32 +830,7 @@ export const PageCmp = {
                 if (this[instanceKey]) this[instanceKey].destroy();
                 const ctx = document.getElementById(canvasId)?.getContext('2d');
                 if (!ctx) return;
-                this[instanceKey] = new Chart(ctx, {
-                    type: 'bar',
-                    data: { labels: months, datasets: [ds25, ds26] },
-                    options: {
-                        responsive: true, maintainAspectRatio: false,
-                        layout: { padding: { top: 20, bottom: 30 } },
-                        plugins: {
-                            legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } },
-                            tooltip: {
-                                callbacks: {
-                                    afterLabel: (item) => {
-                                        const sec = item.datasetIndex === 0
-                                            ? ds25._secondaryData[item.dataIndex]
-                                            : ds26._secondaryData[item.dataIndex];
-                                        return sec ? `${secondaryKey === 'pax' ? 'PAX' : 'Tours'}: ${sec}` : '';
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: { ticks: { color: colors.text3, font: { size: 11 } }, grid: { color: colors.border } },
-                            y: { title: { display: true, text: yLabel, color: colors.text3, font: { size: 10 } }, ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
-                        }
-                    },
-                    plugins: [secondaryLabelPlugin(secondaryKey)]
-                });
+                this[instanceKey] = createPaidTypeChart(ctx, months, ds25, ds26, colors, secondaryLabelPlugin(secondaryKey), yLabel);
             } catch(e) { console.error('Type chart error:', e); }
         };
 
@@ -999,27 +870,7 @@ export const PageCmp = {
             if (this.warAvgChartInstance) this.warAvgChartInstance.destroy();
             const warCtx = document.getElementById('warAvgChart-cmp')?.getContext('2d');
             if (warCtx) {
-                this.warAvgChartInstance = new Chart(warCtx, {
-                    type: 'line',
-                    data: {
-                        labels: months,
-                        datasets: [
-                            { label: `${rangeLabel} 2025`, data: getTypeAvg(25, typesToShow), borderColor: colors.y25, backgroundColor: colors.y25 + '22', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4, spanGaps: false },
-                            { label: `${rangeLabel} 2026`, data: getTypeAvg(26, typesToShow), borderColor: colors.y26, backgroundColor: colors.y26 + '22', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4, spanGaps: false },
-                        ]
-                    },
-                    options: {
-                        responsive: true, maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } },
-                            tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} PAX/tour` } }
-                        },
-                        scales: {
-                            x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
-                            y: { ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
-                        }
-                    }
-                });
+                this.warAvgChartInstance = createWarAvgChart(warCtx, months, getTypeAvg(25, typesToShow), getTypeAvg(26, typesToShow), colors, rangeLabel);
             }
         } catch(e) { console.error('Avg type chart error:', e); }
     },
@@ -1332,12 +1183,13 @@ export const PageCmp = {
     },
 
     _destroyCharts() {
-        [this.cityChartInstance, this.monthlyChartInstance, this.paidChartInstance,
+        [this.cityChartInstance, this.paidCityChartInstance, this.monthlyChartInstance, this.paidChartInstance,
          this.cityMonthlyChartInstance, this.privatePaidChartInstance, this.sharedPaidChartInstance,
          this.warAvgChartInstance, this.avgFreePaxCmpChartInstance].forEach(chart => {
             if (chart) try { chart.destroy(); } catch(e) {}
         });
         this.cityChartInstance = null;
+        this.paidCityChartInstance = null;
         this.monthlyChartInstance = null;
         this.paidChartInstance = null;
         this.cityMonthlyChartInstance = null;

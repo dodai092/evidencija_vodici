@@ -1,105 +1,132 @@
 import {
-    CITY_COLS, CITY_CLS, CITIES, MONTH_NAMES_HR, CSS,
-    PAGES, registerPage,
-    getGlobalDate, setGlobalDate, getGlobalLanguage, setGlobalLanguage,
-    safeName, fmtN,
-    getCutoffMonth, parseGlobalDate, getRangeLabel,
-    updateDateAsOf, filteredStats,
-    toggleSection, showPage,
-    initKeyboardShortcuts,
+    PAGES,
+    getGlobalDate,
+    updateDateAsOf, showPage,
 } from './shared.js';
 
-import { TRANSLATIONS, t, tOpposite, titleAttr } from './i18n.js';
-
 import {
-    initTheme, initLanguage,
     toggleTheme, toggleLanguage,
     updateThemeButton, updateLanguageButton, updateNavigationLabels,
+    initTheme, initLanguage,
 } from './theme.js';
-
-// ── Boot ──────────────────────────────────────────────────────────────────────
-
-initTheme();
-initLanguage();
-
-// ── Window globals for inline HTML handlers and legacy <script> tags ──────────
-
-// Mutable state: expose as getter/setter so reads in old script tags are live
-Object.defineProperty(window, 'GLOBAL_DATE', {
-    get: getGlobalDate,
-    set: setGlobalDate,
-    configurable: true,
-    enumerable: true,
-});
-Object.defineProperty(window, 'GLOBAL_LANGUAGE', {
-    get: getGlobalLanguage,
-    set: setGlobalLanguage,
-    configurable: true,
-    enumerable: true,
-});
-
-// Reference types (objects/arrays): single reference, mutations are live
-window.CITY_COLS  = CITY_COLS;
-window.CITY_CLS   = CITY_CLS;
-window.CITIES     = CITIES;
-window.MONTH_NAMES_HR = MONTH_NAMES_HR;
-window.CSS        = CSS;
-window.PAGES      = PAGES;
-
-// Functions: inline HTML handlers + legacy script dependencies
-window.registerPage        = registerPage;
-window.safeName            = safeName;
-window.fmtN                = fmtN;
-window.getCutoffMonth      = getCutoffMonth;
-window.parseGlobalDate     = parseGlobalDate;
-window.getRangeLabel       = getRangeLabel;
-window.updateDateAsOf      = updateDateAsOf;
-window.filteredStats       = filteredStats;
-window.toggleSection       = toggleSection;
-window.showPage            = showPage;
-
-window.TRANSLATIONS        = TRANSLATIONS;
-window.t                   = t;
-window.tOpposite           = tOpposite;
-window.titleAttr           = titleAttr;
-
-window.toggleTheme         = toggleTheme;
-window.toggleLanguage      = toggleLanguage;
-window.updateThemeButton   = updateThemeButton;
-window.updateLanguageButton = updateLanguageButton;
-window.updateNavigationLabels = updateNavigationLabels;
-
-// Used by KEYBOARD_SHORTCUTS 't' handler without circular import
-window._toggleTheme        = toggleTheme;
 
 import { Page25 } from './pages/page-2025.js';
 import { Page26 } from './pages/page-2026.js';
 import { PageCmp } from './pages/page-cmp/index.js';
 import {
     mgmtShowTab, mgmtFilterCityPl, mgmtSort,
-    updateMgmtDate, mgmtUpdateCharts, mgmtRefreshAll,
-    updateManagementTabs,
+    mgmtUpdateCharts, updateManagementTabs,
     PageMgmt,
 } from './pages/management/index.js';
 
-window.Page25 = Page25;
-window.Page26 = Page26;
-window.PageCmp = PageCmp;
+// ── Boot ──────────────────────────────────────────────────────────────────────
 
-window.mgmtShowTab          = mgmtShowTab;
-window.mgmtFilterCityPl     = mgmtFilterCityPl;
-window.mgmtSort             = mgmtSort;
-window.updateMgmtDate       = updateMgmtDate;
-window.mgmtUpdateCharts     = mgmtUpdateCharts;
-window.mgmtRefreshAll       = mgmtRefreshAll;
-window.updateManagementTabs = updateManagementTabs;
+initTheme();
+initLanguage();
 
+PAGES.Page25   = Page25;
+PAGES.Page26   = Page26;
+PAGES.PageCmp  = PageCmp;
 PAGES.PageMgmt = PageMgmt;
 
-// ── Post-load init ────────────────────────────────────────────────────────────
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+function toggleShortcutOverlay() {
+    const el = document.getElementById('shortcut-overlay');
+    if (el) el.style.display = el.style.display === 'block' ? 'none' : 'block';
+}
+
+// ── Event wiring ──────────────────────────────────────────────────────────────
+
+const PAGE_MAP = {
+    'tab-25':   'page-25',
+    'tab-26':   'page-26',
+    'tab-cmp':  'page-cmp',
+    'tab-mgmt': 'page-mgmt',
+};
+
+function initEventListeners() {
+    // Main navigation tabs
+    Object.entries(PAGE_MAP).forEach(([tabId, pageId]) => {
+        const el = document.getElementById(tabId);
+        if (el) el.addEventListener('click', () => showPage(pageId, el));
+    });
+
+    // Management sub-navigation tabs
+    ['pl', 'guides', 'channels', 'ops', 'cities'].forEach(id => {
+        const el = document.getElementById('tab-' + id);
+        if (el) el.addEventListener('click', () => mgmtShowTab(id, el));
+    });
+
+    // Controls
+    document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
+    document.getElementById('language-toggle')?.addEventListener('click', toggleLanguage);
+    document.getElementById('cutoff-picker')?.addEventListener('change', e => updateDateAsOf(e.target.value));
+    document.querySelector('.print-btn')?.addEventListener('click', () => window.print());
+
+    // Management city filter pills (two static sets in index.html)
+    document.querySelectorAll('.city-pill').forEach(el =>
+        el.addEventListener('click', () => mgmtFilterCityPl(el.dataset.city)));
+
+    // Sort headers in guide table (static thead in index.html)
+    document.querySelectorAll('.sort-hdr').forEach(el =>
+        el.addEventListener('click', () => mgmtSort(el.dataset.col)));
+
+    // Shortcut overlay close button
+    document.querySelector('.overlay-close')?.addEventListener('click', toggleShortcutOverlay);
+}
+
+// ── Keyboard shortcuts ────────────────────────────────────────────────────────
+
+function initKeyboardShortcuts() {
+    const shortcuts = {
+        '1': () => { const el = document.getElementById('tab-25');   if (el) showPage('page-25', el); },
+        '2': () => { const el = document.getElementById('tab-26');   if (el) showPage('page-26', el); },
+        '3': () => { const el = document.getElementById('tab-cmp');  if (el) showPage('page-cmp', el); },
+        '4': () => { const el = document.getElementById('tab-mgmt'); if (el) showPage('page-mgmt', el); },
+        't': () => toggleTheme(),
+        'd': () => document.getElementById('cutoff-picker')?.focus(),
+        '?': () => toggleShortcutOverlay(),
+        'Escape': () => {
+            const overlay = document.getElementById('shortcut-overlay');
+            if (overlay && overlay.style.display === 'block') overlay.style.display = 'none';
+        },
+    };
+    document.addEventListener('keydown', e => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        if (e.metaKey || e.ctrlKey || e.altKey) return;
+        const handler = shortcuts[e.key];
+        if (handler) { handler(); e.preventDefault(); }
+    });
+}
+
+// ── Theme / language update hooks (called from theme.js after toggling) ───────
+
+export function onThemeChange() {
+    mgmtUpdateCharts();
+    if (PAGES.PageCmp?._initialized) PAGES.PageCmp.updateCharts();
+}
+
+export function onLanguageChange() {
+    updateNavigationLabels();
+    updateManagementTabs();
+}
+
+// ── DOMContentLoaded — single init point ─────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
+    updateThemeButton();
     updateLanguageButton();
     updateNavigationLabels();
+
+    const picker = document.getElementById('cutoff-picker');
+    if (picker) {
+        picker.value = getGlobalDate();
+        updateDateAsOf(picker.value);
+    }
+
+    Page25.init();
+
+    initEventListeners();
     initKeyboardShortcuts();
 });

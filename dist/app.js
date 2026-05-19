@@ -29,9 +29,6 @@
   var _today = /* @__PURE__ */ new Date();
   var GLOBAL_DATE = `${_today.getFullYear()}-${String(_today.getMonth() + 1).padStart(2, "0")}-${String(_today.getDate()).padStart(2, "0")}`;
   var GLOBAL_LANGUAGE = "en";
-  function setGlobalDate(v) {
-    GLOBAL_DATE = v;
-  }
   function getGlobalDate() {
     return GLOBAL_DATE;
   }
@@ -76,7 +73,7 @@
         PAGES.PageCmp.mergedGuides = PAGES.PageCmp.buildMerged();
         PAGES.PageCmp.renderAll();
       }
-      if (window.mgmtRefreshAll) window.mgmtRefreshAll();
+      if (PAGES.PageMgmt?._initialized) PAGES.PageMgmt.renderAll();
     });
   }
   function filteredStats(st, months) {
@@ -114,13 +111,6 @@
       return acc;
     }, { freeTours: 0, freePax: 0, paidTours: 0, paidPax: 0 });
   }
-  function toggleSection(id) {
-    const body = document.getElementById(id);
-    if (!body) return;
-    const collapsed = body.classList.toggle("collapsed");
-    const chevron = body.previousElementSibling?.querySelector(".section-chevron");
-    if (chevron) chevron.textContent = collapsed ? "\u25B8" : "\u25BE";
-  }
   function showPage(id, tab) {
     document.querySelectorAll(`.${CSS.PAGE}`).forEach((p) => p.classList.remove(CSS.ACTIVE));
     document.querySelectorAll(`.nav-tabs .${CSS.NAV_TAB}`).forEach((t2) => t2.classList.remove(CSS.ACTIVE, CSS.NAV_Y25, CSS.NAV_Y26, CSS.NAV_CMP));
@@ -135,47 +125,8 @@
     else if (id === "page-cmp" && PAGES.PageCmp) setTimeout(() => PAGES.PageCmp.updateCharts(), 50);
     if (id === "page-mgmt" && PAGES.PageMgmt) {
       if (!PAGES.PageMgmt._initialized) PAGES.PageMgmt.init();
-      else if (window.mgmtRefreshAll) window.mgmtRefreshAll();
+      else PAGES.PageMgmt.renderAll();
     }
-  }
-  var KEYBOARD_SHORTCUTS = {
-    "1": () => {
-      const tab = document.getElementById("tab-25");
-      if (tab) showPage("page-25", tab);
-    },
-    "2": () => {
-      const tab = document.getElementById("tab-26");
-      if (tab) showPage("page-26", tab);
-    },
-    "3": () => {
-      const tab = document.getElementById("tab-cmp");
-      if (tab) showPage("page-cmp", tab);
-    },
-    "4": () => {
-      const tab = document.getElementById("tab-mgmt");
-      if (tab) showPage("page-mgmt", tab);
-    },
-    "t": () => window._toggleTheme && window._toggleTheme(),
-    "d": () => {
-      const picker = document.getElementById("cutoff-picker");
-      if (picker) picker.focus();
-    },
-    "?": () => window.toggleShortcutOverlay && window.toggleShortcutOverlay(),
-    "Escape": () => {
-      const overlay = document.getElementById("shortcut-overlay");
-      if (overlay && overlay.style.display === "block") overlay.style.display = "none";
-    }
-  };
-  function initKeyboardShortcuts() {
-    document.addEventListener("keydown", (e) => {
-      if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
-      if (e.metaKey || e.ctrlKey || e.altKey) return;
-      const handler = KEYBOARD_SHORTCUTS[e.key];
-      if (handler) {
-        handler();
-        e.preventDefault();
-      }
-    });
   }
 
   // src/i18n.js
@@ -1104,7 +1055,7 @@
     rebuildStructure() {
       this._destroyCharts();
       document.getElementById("page-25").innerHTML = this._buildHeader() + this._buildFilters() + this._buildFreeTours() + this._buildPaidTours() + this._buildGuides();
-      const d = new Date(window.GLOBAL_DATE);
+      const d = new Date(getGlobalDate());
       const fmt2 = d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
       const datePov = this._el("date-pov");
       if (datePov) datePov.textContent = fmt2;
@@ -1240,7 +1191,7 @@
       const lang = this.activeLang;
       const MONTH_NAMES = { 1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec" };
       const cutoffMonth = getCutoffMonth();
-      const cutoffDay = parseInt(window.GLOBAL_DATE.split("-")[2]);
+      const cutoffDay = parseInt(getGlobalDate().split("-")[2]);
       const months = this.activeMonths.length > 0 ? this.activeMonths : Array.from({ length: cutoffMonth }, (_, i) => i + 1);
       const citiesToShow = this.activeCity === "all" ? CITIES : [this.activeCity];
       const getPax = (g, m) => {
@@ -1292,7 +1243,7 @@
                 </tbody>
             </table>
             </div>
-            ${hasPartial ? `<div class="mpax-note">* ${t("labels.partial")} \u2014 data through ${window.GLOBAL_DATE}</div>` : ""}
+            ${hasPartial ? `<div class="mpax-note">* ${t("labels.partial")} \u2014 data through ${getGlobalDate()}</div>` : ""}
         </div>`;
       const el = document.getElementById("monthly-pax-table-26");
       if (el) el.innerHTML = html;
@@ -1300,7 +1251,7 @@
     _getTypeMonthData(types) {
       const lang = this.activeLang;
       const cutoffMonth = getCutoffMonth();
-      const cutoffDay = parseInt(window.GLOBAL_DATE.split("-")[2]);
+      const cutoffDay = parseInt(getGlobalDate().split("-")[2]);
       const maxMonth = this.activeMonths.length > 0 ? Math.max(...this.activeMonths) : cutoffMonth;
       const fc = guideStats26.filter((g) => this.activeCity === "all" || g.city === this.activeCity);
       return Array.from({ length: maxMonth }, (_, i) => i + 1).map((mo) => {
@@ -1451,7 +1402,7 @@
     updateChart() {
       const colors = this.getChartColors();
       const cutoffMonth = getCutoffMonth();
-      const cutoffDay = parseInt(window.GLOBAL_DATE.split("-")[2]);
+      const cutoffDay = parseInt(getGlobalDate().split("-")[2]);
       const lang = this.activeLang;
       const months = Array.from({ length: cutoffMonth }, (_, i) => i + 1);
       const citiesToShow = this.activeCity === "all" ? CITIES : [this.activeCity];
@@ -1716,7 +1667,7 @@
     rebuildStructure() {
       this._destroyCharts();
       document.getElementById("page-26").innerHTML = this._buildHeader() + this._buildFilters() + this._buildFreeTours() + this._buildPaidTours() + this._buildGuides();
-      const d = new Date(window.GLOBAL_DATE);
+      const d = new Date(getGlobalDate());
       const fmt2 = d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
       const datePov = this._el("date-pov");
       if (datePov) datePov.textContent = fmt2;
@@ -4342,25 +4293,6 @@ GM%: ${gmpct}%`;
         `;
     }
   }
-  function mgmtRefreshAll() {
-    if (MgmtPages.pl._init) {
-      renderPlKpis(_activeCity);
-      renderWaterfall();
-      renderMonthTrend();
-      renderBillingTrend();
-    }
-    if (MgmtPages.guides._init) renderGuideTable();
-    if (MgmtPages.channels._init) renderDirectOtaTrend();
-    if (MgmtPages.ops._init) {
-      renderOpsMonthLine();
-      renderPaymentMethod();
-    }
-    if (MgmtPages.cities._init) renderCitiesTab();
-  }
-  function updateMgmtDate(val) {
-    window.GLOBAL_DATE = val;
-    mgmtRefreshAll();
-  }
   function mgmtUpdateCharts() {
     const ax = axisDefaults();
     const tt = tooltipDefaults();
@@ -4414,58 +4346,92 @@ GM%: ${gmpct}%`;
   // src/main.js
   initTheme();
   initLanguage();
-  Object.defineProperty(window, "GLOBAL_DATE", {
-    get: getGlobalDate,
-    set: setGlobalDate,
-    configurable: true,
-    enumerable: true
-  });
-  Object.defineProperty(window, "GLOBAL_LANGUAGE", {
-    get: getGlobalLanguage,
-    set: setGlobalLanguage,
-    configurable: true,
-    enumerable: true
-  });
-  window.CITY_COLS = CITY_COLS;
-  window.CITY_CLS = CITY_CLS;
-  window.CITIES = CITIES;
-  window.MONTH_NAMES_HR = MONTH_NAMES_HR;
-  window.CSS = CSS;
-  window.PAGES = PAGES;
-  window.registerPage = registerPage;
-  window.safeName = safeName;
-  window.fmtN = fmtN;
-  window.getCutoffMonth = getCutoffMonth;
-  window.parseGlobalDate = parseGlobalDate;
-  window.getRangeLabel = getRangeLabel;
-  window.updateDateAsOf = updateDateAsOf;
-  window.filteredStats = filteredStats;
-  window.toggleSection = toggleSection;
-  window.showPage = showPage;
-  window.TRANSLATIONS = TRANSLATIONS;
-  window.t = t;
-  window.tOpposite = tOpposite;
-  window.titleAttr = titleAttr;
-  window.toggleTheme = toggleTheme;
-  window.toggleLanguage = toggleLanguage;
-  window.updateThemeButton = updateThemeButton;
-  window.updateLanguageButton = updateLanguageButton;
-  window.updateNavigationLabels = updateNavigationLabels;
-  window._toggleTheme = toggleTheme;
-  window.Page25 = Page25;
-  window.Page26 = Page26;
-  window.PageCmp = PageCmp;
-  window.mgmtShowTab = mgmtShowTab;
-  window.mgmtFilterCityPl = mgmtFilterCityPl;
-  window.mgmtSort = mgmtSort;
-  window.updateMgmtDate = updateMgmtDate;
-  window.mgmtUpdateCharts = mgmtUpdateCharts;
-  window.mgmtRefreshAll = mgmtRefreshAll;
-  window.updateManagementTabs = updateManagementTabs2;
+  PAGES.Page25 = Page25;
+  PAGES.Page26 = Page26;
+  PAGES.PageCmp = PageCmp;
   PAGES.PageMgmt = PageMgmt;
+  function toggleShortcutOverlay() {
+    const el = document.getElementById("shortcut-overlay");
+    if (el) el.style.display = el.style.display === "block" ? "none" : "block";
+  }
+  var PAGE_MAP = {
+    "tab-25": "page-25",
+    "tab-26": "page-26",
+    "tab-cmp": "page-cmp",
+    "tab-mgmt": "page-mgmt"
+  };
+  function initEventListeners() {
+    Object.entries(PAGE_MAP).forEach(([tabId, pageId]) => {
+      const el = document.getElementById(tabId);
+      if (el) el.addEventListener("click", () => showPage(pageId, el));
+    });
+    ["pl", "guides", "channels", "ops", "cities"].forEach((id) => {
+      const el = document.getElementById("tab-" + id);
+      if (el) el.addEventListener("click", () => mgmtShowTab(id, el));
+    });
+    document.getElementById("theme-toggle")?.addEventListener("click", toggleTheme);
+    document.getElementById("language-toggle")?.addEventListener("click", toggleLanguage);
+    document.getElementById("cutoff-picker")?.addEventListener("change", (e) => updateDateAsOf(e.target.value));
+    document.querySelector(".print-btn")?.addEventListener("click", () => window.print());
+    document.querySelectorAll(".city-pill").forEach((el) => el.addEventListener("click", () => mgmtFilterCityPl(el.dataset.city)));
+    document.querySelectorAll(".sort-hdr").forEach((el) => el.addEventListener("click", () => mgmtSort(el.dataset.col)));
+    document.querySelector(".overlay-close")?.addEventListener("click", toggleShortcutOverlay);
+  }
+  function initKeyboardShortcuts() {
+    const shortcuts = {
+      "1": () => {
+        const el = document.getElementById("tab-25");
+        if (el) showPage("page-25", el);
+      },
+      "2": () => {
+        const el = document.getElementById("tab-26");
+        if (el) showPage("page-26", el);
+      },
+      "3": () => {
+        const el = document.getElementById("tab-cmp");
+        if (el) showPage("page-cmp", el);
+      },
+      "4": () => {
+        const el = document.getElementById("tab-mgmt");
+        if (el) showPage("page-mgmt", el);
+      },
+      "t": () => toggleTheme(),
+      "d": () => document.getElementById("cutoff-picker")?.focus(),
+      "?": () => toggleShortcutOverlay(),
+      "Escape": () => {
+        const overlay = document.getElementById("shortcut-overlay");
+        if (overlay && overlay.style.display === "block") overlay.style.display = "none";
+      }
+    };
+    document.addEventListener("keydown", (e) => {
+      if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const handler = shortcuts[e.key];
+      if (handler) {
+        handler();
+        e.preventDefault();
+      }
+    });
+  }
+  function onThemeChange() {
+    mgmtUpdateCharts();
+    if (PAGES.PageCmp?._initialized) PAGES.PageCmp.updateCharts();
+  }
+  function onLanguageChange() {
+    updateNavigationLabels();
+    updateManagementTabs2();
+  }
   document.addEventListener("DOMContentLoaded", () => {
+    updateThemeButton();
     updateLanguageButton();
     updateNavigationLabels();
+    const picker = document.getElementById("cutoff-picker");
+    if (picker) {
+      picker.value = getGlobalDate();
+      updateDateAsOf(picker.value);
+    }
+    Page25.init();
+    initEventListeners();
     initKeyboardShortcuts();
   });
 })();

@@ -39,7 +39,7 @@ export function guidesForCity(city) {
 
 // ── Aggregation ───────────────────────────────────────────────────────────────
 
-export function _sumMgmtMonths(mgmt, cutoff) {
+function _sumMgmtMonths(mgmt, cutoff) {
     const acc = { revenue:0, vendorCost:0, grossMargin:0, tourCost:0,
                   commissionCost:0, processingFee:0, vatAmount:0, amountBeforeTax:0 };
     for (let m = 1; m <= cutoff; m++) {
@@ -85,15 +85,23 @@ export function filterStatsByDate(stats, cutoffDate) {
     const cutoffMonth = parseInt(monthStr);
     const cutoffDay   = parseInt(dayStr);
     let freeTours=0, paidTours=0, freePax=0, paidPax=0;
-    if (stats.byDay) {
-        for (const [key, val] of Object.entries(stats.byDay)) {
-            const [m, d] = key.split('-').map(Number);
-            if (m < cutoffMonth || (m === cutoffMonth && d <= cutoffDay)) {
-                freeTours += val.free?.tours || 0;
-                paidTours += val.paid?.tours || 0;
-                freePax   += val.free?.pax   || 0;
-                paidPax   += val.paid?.pax   || 0;
-            }
+    if (!stats.byDay) {
+        for (let m = 1; m <= cutoffMonth; m++) {
+            const bm = stats.byMonth?.[String(m)] || {};
+            freeTours += bm.free?.tours || 0;
+            paidTours += bm.paid?.tours || 0;
+            freePax   += bm.free?.pax   || 0;
+            paidPax   += bm.paid?.pax   || 0;
+        }
+        return { freeTours, paidTours, freePax, paidPax };
+    }
+    for (const [key, val] of Object.entries(stats.byDay)) {
+        const [m, d] = key.split('-').map(Number);
+        if (m < cutoffMonth || (m === cutoffMonth && d <= cutoffDay)) {
+            freeTours += val.free?.tours || 0;
+            paidTours += val.paid?.tours || 0;
+            freePax   += val.free?.pax   || 0;
+            paidPax   += val.paid?.pax   || 0;
         }
     }
     return { freeTours, paidTours, freePax, paidPax };

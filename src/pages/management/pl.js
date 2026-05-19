@@ -79,7 +79,7 @@ export function renderPlKpis(city) {
     const avgGm25 = k25 && k25.paidTours > 0 ? k25.grossMargin / k25.paidTours : null;
     document.getElementById('kpi-avg-gm-delta').innerHTML = kpiDelta(avgGm, avgGm25);
 
-    const rangeLabel = getRangeLabel ? getRangeLabel() : '';
+    const rangeLabel = getRangeLabel();
     const sBar = document.getElementById('sticky-kpi-bar');
     if (sBar) {
         document.getElementById('skpi-revenue').textContent    = fmtEur(k.revenue);

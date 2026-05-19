@@ -115,6 +115,7 @@ export function updateManagementTabs() {
 export const PageMgmt = {
     _initialized: false,
     init() {
+        if (this._initialized) return;
         const footerDate = document.getElementById('footer-date');
         if (footerDate) footerDate.textContent = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
         const tabEl = document.getElementById('tab-pl');

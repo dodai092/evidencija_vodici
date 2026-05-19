@@ -3186,15 +3186,23 @@
     const cutoffMonth = parseInt(monthStr);
     const cutoffDay = parseInt(dayStr);
     let freeTours = 0, paidTours = 0, freePax = 0, paidPax = 0;
-    if (stats.byDay) {
-      for (const [key, val] of Object.entries(stats.byDay)) {
-        const [m, d] = key.split("-").map(Number);
-        if (m < cutoffMonth || m === cutoffMonth && d <= cutoffDay) {
-          freeTours += val.free?.tours || 0;
-          paidTours += val.paid?.tours || 0;
-          freePax += val.free?.pax || 0;
-          paidPax += val.paid?.pax || 0;
-        }
+    if (!stats.byDay) {
+      for (let m = 1; m <= cutoffMonth; m++) {
+        const bm = stats.byMonth?.[String(m)] || {};
+        freeTours += bm.free?.tours || 0;
+        paidTours += bm.paid?.tours || 0;
+        freePax += bm.free?.pax || 0;
+        paidPax += bm.paid?.pax || 0;
+      }
+      return { freeTours, paidTours, freePax, paidPax };
+    }
+    for (const [key, val] of Object.entries(stats.byDay)) {
+      const [m, d] = key.split("-").map(Number);
+      if (m < cutoffMonth || m === cutoffMonth && d <= cutoffDay) {
+        freeTours += val.free?.tours || 0;
+        paidTours += val.paid?.tours || 0;
+        freePax += val.free?.pax || 0;
+        paidPax += val.paid?.pax || 0;
       }
     }
     return { freeTours, paidTours, freePax, paidPax };
@@ -3399,7 +3407,7 @@
     document.getElementById("kpi-tour-cost-delta").innerHTML = kpiDelta(k.tourCost, k25?.tourCost);
     const avgGm25 = k25 && k25.paidTours > 0 ? k25.grossMargin / k25.paidTours : null;
     document.getElementById("kpi-avg-gm-delta").innerHTML = kpiDelta(avgGm, avgGm25);
-    const rangeLabel = getRangeLabel ? getRangeLabel() : "";
+    const rangeLabel = getRangeLabel();
     const sBar = document.getElementById("sticky-kpi-bar");
     if (sBar) {
       document.getElementById("skpi-revenue").textContent = fmtEur(k.revenue);
@@ -4463,6 +4471,7 @@ GM%: ${gmpct}%`;
   var PageMgmt = {
     _initialized: false,
     init() {
+      if (this._initialized) return;
       const footerDate = document.getElementById("footer-date");
       if (footerDate) footerDate.textContent = (/* @__PURE__ */ new Date()).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
       const tabEl = document.getElementById("tab-pl");

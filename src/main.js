@@ -8,6 +8,7 @@ import {
     toggleTheme, toggleLanguage,
     updateThemeButton, updateLanguageButton, updateNavigationLabels,
     initTheme, initLanguage,
+    registerThemeChangeCallback, registerLanguageChangeCallback,
 } from './theme.js';
 
 import { Page25 } from './pages/page-2025.js';
@@ -28,6 +29,16 @@ PAGES.Page25   = Page25;
 PAGES.Page26   = Page26;
 PAGES.PageCmp  = PageCmp;
 PAGES.PageMgmt = PageMgmt;
+
+// ── Register callbacks (theme.js -> main.js to avoid circular dependency) ────
+
+registerThemeChangeCallback(() => {
+    mgmtUpdateCharts();
+});
+
+registerLanguageChangeCallback(() => {
+    updateManagementTabs();
+});
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -98,18 +109,6 @@ function initKeyboardShortcuts() {
         const handler = shortcuts[e.key];
         if (handler) { handler(); e.preventDefault(); }
     });
-}
-
-// ── Theme / language update hooks (called from theme.js after toggling) ───────
-
-export function onThemeChange() {
-    mgmtUpdateCharts();
-    if (PAGES.PageCmp?._initialized) PAGES.PageCmp.updateCharts();
-}
-
-export function onLanguageChange() {
-    updateNavigationLabels();
-    updateManagementTabs();
 }
 
 // ── DOMContentLoaded — single init point ─────────────────────────────────────

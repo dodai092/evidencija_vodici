@@ -444,6 +444,14 @@
   }
 
   // src/theme.js
+  var _onThemeChange = null;
+  var _onLanguageChange = null;
+  function registerThemeChangeCallback(callback) {
+    _onThemeChange = callback;
+  }
+  function registerLanguageChangeCallback(callback) {
+    _onLanguageChange = callback;
+  }
   function initTheme() {
     if (localStorage.getItem("theme") === "dark") {
       document.documentElement.classList.add(CSS.DARK_MODE);
@@ -469,7 +477,7 @@
         if (PAGES.Page25 && PAGES.Page25._initialized) PAGES.Page25.updateChart();
         if (PAGES.Page26 && PAGES.Page26._initialized) PAGES.Page26.updateChart();
         if (PAGES.PageCmp && PAGES.PageCmp._initialized) PAGES.PageCmp.updateCharts();
-        if (window.mgmtUpdateCharts) window.mgmtUpdateCharts();
+        if (_onThemeChange) _onThemeChange();
       }, 100);
     }
   }
@@ -498,7 +506,6 @@
     localStorage.setItem("language", getGlobalLanguage());
     updateLanguageButton();
     updateNavigationLabels();
-    if (typeof updateManagementTabs === "function") updateManagementTabs();
     requestAnimationFrame(() => {
       if (PAGES.Page25 && PAGES.Page25._initialized) {
         PAGES.Page25.rebuildStructure();
@@ -514,7 +521,7 @@
         PAGES.PageCmp.renderAll();
         PAGES.PageCmp.updateCharts();
       }
-      if (window.mgmtUpdateCharts) window.mgmtUpdateCharts();
+      if (_onLanguageChange) _onLanguageChange();
       if (onToggleComplete) onToggleComplete();
     });
   }
@@ -1681,6 +1688,242 @@
   };
   registerPage("Page26", Page26);
 
+  // src/pages/page-cmp/charts.js
+  function axisDefaults() {
+    const s = getComputedStyle(document.body);
+    return {
+      ticks: { color: s.getPropertyValue("--text2").trim(), font: { family: "Montserrat", size: 11 } },
+      grid: { color: s.getPropertyValue("--border").trim() }
+    };
+  }
+  function tooltipDefaults() {
+    const s = getComputedStyle(document.body);
+    return {
+      backgroundColor: s.getPropertyValue("--card-bg").trim(),
+      titleColor: s.getPropertyValue("--text").trim(),
+      bodyColor: s.getPropertyValue("--text2").trim(),
+      borderColor: s.getPropertyValue("--border-dark").trim(),
+      borderWidth: 1
+    };
+  }
+  function createFreePaxCityChart(ctx, cityLabels, cityData25, cityData26, cityDeltaPlugin, colors, rangeLabel) {
+    return new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: cityLabels,
+        datasets: [
+          { label: `${rangeLabel} 2025`, data: cityLabels.map((c) => cityData25[c]), backgroundColor: cityLabels.map((c) => CITY_COLS[c] + "80"), borderRadius: 4 },
+          { label: `${rangeLabel} 2026`, data: cityLabels.map((c) => cityData26[c]), backgroundColor: cityLabels.map((c) => CITY_COLS[c]), borderRadius: 4 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: { padding: { bottom: 45, right: 55 } },
+        plugins: {
+          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+        },
+        scales: {
+          x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
+          y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
+        }
+      },
+      plugins: [cityDeltaPlugin]
+    });
+  }
+  function createPaidCityChart(ctx, cityLabels, paidCityData25, paidCityData26, cityDeltaPlugin, colors, rangeLabel) {
+    return new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: cityLabels,
+        datasets: [
+          { label: `${rangeLabel} 2025`, data: cityLabels.map((c) => paidCityData25[c]), backgroundColor: cityLabels.map((c) => CITY_COLS[c] + "80"), borderRadius: 4 },
+          { label: `${rangeLabel} 2026`, data: cityLabels.map((c) => paidCityData26[c]), backgroundColor: cityLabels.map((c) => CITY_COLS[c]), borderRadius: 4 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: { padding: { bottom: 45, right: 55 } },
+        plugins: {
+          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+        },
+        scales: {
+          x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
+          y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
+        }
+      },
+      plugins: [cityDeltaPlugin]
+    });
+  }
+  function createMonthlyFreePaxChart(ctx, months, cumMonthData25, cumMonthData26, deltaOverlay, monthDeltaPlugin, colors, rangeLabel) {
+    return new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: months,
+        datasets: [
+          { label: `${rangeLabel} 2025`, data: cumMonthData25, borderColor: colors.y25, backgroundColor: colors.y25 + "33", borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 },
+          { label: `${rangeLabel} 2026`, data: cumMonthData26, borderColor: colors.y26, backgroundColor: colors.y26 + "33", borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: { padding: { bottom: 45, right: 55 } },
+        plugins: {
+          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+        },
+        scales: {
+          x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
+          y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
+        }
+      },
+      plugins: [deltaOverlay, monthDeltaPlugin]
+    });
+  }
+  function createMonthlyPaidChart(ctx, months, cumPaidMonthData25, cumPaidMonthData26, deltaOverlay, monthDeltaPlugin, colors, rangeLabel) {
+    return new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: months,
+        datasets: [
+          { label: `${rangeLabel} 2025`, data: cumPaidMonthData25, borderColor: colors.y25, backgroundColor: colors.y25 + "33", borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 },
+          { label: `${rangeLabel} 2026`, data: cumPaidMonthData26, borderColor: colors.y26, backgroundColor: colors.y26 + "33", borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: { padding: { bottom: 45, right: 55 } },
+        plugins: {
+          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+        },
+        scales: {
+          x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
+          y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
+        }
+      },
+      plugins: [deltaOverlay, monthDeltaPlugin]
+    });
+  }
+  function createCityMonthlyChart(ctx, months, datasets, colors) {
+    return new Chart(ctx, {
+      type: "line",
+      data: { labels: months, datasets },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            labels: {
+              color: colors.text,
+              font: { size: 10, family: "'Montserrat',sans-serif" },
+              boxWidth: 12,
+              padding: 12,
+              filter: (item) => !item.text.includes("2025")
+            }
+          }
+        },
+        scales: {
+          x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
+          y: { ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
+        }
+      }
+    });
+  }
+  function createAvgFreePaxChart(ctx, months, avgFree25, avgFree26, colors, rangeLabel) {
+    return new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: months,
+        datasets: [
+          { label: `${rangeLabel} 2025`, data: avgFree25, borderColor: colors.y25, backgroundColor: colors.y25 + "22", borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4, spanGaps: false },
+          { label: `${rangeLabel} 2026`, data: avgFree26, borderColor: colors.y26, backgroundColor: colors.y26 + "22", borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4, spanGaps: false }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } },
+          tooltip: { callbacks: { label: (i) => `${i.dataset.label}: ${i.raw} PAX/tour` } }
+        },
+        scales: {
+          x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
+          y: { ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
+        }
+      }
+    });
+  }
+  function createPaidTypeChart(ctx, months, ds25, ds26, colors, secondaryLabelPlugin, yLabel) {
+    return new Chart(ctx, {
+      type: "bar",
+      data: { labels: months, datasets: [ds25, ds26] },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: { padding: { top: 20, bottom: 30 } },
+        plugins: {
+          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } },
+          tooltip: {
+            callbacks: {
+              afterLabel: (item) => {
+                const sec = item.datasetIndex === 0 ? ds25._secondaryData[item.dataIndex] : ds26._secondaryData[item.dataIndex];
+                return sec ? `${item.datasetIndex === 0 ? ds25._secondaryKey || "pax" : (ds26._secondaryKey || "pax") === "pax" ? "PAX" : "Tours"}: ${sec}` : "";
+              }
+            }
+          }
+        },
+        scales: {
+          x: { ticks: { color: colors.text3, font: { size: 11 } }, grid: { color: colors.border } },
+          y: { title: { display: true, text: yLabel, color: colors.text3, font: { size: 10 } }, ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
+        }
+      },
+      plugins: [secondaryLabelPlugin]
+    });
+  }
+  function createWarAvgChart(ctx, months, getTypeAvg25, getTypeAvg26, colors, rangeLabel) {
+    return new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: months,
+        datasets: [
+          { label: `${rangeLabel} 2025`, data: getTypeAvg25, borderColor: colors.y25, backgroundColor: colors.y25 + "22", borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4, spanGaps: false },
+          { label: `${rangeLabel} 2026`, data: getTypeAvg26, borderColor: colors.y26, backgroundColor: colors.y26 + "22", borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4, spanGaps: false }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } },
+          tooltip: { callbacks: { label: (i) => `${i.dataset.label}: ${i.raw} PAX/tour` } }
+        },
+        scales: {
+          x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
+          y: { ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
+        }
+      }
+    });
+  }
+  function updateChartColors(chartInstances) {
+    const ax = axisDefaults();
+    const tt = tooltipDefaults();
+    chartInstances.forEach((c) => {
+      if (!c) return;
+      if (c.options.scales) {
+        Object.values(c.options.scales).forEach((sc) => {
+          if (sc.ticks) sc.ticks.color = ax.ticks.color;
+          if (sc.grid) sc.grid.color = ax.grid.color;
+        });
+      }
+      if (c.options.plugins?.tooltip) Object.assign(c.options.plugins.tooltip, tt);
+      if (c.options.plugins?.legend?.labels) c.options.plugins.legend.labels.color = ax.ticks.color;
+      c.update();
+    });
+  }
+
   // src/pages/page-cmp/index.js
   var PageCmp = {
     activeCity: "all",
@@ -1688,6 +1931,7 @@
     activeMonths: [],
     mergedGuides: [],
     cityChartInstance: null,
+    paidCityChartInstance: null,
     monthlyChartInstance: null,
     paidChartInstance: null,
     cityMonthlyChartInstance: null,
@@ -1890,58 +2134,14 @@
       try {
         if (this.cityChartInstance) this.cityChartInstance.destroy();
         const cityCtx = this._el("cityChart").getContext("2d");
-        this.cityChartInstance = new Chart(cityCtx, {
-          type: "bar",
-          data: {
-            labels: CITIES,
-            datasets: [
-              { label: `${rangeLabel} 2025`, data: CITIES.map((c) => cityData25[c]), backgroundColor: CITIES.map((c) => CITY_COLS[c] + "80"), borderRadius: 4 },
-              { label: `${rangeLabel} 2026`, data: CITIES.map((c) => cityData26[c]), backgroundColor: CITIES.map((c) => CITY_COLS[c]), borderRadius: 4 }
-            ]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            layout: { padding: { bottom: 45, right: 55 } },
-            plugins: {
-              legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
-            },
-            scales: {
-              x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
-              y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
-            }
-          },
-          plugins: [cityDeltaPlugin]
-        });
+        this.cityChartInstance = createFreePaxCityChart(cityCtx, CITIES, cityData25, cityData26, cityDeltaPlugin, colors, rangeLabel);
       } catch (e) {
         console.error("City Chart Error:", e);
       }
       try {
         if (this.paidCityChartInstance) this.paidCityChartInstance.destroy();
         const paidCityCtx = this._el("paidCityChart").getContext("2d");
-        this.paidCityChartInstance = new Chart(paidCityCtx, {
-          type: "bar",
-          data: {
-            labels: CITIES,
-            datasets: [
-              { label: `${rangeLabel} 2025`, data: CITIES.map((c) => paidCityData25[c]), backgroundColor: CITIES.map((c) => CITY_COLS[c] + "80"), borderRadius: 4 },
-              { label: `${rangeLabel} 2026`, data: CITIES.map((c) => paidCityData26[c]), backgroundColor: CITIES.map((c) => CITY_COLS[c]), borderRadius: 4 }
-            ]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            layout: { padding: { bottom: 45, right: 55 } },
-            plugins: {
-              legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
-            },
-            scales: {
-              x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
-              y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
-            }
-          },
-          plugins: [cityDeltaPlugin]
-        });
+        this.paidCityChartInstance = createPaidCityChart(paidCityCtx, CITIES, paidCityData25, paidCityData26, cityDeltaPlugin, colors, rangeLabel);
       } catch (e) {
         console.error("Paid City Chart Error:", e);
       }
@@ -1954,7 +2154,7 @@
       const monthData25 = [], monthData26 = [];
       const paidMonthData25 = [], paidMonthData26 = [];
       const cutoffMonth = getCutoffMonth();
-      const cutoffDay = parseInt(window.GLOBAL_DATE.split("-")[2]);
+      const cutoffDay = parseInt(getGlobalDate().split("-")[2]);
       selectedMonths.forEach((i) => {
         let fd25 = 0, fd26 = 0, pd25 = 0, pd26 = 0;
         if (i < cutoffMonth) {
@@ -2055,63 +2255,19 @@
       try {
         if (this.monthlyChartInstance) this.monthlyChartInstance.destroy();
         const monthCtx = this._el("monthlyChart").getContext("2d");
-        this.monthlyChartInstance = new Chart(monthCtx, {
-          type: "line",
-          data: {
-            labels: months,
-            datasets: [
-              { label: `${rangeLabel} 2025`, data: cumMonthData25, borderColor: colors.y25, backgroundColor: colors.y25 + "33", borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 },
-              { label: `${rangeLabel} 2026`, data: cumMonthData26, borderColor: colors.y26, backgroundColor: colors.y26 + "33", borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 }
-            ]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            layout: { padding: { bottom: 45, right: 55 } },
-            plugins: {
-              legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
-            },
-            scales: {
-              x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
-              y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
-            }
-          },
-          plugins: [deltaOverlay, monthDeltaPlugin]
-        });
+        this.monthlyChartInstance = createMonthlyFreePaxChart(monthCtx, months, cumMonthData25, cumMonthData26, deltaOverlay, monthDeltaPlugin, colors, rangeLabel);
       } catch (e) {
         console.error("Monthly Chart Error:", e);
       }
       try {
         if (this.paidChartInstance) this.paidChartInstance.destroy();
         const paidCtx = this._el("paidChart").getContext("2d");
-        this.paidChartInstance = new Chart(paidCtx, {
-          type: "line",
-          data: {
-            labels: months,
-            datasets: [
-              { label: `${rangeLabel} 2025`, data: cumPaidMonthData25, borderColor: colors.y25, backgroundColor: colors.y25 + "33", borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 },
-              { label: `${rangeLabel} 2026`, data: cumPaidMonthData26, borderColor: colors.y26, backgroundColor: colors.y26 + "33", borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4 }
-            ]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            layout: { padding: { bottom: 45, right: 55 } },
-            plugins: {
-              legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
-            },
-            scales: {
-              x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
-              y: { ticks: { color: colors.text3 }, grid: { color: colors.border } }
-            }
-          },
-          plugins: [deltaOverlay, monthDeltaPlugin]
-        });
+        this.paidChartInstance = createMonthlyPaidChart(paidCtx, months, cumPaidMonthData25, cumPaidMonthData26, deltaOverlay, monthDeltaPlugin, colors, rangeLabel);
       } catch (e) {
         console.error("Paid Chart Error:", e);
       }
       try {
-        const cutoffDay2 = parseInt(window.GLOBAL_DATE.split("-")[2]);
+        const cutoffDay2 = parseInt(getGlobalDate().split("-")[2]);
         const cityMonthly25 = {};
         const cityMonthly26 = {};
         CITIES.forEach((c) => {
@@ -2186,30 +2342,7 @@
         }
         if (this.cityMonthlyChartInstance) this.cityMonthlyChartInstance.destroy();
         const cmCtx = this._el("cityMonthlyChart").getContext("2d");
-        this.cityMonthlyChartInstance = new Chart(cmCtx, {
-          type: "line",
-          data: { labels: months, datasets },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: {
-                display: true,
-                labels: {
-                  color: colors.text,
-                  font: { size: 10, family: "'Montserrat',sans-serif" },
-                  boxWidth: 12,
-                  padding: 12,
-                  filter: (item) => !item.text.includes("2025")
-                }
-              }
-            },
-            scales: {
-              x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
-              y: { ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
-            }
-          }
-        });
+        this.cityMonthlyChartInstance = createCityMonthlyChart(cmCtx, months, datasets, colors);
       } catch (e) {
         console.error("City Monthly Chart Error:", e);
       }
@@ -2253,37 +2386,27 @@
         if (this.avgFreePaxCmpChartInstance) this.avgFreePaxCmpChartInstance.destroy();
         const afCtx = document.getElementById("avgFreePaxCmpChart-cmp")?.getContext("2d");
         if (afCtx) {
-          this.avgFreePaxCmpChartInstance = new Chart(afCtx, {
-            type: "line",
-            data: {
-              labels: months,
-              datasets: [
-                { label: `${rangeLabel} 2025`, data: avgFree25, borderColor: colors.y25, backgroundColor: colors.y25 + "22", borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4, spanGaps: false },
-                { label: `${rangeLabel} 2026`, data: avgFree26, borderColor: colors.y26, backgroundColor: colors.y26 + "22", borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4, spanGaps: false }
-              ]
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } },
-                tooltip: { callbacks: { label: (i) => `${i.dataset.label}: ${i.raw} PAX/tour` } }
-              },
-              scales: {
-                x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
-                y: { ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
-              }
-            }
-          });
+          this.avgFreePaxCmpChartInstance = createAvgFreePaxChart(afCtx, months, avgFree25, avgFree26, colors, rangeLabel);
         }
       } catch (e) {
         console.error("Avg free PAX cmp chart error:", e);
       }
       this.updatePaidTypeCharts();
+      updateChartColors([
+        this.cityChartInstance,
+        this.paidCityChartInstance,
+        this.monthlyChartInstance,
+        this.paidChartInstance,
+        this.cityMonthlyChartInstance,
+        this.avgFreePaxCmpChartInstance,
+        this.privatePaidChartInstance,
+        this.sharedPaidChartInstance,
+        this.warAvgChartInstance
+      ]);
     },
     renderMonthlyTable() {
       const cutoffMonth = getCutoffMonth();
-      const cutoffDay = parseInt(window.GLOBAL_DATE.split("-")[2]);
+      const cutoffDay = parseInt(getGlobalDate().split("-")[2]);
       const MONTH_NAMES = { 1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec" };
       const months = this.activeMonths.length > 0 ? this.activeMonths : Array.from({ length: cutoffMonth }, (_, i) => i + 1);
       const getPax = (guide, lang, m) => {
@@ -2366,7 +2489,7 @@
                 </tbody>
             </table>
             </div>
-            ${hasPartial ? `<div class="mpax-note">* ${t("labels.partial")} \u2014 ${t("labels.dataThrough")} ${window.GLOBAL_DATE}</div>` : ""}
+            ${hasPartial ? `<div class="mpax-note">* ${t("labels.partial")} \u2014 ${t("labels.dataThrough")} ${getGlobalDate()}</div>` : ""}
         </div>`;
       const el = document.getElementById("monthly-pax-table-cmp");
       if (el) el.innerHTML = html;
@@ -2404,7 +2527,7 @@
     },
     _getTypeMonthData(city, types, primaryKey, year) {
       const cutoffMonth = getCutoffMonth();
-      const cutoffDay = parseInt(window.GLOBAL_DATE.split("-")[2]);
+      const cutoffDay = parseInt(getGlobalDate().split("-")[2]);
       const maxMonth = this.activeMonths.length > 0 ? Math.max(...this.activeMonths) : cutoffMonth;
       const fc = this.mergedGuides.filter((m) => city === "all" || m.city === city);
       return Array.from({ length: maxMonth }, (_, i) => i + 1).map((mo) => {
@@ -2515,7 +2638,7 @@
                 </thead>
                 <tbody>${bodyRows}${totalRow}</tbody>
             </table>
-            ${hasPartial ? `<div class="mpax-note">* ${t("labels.partial")} \u2014 ${t("labels.dataThrough")} ${window.GLOBAL_DATE}</div>` : ""}
+            ${hasPartial ? `<div class="mpax-note">* ${t("labels.partial")} \u2014 ${t("labels.dataThrough")} ${getGlobalDate()}</div>` : ""}
         </div>`;
       const el = document.getElementById(containerId);
       if (el) el.innerHTML = html;
@@ -2528,7 +2651,7 @@
       const maxMonth = this.activeMonths.length > 0 ? Math.max(...this.activeMonths) : cutoffMonth;
       const months = Array.from({ length: maxMonth }, (_, i) => MONTH_NAMES[i + 1]);
       const rangeLabel = getRangeLabel();
-      const cutoffDay = parseInt(window.GLOBAL_DATE.split("-")[2]);
+      const cutoffDay = parseInt(getGlobalDate().split("-")[2]);
       const secondaryLabelPlugin = (secondaryKey) => ({
         id: "secondaryLabel",
         afterDraw(chart) {
@@ -2577,31 +2700,7 @@
           if (this[instanceKey]) this[instanceKey].destroy();
           const ctx = document.getElementById(canvasId)?.getContext("2d");
           if (!ctx) return;
-          this[instanceKey] = new Chart(ctx, {
-            type: "bar",
-            data: { labels: months, datasets: [ds25, ds26] },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              layout: { padding: { top: 20, bottom: 30 } },
-              plugins: {
-                legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } },
-                tooltip: {
-                  callbacks: {
-                    afterLabel: (item) => {
-                      const sec = item.datasetIndex === 0 ? ds25._secondaryData[item.dataIndex] : ds26._secondaryData[item.dataIndex];
-                      return sec ? `${secondaryKey === "pax" ? "PAX" : "Tours"}: ${sec}` : "";
-                    }
-                  }
-                }
-              },
-              scales: {
-                x: { ticks: { color: colors.text3, font: { size: 11 } }, grid: { color: colors.border } },
-                y: { title: { display: true, text: yLabel, color: colors.text3, font: { size: 10 } }, ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
-              }
-            },
-            plugins: [secondaryLabelPlugin(secondaryKey)]
-          });
+          this[instanceKey] = createPaidTypeChart(ctx, months, ds25, ds26, colors, secondaryLabelPlugin(secondaryKey), yLabel);
         } catch (e) {
           console.error("Type chart error:", e);
         }
@@ -2650,28 +2749,7 @@
         if (this.warAvgChartInstance) this.warAvgChartInstance.destroy();
         const warCtx = document.getElementById("warAvgChart-cmp")?.getContext("2d");
         if (warCtx) {
-          this.warAvgChartInstance = new Chart(warCtx, {
-            type: "line",
-            data: {
-              labels: months,
-              datasets: [
-                { label: `${rangeLabel} 2025`, data: getTypeAvg(25, typesToShow), borderColor: colors.y25, backgroundColor: colors.y25 + "22", borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4, spanGaps: false },
-                { label: `${rangeLabel} 2026`, data: getTypeAvg(26, typesToShow), borderColor: colors.y26, backgroundColor: colors.y26 + "22", borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4, spanGaps: false }
-              ]
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } },
-                tooltip: { callbacks: { label: (i) => `${i.dataset.label}: ${i.raw} PAX/tour` } }
-              },
-              scales: {
-                x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
-                y: { ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
-              }
-            }
-          });
+          this.warAvgChartInstance = createWarAvgChart(warCtx, months, getTypeAvg(25, typesToShow), getTypeAvg(26, typesToShow), colors, rangeLabel);
         }
       } catch (e) {
         console.error("Avg type chart error:", e);
@@ -2979,6 +3057,7 @@
     _destroyCharts() {
       [
         this.cityChartInstance,
+        this.paidCityChartInstance,
         this.monthlyChartInstance,
         this.paidChartInstance,
         this.cityMonthlyChartInstance,
@@ -2993,6 +3072,7 @@
         }
       });
       this.cityChartInstance = null;
+      this.paidCityChartInstance = null;
       this.monthlyChartInstance = null;
       this.paidChartInstance = null;
       this.cityMonthlyChartInstance = null;
@@ -3018,37 +3098,7 @@
   };
   registerPage("PageCmp", PageCmp);
 
-  // src/pages/management/index.js
-  var MgmtPages = {
-    pl: { _init: false },
-    guides: { _init: false },
-    channels: { _init: false },
-    ops: { _init: false },
-    cities: { _init: false }
-  };
-  var _activeTab = "pl";
-  var _activeCity = "all";
-  var _sortCol = "grossMargin";
-  var _sortDir = -1;
-  function mgmtShowTab(id, el) {
-    document.querySelectorAll(`.${CSS.MGMT_PAGE}`).forEach((p) => p.classList.remove(CSS.ACTIVE));
-    document.querySelectorAll(`.mgmt-subnav .${CSS.NAV_TAB}`).forEach((tp) => tp.classList.remove(CSS.ACTIVE, CSS.MGMT_TAB_ACTIVE));
-    document.getElementById("mgmt-" + id).classList.add(CSS.ACTIVE);
-    el.classList.add(CSS.ACTIVE, CSS.MGMT_TAB_ACTIVE);
-    _activeTab = id;
-    if (id !== "pl") {
-      const bar = document.getElementById("sticky-kpi-bar");
-      if (bar) bar.style.display = "none";
-    }
-    if (!MgmtPages[id]._init) {
-      if (id === "pl") initPl();
-      if (id === "guides") initGuides();
-      if (id === "channels") initChannels();
-      if (id === "ops") initOps();
-      if (id === "cities") initCities();
-      MgmtPages[id]._init = true;
-    }
-  }
+  // src/pages/management/helpers.js
   function fmt(v, dec = 0) {
     return (v || 0).toLocaleString("en-GB", { minimumFractionDigits: dec, maximumFractionDigits: dec });
   }
@@ -3069,16 +3119,16 @@
     const abs = fmt(Math.abs(v));
     return `<span class="${cls}">${sign}${eurSign ? "\u20AC" : ""}${abs}</span>`;
   }
-  function build25Lookup() {
+  var _guide25 = null;
+  function _build25Lookup() {
     const map = {};
     if (typeof guideStats25 !== "undefined") guideStats25.forEach((g) => {
       map[g.name] = g;
     });
     return map;
   }
-  var _guide25 = null;
   function get25(name) {
-    if (!_guide25) _guide25 = build25Lookup();
+    if (!_guide25) _guide25 = _build25Lookup();
     return _guide25[name] || null;
   }
   function guidesForCity(city) {
@@ -3152,8 +3202,8 @@
   function computeKpisForGuides(guides) {
     return guides.reduce((acc, g) => {
       if (!g.mgmt) return acc;
-      const fin = filterMgmtByDate(g.mgmt, window.GLOBAL_DATE);
-      const sts = filterStatsByDate(g.stats.all, window.GLOBAL_DATE);
+      const fin = filterMgmtByDate(g.mgmt, getGlobalDate());
+      const sts = filterStatsByDate(g.stats.all, getGlobalDate());
       acc.revenue += fin.revenue;
       acc.vendorCost += fin.vendorCost;
       acc.grossMargin += fin.grossMargin;
@@ -3182,8 +3232,14 @@
       paidPax: 0
     });
   }
+  var _kpiCache = {};
   function computeFilteredKpis(city) {
-    return computeKpisForGuides(guidesForCity(city));
+    const key = `${getGlobalDate()}-${city}`;
+    if (!_kpiCache[key]) _kpiCache[key] = computeKpisForGuides(guidesForCity(city));
+    return _kpiCache[key];
+  }
+  function clearKpiCache() {
+    _kpiCache = {};
   }
   function computeCity25(city) {
     if (typeof guideStats25 === "undefined") return null;
@@ -3207,21 +3263,14 @@
     });
     return result;
   }
-  var _charts = {};
-  function destroyChart(id) {
-    if (_charts[id]) {
-      _charts[id].destroy();
-      delete _charts[id];
-    }
-  }
-  function axisDefaults() {
+  function axisDefaults2() {
     const s = getComputedStyle(document.body);
     return {
       ticks: { color: s.getPropertyValue("--text2").trim(), font: { family: "Montserrat", size: 11 } },
       grid: { color: s.getPropertyValue("--border").trim() }
     };
   }
-  function tooltipDefaults() {
+  function tooltipDefaults2() {
     const s = getComputedStyle(document.body);
     return {
       backgroundColor: s.getPropertyValue("--card-bg").trim(),
@@ -3240,11 +3289,18 @@
       red: s.getPropertyValue("--delta-neg").trim() || "#D4545A"
     };
   }
+  var _charts = {};
+  function destroyChart(id) {
+    if (_charts[id]) {
+      _charts[id].destroy();
+      delete _charts[id];
+    }
+  }
   function makeBarChart(canvasId, labels, datasets, opts = {}) {
     destroyChart(canvasId);
     const ctx = document.getElementById(canvasId)?.getContext("2d");
     if (!ctx) return;
-    const ax = axisDefaults();
+    const ax = axisDefaults2();
     const dsets = Array.isArray(datasets) && typeof datasets[0] === "object" && datasets[0].data !== void 0 ? datasets : [{ data: datasets, backgroundColor: opts.colors || "#8FA8BC", borderRadius: 4, borderSkipped: false }];
     _charts[canvasId] = new Chart(ctx, {
       type: "bar",
@@ -3255,7 +3311,7 @@
         maintainAspectRatio: false,
         plugins: {
           legend: { display: opts.showLegend || false, labels: { color: ax.ticks.color, font: ax.ticks.font } },
-          tooltip: { ...tooltipDefaults(), callbacks: opts.tooltipCb || {} }
+          tooltip: { ...tooltipDefaults2(), callbacks: opts.tooltipCb || {} }
         },
         scales: {
           x: { ...ax, grid: opts.horizontal ? ax.grid : { display: false }, stacked: opts.stacked || false },
@@ -3268,7 +3324,7 @@
     destroyChart(canvasId);
     const ctx = document.getElementById(canvasId)?.getContext("2d");
     if (!ctx) return;
-    const ax = axisDefaults();
+    const ax = axisDefaults2();
     const scales = extraScales || { x: ax, y: ax };
     _charts[canvasId] = new Chart(ctx, {
       type: "line",
@@ -3279,14 +3335,16 @@
         interaction: { mode: "index", intersect: false },
         plugins: {
           legend: { labels: { color: ax.ticks.color, font: ax.ticks.font } },
-          tooltip: { ...tooltipDefaults() }
+          tooltip: { ...tooltipDefaults2() }
         },
         scales
       }
     });
   }
-  function initPl() {
-    renderPlKpis(_activeCity);
+
+  // src/pages/management/pl.js
+  function initPl(city) {
+    renderPlKpis(city);
     renderWaterfall();
     renderMonthTrend();
     renderBillingTrend();
@@ -3295,7 +3353,8 @@
     const kpiGrid = document.querySelector("#mgmt-pl .kpi-grid");
     if (kpiGrid && "IntersectionObserver" in window) {
       const obs = new IntersectionObserver(([entry]) => {
-        if (_activeTab !== "pl") return;
+        const isPlActive = document.querySelector("#mgmt-pl")?.classList.contains("active");
+        if (!isPlActive) return;
         const bar = document.getElementById("sticky-kpi-bar");
         if (bar) bar.style.display = entry.isIntersecting ? "none" : "flex";
       }, { threshold: 0 });
@@ -3416,11 +3475,11 @@
     const el = document.getElementById("pl-guide-drilldown");
     if (!el || guides.length === 0) return;
     const rows = guides.map((g) => {
-      const fin = filterMgmtByDate(g.mgmt, window.GLOBAL_DATE);
-      const sts = filterStatsByDate(g.stats.all, window.GLOBAL_DATE);
+      const fin = filterMgmtByDate(g.mgmt, getGlobalDate());
+      const sts = filterStatsByDate(g.stats.all, getGlobalDate());
       const gmPct = fin.revenue > 0 ? fin.grossMargin / fin.revenue * 100 : 0;
       const g25 = get25(g.name);
-      const fin25 = g25?.mgmt ? filterMgmtByDate(g25.mgmt, window.GLOBAL_DATE) : null;
+      const fin25 = g25?.mgmt ? filterMgmtByDate(g25.mgmt, getGlobalDate()) : null;
       const dGm = fin25 ? fin.grossMargin - fin25.grossMargin : null;
       return {
         name: g.name,
@@ -3465,7 +3524,7 @@
     const guides26 = guideStats26.filter((g) => g.mgmt);
     const guides25 = has25 ? guideStats25.filter((g) => g.mgmt) : [];
     const t26 = guides26.reduce((acc, g) => {
-      const fin = filterMgmtByDate(g.mgmt, window.GLOBAL_DATE);
+      const fin = filterMgmtByDate(g.mgmt, getGlobalDate());
       acc.revenue += fin.revenue;
       acc.commissionCost += fin.commissionCost;
       acc.vatAmount += fin.vatAmount;
@@ -3477,7 +3536,7 @@
     let t25 = null;
     if (has25) {
       t25 = guides25.reduce((acc, g) => {
-        const fin = filterMgmtByDate(g.mgmt, window.GLOBAL_DATE);
+        const fin = filterMgmtByDate(g.mgmt, getGlobalDate());
         acc.revenue += fin.revenue;
         acc.commissionCost += fin.commissionCost;
         acc.vatAmount += fin.vatAmount;
@@ -3575,7 +3634,7 @@
         if (!g.mgmt || !g.mgmt.byBillingMethod) return;
         const fullRevenue = g.mgmt.revenue || 0;
         if (fullRevenue === 0) return;
-        const filtered = filterMgmtByDate(g.mgmt, window.GLOBAL_DATE);
+        const filtered = filterMgmtByDate(g.mgmt, getGlobalDate());
         const ratio = filtered.revenue / fullRevenue;
         for (const [method, data] of Object.entries(g.mgmt.byBillingMethod)) {
           if (!billing[method]) billing[method] = { revenue: 0, grossMargin: 0 };
@@ -3630,22 +3689,24 @@
       el.innerHTML = bstat(t("management.directCashCard"), billing25["POS"] || { revenue: 0, grossMargin: 0 }, billing26["POS"] || { revenue: 0, grossMargin: 0 }) + bstat(t("management.otaBankTransfer"), billing25["CPP"] || { revenue: 0, grossMargin: 0 }, billing26["CPP"] || { revenue: 0, grossMargin: 0 });
     }
   }
-  function mgmtFilterCityPl(city) {
-    _activeCity = city;
-    document.querySelectorAll(".city-pill").forEach((p) => {
-      p.classList.toggle("active", p.dataset.city === city);
-    });
-    if (MgmtPages.pl._init) renderPlKpis(city);
-    if (MgmtPages.guides._init) renderGuideTable();
+  function refreshPl(city) {
+    renderPlKpis(city);
+    renderWaterfall();
+    renderMonthTrend();
+    renderBillingTrend();
   }
-  function initGuides() {
-    renderGuideTable();
+
+  // src/pages/management/guides.js
+  var _sortCol = "grossMargin";
+  var _sortDir = -1;
+  function initGuides(city) {
+    renderGuideTable(city);
   }
-  function renderGuideTable() {
-    const guides = guidesForCity(_activeCity);
+  function renderGuideTable(city) {
+    const guides = guidesForCity(city);
     const rows = guides.map((g) => {
-      const fin = filterMgmtByDate(g.mgmt, window.GLOBAL_DATE);
-      const sts = filterStatsByDate(g.stats.all, window.GLOBAL_DATE);
+      const fin = filterMgmtByDate(g.mgmt, getGlobalDate());
+      const sts = filterStatsByDate(g.stats.all, getGlobalDate());
       const m = fin;
       const gmPct = m.revenue > 0 ? m.grossMargin / m.revenue * 100 : 0;
       const avgGm = sts.paidTours > 0 ? m.grossMargin / sts.paidTours : 0;
@@ -3653,8 +3714,8 @@
       const comm = m.commissionCost || 0;
       const commPct = m.revenue > 0 ? comm / m.revenue * 100 : 0;
       const g25 = get25(g.name);
-      const fin25 = g25?.mgmt ? filterMgmtByDate(g25.mgmt, window.GLOBAL_DATE) : null;
-      const sts25 = g25 ? filterStatsByDate(g25.stats.all, window.GLOBAL_DATE) : null;
+      const fin25 = g25?.mgmt ? filterMgmtByDate(g25.mgmt, getGlobalDate()) : null;
+      const sts25 = g25 ? filterStatsByDate(g25.stats.all, getGlobalDate()) : null;
       const paid25 = sts25 ? sts25.paidTours : null;
       const rev25 = fin25 ? fin25.revenue : null;
       const gm25 = fin25 ? fin25.grossMargin : null;
@@ -3733,8 +3794,15 @@
       th.classList.remove("sorted-asc", "sorted-desc");
       if (th.dataset.col === col) th.classList.add(_sortDir === -1 ? "sorted-desc" : "sorted-asc");
     });
-    renderGuideTable();
+    const activePill = document.querySelector(".city-pill.active");
+    const activeCity = activePill?.dataset.city || "all";
+    renderGuideTable(activeCity);
   }
+  function refreshGuides(city) {
+    renderGuideTable(city);
+  }
+
+  // src/pages/management/channels.js
   function initChannels() {
     renderCommissionWaterfall();
     renderDirectOtaTrend();
@@ -3891,6 +3959,11 @@
         </tr>`;
     }).join("");
   }
+  function refreshChannels() {
+    renderDirectOtaTrend();
+  }
+
+  // src/pages/management/ops.js
   var DOW_ORDER = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   var SEASON_ORDER = ["low", "mid", "high", "peak"];
   var PAXBAND_ORDER = ["1-4", "5-10", "11-20", "21-30", "30+"];
@@ -4010,7 +4083,7 @@ GM%: ${gmpct}%`;
     const wk26 = mgmt26.byWeek;
     const wk25 = mgmt25?.byWeek || {};
     const wkNums = Object.keys(wk26).map(Number).sort((a, b) => a - b);
-    const ax = axisDefaults();
+    const ax = axisDefaults2();
     const datasets = [
       { label: t("management.tours"), data: wkNums.map((w) => wk26[String(w)].tours), borderColor: "#8FA8BC", backgroundColor: "#8FA8BC22", tension: 0.3, fill: true, yAxisID: "yL" },
       { label: t("management.revenue"), data: wkNums.map((w) => wk26[String(w)].revenue), borderColor: "#C49A8A", backgroundColor: "transparent", tension: 0.3, yAxisID: "yR" },
@@ -4035,49 +4108,19 @@ GM%: ${gmpct}%`;
     });
     renderPaymentMethod();
   }
-  function buildDimensionByCity(dimensionKey, fields) {
-    const result = {};
-    CITIES.forEach((city) => {
-      result[city] = {};
-    });
-    guideStats26.forEach((g) => {
-      const city = g.city;
-      if (!result[city]) result[city] = {};
-      const dim = g.mgmt?.[dimensionKey];
-      if (!dim) return;
-      Object.entries(dim).forEach(([key, data]) => {
-        if (!result[city][key]) {
-          result[city][key] = Object.fromEntries(fields.map((f) => [f, 0]));
-        }
-        fields.forEach((f) => {
-          result[city][key][f] += data[f] || 0;
-        });
-      });
-    });
-    return result;
-  }
-  function buildTourTypeByCity() {
-    return buildDimensionByCity("byTourType", ["revenue", "grossMargin", "tours"]);
-  }
-  function buildSourceByCity() {
-    return buildDimensionByCity("bySource", ["revenue", "commissionCost", "tours"]);
-  }
-  function buildLangByCity() {
-    const result = {};
-    ["Zagreb", "Dubrovnik", "Split", "Zadar"].forEach((city) => {
-      result[city] = { eng: { tours: 0, pax: 0 }, esp: { tours: 0, pax: 0 }, fra: { tours: 0, pax: 0 } };
-    });
-    guideStats26.forEach((g) => {
-      const city = g.city;
-      ["eng", "esp", "fra"].forEach((lang) => {
-        if (g.stats?.[lang]) {
-          const langStats = filterStatsByDate(g.stats[lang], window.GLOBAL_DATE);
-          result[city][lang].tours += langStats.paidTours || 0;
-          result[city][lang].pax += langStats.paidPax || 0;
-        }
-      });
-    });
-    return result;
+  function renderOpsMonthLine() {
+    const has25 = typeof guideStats25 !== "undefined";
+    const { c25, green } = getThemeColors();
+    const { month: cutoffMonth, day: cutoffDay } = parseGlobalDate();
+    const m26 = buildMonthlyFromDays(guideStats26, cutoffMonth, cutoffDay);
+    const m25 = has25 ? buildMonthlyFromDays(guideStats25, cutoffMonth, cutoffDay) : {};
+    const allM = Array.from({ length: cutoffMonth }, (_, i) => i + 1);
+    makeLineChart("month-line", allM.map((m) => MONTH_SHORT[m]), [
+      { label: t("management.revenue") + " 2025", data: allM.map((m) => m25[m]?.revenue || 0), borderColor: c25, backgroundColor: "transparent", tension: 0.3, borderDash: [5, 3] },
+      { label: t("management.revenue") + " 2026", data: allM.map((m) => m26[m]?.revenue || 0), borderColor: "#8FA8BC", backgroundColor: "#8FA8BC22", tension: 0.3, fill: true },
+      { label: t("management.grossMargin") + " 2025", data: allM.map((m) => m25[m]?.grossMargin || 0), borderColor: c25, backgroundColor: "transparent", tension: 0.3, borderDash: [2, 2], borderWidth: 1.5 },
+      { label: t("management.grossMargin") + " 2026", data: allM.map((m) => m26[m]?.grossMargin || 0), borderColor: green, backgroundColor: "transparent", tension: 0.3, borderWidth: 2 }
+    ]);
   }
   function renderPaymentMethod() {
     const mgmt26 = kpiTotals26.mgmt;
@@ -4127,6 +4170,37 @@ GM%: ${gmpct}%`;
       }
     });
   }
+  function renderPaxBandActionPanel() {
+    const mgmt26 = kpiTotals26.mgmt;
+    const mgmt25 = typeof kpiTotals25 !== "undefined" ? kpiTotals25.mgmt : null;
+    const gpb26 = mgmt26.byGuidePaxBand || {};
+    const gpb25 = mgmt25?.byGuidePaxBand || {};
+    const smallGroup26 = gpb26["1-5"] || { tours: 0, revenue: 0, grossMargin: 0 };
+    const smallGroup25 = gpb25["1-5"] || { tours: 0, revenue: 0, grossMargin: 0 };
+    const totalTours26 = Object.values(gpb26).reduce((sum, g) => sum + (g.tours || 0), 0);
+    const totalTours25 = Object.values(gpb25).reduce((sum, g) => sum + (g.tours || 0), 0);
+    const smallGroupPct26 = totalTours26 > 0 ? smallGroup26.tours / totalTours26 * 100 : 0;
+    const smallGroupPct25 = totalTours25 > 0 ? smallGroup25.tours / totalTours25 * 100 : 0;
+    const pctChange = smallGroupPct26 - smallGroupPct25;
+    const lossFromSmallGroups = smallGroup26.grossMargin < 0 ? Math.abs(smallGroup26.grossMargin) : 0;
+    const el = document.getElementById("paxband-action-panel");
+    if (el) {
+      el.innerHTML = `
+            <div style="font-weight: 600; margin-bottom: 10px; color: var(--text);">${t("management.smallGroupProblem")}</div>
+            <div style="color: var(--text2); line-height: 1.6; font-size: 11px;">
+                <div><strong>\u{1F4CA} ${t("management.prevalence")}:</strong> ${smallGroupPct26.toFixed(0)}% of paid tours are 1\u20135 PAX (${smallGroup26.tours} ${t("management.tours")})</div>
+                <div><strong>\u{1F4B0} ${t("management.marginLoss")}:</strong> \u20AC${fmt(lossFromSmallGroups)} total from small groups</div>
+                <div><strong>\u{1F4C8} ${t("management.trend")}:</strong> ${pctChange > 0 ? "+" : ""}${pctChange.toFixed(1)}pp ${t("management.vs2025")} \u2014 getting ${pctChange > 0 ? "worse" : "better"}</div>
+            </div>
+        `;
+    }
+  }
+  function refreshOps() {
+    renderOpsMonthLine();
+    renderPaymentMethod();
+  }
+
+  // src/pages/management/cities.js
   function initCities() {
     renderCitiesTab();
   }
@@ -4254,48 +4328,104 @@ GM%: ${gmpct}%`;
       }
     });
   }
-  function renderOpsMonthLine() {
-    const has25 = typeof guideStats25 !== "undefined";
-    const { c25, green } = getThemeColors();
-    const { month: cutoffMonth, day: cutoffDay } = parseGlobalDate();
-    const m26 = buildMonthlyFromDays(guideStats26, cutoffMonth, cutoffDay);
-    const m25 = has25 ? buildMonthlyFromDays(guideStats25, cutoffMonth, cutoffDay) : {};
-    const allM = Array.from({ length: cutoffMonth }, (_, i) => i + 1);
-    makeLineChart("month-line", allM.map((m) => MONTH_SHORT[m]), [
-      { label: t("management.revenue") + " 2025", data: allM.map((m) => m25[m]?.revenue || 0), borderColor: c25, backgroundColor: "transparent", tension: 0.3, borderDash: [5, 3] },
-      { label: t("management.revenue") + " 2026", data: allM.map((m) => m26[m]?.revenue || 0), borderColor: "#8FA8BC", backgroundColor: "#8FA8BC22", tension: 0.3, fill: true },
-      { label: t("management.grossMargin") + " 2025", data: allM.map((m) => m25[m]?.grossMargin || 0), borderColor: c25, backgroundColor: "transparent", tension: 0.3, borderDash: [2, 2], borderWidth: 1.5 },
-      { label: t("management.grossMargin") + " 2026", data: allM.map((m) => m26[m]?.grossMargin || 0), borderColor: green, backgroundColor: "transparent", tension: 0.3, borderWidth: 2 }
-    ]);
+  function buildDimensionByCity(dimensionKey, fields) {
+    const result = {};
+    CITIES.forEach((city) => {
+      result[city] = {};
+    });
+    guideStats26.forEach((g) => {
+      const city = g.city;
+      if (!result[city]) result[city] = {};
+      const dim = g.mgmt?.[dimensionKey];
+      if (!dim) return;
+      Object.entries(dim).forEach(([key, data]) => {
+        if (!result[city][key]) {
+          result[city][key] = Object.fromEntries(fields.map((f) => [f, 0]));
+        }
+        fields.forEach((f) => {
+          result[city][key][f] += data[f] || 0;
+        });
+      });
+    });
+    return result;
   }
-  function renderPaxBandActionPanel() {
-    const mgmt26 = kpiTotals26.mgmt;
-    const mgmt25 = typeof kpiTotals25 !== "undefined" ? kpiTotals25.mgmt : null;
-    const gpb26 = mgmt26.byGuidePaxBand || {};
-    const gpb25 = mgmt25?.byGuidePaxBand || {};
-    const smallGroup26 = gpb26["1-5"] || { tours: 0, revenue: 0, grossMargin: 0 };
-    const smallGroup25 = gpb25["1-5"] || { tours: 0, revenue: 0, grossMargin: 0 };
-    const totalTours26 = Object.values(gpb26).reduce((sum, g) => sum + (g.tours || 0), 0);
-    const totalTours25 = Object.values(gpb25).reduce((sum, g) => sum + (g.tours || 0), 0);
-    const smallGroupPct26 = totalTours26 > 0 ? smallGroup26.tours / totalTours26 * 100 : 0;
-    const smallGroupPct25 = totalTours25 > 0 ? smallGroup25.tours / totalTours25 * 100 : 0;
-    const pctChange = smallGroupPct26 - smallGroupPct25;
-    const lossFromSmallGroups = smallGroup26.grossMargin < 0 ? Math.abs(smallGroup26.grossMargin) : 0;
-    const el = document.getElementById("paxband-action-panel");
-    if (el) {
-      el.innerHTML = `
-            <div style="font-weight: 600; margin-bottom: 10px; color: var(--text);">${t("management.smallGroupProblem")}</div>
-            <div style="color: var(--text2); line-height: 1.6; font-size: 11px;">
-                <div><strong>\u{1F4CA} ${t("management.prevalence")}:</strong> ${smallGroupPct26.toFixed(0)}% of paid tours are 1\u20135 PAX (${smallGroup26.tours} ${t("management.tours")})</div>
-                <div><strong>\u{1F4B0} ${t("management.marginLoss")}:</strong> \u20AC${fmt(lossFromSmallGroups)} total from small groups</div>
-                <div><strong>\u{1F4C8} ${t("management.trend")}:</strong> ${pctChange > 0 ? "+" : ""}${pctChange.toFixed(1)}pp ${t("management.vs2025")} \u2014 getting ${pctChange > 0 ? "worse" : "better"}</div>
-            </div>
-        `;
+  function buildTourTypeByCity() {
+    return buildDimensionByCity("byTourType", ["revenue", "grossMargin", "tours"]);
+  }
+  function buildSourceByCity() {
+    return buildDimensionByCity("bySource", ["revenue", "commissionCost", "tours"]);
+  }
+  function buildLangByCity() {
+    const result = {};
+    ["Zagreb", "Dubrovnik", "Split", "Zadar"].forEach((city) => {
+      result[city] = { eng: { tours: 0, pax: 0 }, esp: { tours: 0, pax: 0 }, fra: { tours: 0, pax: 0 } };
+    });
+    guideStats26.forEach((g) => {
+      const city = g.city;
+      ["eng", "esp", "fra"].forEach((lang) => {
+        if (g.stats?.[lang]) {
+          const langStats = filterStatsByDate(g.stats[lang], getGlobalDate());
+          result[city][lang].tours += langStats.paidTours || 0;
+          result[city][lang].pax += langStats.paidPax || 0;
+        }
+      });
+    });
+    return result;
+  }
+  function refreshCities() {
+    renderCitiesTab();
+  }
+
+  // src/pages/management/index.js
+  var MgmtPages = {
+    pl: { _init: false },
+    guides: { _init: false },
+    channels: { _init: false },
+    ops: { _init: false },
+    cities: { _init: false }
+  };
+  var _activeTab = "pl";
+  var _activeCity = "all";
+  function mgmtShowTab(id, el) {
+    document.querySelectorAll(`.mgmt-page`).forEach((p) => p.classList.remove("active"));
+    document.querySelectorAll(`.mgmt-subnav .nav-tab`).forEach((tp) => tp.classList.remove("active", "mgmt-tab-active"));
+    document.getElementById("mgmt-" + id).classList.add("active");
+    el.classList.add("active", "mgmt-tab-active");
+    _activeTab = id;
+    if (id !== "pl") {
+      const bar = document.getElementById("sticky-kpi-bar");
+      if (bar) bar.style.display = "none";
+    }
+    if (!MgmtPages[id]._init) {
+      if (id === "pl") initPl(_activeCity);
+      if (id === "guides") initGuides(_activeCity);
+      if (id === "channels") initChannels();
+      if (id === "ops") initOps();
+      if (id === "cities") initCities();
+      MgmtPages[id]._init = true;
     }
   }
+  function mgmtFilterCityPl(city) {
+    _activeCity = city;
+    document.querySelectorAll(".city-pill").forEach((p) => {
+      p.classList.toggle("active", p.dataset.city === city);
+    });
+    clearKpiCache();
+    if (MgmtPages.pl._init) renderPlKpis(city);
+    if (MgmtPages.guides._init) renderGuideTable(city);
+  }
+  var mgmtSort2 = mgmtSort;
+  function mgmtRefreshAll() {
+    clearKpiCache();
+    if (MgmtPages.pl._init) refreshPl(_activeCity);
+    if (MgmtPages.guides._init) refreshGuides(_activeCity);
+    if (MgmtPages.channels._init) refreshChannels();
+    if (MgmtPages.ops._init) refreshOps();
+    if (MgmtPages.cities._init) refreshCities();
+  }
   function mgmtUpdateCharts() {
-    const ax = axisDefaults();
-    const tt = tooltipDefaults();
+    const ax = axisDefaults2();
+    const tt = tooltipDefaults2();
     Object.values(_charts).forEach((c) => {
       if (c.options.scales) {
         Object.values(c.options.scales).forEach((sc) => {
@@ -4308,7 +4438,7 @@ GM%: ${gmpct}%`;
       c.update();
     });
   }
-  function updateManagementTabs2() {
+  function updateManagementTabs() {
     const tabs = {
       "tab-pl": t("management.profitAndLoss"),
       "tab-guides": t("management.guides"),
@@ -4320,26 +4450,27 @@ GM%: ${gmpct}%`;
       const el = document.getElementById(id);
       if (el) el.textContent = text;
     });
-    if (_activeTab === "pl") renderPlKpis("all");
-    else if (_activeTab === "guides") renderGuideTable();
-    else if (_activeTab === "channels") {
+    if (_activeTab === "pl" && MgmtPages.pl._init) renderPlKpis(_activeCity);
+    else if (_activeTab === "guides" && MgmtPages.guides._init) renderGuideTable(_activeCity);
+    else if (_activeTab === "channels" && MgmtPages.channels._init) {
       renderCommissionWaterfall();
       renderDirectOtaTrend();
       renderOtaSourceTable();
       renderTourTypeTable();
-    } else if (_activeTab === "ops") renderPlKpis("all");
-    else if (_activeTab === "cities") renderCitiesTab();
+    } else if (_activeTab === "ops" && MgmtPages.ops._init) refreshOps();
+    else if (_activeTab === "cities" && MgmtPages.cities._init) refreshCities();
   }
   var PageMgmt = {
     _initialized: false,
     init() {
       const footerDate = document.getElementById("footer-date");
       if (footerDate) footerDate.textContent = (/* @__PURE__ */ new Date()).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-      const picker = document.getElementById("cutoff-picker");
-      if (picker) picker.value = window.GLOBAL_DATE;
       const tabEl = document.getElementById("tab-pl");
       if (tabEl) mgmtShowTab("pl", tabEl);
       this._initialized = true;
+    },
+    renderAll() {
+      mgmtRefreshAll();
     }
   };
 
@@ -4350,6 +4481,12 @@ GM%: ${gmpct}%`;
   PAGES.Page26 = Page26;
   PAGES.PageCmp = PageCmp;
   PAGES.PageMgmt = PageMgmt;
+  registerThemeChangeCallback(() => {
+    mgmtUpdateCharts();
+  });
+  registerLanguageChangeCallback(() => {
+    updateManagementTabs();
+  });
   function toggleShortcutOverlay() {
     const el = document.getElementById("shortcut-overlay");
     if (el) el.style.display = el.style.display === "block" ? "none" : "block";
@@ -4374,7 +4511,7 @@ GM%: ${gmpct}%`;
     document.getElementById("cutoff-picker")?.addEventListener("change", (e) => updateDateAsOf(e.target.value));
     document.querySelector(".print-btn")?.addEventListener("click", () => window.print());
     document.querySelectorAll(".city-pill").forEach((el) => el.addEventListener("click", () => mgmtFilterCityPl(el.dataset.city)));
-    document.querySelectorAll(".sort-hdr").forEach((el) => el.addEventListener("click", () => mgmtSort(el.dataset.col)));
+    document.querySelectorAll(".sort-hdr").forEach((el) => el.addEventListener("click", () => mgmtSort2(el.dataset.col)));
     document.querySelector(".overlay-close")?.addEventListener("click", toggleShortcutOverlay);
   }
   function initKeyboardShortcuts() {
@@ -4412,14 +4549,6 @@ GM%: ${gmpct}%`;
         e.preventDefault();
       }
     });
-  }
-  function onThemeChange() {
-    mgmtUpdateCharts();
-    if (PAGES.PageCmp?._initialized) PAGES.PageCmp.updateCharts();
-  }
-  function onLanguageChange() {
-    updateNavigationLabels();
-    updateManagementTabs2();
   }
   document.addEventListener("DOMContentLoaded", () => {
     updateThemeButton();

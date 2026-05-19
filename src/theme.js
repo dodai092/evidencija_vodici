@@ -1,6 +1,20 @@
 import { CSS, PAGES, setGlobalLanguage, getGlobalLanguage } from './shared.js';
 import { t } from './i18n.js';
 
+// ── Callback hooks for theme/language changes ──────────────────────────────────
+// Registered by main.js to avoid circular dependency
+
+let _onThemeChange = null;
+let _onLanguageChange = null;
+
+export function registerThemeChangeCallback(callback) {
+    _onThemeChange = callback;
+}
+
+export function registerLanguageChangeCallback(callback) {
+    _onLanguageChange = callback;
+}
+
 export function initTheme() {
     if (localStorage.getItem('theme') === 'dark') {
         document.documentElement.classList.add(CSS.DARK_MODE);
@@ -30,7 +44,7 @@ export function toggleTheme(onToggleComplete) {
             if (PAGES.Page25 && PAGES.Page25._initialized) PAGES.Page25.updateChart();
             if (PAGES.Page26 && PAGES.Page26._initialized) PAGES.Page26.updateChart();
             if (PAGES.PageCmp && PAGES.PageCmp._initialized) PAGES.PageCmp.updateCharts();
-            if (window.mgmtUpdateCharts) window.mgmtUpdateCharts();
+            if (_onThemeChange) _onThemeChange();
         }, 100);
     }
 }
@@ -64,7 +78,6 @@ export function toggleLanguage(onToggleComplete) {
     localStorage.setItem('language', getGlobalLanguage());
     updateLanguageButton();
     updateNavigationLabels();
-    if (typeof updateManagementTabs === 'function') updateManagementTabs();
 
     requestAnimationFrame(() => {
         if (PAGES.Page25 && PAGES.Page25._initialized) {
@@ -81,7 +94,7 @@ export function toggleLanguage(onToggleComplete) {
             PAGES.PageCmp.renderAll();
             PAGES.PageCmp.updateCharts();
         }
-        if (window.mgmtUpdateCharts) window.mgmtUpdateCharts();
+        if (_onLanguageChange) _onLanguageChange();
         if (onToggleComplete) onToggleComplete();
     });
 }

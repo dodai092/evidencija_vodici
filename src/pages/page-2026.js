@@ -1,4 +1,4 @@
-import { CITY_COLS, CITY_CLS, CITIES, MONTH_NAMES_HR, filteredStats, safeName, fmtN, getCutoffMonth, registerPage } from '../shared.js';
+import { CITY_COLS, CITY_CLS, CITIES, MONTH_NAMES_HR, filteredStats, safeName, fmtN, getCutoffMonth, getGlobalDate, registerPage } from '../shared.js';
 import { t, titleAttr } from '../i18n.js';
 
 export const Page26 = {
@@ -183,7 +183,7 @@ export const Page26 = {
         const lang = this.activeLang;
         const MONTH_NAMES = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
         const cutoffMonth = getCutoffMonth();
-        const cutoffDay   = parseInt(window.GLOBAL_DATE.split('-')[2]);
+        const cutoffDay   = parseInt(getGlobalDate().split('-')[2]);
         const months = this.activeMonths.length > 0 ? this.activeMonths : Array.from({length: cutoffMonth}, (_, i) => i + 1);
         const citiesToShow = this.activeCity === 'all' ? CITIES : [this.activeCity];
 
@@ -236,7 +236,7 @@ export const Page26 = {
                 </tbody>
             </table>
             </div>
-            ${hasPartial ? `<div class="mpax-note">* ${t('labels.partial')} — data through ${window.GLOBAL_DATE}</div>` : ''}
+            ${hasPartial ? `<div class="mpax-note">* ${t('labels.partial')} — data through ${getGlobalDate()}</div>` : ''}
         </div>`;
 
         const el = document.getElementById('monthly-pax-table-26');
@@ -246,7 +246,7 @@ export const Page26 = {
     _getTypeMonthData(types) {
         const lang = this.activeLang;
         const cutoffMonth = getCutoffMonth();
-        const cutoffDay   = parseInt(window.GLOBAL_DATE.split('-')[2]);
+        const cutoffDay   = parseInt(getGlobalDate().split('-')[2]);
         const maxMonth = this.activeMonths.length > 0 ? Math.max(...this.activeMonths) : cutoffMonth;
         const fc = guideStats26.filter(g => this.activeCity === 'all' || g.city === this.activeCity);
 
@@ -389,7 +389,7 @@ export const Page26 = {
     updateChart() {
         const colors = this.getChartColors();
         const cutoffMonth = getCutoffMonth();
-        const cutoffDay   = parseInt(window.GLOBAL_DATE.split('-')[2]);
+        const cutoffDay   = parseInt(getGlobalDate().split('-')[2]);
         const lang = this.activeLang;
         const months = Array.from({length: cutoffMonth}, (_, i) => i + 1);
         const citiesToShow = this.activeCity === 'all' ? CITIES : [this.activeCity];
@@ -648,7 +648,7 @@ export const Page26 = {
             this._buildPaidTours() +
             this._buildGuides();
 
-        const d = new Date(window.GLOBAL_DATE);
+        const d = new Date(getGlobalDate());
         const fmt = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
         const datePov = this._el('date-pov');
         if (datePov) datePov.textContent = fmt;

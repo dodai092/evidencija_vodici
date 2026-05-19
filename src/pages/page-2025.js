@@ -1,4 +1,4 @@
-import { CITY_COLS, CITY_CLS, CITIES, MONTH_NAMES_HR, filteredStats, safeName, fmtN, getCutoffMonth, registerPage } from '../shared.js';
+import { CITY_COLS, CITY_CLS, CITIES, MONTH_NAMES_HR, filteredStats, safeName, fmtN, getCutoffMonth, getGlobalDate, registerPage } from '../shared.js';
 import { t, titleAttr } from '../i18n.js';
 
 export const Page25 = {
@@ -599,7 +599,7 @@ export const Page25 = {
             this._buildPaidTours() +
             this._buildGuides();
 
-        const d = new Date(window.GLOBAL_DATE);
+        const d = new Date(getGlobalDate());
         const fmt = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
         const datePov = this._el('date-pov');
         if (datePov) datePov.textContent = fmt;

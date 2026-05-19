@@ -74,7 +74,7 @@ export function updateDateAsOf(val) {
             PAGES.PageCmp.mergedGuides = PAGES.PageCmp.buildMerged();
             PAGES.PageCmp.renderAll();
         }
-        if (window.mgmtRefreshAll) window.mgmtRefreshAll();
+        if (PAGES.PageMgmt?._initialized) PAGES.PageMgmt.renderAll();
     });
 }
 
@@ -139,47 +139,6 @@ export function showPage(id, tab) {
     else if (id === 'page-cmp' && PAGES.PageCmp) setTimeout(() => PAGES.PageCmp.updateCharts(), 50);
     if (id === 'page-mgmt' && PAGES.PageMgmt) {
         if (!PAGES.PageMgmt._initialized) PAGES.PageMgmt.init();
-        else if (window.mgmtRefreshAll) window.mgmtRefreshAll();
+        else PAGES.PageMgmt.renderAll();
     }
-}
-
-export const KEYBOARD_SHORTCUTS = {
-    '1': () => {
-        const tab = document.getElementById('tab-25');
-        if (tab) showPage('page-25', tab);
-    },
-    '2': () => {
-        const tab = document.getElementById('tab-26');
-        if (tab) showPage('page-26', tab);
-    },
-    '3': () => {
-        const tab = document.getElementById('tab-cmp');
-        if (tab) showPage('page-cmp', tab);
-    },
-    '4': () => {
-        const tab = document.getElementById('tab-mgmt');
-        if (tab) showPage('page-mgmt', tab);
-    },
-    't': () => window._toggleTheme && window._toggleTheme(),
-    'd': () => {
-        const picker = document.getElementById('cutoff-picker');
-        if (picker) picker.focus();
-    },
-    '?': () => window.toggleShortcutOverlay && window.toggleShortcutOverlay(),
-    'Escape': () => {
-        const overlay = document.getElementById('shortcut-overlay');
-        if (overlay && overlay.style.display === 'block') overlay.style.display = 'none';
-    },
-};
-
-export function initKeyboardShortcuts() {
-    document.addEventListener('keydown', e => {
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-        if (e.metaKey || e.ctrlKey || e.altKey) return;
-        const handler = KEYBOARD_SHORTCUTS[e.key];
-        if (handler) {
-            handler();
-            e.preventDefault();
-        }
-    });
 }

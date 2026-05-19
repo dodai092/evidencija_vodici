@@ -100,7 +100,7 @@
             </div>
             <div class="main">
                 <!-- Primary KPIs -->
-                <div class="kpi-grid">
+                <div class="mgmt-kpi-grid">
                     <div class="kpi-card">
                         <div class="kpi-label">Net Revenue</div>
                         <div class="kpi-value" id="kpi-revenue">&#x2014;</div>
@@ -124,7 +124,7 @@
                     </div>
                 </div>
                 <!-- Secondary KPIs -->
-                <div class="kpi-grid">
+                <div class="mgmt-kpi-grid">
                     <div class="kpi-card">
                         <div class="kpi-label">Tour Cost</div>
                         <div class="kpi-value" id="kpi-tour-cost">&#x2014;</div>
@@ -175,7 +175,7 @@
                 <div id="pl-guide-drilldown" class="mb-24"></div>
 
                 <!-- Billing method -->
-                <h2 class="section-title">Direct Booking vs OTA (Billing Method)</h2>
+                <h2 class="mgmt-section-title">Direct Booking vs OTA (Billing Method)</h2>
                 <div class="two-col">
                     <div class="chart-card">
                         <h3>POS vs CPP &#x2014; Revenue 2025 vs 2026</h3>
@@ -237,25 +237,25 @@
                 </div>
             </div>
             <div class="main">
-                <h2 class="section-title">Commission Waterfall by Source</h2>
+                <h2 class="mgmt-section-title">Commission Waterfall by Source</h2>
                 <div class="chart-card mb-24">
                     <h3>Revenue &#x2192; Commission &#x2192; Vendor Cost &#x2192; Gross Margin per Source (2026)</h3>
                     <div class="chart-wrap h320"><canvas id="commission-wfall"></canvas></div>
                 </div>
 
-                <h2 class="section-title">Direct Booking vs OTA Trend</h2>
+                <h2 class="mgmt-section-title">Direct Booking vs OTA Trend</h2>
                 <div class="chart-card mb-24">
                     <h3>Direct (Web) vs OTA Revenue by Month &#x2014; 2025 vs 2026</h3>
                     <div class="approx-banner">&#x26A0; Approximate &#x2014; channel split estimated from guide-level ratios, not per-booking data</div>
                     <div class="chart-wrap h280"><canvas id="direct-ota-line"></canvas></div>
                 </div>
 
-                <h2 class="section-title">OTA Source Detail</h2>
+                <h2 class="mgmt-section-title">OTA Source Detail</h2>
                 <div class="table-card mb-24">
                     <div id="ota-source-table"></div>
                 </div>
 
-                <h2 class="section-title">Tour Type &#x2014; Financial Breakdown</h2>
+                <h2 class="mgmt-section-title">Tour Type &#x2014; Financial Breakdown</h2>
                 <div class="table-card">
                     <table class="mgmt-table">
                         <thead>
@@ -286,7 +286,7 @@
                 </div>
             </div>
             <div class="main">
-                <h2 class="section-title">Group Size Efficiency &#x2014; The Key Driver</h2>
+                <h2 class="mgmt-section-title">Group Size Efficiency &#x2014; The Key Driver</h2>
                 <div class="two-col mb-24">
                     <div class="chart-card">
                         <h3>GM% by Guide Group Size &#x2014; 2025 vs 2026</h3>
@@ -322,8 +322,8 @@
                     </div>
                 </div>
 
-                <h2 class="section-title">Payment Method Impact</h2>
-                <div class="kpi-grid" id="payment-stats-container"></div>
+                <h2 class="mgmt-section-title">Payment Method Impact</h2>
+                <div class="mgmt-kpi-grid" id="payment-stats-container"></div>
                 <div class="chart-card mb-24">
                     <h3>Revenue by Payment Method &#x2014; 2025 vs 2026</h3>
                     <div class="chart-wrap h280"><canvas id="payment-bar"></canvas></div>
@@ -349,22 +349,22 @@
                 </div>
             </div>
             <div class="main">
-                <h2 class="section-title">City Overview &#x2014; 2026 YTD</h2>
-                <div class="kpi-grid" id="city-cards-container"></div>
+                <h2 class="mgmt-section-title">City Overview &#x2014; 2026 YTD</h2>
+                <div class="mgmt-kpi-grid" id="city-cards-container"></div>
 
-                <h2 class="section-title">Tour Type Performance by City</h2>
+                <h2 class="mgmt-section-title">Tour Type Performance by City</h2>
                 <p class="section-desc">Revenue (&#x20ac;) and Gross Margin % &#x2014; 2026 YTD</p>
                 <div style="overflow-x: auto; margin-bottom: 32px;">
                     <table class="mgmt-table" id="tourtype-city-table"></table>
                 </div>
 
-                <h2 class="section-title">Booking Source Distribution by City</h2>
+                <h2 class="mgmt-section-title">Booking Source Distribution by City</h2>
                 <p class="section-desc">Top sources by revenue and commission % &#x2014; 2026 YTD</p>
                 <div style="overflow-x: auto; margin-bottom: 32px;">
                     <table class="mgmt-table" id="source-city-table"></table>
                 </div>
 
-                <h2 class="section-title">Language Mix by City &#x2014; Paid Tours</h2>
+                <h2 class="mgmt-section-title">Language Mix by City &#x2014; Paid Tours</h2>
                 <p class="section-desc">Production volume (tours &amp; pax) &#x2014; revenue breakdown not available</p>
                 <div class="chart-card" style="margin-bottom: 32px">
                     <div class="chart-wrap h280"><canvas id="lang-mix-chart"></canvas></div>

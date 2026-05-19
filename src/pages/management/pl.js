@@ -52,7 +52,7 @@ export function renderPlKpis(city) {
         const cls = d > 0 ? 'delta-pos' : d < 0 ? 'delta-neg' : 'delta-neu';
         const sign = d >= 0 ? '+' : '−';
         const pctStr = pct !== null ? ` (${d >= 0 ? '+' : ''}${pct.toFixed(1)}%)` : '';
-        return `<div class="kpi-delta ${cls}">${sign}€${fmt(Math.abs(d))}${pctStr} vs 2025</div>`;
+        return `<div class="mgmt-kpi-delta ${cls}">${sign}€${fmt(Math.abs(d))}${pctStr} vs 2025</div>`;
     }
 
     document.getElementById('kpi-revenue').textContent    = fmtEur(k.revenue);

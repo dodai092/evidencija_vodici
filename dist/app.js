@@ -3394,7 +3394,7 @@
       const cls = d > 0 ? "delta-pos" : d < 0 ? "delta-neg" : "delta-neu";
       const sign = d >= 0 ? "+" : "\u2212";
       const pctStr = pct !== null ? ` (${d >= 0 ? "+" : ""}${pct.toFixed(1)}%)` : "";
-      return `<div class="kpi-delta ${cls}">${sign}\u20AC${fmt(Math.abs(d))}${pctStr} vs 2025</div>`;
+      return `<div class="mgmt-kpi-delta ${cls}">${sign}\u20AC${fmt(Math.abs(d))}${pctStr} vs 2025</div>`;
     }
     document.getElementById("kpi-revenue").textContent = fmtEur(k.revenue);
     document.getElementById("kpi-revenue-sub").innerHTML = `${t("management.gmOfRevenue")}: ${gmPct.toFixed(1)}% ${t("management.ofRevenue")}` + kpiDelta(k.revenue, k25?.revenue);
@@ -4160,7 +4160,7 @@ GM%: ${gmpct}%`;
                     <div class="kpi-value">${fmtEur(d26.revenue)}</div>
                     <div class="kpi-sub">
                         GM%: <strong>${gm26.toFixed(1)}%</strong>
-                        <span class="kpi-delta ${deltaClass(gmDelta)}"> ${gmDelta > 0 ? "+" : ""}${gmDelta.toFixed(1)}%</span><br>
+                        <span class="mgmt-kpi-delta ${deltaClass(gmDelta)}"> ${gmDelta > 0 ? "+" : ""}${gmDelta.toFixed(1)}%</span><br>
                         ${d26.tours} tours
                     </div>
                 </div>
@@ -4236,7 +4236,7 @@ GM%: ${gmpct}%`;
                 <div class="kpi-sub">
                     GM: <strong>${fmtEur(k26.grossMargin)}</strong> (${gm26.toFixed(1)}%)<br>
                     Commission: ${commRate26.toFixed(1)}% \xB7 ${k26.paidTours} tours \xB7 ${k26.paidPax} pax
-                    <div class="kpi-delta ${deltaClass(gmDelta)}" style="margin-top:4px">\u2206 GM: ${gmDelta > 0 ? "+" : ""}${fmtEur(gmDelta)}</div>
+                    <div class="mgmt-kpi-delta ${deltaClass(gmDelta)}" style="margin-top:4px">\u2206 GM: ${gmDelta > 0 ? "+" : ""}${fmtEur(gmDelta)}</div>
                 </div>
             </div>
         `;

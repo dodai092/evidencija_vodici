@@ -192,7 +192,7 @@ export function renderPaymentMethod() {
                     <div class="kpi-value">${fmtEur(d26.revenue)}</div>
                     <div class="kpi-sub">
                         GM%: <strong>${gm26.toFixed(1)}%</strong>
-                        <span class="kpi-delta ${deltaClass(gmDelta)}"> ${gmDelta > 0 ? '+' : ''}${gmDelta.toFixed(1)}%</span><br>
+                        <span class="mgmt-kpi-delta ${deltaClass(gmDelta)}"> ${gmDelta > 0 ? '+' : ''}${gmDelta.toFixed(1)}%</span><br>
                         ${d26.tours} tours
                     </div>
                 </div>

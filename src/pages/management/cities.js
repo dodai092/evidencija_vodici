@@ -29,7 +29,7 @@ export function renderCitiesTab() {
                 <div class="kpi-sub">
                     GM: <strong>${fmtEur(k26.grossMargin)}</strong> (${gm26.toFixed(1)}%)<br>
                     Commission: ${commRate26.toFixed(1)}% · ${k26.paidTours} tours · ${k26.paidPax} pax
-                    <div class="kpi-delta ${deltaClass(gmDelta)}" style="margin-top:4px">∆ GM: ${gmDelta > 0 ? '+' : ''}${fmtEur(gmDelta)}</div>
+                    <div class="mgmt-kpi-delta ${deltaClass(gmDelta)}" style="margin-top:4px">∆ GM: ${gmDelta > 0 ? '+' : ''}${fmtEur(gmDelta)}</div>
                 </div>
             </div>
         `;

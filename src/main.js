@@ -42,8 +42,10 @@ registerLanguageChangeCallback(() => {
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
+const shortcutOverlay = () => document.getElementById('shortcut-overlay');
+
 function toggleShortcutOverlay() {
-    const el = document.getElementById('shortcut-overlay');
+    const el = shortcutOverlay();
     if (el) el.style.display = el.style.display === 'block' ? 'none' : 'block';
 }
 
@@ -99,8 +101,8 @@ function initKeyboardShortcuts() {
         'd': () => document.getElementById('cutoff-picker')?.focus(),
         '?': () => toggleShortcutOverlay(),
         'Escape': () => {
-            const overlay = document.getElementById('shortcut-overlay');
-            if (overlay && overlay.style.display === 'block') overlay.style.display = 'none';
+            const el = shortcutOverlay();
+            if (el && el.style.display === 'block') el.style.display = 'none';
         },
     };
     document.addEventListener('keydown', e => {

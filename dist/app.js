@@ -4551,7 +4551,7 @@ GM%: ${gmpct}%`;
     });
   }
   document.addEventListener("DOMContentLoaded", () => {
-    updateThemeButton();
+    updateThemeButton(document.body.classList.contains("dark-mode"));
     updateLanguageButton();
     updateNavigationLabels();
     const picker = document.getElementById("cutoff-picker");

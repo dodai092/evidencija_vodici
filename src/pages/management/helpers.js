@@ -1,7 +1,4 @@
-import {
-    CITIES, CITY_COLS,
-    getGlobalDate, getCutoffMonth, parseGlobalDate, getRangeLabel,
-} from '../../shared.js';
+import { getGlobalDate } from '../../shared.js';
 
 // ── Formatters ────────────────────────────────────────────────────────────────
 

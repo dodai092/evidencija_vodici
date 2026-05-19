@@ -1,4 +1,3 @@
-import { getRangeLabel } from '../../shared.js';
 import { t } from '../../i18n.js';
 import { _charts, clearKpiCache, axisDefaults, tooltipDefaults } from './helpers.js';
 import { initPl, renderPlKpis, refreshPl } from './pl.js';

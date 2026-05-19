@@ -114,7 +114,7 @@ function initKeyboardShortcuts() {
 // ── DOMContentLoaded — single init point ─────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
-    updateThemeButton();
+    updateThemeButton(document.body.classList.contains('dark-mode'));
     updateLanguageButton();
     updateNavigationLabels();
 

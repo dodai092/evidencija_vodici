@@ -516,7 +516,7 @@
 
   // src/pages/page-2025.js
   var Page25 = {
-    activeCity: "all",
+    activeCity: "Zagreb",
     activeLang: "all",
     activeMonths: [],
     activePrivateType: "all",
@@ -862,6 +862,7 @@
     },
     filterCity(city) {
       this.activeCity = city;
+      document.querySelectorAll("#page-25 .city-filter-pill").forEach((p) => p.classList.toggle("active", p.dataset.city === city));
       this.renderAll();
     },
     filterLang(lang) {
@@ -891,29 +892,23 @@
         </div>`;
     },
     _buildFilters() {
+      const cityPills = ["all", ...CITIES].map((c) => {
+        const col = CITY_COLS[c];
+        const label = c === "all" ? t("labels.all") : c;
+        const active = this.activeCity === c ? " active" : "";
+        const style = col ? ` style="--city-col:${col}"` : "";
+        return `<button class="city-filter-pill${active}" data-city="${c}"${style} onclick="Page25.filterCity('${c}')">${label}</button>`;
+      }).join("");
       return `<div class="main">
-            <div class="filter-area">
-                <div class="filter-group">
-                    <label for="city-filter-25">${t("labels.city")}</label>
-                    <select class="filter-select" id="city-filter-25" onchange="Page25.filterCity(this.value)">
-                        <option value="all">${t("labels.all")}</option>
-                        <option value="Zagreb">Zagreb</option>
-                        <option value="Dubrovnik">Dubrovnik</option>
-                        <option value="Split">Split</option>
-                        <option value="Zadar">Zadar</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="lang-filter-25">${t("labels.language")}</label>
+            <div class="filter-bar">
+                <div class="city-pill-group">${cityPills}</div>
+                <div class="filter-dropdowns">
                     <select class="filter-select" id="lang-filter-25" onchange="Page25.filterLang(this.value)">
                         <option value="all">${t("labels.all")}</option>
                         <option value="eng">\u{1F1EC}\u{1F1E7} ENG</option>
                         <option value="esp">\u{1F1EA}\u{1F1F8} ESP</option>
                         <option value="fra">\u{1F1EB}\u{1F1F7} FRA</option>
                     </select>
-                </div>
-                <div class="filter-group">
-                    <label for="month-filter-25">${t("table.month")}</label>
                     <select class="filter-select" id="month-filter-25" onchange="Page25.filterMonth(this.value)">
                         <option value="all">${t("labels.all")}</option>
                         ${Array.from({ length: 12 }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join("")}
@@ -1065,7 +1060,7 @@
 
   // src/pages/page-2026.js
   var Page26 = {
-    activeCity: "all",
+    activeCity: "Zagreb",
     activeLang: "all",
     activeMonths: [],
     activePrivateType: "all",
@@ -1469,6 +1464,7 @@
     },
     filterCity(city) {
       this.activeCity = city;
+      document.querySelectorAll("#page-26 .city-filter-pill").forEach((p) => p.classList.toggle("active", p.dataset.city === city));
       this.renderAll();
     },
     filterLang(lang) {
@@ -1499,29 +1495,23 @@
         </div>`;
     },
     _buildFilters() {
+      const cityPills = ["all", ...CITIES].map((c) => {
+        const col = CITY_COLS[c];
+        const label = c === "all" ? t("labels.all") : c;
+        const active = this.activeCity === c ? " active" : "";
+        const style = col ? ` style="--city-col:${col}"` : "";
+        return `<button class="city-filter-pill${active}" data-city="${c}"${style} onclick="Page26.filterCity('${c}')">${label}</button>`;
+      }).join("");
       return `<div class="main">
-            <div class="filter-area">
-                <div class="filter-group">
-                    <label for="city-filter-26">${t("labels.city")}</label>
-                    <select class="filter-select" id="city-filter-26" onchange="Page26.filterCity(this.value)">
-                        <option value="all">${t("labels.all")}</option>
-                        <option value="Zagreb">Zagreb</option>
-                        <option value="Dubrovnik">Dubrovnik</option>
-                        <option value="Split">Split</option>
-                        <option value="Zadar">Zadar</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="lang-filter-26">${t("labels.language")}</label>
+            <div class="filter-bar">
+                <div class="city-pill-group">${cityPills}</div>
+                <div class="filter-dropdowns">
                     <select class="filter-select" id="lang-filter-26" onchange="Page26.filterLang(this.value)">
                         <option value="all">${t("labels.all")}</option>
                         <option value="eng">\u{1F1EC}\u{1F1E7} ENG</option>
                         <option value="esp">\u{1F1EA}\u{1F1F8} ESP</option>
                         <option value="fra">\u{1F1EB}\u{1F1F7} FRA</option>
                     </select>
-                </div>
-                <div class="filter-group">
-                    <label for="month-filter-26">${t("table.month")}</label>
                     <select class="filter-select" id="month-filter-26" onchange="Page26.filterMonth(this.value)">
                         <option value="all">${t("labels.all")}</option>
                         <option value="1">1</option>

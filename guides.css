@@ -25,6 +25,50 @@
 /* ── NAV ACTIONS & CONTROLS ── */
 
 
+.filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0 14px;
+    flex-wrap: wrap;
+}
+
+.city-pill-group {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.filter-dropdowns {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.city-filter-pill {
+    padding: 3px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text3);
+    font-size: 11px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    line-height: 1.6;
+}
+
+.city-filter-pill:hover {
+    border-color: var(--city-col, var(--text3));
+    color: var(--city-col, var(--text));
+}
+
+.city-filter-pill.active {
+    background: var(--city-col, var(--accent));
+    border-color: var(--city-col, var(--accent));
+    color: #fff;
+}
 
 .date-picker-ui {
     background: var(--smoke);
@@ -48,6 +92,22 @@ body.dark-mode .date-picker-ui {
 }
 
 
+
+.filter-select {
+    background: var(--smoke);
+    border: 1px solid var(--border-dark);
+    color: var(--text2);
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    outline: none;
+    cursor: pointer;
+}
+
+body.dark-mode .filter-select {
+    color-scheme: dark;
+}
 
 .date-picker-label {
     font-size: 11px;

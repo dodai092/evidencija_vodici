@@ -1903,7 +1903,7 @@
 
   // src/pages/page-cmp/index.js
   var PageCmp = {
-    activeCity: "all",
+    activeCity: "Zagreb",
     activeLang: "all",
     activeMonths: [],
     mergedGuides: [],
@@ -2734,6 +2734,7 @@
     },
     filterCity(city) {
       this.activeCity = city;
+      document.querySelectorAll("#page-cmp .city-filter-pill").forEach((p) => p.classList.toggle("active", p.dataset.city === city));
       this.renderAll();
     },
     filterLang(lang) {
@@ -2831,28 +2832,23 @@
                 </div>
             </div>
 
-            <div class="filter-area">
-                <div class="filter-group">
-                    <label for="city-filter-cmp">${t("labels.city")}</label>
-                    <select class="filter-select" id="city-filter-cmp" onchange="PageCmp.filterCity(this.value)">
-                        <option value="all">${t("labels.all")}</option>
-                        <option value="Zagreb">Zagreb</option>
-                        <option value="Dubrovnik">Dubrovnik</option>
-                        <option value="Split">Split</option>
-                        <option value="Zadar">Zadar</option>
-                    </select>
+            <div class="filter-bar">
+                <div class="city-pill-group">
+                    ${["all", ...CITIES].map((c) => {
+        const col = CITY_COLS[c];
+        const label = c === "all" ? t("labels.all") : c;
+        const active = this.activeCity === c ? " active" : "";
+        const style = col ? ` style="--city-col:${col}"` : "";
+        return `<button class="city-filter-pill${active}" data-city="${c}"${style} onclick="PageCmp.filterCity('${c}')">${label}</button>`;
+      }).join("")}
                 </div>
-                <div class="filter-group">
-                    <label for="lang-filter-cmp">${t("labels.language")}</label>
+                <div class="filter-dropdowns">
                     <select class="filter-select" id="lang-filter-cmp" onchange="PageCmp.filterLang(this.value)">
                         <option value="all">${t("labels.all")}</option>
                         <option value="eng">\u{1F1EC}\u{1F1E7} ENG</option>
                         <option value="esp">\u{1F1EA}\u{1F1F8} ESP</option>
                         <option value="fra">\u{1F1EB}\u{1F1F7} FRA</option>
                     </select>
-                </div>
-                <div class="filter-group">
-                    <label for="month-filter-cmp">${t("labels.mo")}</label>
                     <select class="filter-select" id="month-filter-cmp" onchange="PageCmp.filterMonth(this.value)">
                         <option value="all">${t("labels.all")}</option>
                         <option value="1">1</option>

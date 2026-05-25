@@ -49,6 +49,13 @@ body.dark-mode .date-picker-ui {
 
 
 
+.date-picker-label {
+    font-size: 11px;
+    color: var(--text3);
+    white-space: nowrap;
+    cursor: default;
+}
+
 .toggle-btn {
     background: none;
     border: none;

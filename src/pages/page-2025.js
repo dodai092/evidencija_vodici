@@ -432,7 +432,6 @@ export const Page25 = {
             </div>
             <div class="header-right">
                 <div id="date-pov-25" class="mb-6"></div>
-                <div class="header-badge">Travel Year 2025 &middot; Closed</div>
             </div>
         </div>`;
     },

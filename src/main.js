@@ -5,8 +5,8 @@ import {
 } from './shared.js';
 
 import {
-    toggleTheme, toggleLanguage,
-    updateThemeButton, updateLanguageButton, updateNavigationLabels,
+    toggleTheme,
+    updateThemeButton, updateNavigationLabels,
     initTheme, initLanguage,
     registerThemeChangeCallback, registerLanguageChangeCallback,
 } from './theme.js';
@@ -82,7 +82,6 @@ function initEventListeners() {
 
     // Controls
     document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
-    document.getElementById('language-toggle')?.addEventListener('click', toggleLanguage);
     document.getElementById('cutoff-picker')?.addEventListener('change', e => updateDateAsOf(e.target.value));
     document.querySelector('.print-btn')?.addEventListener('click', () => window.print());
 
@@ -155,7 +154,6 @@ function initKeyboardShortcuts() {
 
 document.addEventListener('DOMContentLoaded', () => {
     updateThemeButton(document.body.classList.contains('dark-mode'));
-    updateLanguageButton();
     updateNavigationLabels();
 
     const picker = document.getElementById('cutoff-picker');
@@ -164,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDateAsOf(picker.value);
     }
 
-    Page25.init();
+    PageCmp.init();
 
     initEventListeners();
     initKeyboardShortcuts();

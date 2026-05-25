@@ -502,14 +502,6 @@
       }, 100);
     }
   }
-  function updateLanguageButton() {
-    const lang = getGlobalLanguage();
-    const btn = document.getElementById("language-toggle");
-    if (btn) {
-      btn.textContent = lang === "en" ? "\u{1F1ED}\u{1F1F7}" : "\u{1F1EC}\u{1F1E7}";
-      btn.setAttribute("title", lang === "en" ? "Promijeni na Hrvatski" : "Switch to English");
-    }
-  }
   function updateNavigationLabels() {
     const tabs = {
       "tab-25": t("nav.guides2025"),
@@ -519,32 +511,6 @@
     Object.entries(tabs).forEach(([id, text]) => {
       const el = document.getElementById(id);
       if (el) el.textContent = text;
-    });
-  }
-  function toggleLanguage(onToggleComplete) {
-    const current = getGlobalLanguage();
-    setGlobalLanguage(current === "en" ? "hr" : "en");
-    localStorage.setItem("language", getGlobalLanguage());
-    document.documentElement.lang = getGlobalLanguage() === "hr" ? "hr" : "en";
-    updateLanguageButton();
-    updateNavigationLabels();
-    requestAnimationFrame(() => {
-      if (PAGES.Page25 && PAGES.Page25._initialized) {
-        PAGES.Page25.rebuildStructure();
-        PAGES.Page25.renderAll();
-      }
-      if (PAGES.Page26 && PAGES.Page26._initialized) {
-        PAGES.Page26.rebuildStructure();
-        PAGES.Page26.renderAll();
-      }
-      if (PAGES.PageCmp && PAGES.PageCmp._initialized) {
-        PAGES.PageCmp.rebuildStructure();
-        PAGES.PageCmp.mergedGuides = PAGES.PageCmp.buildMerged();
-        PAGES.PageCmp.renderAll();
-        PAGES.PageCmp.updateCharts();
-      }
-      if (_onLanguageChange) _onLanguageChange();
-      if (onToggleComplete) onToggleComplete();
     });
   }
 
@@ -921,7 +887,6 @@
             </div>
             <div class="header-right">
                 <div id="date-pov-25" class="mb-6"></div>
-                <div class="header-badge">Travel Year 2025 &middot; Closed</div>
             </div>
         </div>`;
     },
@@ -4553,7 +4518,6 @@ GM%: ${gmpct}%`;
       if (el) el.addEventListener("click", () => mgmtShowTab(id, el));
     });
     document.getElementById("theme-toggle")?.addEventListener("click", toggleTheme);
-    document.getElementById("language-toggle")?.addEventListener("click", toggleLanguage);
     document.getElementById("cutoff-picker")?.addEventListener("change", (e) => updateDateAsOf(e.target.value));
     document.querySelector(".print-btn")?.addEventListener("click", () => window.print());
     document.querySelectorAll(".city-pill").forEach((el) => el.addEventListener("click", () => mgmtFilterCityPl(el.dataset.city)));
@@ -4631,14 +4595,13 @@ GM%: ${gmpct}%`;
   }
   document.addEventListener("DOMContentLoaded", () => {
     updateThemeButton(document.body.classList.contains("dark-mode"));
-    updateLanguageButton();
     updateNavigationLabels();
     const picker = document.getElementById("cutoff-picker");
     if (picker) {
       picker.value = getGlobalDate();
       updateDateAsOf(picker.value);
     }
-    Page25.init();
+    PageCmp.init();
     initEventListeners();
     initKeyboardShortcuts();
   });

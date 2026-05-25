@@ -43,13 +43,15 @@ python3 scripts/extract_guides.py --year 2025 > data-2025.js
 - Output: `dist/app.js` (IIFE bundle, ~208kb)
 - `data-2025.js` and `data-2026.js` are loaded as separate script tags (generated, not bundled)
 - `Chart.js` loaded from CDN
+- **`fs-core.js` is NOT used** — evidencija has its own JS architecture (ES modules → esbuild bundle)
 
 ### File responsibilities
 
 | File | Role |
 |---|---|
 | `index.html` | Shell with 4 empty `.page` containers + management sub-nav HTML inside `#page-mgmt`. **Never edited for data updates.** |
-| `guides.css` | All styles — CSS variables, dark mode, management dashboard, component styles |
+| `../shared/fs-core.css` | Shared foundation — loads first. Variables, dark mode, nav, kpi, card, bar/owner/agency CSS. |
+| `guides.css` | Evidencija-specific styles — `--radius: 8px`, filter bar, date picker, management dashboard, guide card styles, language toggle, sticky KPI bar, city/year/delta color vars. |
 | `src/main.js` | Entry point — boots theme/language, exposes all `window.*` globals, registers pages |
 | `src/shared.js` | Constants, `PAGES` registry, `filteredStats()`, `showPage()`, `updateDateAsOf()`, keyboard shortcuts |
 | `src/i18n.js` | `TRANSLATIONS`, `t()`, `tOpposite()`, `titleAttr()` |
@@ -131,7 +133,7 @@ The comparison tab (`page-cmp/index.js`) shows Jan–May by default. To extend t
 
 ### Theme system
 
-CSS variables on `:root`; `body.dark-mode` overrides. `toggleTheme()` in `src/theme.js` persists to `localStorage` and updates all initialized page charts including management.
+CSS variables and `body.dark-mode` overrides are defined in `../shared/fs-core.css`. Evidencija-specific color vars (`--radius`, city colors, delta colors, etc.) stay in `guides.css`. `toggleTheme()` in `src/theme.js` persists to `localStorage` and updates all initialized page charts including management. The SVG sun/moon theme button uses `.theme-toggle-icon` class — styled by `fs-core.css`.
 
 ### Guide ordering
 

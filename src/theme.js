@@ -25,6 +25,7 @@ export function initTheme() {
 export function initLanguage() {
     const stored = localStorage.getItem('language');
     if (stored) setGlobalLanguage(stored);
+    document.documentElement.lang = getGlobalLanguage() === 'hr' ? 'hr' : 'en';
 }
 
 export function updateThemeButton(isDark) {
@@ -76,6 +77,7 @@ export function toggleLanguage(onToggleComplete) {
     const current = getGlobalLanguage();
     setGlobalLanguage(current === 'en' ? 'hr' : 'en');
     localStorage.setItem('language', getGlobalLanguage());
+    document.documentElement.lang = getGlobalLanguage() === 'hr' ? 'hr' : 'en';
     updateLanguageButton();
     updateNavigationLabels();
 

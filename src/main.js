@@ -52,7 +52,10 @@ const shortcutOverlay = () => document.getElementById('shortcut-overlay');
 
 function toggleShortcutOverlay() {
     const el = shortcutOverlay();
-    if (el) el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    if (!el) return;
+    const isOpen = el.style.display === 'block';
+    el.style.display = isOpen ? 'none' : 'block';
+    el.setAttribute('aria-hidden', isOpen ? 'true' : 'false');
 }
 
 // ── Event wiring ──────────────────────────────────────────────────────────────
@@ -93,6 +96,32 @@ function initEventListeners() {
 
     // Shortcut overlay close button
     document.querySelector('.overlay-close')?.addEventListener('click', toggleShortcutOverlay);
+
+    // Arrow-key navigation for main nav tabs
+    const mainTabs = Array.from(document.querySelectorAll('.nav-tabs .nav-tab'));
+    mainTabs.forEach((tab, i) => {
+        tab.addEventListener('keydown', e => {
+            let next;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = mainTabs[(i + 1) % mainTabs.length];
+            if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   next = mainTabs[(i - 1 + mainTabs.length) % mainTabs.length];
+            if (e.key === 'Home') next = mainTabs[0];
+            if (e.key === 'End')  next = mainTabs[mainTabs.length - 1];
+            if (next) { e.preventDefault(); next.focus(); next.click(); }
+        });
+    });
+
+    // Arrow-key navigation for management sub-nav tabs
+    const mgmtTabs = Array.from(document.querySelectorAll('.mgmt-subnav .nav-tab'));
+    mgmtTabs.forEach((tab, i) => {
+        tab.addEventListener('keydown', e => {
+            let next;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = mgmtTabs[(i + 1) % mgmtTabs.length];
+            if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   next = mgmtTabs[(i - 1 + mgmtTabs.length) % mgmtTabs.length];
+            if (e.key === 'Home') next = mgmtTabs[0];
+            if (e.key === 'End')  next = mgmtTabs[mgmtTabs.length - 1];
+            if (next) { e.preventDefault(); next.focus(); next.click(); }
+        });
+    });
 }
 
 // ── Keyboard shortcuts ────────────────────────────────────────────────────────
@@ -108,7 +137,10 @@ function initKeyboardShortcuts() {
         '?': () => toggleShortcutOverlay(),
         'Escape': () => {
             const el = shortcutOverlay();
-            if (el && el.style.display === 'block') el.style.display = 'none';
+            if (el && el.style.display === 'block') {
+                el.style.display = 'none';
+                el.setAttribute('aria-hidden', 'true');
+            }
         },
     };
     document.addEventListener('keydown', e => {

@@ -120,12 +120,25 @@
   }
   function showPage(id, tab) {
     document.querySelectorAll(`.${CSS.PAGE}`).forEach((p) => p.classList.remove(CSS.ACTIVE));
-    document.querySelectorAll(`.nav-tabs .${CSS.NAV_TAB}`).forEach((t2) => t2.classList.remove(CSS.ACTIVE, CSS.NAV_Y25, CSS.NAV_Y26, CSS.NAV_CMP));
+    document.querySelectorAll(`.nav-tabs .${CSS.NAV_TAB}`).forEach((t2) => {
+      t2.classList.remove(CSS.ACTIVE, CSS.NAV_Y25, CSS.NAV_Y26, CSS.NAV_CMP);
+      t2.setAttribute("aria-selected", "false");
+      t2.setAttribute("tabindex", "-1");
+    });
     document.getElementById(id).classList.add(CSS.ACTIVE);
     tab.classList.add(CSS.ACTIVE);
+    tab.setAttribute("aria-selected", "true");
+    tab.setAttribute("tabindex", "0");
     if (id === "page-25") tab.classList.add(CSS.NAV_Y25);
     if (id === "page-26") tab.classList.add(CSS.NAV_Y26);
     if (id === "page-cmp") tab.classList.add(CSS.NAV_CMP);
+    const titles = {
+      "page-25": "Guides 2025",
+      "page-26": "Guides 2026",
+      "page-cmp": "Comparison 25/26",
+      "page-mgmt": "Management"
+    };
+    document.title = `${titles[id] || "Guide Production"} \xB7 FreeSpirit`;
     if (id === "page-25" && PAGES.Page25 && !PAGES.Page25._initialized) PAGES.Page25.init();
     if (id === "page-26" && PAGES.Page26 && !PAGES.Page26._initialized) PAGES.Page26.init();
     if (id === "page-cmp" && PAGES.PageCmp && !PAGES.PageCmp._initialized) PAGES.PageCmp.init();
@@ -468,6 +481,7 @@
   function initLanguage() {
     const stored = localStorage.getItem("language");
     if (stored) setGlobalLanguage(stored);
+    document.documentElement.lang = getGlobalLanguage() === "hr" ? "hr" : "en";
   }
   function updateThemeButton(isDark) {
     const btn = document.getElementById("theme-toggle");
@@ -511,6 +525,7 @@
     const current = getGlobalLanguage();
     setGlobalLanguage(current === "en" ? "hr" : "en");
     localStorage.setItem("language", getGlobalLanguage());
+    document.documentElement.lang = getGlobalLanguage() === "hr" ? "hr" : "en";
     updateLanguageButton();
     updateNavigationLabels();
     requestAnimationFrame(() => {
@@ -4403,10 +4418,18 @@ GM%: ${gmpct}%`;
   var _activeCity = "all";
   function mgmtShowTab(id, el) {
     document.querySelectorAll(`.mgmt-page`).forEach((p) => p.classList.remove("active"));
-    document.querySelectorAll(`.mgmt-subnav .nav-tab`).forEach((tp) => tp.classList.remove("active", "mgmt-tab-active"));
+    document.querySelectorAll(`.mgmt-subnav .nav-tab`).forEach((tp) => {
+      tp.classList.remove("active", "mgmt-tab-active");
+      tp.setAttribute("aria-selected", "false");
+      tp.setAttribute("tabindex", "-1");
+    });
     document.getElementById("mgmt-" + id).classList.add("active");
     el.classList.add("active", "mgmt-tab-active");
+    el.setAttribute("aria-selected", "true");
+    el.setAttribute("tabindex", "0");
     _activeTab = id;
+    const subTitles = { pl: "P&L", guides: "Guides", channels: "Channels", ops: "Operational", cities: "Cities" };
+    document.title = `${subTitles[id] || "Management"} \xB7 Management \xB7 FreeSpirit`;
     if (id !== "pl") {
       const bar = document.getElementById("sticky-kpi-bar");
       if (bar) bar.style.display = "none";
@@ -4509,7 +4532,10 @@ GM%: ${gmpct}%`;
   var shortcutOverlay = () => document.getElementById("shortcut-overlay");
   function toggleShortcutOverlay() {
     const el = shortcutOverlay();
-    if (el) el.style.display = el.style.display === "block" ? "none" : "block";
+    if (!el) return;
+    const isOpen = el.style.display === "block";
+    el.style.display = isOpen ? "none" : "block";
+    el.setAttribute("aria-hidden", isOpen ? "true" : "false");
   }
   var PAGE_MAP = {
     "tab-25": "page-25",
@@ -4533,6 +4559,36 @@ GM%: ${gmpct}%`;
     document.querySelectorAll(".city-pill").forEach((el) => el.addEventListener("click", () => mgmtFilterCityPl(el.dataset.city)));
     document.querySelectorAll(".sort-hdr").forEach((el) => el.addEventListener("click", () => mgmtSort2(el.dataset.col)));
     document.querySelector(".overlay-close")?.addEventListener("click", toggleShortcutOverlay);
+    const mainTabs = Array.from(document.querySelectorAll(".nav-tabs .nav-tab"));
+    mainTabs.forEach((tab, i) => {
+      tab.addEventListener("keydown", (e) => {
+        let next;
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") next = mainTabs[(i + 1) % mainTabs.length];
+        if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = mainTabs[(i - 1 + mainTabs.length) % mainTabs.length];
+        if (e.key === "Home") next = mainTabs[0];
+        if (e.key === "End") next = mainTabs[mainTabs.length - 1];
+        if (next) {
+          e.preventDefault();
+          next.focus();
+          next.click();
+        }
+      });
+    });
+    const mgmtTabs = Array.from(document.querySelectorAll(".mgmt-subnav .nav-tab"));
+    mgmtTabs.forEach((tab, i) => {
+      tab.addEventListener("keydown", (e) => {
+        let next;
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") next = mgmtTabs[(i + 1) % mgmtTabs.length];
+        if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = mgmtTabs[(i - 1 + mgmtTabs.length) % mgmtTabs.length];
+        if (e.key === "Home") next = mgmtTabs[0];
+        if (e.key === "End") next = mgmtTabs[mgmtTabs.length - 1];
+        if (next) {
+          e.preventDefault();
+          next.focus();
+          next.click();
+        }
+      });
+    });
   }
   function initKeyboardShortcuts() {
     const shortcuts = {
@@ -4557,7 +4613,10 @@ GM%: ${gmpct}%`;
       "?": () => toggleShortcutOverlay(),
       "Escape": () => {
         const el = shortcutOverlay();
-        if (el && el.style.display === "block") el.style.display = "none";
+        if (el && el.style.display === "block") {
+          el.style.display = "none";
+          el.setAttribute("aria-hidden", "true");
+        }
       }
     };
     document.addEventListener("keydown", (e) => {

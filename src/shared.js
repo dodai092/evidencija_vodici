@@ -127,12 +127,25 @@ export function toggleSection(id) {
 
 export function showPage(id, tab) {
     document.querySelectorAll(`.${CSS.PAGE}`).forEach(p => p.classList.remove(CSS.ACTIVE));
-    document.querySelectorAll(`.nav-tabs .${CSS.NAV_TAB}`).forEach(t => t.classList.remove(CSS.ACTIVE, CSS.NAV_Y25, CSS.NAV_Y26, CSS.NAV_CMP));
+    document.querySelectorAll(`.nav-tabs .${CSS.NAV_TAB}`).forEach(t => {
+        t.classList.remove(CSS.ACTIVE, CSS.NAV_Y25, CSS.NAV_Y26, CSS.NAV_CMP);
+        t.setAttribute('aria-selected', 'false');
+        t.setAttribute('tabindex', '-1');
+    });
     document.getElementById(id).classList.add(CSS.ACTIVE);
     tab.classList.add(CSS.ACTIVE);
+    tab.setAttribute('aria-selected', 'true');
+    tab.setAttribute('tabindex', '0');
     if (id === 'page-25')  tab.classList.add(CSS.NAV_Y25);
     if (id === 'page-26')  tab.classList.add(CSS.NAV_Y26);
     if (id === 'page-cmp') tab.classList.add(CSS.NAV_CMP);
+
+    const titles = {
+        'page-25': 'Guides 2025', 'page-26': 'Guides 2026',
+        'page-cmp': 'Comparison 25/26', 'page-mgmt': 'Management',
+    };
+    document.title = `${titles[id] || 'Guide Production'} · FreeSpirit`;
+
     if (id === 'page-25'  && PAGES.Page25 && !PAGES.Page25._initialized)  PAGES.Page25.init();
     if (id === 'page-26'  && PAGES.Page26 && !PAGES.Page26._initialized)  PAGES.Page26.init();
     if (id === 'page-cmp' && PAGES.PageCmp && !PAGES.PageCmp._initialized)  PAGES.PageCmp.init();

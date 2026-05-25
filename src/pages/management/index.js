@@ -23,10 +23,19 @@ let _activeCity = 'all';
 
 export function mgmtShowTab(id, el) {
     document.querySelectorAll(`.mgmt-page`).forEach(p => p.classList.remove('active'));
-    document.querySelectorAll(`.mgmt-subnav .nav-tab`).forEach(tp => tp.classList.remove('active', 'mgmt-tab-active'));
+    document.querySelectorAll(`.mgmt-subnav .nav-tab`).forEach(tp => {
+        tp.classList.remove('active', 'mgmt-tab-active');
+        tp.setAttribute('aria-selected', 'false');
+        tp.setAttribute('tabindex', '-1');
+    });
     document.getElementById('mgmt-' + id).classList.add('active');
     el.classList.add('active', 'mgmt-tab-active');
+    el.setAttribute('aria-selected', 'true');
+    el.setAttribute('tabindex', '0');
     _activeTab = id;
+
+    const subTitles = { pl: 'P&L', guides: 'Guides', channels: 'Channels', ops: 'Operational', cities: 'Cities' };
+    document.title = `${subTitles[id] || 'Management'} · Management · FreeSpirit`;
 
     if (id !== 'pl') {
         const bar = document.getElementById('sticky-kpi-bar');

@@ -1,21 +1,8 @@
 :root {
-    --black: #000000;
-    --white: #ffffff;
-    --smoke: #f5f5f5;
-    --border: #e8e8e8;
-    --border-dark: #cccccc;
-    --text: #111111;
-    --text2: #555555;
-    --text3: #999999;
-    --card-bg: #fafafa;
-    --nav-bg: var(--white);
+    --radius: 8px;
     --nav-h: 60px;
-    --filter-bar-h: 49px;
 
-    --green: #1D9E75;
-    --purple: #534AB7;
-    --amber: #BA7517;
-    --blue: #378ADD;
+    /* evidencija-specific colors */
     --teal: #0E7C7B;
     --zagreb: #8FA8BC;
     --dubrovnik: #C49A8A;
@@ -27,64 +14,17 @@
     --delta-pos: #1D9E75;
     --delta-neg: #D4545A;
     --delta-neu: #999999;
-
-    --font-serif: 'Playfair Display', Georgia, serif;
-    --font-sans: 'Montserrat', Helvetica, sans-serif;
-    --font-mono: 'Inconsolata', monospace;
-
-    --max-w: 1400px;
-    --pad: 48px;
-    --radius: 8px;
-    --radius-sm: 4px;
 }
 
-body.dark-mode {
-    --white: #111111;
-    --smoke: #1a1a1a;
-    --border: #333333;
-    --border-dark: #444444;
-    --text: #eeeeee;
-    --text2: #bbbbbb;
-    --text3: #888888;
-    --card-bg: #1e1e1e;
-    --black: #ffffff;
-    --nav-bg: #111111;
-}
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
 
-body {
-    font-family: var(--font-sans);
-    background: var(--white);
-    color: var(--text);
-    font-size: 16px;
-    line-height: 1.5;
-    transition: background 0.3s, color 0.3s;
-}
 
-/* NAV */
-.nav {
-    background: var(--nav-bg);
-    border-bottom: 1px solid var(--border-dark);
-    padding: 0 var(--pad);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    transition: background 0.3s;
-}
 
-.nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
+
+
+/* ── NAV ACTIONS & CONTROLS ── */
+
+
 
 .date-picker-ui {
     background: var(--smoke);
@@ -107,25 +47,7 @@ body.dark-mode .date-picker-ui {
     color-scheme: dark;
 }
 
-.theme-toggle-icon {
-    background: none;
-    border: none;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    padding: 0;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    flex-shrink: 0;
-    transition: background 0.2s, border-color 0.2s;
-}
 
-.theme-toggle-icon:hover {
-    background: var(--smoke);
-}
 
 .toggle-btn {
     background: none;
@@ -147,57 +69,7 @@ body.dark-mode .date-picker-ui {
     background: var(--smoke);
 }
 
-.theme-icon {
-    width: 15px;
-    height: 15px;
-    color: var(--text);
-    transition: opacity 0.3s;
-    position: absolute;
-    pointer-events: none;
-}
 
-.theme-icon-sun {
-    opacity: 1;
-}
-
-.theme-icon-moon {
-    opacity: 0;
-}
-
-body.dark-mode .theme-icon-sun {
-    opacity: 0;
-}
-
-body.dark-mode .theme-icon-moon {
-    opacity: 1;
-}
-
-.print-btn {
-    padding: 8px 20px;
-    background: var(--black);
-    border: none;
-    color: var(--white);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    font-family: var(--font-sans);
-    border-radius: var(--radius-sm);
-    transition: background 0.2s;
-}
-
-.print-btn:hover {
-    background: #333;
-}
-
-body.dark-mode .print-btn:hover {
-    background: #eee;
-}
-
-body.dark-mode .nav img {
-    filter: invert(1) brightness(2);
-}
 
 /* HEADER */
 .header {
@@ -437,63 +309,6 @@ body.dark-mode .nav img {
 
 .section-title.zadar::after {
     background: rgba(245, 158, 11, 0.2);
-}
-
-/* FILTER BAR */
-.filter-area {
-    position: sticky;
-    top: 60px;
-    z-index: 50;
-    background: var(--nav-bg);
-    border-bottom: 1px solid var(--border);
-    border-radius: 0;
-    padding: 10px var(--pad);
-    margin: 0 calc(-1 * var(--pad)) 24px;
-    display: flex;
-    gap: 16px;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.filter-group {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.filter-label,
-.filter-group label {
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    white-space: nowrap;
-}
-
-.filter-select {
-    background: var(--smoke);
-    border: 1px solid var(--border-dark);
-    color: var(--text);
-    padding: 6px 10px;
-    border-radius: var(--radius-sm);
-    font-family: var(--font-sans);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    cursor: pointer;
-    outline: none;
-    min-width: 120px;
-    transition: border-color 0.2s;
-}
-
-.filter-select:focus {
-    border-color: var(--text3);
-}
-
-body.dark-mode .filter-select {
-    color-scheme: dark;
 }
 
 /* PILL FILTERS (type charts) */
@@ -930,17 +745,6 @@ body.dark-mode .filter-select {
         font-size: 26px;
     }
 
-    .filter-area {
-        top: 52px;
-        padding: 8px var(--pad);
-        gap: 10px;
-    }
-
-    .filter-select {
-        font-size: 10px;
-        min-width: 100px;
-    }
-
     .kpi-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 8px;
@@ -966,8 +770,7 @@ body.dark-mode .filter-select {
 
 @media print {
 
-    .nav,
-    .filter-area {
+    .nav {
         display: none;
     }
 
@@ -1152,7 +955,7 @@ body.dark-mode .filter-select {
     cursor: pointer;
     user-select: none;
     position: sticky;
-    top: calc(var(--nav-h) + var(--filter-bar-h));
+    top: var(--nav-h);
     background: var(--nav-bg);
     z-index: 10;
 }
@@ -1834,6 +1637,10 @@ grid-template-columns: 1fr;
     color: var(--text3);
     font-size: 14px;
     line-height: 1;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
 }
 /* ── Utility Classes ─────────────────────────────── */
 .mb-8  { margin-bottom: 8px; }
@@ -1898,3 +1705,7 @@ grid-template-columns: 1fr;
 .mb-6 {
     margin-bottom: 6px;
 }
+
+.overflow-auto     { overflow-x: auto; }
+.guide-legend-note { padding: 12px 0; font-size: 11px; color: var(--text2); margin-top: -8px; }
+.action-panel      { margin-top: 16px; padding: 12px; background: rgba(186,117,23,0.06); border-radius: 4px; font-size: 12px; border-left: 3px solid var(--amber); }

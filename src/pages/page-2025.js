@@ -2,7 +2,7 @@ import { CITY_COLS, CITY_CLS, CITIES, MONTH_NAMES_HR, filteredStats, safeName, f
 import { t, titleAttr } from '../i18n.js';
 
 export const Page25 = {
-    activeCity: 'Zagreb',
+    activeCity: 'all',
     activeLang: 'all',
     activeMonths: [],
     activePrivateType: 'all',
@@ -206,18 +206,20 @@ export const Page25 = {
         ).join('');
         const bodyRows = data.map(row => {
             const cells = citiesToShow.map(c => `<td>${row[c] ? fmtN(row[c]) : '—'}</td>`).join('');
-            return `<tr><td class="mpax-month">${MONTH_NAMES[row.m]}</td>${cells}</tr>`;
+            const rowTotal = citiesToShow.reduce((s, c) => s + (row[c] || 0), 0);
+            return `<tr><td class="mpax-month">${MONTH_NAMES[row.m]}</td>${cells}<td><strong>${rowTotal ? fmtN(rowTotal) : '—'}</strong></td></tr>`;
         }).join('');
         const totalCells = citiesToShow.map(c => `<td>${fmtN(totals[c])}</td>`).join('');
+        const overallTotal = citiesToShow.reduce((s, c) => s + totals[c], 0);
 
         const html = `<div class="chart-card">
             <div class="chart-card-title"${titleAttr('charts.freePaxByMonthAndCity')}>${t('charts.freePaxByMonthAndCity')}</div>
             <div class="mpax-wrap">
             <table class="mpax-table">
-                <thead><tr><th class="mpax-month-head">${t('table.month')}</th>${cityHeaders}</tr></thead>
+                <thead><tr><th class="mpax-month-head">${t('table.month')}</th>${cityHeaders}<th class="mpax-city-head">${t('labels.total')}</th></tr></thead>
                 <tbody>
                     ${bodyRows}
-                    <tr class="mpax-total"><td class="mpax-month">${t('labels.total')}</td>${totalCells}</tr>
+                    <tr class="mpax-total"><td class="mpax-month">${t('labels.total')}</td>${totalCells}<td><strong>${fmtN(overallTotal)}</strong></td></tr>
                 </tbody>
             </table>
             </div>
@@ -404,7 +406,7 @@ export const Page25 = {
             freePax   += fs.freePax;
             paidPax   += fs.paidPax;
         });
-        this._el('kv-guides').textContent    = filtered.length;
+        this._el('kv-free-tours').textContent = fmtN(freeTours);
         this._el('kv-free').textContent      = fmtN(freePax);
         this._el('kv-free-pax').textContent  = freeTours + ' t';
         this._el('kv-avg-pax').textContent   = freeTours > 0 ? (freePax / freeTours).toFixed(1) : '—';
@@ -432,7 +434,7 @@ export const Page25 = {
     _buildHeader() {
         return `<div class="header">
             <div class="header-left">
-                <h1>Guides <span class="accent">2025</span></h1>
+                <h1>Tours <span class="accent">2025</span></h1>
                 <p>Tour production by guide &middot; Free vs. Paid &middot; <span class="ytd-range-label">Jan–May</span></p>
             </div>
             <div class="header-right">
@@ -478,15 +480,15 @@ export const Page25 = {
                     <div class="kpi-value" id="kv-avg-pax-25">—</div>
                     <div class="kpi-sub">${t('labels.paxPerTour')}</div>
                 </div>
+                <div class="kpi hl-green">
+                    <div class="kpi-label">${t('labels.totalFreeTours')}</div>
+                    <div class="kpi-value" id="kv-free-tours-25">—</div>
+                    <div class="kpi-sub">${t('labels.in2025')}</div>
+                </div>
                 <div class="kpi hl-blue">
                     <div class="kpi-label">${t('labels.paidToursCount')}</div>
                     <div class="kpi-value" id="kv-paid-25">—</div>
                     <div class="kpi-sub" id="kv-paid-pax-25">— pax</div>
-                </div>
-                <div class="kpi hl-teal">
-                    <div class="kpi-label">${t('labels.activeGuides')}</div>
-                    <div class="kpi-value" id="kv-guides-25">—</div>
-                    <div class="kpi-sub">${t('labels.in2025')}</div>
                 </div>
             </div>`;
     },

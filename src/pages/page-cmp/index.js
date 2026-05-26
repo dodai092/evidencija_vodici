@@ -13,7 +13,7 @@ import {
 } from './charts.js';
 
 export const PageCmp = {
-    activeCity: 'Zagreb',
+    activeCity: 'all',
     activeLang: 'all',
     activeMonths: [],
     mergedGuides: [],
@@ -139,17 +139,15 @@ export const PageCmp = {
 
     updateKPIs() {
         const fc = this.mergedGuides.filter(m => this.activeCity === 'all' || m.city === this.activeCity);
-        let g25 = 0, g26 = 0, pt25 = 0, pt26 = 0, fp25 = 0, fp26 = 0;
+        let pt25 = 0, pt26 = 0, fp25 = 0, fp26 = 0, ft25 = 0, ft26 = 0;
         fc.forEach(m => {
             if (m.g25) {
-                g25++;
                 const s25 = filteredStats(m.g25.stats[this.activeLang], this.activeMonths);
-                fp25 += s25.freePax; pt25 += s25.paidTours;
+                fp25 += s25.freePax; pt25 += s25.paidTours; ft25 += s25.freeTours;
             }
             if (m.g26) {
-                g26++;
                 const s26 = filteredStats(m.g26.stats[this.activeLang], this.activeMonths);
-                fp26 += s26.freePax; pt26 += s26.paidTours;
+                fp26 += s26.freePax; pt26 += s26.paidTours; ft26 += s26.freeTours;
             }
         });
 
@@ -163,20 +161,15 @@ export const PageCmp = {
 
         setDelta('kd-free-abs', 'kd-free-pct', fp25, fp26, fmtN);
         setDelta('kd-paid-abs', 'kd-paid-pct', pt25, pt26, v => v);
-        setDelta('kd-guides-abs', 'kd-guides-pct', g25, g26, v => v);
+        setDelta('kd-free-tours-abs', 'kd-free-tours-pct', ft25, ft26, fmtN);
 
-        this._el('kv-free25').textContent   = fmtN(fp25);
-        this._el('kv-free26').textContent   = fmtN(fp26);
-        this._el('kv-paid25').textContent   = pt25;
-        this._el('kv-paid26').textContent   = pt26;
-        this._el('kv-guides25').textContent = g25;
-        this._el('kv-guides26').textContent = g26;
+        this._el('kv-free25').textContent        = fmtN(fp25);
+        this._el('kv-free26').textContent        = fmtN(fp26);
+        this._el('kv-paid25').textContent        = pt25;
+        this._el('kv-paid26').textContent        = pt26;
+        this._el('kv-free-tours25').textContent  = fmtN(ft25);
+        this._el('kv-free-tours26').textContent  = fmtN(ft26);
 
-        let ft25 = 0, ft26 = 0;
-        fc.forEach(m => {
-            if (m.g25) { const s = filteredStats(m.g25.stats[this.activeLang], this.activeMonths); ft25 += s.freeTours; }
-            if (m.g26) { const s = filteredStats(m.g26.stats[this.activeLang], this.activeMonths); ft26 += s.freeTours; }
-        });
         const avg25 = ft25 > 0 ? (fp25 / ft25).toFixed(1) : '—';
         const avg26 = ft26 > 0 ? (fp26 / ft26).toFixed(1) : '—';
         this._el('kv-avg-pax25').textContent = avg25;
@@ -576,7 +569,10 @@ export const PageCmp = {
                 const { d, p } = fmtDelta(p25, p26);
                 return `<td>${p25 ? fmtN(p25) : '—'}</td><td>${p26 ? fmtN(p26) : '—'}</td><td>${d}</td><td>${p}</td>`;
             }).join('');
-            return `<tr><td class="mpax-month">${MONTH_NAMES[row.m]}${row.isPartial ? '<sup>*</sup>' : ''}</td>${cells}</tr>`;
+            const rowTotal25 = CITIES.reduce((s, c) => s + row[c].p25, 0);
+            const rowTotal26 = CITIES.reduce((s, c) => s + row[c].p26, 0);
+            const { d: td, p: tp } = fmtDelta(rowTotal25, rowTotal26);
+            return `<tr><td class="mpax-month">${MONTH_NAMES[row.m]}${row.isPartial ? '<sup>*</sup>' : ''}</td>${cells}<td><strong>${rowTotal25 ? fmtN(rowTotal25) : '—'}</strong></td><td><strong>${rowTotal26 ? fmtN(rowTotal26) : '—'}</strong></td><td>${td}</td><td>${tp}</td></tr>`;
         }).join('');
 
         const totalCells = CITIES.map(city => {
@@ -584,6 +580,9 @@ export const PageCmp = {
             const { d, p } = fmtDelta(p25, p26);
             return `<td>${fmtN(p25)}</td><td>${fmtN(p26)}</td><td>${d}</td><td>${p}</td>`;
         }).join('');
+        const grandTotal25 = CITIES.reduce((s, c) => s + totals[c].p25, 0);
+        const grandTotal26 = CITIES.reduce((s, c) => s + totals[c].p26, 0);
+        const { d: gtd, p: gtp } = fmtDelta(grandTotal25, grandTotal26);
 
         const hasPartial = data.some(r => r.isPartial);
 
@@ -592,12 +591,12 @@ export const PageCmp = {
             <div class="mpax-wrap">
             <table class="mpax-table">
                 <thead>
-                    <tr><th class="mpax-month-head" rowspan="2">${t('labels.mo')}</th>${cityHeaders}</tr>
-                    <tr>${subHeaders}</tr>
+                    <tr><th class="mpax-month-head" rowspan="2">${t('labels.mo')}</th>${cityHeaders}<th colspan="4" class="mpax-city-head">${t('labels.total')}</th></tr>
+                    <tr>${subHeaders}<th class="mpax-sub-head">'25</th><th class="mpax-sub-head">'26</th><th class="mpax-sub-head">±</th><th class="mpax-sub-head">±%</th></tr>
                 </thead>
                 <tbody>
                     ${bodyRows}
-                    <tr class="mpax-total"><td class="mpax-month">${t('labels.total')}</td>${totalCells}</tr>
+                    <tr class="mpax-total"><td class="mpax-month">${t('labels.total')}</td>${totalCells}<td><strong>${fmtN(grandTotal25)}</strong></td><td><strong>${fmtN(grandTotal26)}</strong></td><td>${gtd}</td><td>${gtp}</td></tr>
                 </tbody>
             </table>
             </div>
@@ -972,6 +971,23 @@ export const PageCmp = {
                         </div>
                     </div>
                 </div>
+                <div class="kpi hl-green">
+                    <div class="kpi-label">${t('labels.totalFreeTours')}</div>
+                    <div class="kpi-delta">
+                        <span class="kpi-delta-abs" id="kd-free-tours-abs-cmp">—</span>
+                        <span class="kpi-delta-pct" id="kd-free-tours-pct-cmp">—</span>
+                    </div>
+                    <div class="kpi-2y">
+                        <div>
+                            <div class="kpi-2y-label">2025</div>
+                            <div class="kpi-2y-val" id="kv-free-tours25-cmp">—</div>
+                        </div>
+                        <div>
+                            <div class="kpi-2y-label">2026</div>
+                            <div class="kpi-2y-val" id="kv-free-tours26-cmp">—</div>
+                        </div>
+                    </div>
+                </div>
                 <div class="kpi hl-blue">
                     <div class="kpi-label">${t('labels.paidToursCountYtd')}</div>
                     <div class="kpi-delta">
@@ -986,23 +1002,6 @@ export const PageCmp = {
                         <div>
                             <div class="kpi-2y-label">2026</div>
                             <div class="kpi-2y-val" id="kv-paid26-cmp">—</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="kpi hl-teal">
-                    <div class="kpi-label">${t('labels.activeGuides')}</div>
-                    <div class="kpi-delta">
-                        <span class="kpi-delta-abs" id="kd-guides-abs-cmp">—</span>
-                        <span class="kpi-delta-pct" id="kd-guides-pct-cmp">—</span>
-                    </div>
-                    <div class="kpi-2y">
-                        <div>
-                            <div class="kpi-2y-label">2025</div>
-                            <div class="kpi-2y-val" id="kv-guides25-cmp">—</div>
-                        </div>
-                        <div>
-                            <div class="kpi-2y-label">2026</div>
-                            <div class="kpi-2y-val" id="kv-guides26-cmp">—</div>
                         </div>
                     </div>
                 </div>

@@ -153,8 +153,8 @@
   var TRANSLATIONS = {
     en: {
       nav: {
-        guides2025: "Guides 2025",
-        guides2026: "Guides 2026",
+        guides2025: "Tours 2025",
+        guides2026: "Tours 2026",
         comparison: "Comparison 25/26",
         management: "Management"
       },
@@ -168,13 +168,14 @@
         avgPaxPerTour: "Avg PAX per Tour",
         city: "City",
         language: "Language",
-        mo: "Mo.",
+        mo: "Month",
         all: "All",
         cumulative: "Cumulative",
         total: "Total",
         type: "Type",
         guides: "Guides",
         activeGuides: "Active Guides",
+        totalFreeTours: "Total Free Tours",
         in2025: "in 2025",
         in2026: "in 2026",
         freeToursPaxCount: "Free Tours \u2013 PAX Count",
@@ -220,7 +221,7 @@
         freePaxByMonthAndCity26: "Free PAX by Month and City \u2014 2026"
       },
       table: {
-        month: "Mo.",
+        month: "Month",
         free: "Free",
         paid: "Paid",
         pax: "PAX",
@@ -232,7 +233,7 @@
         byCity: "by City",
         byType: "by Type",
         guides: "Guides",
-        guideComparison: "Guide Comparison",
+        guideComparison: "Tour Comparison",
         productionByGuide: "Production by guide",
         comparisonYtd: "Comparison YTD"
       },
@@ -298,8 +299,8 @@
     },
     hr: {
       nav: {
-        guides2025: "Vodi\u010Di 2025",
-        guides2026: "Vodi\u010Di 2026",
+        guides2025: "Ture 2025",
+        guides2026: "Ture 2026",
         comparison: "Usporedba 25/26",
         management: "Upravljanje"
       },
@@ -320,6 +321,7 @@
         type: "Tip",
         guides: "Vodi\u010Di",
         activeGuides: "Aktivni vodi\u010Di",
+        totalFreeTours: "Ukupno besplatnih tura",
         in2025: "u 2025.",
         in2026: "u 2026.",
         freeToursPaxCount: "Besplatne ture \u2013 Broj PAX-a",
@@ -377,7 +379,7 @@
         byCity: "po gradu",
         byType: "po vrsti",
         guides: "Vodi\u010Di",
-        guideComparison: "Usporedba vodi\u010Da",
+        guideComparison: "Usporedba tura",
         productionByGuide: "Proizvodnja po vo\u0111enju",
         comparisonYtd: "Usporedba YTD"
       },
@@ -516,7 +518,7 @@
 
   // src/pages/page-2025.js
   var Page25 = {
-    activeCity: "Zagreb",
+    activeCity: "all",
     activeLang: "all",
     activeMonths: [],
     activePrivateType: "all",
@@ -655,17 +657,19 @@
       ).join("");
       const bodyRows = data.map((row) => {
         const cells = citiesToShow.map((c) => `<td>${row[c] ? fmtN(row[c]) : "\u2014"}</td>`).join("");
-        return `<tr><td class="mpax-month">${MONTH_NAMES[row.m]}</td>${cells}</tr>`;
+        const rowTotal = citiesToShow.reduce((s, c) => s + (row[c] || 0), 0);
+        return `<tr><td class="mpax-month">${MONTH_NAMES[row.m]}</td>${cells}<td><strong>${rowTotal ? fmtN(rowTotal) : "\u2014"}</strong></td></tr>`;
       }).join("");
       const totalCells = citiesToShow.map((c) => `<td>${fmtN(totals[c])}</td>`).join("");
+      const overallTotal = citiesToShow.reduce((s, c) => s + totals[c], 0);
       const html = `<div class="chart-card">
             <div class="chart-card-title"${titleAttr("charts.freePaxByMonthAndCity")}>${t("charts.freePaxByMonthAndCity")}</div>
             <div class="mpax-wrap">
             <table class="mpax-table">
-                <thead><tr><th class="mpax-month-head">${t("table.month")}</th>${cityHeaders}</tr></thead>
+                <thead><tr><th class="mpax-month-head">${t("table.month")}</th>${cityHeaders}<th class="mpax-city-head">${t("labels.total")}</th></tr></thead>
                 <tbody>
                     ${bodyRows}
-                    <tr class="mpax-total"><td class="mpax-month">${t("labels.total")}</td>${totalCells}</tr>
+                    <tr class="mpax-total"><td class="mpax-month">${t("labels.total")}</td>${totalCells}<td><strong>${fmtN(overallTotal)}</strong></td></tr>
                 </tbody>
             </table>
             </div>
@@ -853,7 +857,7 @@
         freePax += fs.freePax;
         paidPax += fs.paidPax;
       });
-      this._el("kv-guides").textContent = filtered.length;
+      this._el("kv-free-tours").textContent = fmtN(freeTours);
       this._el("kv-free").textContent = fmtN(freePax);
       this._el("kv-free-pax").textContent = freeTours + " t";
       this._el("kv-avg-pax").textContent = freeTours > 0 ? (freePax / freeTours).toFixed(1) : "\u2014";
@@ -883,7 +887,7 @@
     _buildHeader() {
       return `<div class="header">
             <div class="header-left">
-                <h1>Guides <span class="accent">2025</span></h1>
+                <h1>Tours <span class="accent">2025</span></h1>
                 <p>Tour production by guide &middot; Free vs. Paid &middot; <span class="ytd-range-label">Jan\u2013May</span></p>
             </div>
             <div class="header-right">
@@ -927,15 +931,15 @@
                     <div class="kpi-value" id="kv-avg-pax-25">\u2014</div>
                     <div class="kpi-sub">${t("labels.paxPerTour")}</div>
                 </div>
+                <div class="kpi hl-green">
+                    <div class="kpi-label">${t("labels.totalFreeTours")}</div>
+                    <div class="kpi-value" id="kv-free-tours-25">\u2014</div>
+                    <div class="kpi-sub">${t("labels.in2025")}</div>
+                </div>
                 <div class="kpi hl-blue">
                     <div class="kpi-label">${t("labels.paidToursCount")}</div>
                     <div class="kpi-value" id="kv-paid-25">\u2014</div>
                     <div class="kpi-sub" id="kv-paid-pax-25">\u2014 pax</div>
-                </div>
-                <div class="kpi hl-teal">
-                    <div class="kpi-label">${t("labels.activeGuides")}</div>
-                    <div class="kpi-value" id="kv-guides-25">\u2014</div>
-                    <div class="kpi-sub">${t("labels.in2025")}</div>
                 </div>
             </div>`;
     },
@@ -1060,7 +1064,7 @@
 
   // src/pages/page-2026.js
   var Page26 = {
-    activeCity: "Zagreb",
+    activeCity: "all",
     activeLang: "all",
     activeMonths: [],
     activePrivateType: "all",
@@ -1216,19 +1220,21 @@
       ).join("");
       const bodyRows = data.map((row) => {
         const cells = citiesToShow.map((c) => `<td>${row[c] ? fmtN(row[c]) : "\u2014"}</td>`).join("");
+        const rowTotal = citiesToShow.reduce((s, c) => s + (row[c] || 0), 0);
         const label = MONTH_NAMES[row.m] + (row.isPartial ? "<sup>*</sup>" : "");
-        return `<tr><td class="mpax-month">${label}</td>${cells}</tr>`;
+        return `<tr><td class="mpax-month">${label}</td>${cells}<td><strong>${rowTotal ? fmtN(rowTotal) : "\u2014"}</strong></td></tr>`;
       }).join("");
       const totalCells = citiesToShow.map((c) => `<td>${fmtN(totals[c])}</td>`).join("");
+      const overallTotal = citiesToShow.reduce((s, c) => s + totals[c], 0);
       const hasPartial = data.some((r) => r.isPartial);
       const html = `<div class="chart-card">
             <div class="chart-card-title"${titleAttr("charts.freePaxByMonthAndCity26")}>${t("charts.freePaxByMonthAndCity26")}</div>
             <div class="mpax-wrap">
             <table class="mpax-table">
-                <thead><tr><th class="mpax-month-head">${t("table.month")}</th>${cityHeaders}</tr></thead>
+                <thead><tr><th class="mpax-month-head">${t("table.month")}</th>${cityHeaders}<th class="mpax-city-head">${t("labels.total")}</th></tr></thead>
                 <tbody>
                     ${bodyRows}
-                    <tr class="mpax-total"><td class="mpax-month">Total</td>${totalCells}</tr>
+                    <tr class="mpax-total"><td class="mpax-month">${t("labels.total")}</td>${totalCells}<td><strong>${fmtN(overallTotal)}</strong></td></tr>
                 </tbody>
             </table>
             </div>
@@ -1455,7 +1461,7 @@
         freePax += fs.freePax;
         paidPax += fs.paidPax;
       });
-      this._el("kv-guides").textContent = filtered.length;
+      this._el("kv-free-tours").textContent = fmtN(freeTours);
       this._el("kv-free").textContent = fmtN(freePax);
       this._el("kv-free-pax").textContent = freeTours + " t";
       this._el("kv-avg-pax").textContent = freeTours > 0 ? (freePax / freeTours).toFixed(1) : "\u2014";
@@ -1485,7 +1491,7 @@
     _buildHeader() {
       return `<div class="header">
             <div class="header-left">
-                <h1>${t("labels.guides")} <span class="accent">2026</span></h1>
+                <h1>${t("table.tours")} <span class="accent">2026</span></h1>
                 <p>Tour production by guide &middot; ${t("labels.freeTours")} vs. ${t("labels.paidTours")} &middot; <span class="ytd-range-label">${t("labels.ytdRange")}</span></p>
             </div>
             <div class="header-right">
@@ -1534,15 +1540,15 @@
                     <div class="kpi-value" id="kv-avg-pax-26">\u2014</div>
                     <div class="kpi-sub">${t("labels.paxPerTour")}</div>
                 </div>
+                <div class="kpi hl-green">
+                    <div class="kpi-label">${t("labels.totalFreeTours")}</div>
+                    <div class="kpi-value" id="kv-free-tours-26">\u2014</div>
+                    <div class="kpi-sub">${t("labels.in2026")}</div>
+                </div>
                 <div class="kpi hl-blue">
                     <div class="kpi-label">${t("labels.paidToursCount")} YTD</div>
                     <div class="kpi-value" id="kv-paid-26">\u2014</div>
                     <div class="kpi-sub" id="kv-paid-pax-26">\u2014 pax</div>
-                </div>
-                <div class="kpi hl-teal">
-                    <div class="kpi-label">${t("labels.activeGuides")}</div>
-                    <div class="kpi-value" id="kv-guides-26">\u2014</div>
-                    <div class="kpi-sub">${t("labels.in2026")}</div>
                 </div>
             </div>`;
     },
@@ -1903,7 +1909,7 @@
 
   // src/pages/page-cmp/index.js
   var PageCmp = {
-    activeCity: "Zagreb",
+    activeCity: "all",
     activeLang: "all",
     activeMonths: [],
     mergedGuides: [],
@@ -2000,19 +2006,19 @@
     },
     updateKPIs() {
       const fc = this.mergedGuides.filter((m) => this.activeCity === "all" || m.city === this.activeCity);
-      let g25 = 0, g26 = 0, pt25 = 0, pt26 = 0, fp25 = 0, fp26 = 0;
+      let pt25 = 0, pt26 = 0, fp25 = 0, fp26 = 0, ft25 = 0, ft26 = 0;
       fc.forEach((m) => {
         if (m.g25) {
-          g25++;
           const s25 = filteredStats(m.g25.stats[this.activeLang], this.activeMonths);
           fp25 += s25.freePax;
           pt25 += s25.paidTours;
+          ft25 += s25.freeTours;
         }
         if (m.g26) {
-          g26++;
           const s26 = filteredStats(m.g26.stats[this.activeLang], this.activeMonths);
           fp26 += s26.freePax;
           pt26 += s26.paidTours;
+          ft26 += s26.freeTours;
         }
       });
       const setDelta = (absId, pctId, v25, v26, fmt2) => {
@@ -2024,24 +2030,13 @@
       };
       setDelta("kd-free-abs", "kd-free-pct", fp25, fp26, fmtN);
       setDelta("kd-paid-abs", "kd-paid-pct", pt25, pt26, (v) => v);
-      setDelta("kd-guides-abs", "kd-guides-pct", g25, g26, (v) => v);
+      setDelta("kd-free-tours-abs", "kd-free-tours-pct", ft25, ft26, fmtN);
       this._el("kv-free25").textContent = fmtN(fp25);
       this._el("kv-free26").textContent = fmtN(fp26);
       this._el("kv-paid25").textContent = pt25;
       this._el("kv-paid26").textContent = pt26;
-      this._el("kv-guides25").textContent = g25;
-      this._el("kv-guides26").textContent = g26;
-      let ft25 = 0, ft26 = 0;
-      fc.forEach((m) => {
-        if (m.g25) {
-          const s = filteredStats(m.g25.stats[this.activeLang], this.activeMonths);
-          ft25 += s.freeTours;
-        }
-        if (m.g26) {
-          const s = filteredStats(m.g26.stats[this.activeLang], this.activeMonths);
-          ft26 += s.freeTours;
-        }
-      });
+      this._el("kv-free-tours25").textContent = fmtN(ft25);
+      this._el("kv-free-tours26").textContent = fmtN(ft26);
       const avg25 = ft25 > 0 ? (fp25 / ft25).toFixed(1) : "\u2014";
       const avg26 = ft26 > 0 ? (fp26 / ft26).toFixed(1) : "\u2014";
       this._el("kv-avg-pax25").textContent = avg25;
@@ -2444,25 +2439,31 @@
           const { d, p } = fmtDelta(p25, p26);
           return `<td>${p25 ? fmtN(p25) : "\u2014"}</td><td>${p26 ? fmtN(p26) : "\u2014"}</td><td>${d}</td><td>${p}</td>`;
         }).join("");
-        return `<tr><td class="mpax-month">${MONTH_NAMES[row.m]}${row.isPartial ? "<sup>*</sup>" : ""}</td>${cells}</tr>`;
+        const rowTotal25 = CITIES.reduce((s, c) => s + row[c].p25, 0);
+        const rowTotal26 = CITIES.reduce((s, c) => s + row[c].p26, 0);
+        const { d: td, p: tp } = fmtDelta(rowTotal25, rowTotal26);
+        return `<tr><td class="mpax-month">${MONTH_NAMES[row.m]}${row.isPartial ? "<sup>*</sup>" : ""}</td>${cells}<td><strong>${rowTotal25 ? fmtN(rowTotal25) : "\u2014"}</strong></td><td><strong>${rowTotal26 ? fmtN(rowTotal26) : "\u2014"}</strong></td><td>${td}</td><td>${tp}</td></tr>`;
       }).join("");
       const totalCells = CITIES.map((city) => {
         const { p25, p26 } = totals[city];
         const { d, p } = fmtDelta(p25, p26);
         return `<td>${fmtN(p25)}</td><td>${fmtN(p26)}</td><td>${d}</td><td>${p}</td>`;
       }).join("");
+      const grandTotal25 = CITIES.reduce((s, c) => s + totals[c].p25, 0);
+      const grandTotal26 = CITIES.reduce((s, c) => s + totals[c].p26, 0);
+      const { d: gtd, p: gtp } = fmtDelta(grandTotal25, grandTotal26);
       const hasPartial = data.some((r) => r.isPartial);
       const html = `<div class="chart-card">
             <div class="chart-card-title"${titleAttr("charts.freePaxByMonthAndCity")}>${t("charts.freePaxByMonthAndCity")} \u2014 <span class="ytd-range-label">${getRangeLabel()}</span> 2025 vs. 2026</div>
             <div class="mpax-wrap">
             <table class="mpax-table">
                 <thead>
-                    <tr><th class="mpax-month-head" rowspan="2">${t("labels.mo")}</th>${cityHeaders}</tr>
-                    <tr>${subHeaders}</tr>
+                    <tr><th class="mpax-month-head" rowspan="2">${t("labels.mo")}</th>${cityHeaders}<th colspan="4" class="mpax-city-head">${t("labels.total")}</th></tr>
+                    <tr>${subHeaders}<th class="mpax-sub-head">'25</th><th class="mpax-sub-head">'26</th><th class="mpax-sub-head">\xB1</th><th class="mpax-sub-head">\xB1%</th></tr>
                 </thead>
                 <tbody>
                     ${bodyRows}
-                    <tr class="mpax-total"><td class="mpax-month">${t("labels.total")}</td>${totalCells}</tr>
+                    <tr class="mpax-total"><td class="mpax-month">${t("labels.total")}</td>${totalCells}<td><strong>${fmtN(grandTotal25)}</strong></td><td><strong>${fmtN(grandTotal26)}</strong></td><td>${gtd}</td><td>${gtp}</td></tr>
                 </tbody>
             </table>
             </div>
@@ -2824,6 +2825,23 @@
                         </div>
                     </div>
                 </div>
+                <div class="kpi hl-green">
+                    <div class="kpi-label">${t("labels.totalFreeTours")}</div>
+                    <div class="kpi-delta">
+                        <span class="kpi-delta-abs" id="kd-free-tours-abs-cmp">\u2014</span>
+                        <span class="kpi-delta-pct" id="kd-free-tours-pct-cmp">\u2014</span>
+                    </div>
+                    <div class="kpi-2y">
+                        <div>
+                            <div class="kpi-2y-label">2025</div>
+                            <div class="kpi-2y-val" id="kv-free-tours25-cmp">\u2014</div>
+                        </div>
+                        <div>
+                            <div class="kpi-2y-label">2026</div>
+                            <div class="kpi-2y-val" id="kv-free-tours26-cmp">\u2014</div>
+                        </div>
+                    </div>
+                </div>
                 <div class="kpi hl-blue">
                     <div class="kpi-label">${t("labels.paidToursCountYtd")}</div>
                     <div class="kpi-delta">
@@ -2838,23 +2856,6 @@
                         <div>
                             <div class="kpi-2y-label">2026</div>
                             <div class="kpi-2y-val" id="kv-paid26-cmp">\u2014</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="kpi hl-teal">
-                    <div class="kpi-label">${t("labels.activeGuides")}</div>
-                    <div class="kpi-delta">
-                        <span class="kpi-delta-abs" id="kd-guides-abs-cmp">\u2014</span>
-                        <span class="kpi-delta-pct" id="kd-guides-pct-cmp">\u2014</span>
-                    </div>
-                    <div class="kpi-2y">
-                        <div>
-                            <div class="kpi-2y-label">2025</div>
-                            <div class="kpi-2y-val" id="kv-guides25-cmp">\u2014</div>
-                        </div>
-                        <div>
-                            <div class="kpi-2y-label">2026</div>
-                            <div class="kpi-2y-val" id="kv-guides26-cmp">\u2014</div>
                         </div>
                     </div>
                 </div>

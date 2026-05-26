@@ -2,7 +2,7 @@ import { CITY_COLS, CITY_CLS, CITIES, MONTH_NAMES_HR, filteredStats, safeName, f
 import { t, titleAttr } from '../i18n.js';
 
 export const Page26 = {
-    activeCity: 'Zagreb',
+    activeCity: 'all',
     activeLang: 'all',
     activeMonths: [],
     activePrivateType: 'all',
@@ -219,20 +219,22 @@ export const Page26 = {
         ).join('');
         const bodyRows = data.map(row => {
             const cells = citiesToShow.map(c => `<td>${row[c] ? fmtN(row[c]) : '—'}</td>`).join('');
+            const rowTotal = citiesToShow.reduce((s, c) => s + (row[c] || 0), 0);
             const label = MONTH_NAMES[row.m] + (row.isPartial ? '<sup>*</sup>' : '');
-            return `<tr><td class="mpax-month">${label}</td>${cells}</tr>`;
+            return `<tr><td class="mpax-month">${label}</td>${cells}<td><strong>${rowTotal ? fmtN(rowTotal) : '—'}</strong></td></tr>`;
         }).join('');
         const totalCells = citiesToShow.map(c => `<td>${fmtN(totals[c])}</td>`).join('');
+        const overallTotal = citiesToShow.reduce((s, c) => s + totals[c], 0);
         const hasPartial = data.some(r => r.isPartial);
 
         const html = `<div class="chart-card">
             <div class="chart-card-title"${titleAttr('charts.freePaxByMonthAndCity26')}>${t('charts.freePaxByMonthAndCity26')}</div>
             <div class="mpax-wrap">
             <table class="mpax-table">
-                <thead><tr><th class="mpax-month-head">${t('table.month')}</th>${cityHeaders}</tr></thead>
+                <thead><tr><th class="mpax-month-head">${t('table.month')}</th>${cityHeaders}<th class="mpax-city-head">${t('labels.total')}</th></tr></thead>
                 <tbody>
                     ${bodyRows}
-                    <tr class="mpax-total"><td class="mpax-month">Total</td>${totalCells}</tr>
+                    <tr class="mpax-total"><td class="mpax-month">${t('labels.total')}</td>${totalCells}<td><strong>${fmtN(overallTotal)}</strong></td></tr>
                 </tbody>
             </table>
             </div>
@@ -449,7 +451,7 @@ export const Page26 = {
             freePax   += fs.freePax;
             paidPax   += fs.paidPax;
         });
-        this._el('kv-guides').textContent    = filtered.length;
+        this._el('kv-free-tours').textContent = fmtN(freeTours);
         this._el('kv-free').textContent      = fmtN(freePax);
         this._el('kv-free-pax').textContent  = freeTours + ' t';
         this._el('kv-avg-pax').textContent   = freeTours > 0 ? (freePax / freeTours).toFixed(1) : '—';
@@ -477,7 +479,7 @@ export const Page26 = {
     _buildHeader() {
         return `<div class="header">
             <div class="header-left">
-                <h1>${t('labels.guides')} <span class="accent">2026</span></h1>
+                <h1>${t('table.tours')} <span class="accent">2026</span></h1>
                 <p>Tour production by guide &middot; ${t('labels.freeTours')} vs. ${t('labels.paidTours')} &middot; <span class="ytd-range-label">${t('labels.ytdRange')}</span></p>
             </div>
             <div class="header-right">
@@ -528,15 +530,15 @@ export const Page26 = {
                     <div class="kpi-value" id="kv-avg-pax-26">—</div>
                     <div class="kpi-sub">${t('labels.paxPerTour')}</div>
                 </div>
+                <div class="kpi hl-green">
+                    <div class="kpi-label">${t('labels.totalFreeTours')}</div>
+                    <div class="kpi-value" id="kv-free-tours-26">—</div>
+                    <div class="kpi-sub">${t('labels.in2026')}</div>
+                </div>
                 <div class="kpi hl-blue">
                     <div class="kpi-label">${t('labels.paidToursCount')} YTD</div>
                     <div class="kpi-value" id="kv-paid-26">—</div>
                     <div class="kpi-sub" id="kv-paid-pax-26">— pax</div>
-                </div>
-                <div class="kpi hl-teal">
-                    <div class="kpi-label">${t('labels.activeGuides')}</div>
-                    <div class="kpi-value" id="kv-guides-26">—</div>
-                    <div class="kpi-sub">${t('labels.in2026')}</div>
                 </div>
             </div>`;
     },

@@ -148,11 +148,18 @@ export function buildMonthlyFromDays(guides, cutoffMonth, cutoffDay, fields = ['
     const result = {};
     for (let m = 1; m <= cutoffMonth; m++) result[m] = init();
     guides.forEach(g => {
-        if (!g.mgmt?.byDay) return;
-        for (const [key, val] of Object.entries(g.mgmt.byDay)) {
-            const [m, d] = key.split('-').map(Number);
-            if (m < cutoffMonth || (m === cutoffMonth && d <= cutoffDay)) {
-                fields.forEach(f => { result[m][f] += val[f] || 0; });
+        if (!g.mgmt) return;
+        if (g.mgmt.byDay) {
+            for (const [key, val] of Object.entries(g.mgmt.byDay)) {
+                const [m, d] = key.split('-').map(Number);
+                if (m < cutoffMonth || (m === cutoffMonth && d <= cutoffDay)) {
+                    fields.forEach(f => { result[m][f] += val[f] || 0; });
+                }
+            }
+        } else if (g.mgmt.byMonth) {
+            for (const [mStr, val] of Object.entries(g.mgmt.byMonth)) {
+                const m = Number(mStr);
+                if (m <= cutoffMonth) fields.forEach(f => { result[m][f] += val[f] || 0; });
             }
         }
     });

@@ -14,8 +14,21 @@ export function initGuides(city) {
     renderGuideTable(city);
 }
 
+function _build25RankMap(city) {
+    if (typeof guideStats25 === 'undefined') return {};
+    const guides25 = city === 'all' ? guideStats25 : guideStats25.filter(g => g.city === city);
+    const ranked = guides25
+        .filter(g => g.mgmt)
+        .map(g => ({ name: g.name, gm: filterMgmtByDate(g.mgmt, getGlobalDate()).grossMargin }))
+        .sort((a, b) => b.gm - a.gm);
+    const map = {};
+    ranked.forEach((g, i) => { map[g.name] = i + 1; });
+    return map;
+}
+
 export function renderGuideTable(city) {
     const guides = guidesForCity(city);
+    const rank25Map = _build25RankMap(city);
 
     const rows = guides.map(g => {
         const fin = filterMgmtByDate(g.mgmt, getGlobalDate());
@@ -41,6 +54,7 @@ export function renderGuideTable(city) {
             commissionCost: comm, commPct,
             grossMargin: m.grossMargin, gmPct, avgGm,
             paid25, rev25, gm25,
+            rank25: rank25Map[g.name] ?? null,
         };
     });
 
@@ -58,8 +72,17 @@ export function renderGuideTable(city) {
         if (r.commPct > 25) commClass = 'neg';
         else if (r.commPct >= 15) commClass = 'neu';
         else commClass = 'pos';
+        const rank26 = i + 1;
+        const rankDelta = r.rank25 !== null ? r.rank25 - rank26 : null;
+        let rankHtml = '—';
+        if (rankDelta !== null && rankDelta !== 0) {
+            rankHtml = `<span style="color:${rankDelta > 0 ? 'var(--green)' : 'var(--red)'}">${rankDelta > 0 ? '▲' : '▼'}${Math.abs(rankDelta)}</span>`;
+        } else if (rankDelta === 0) {
+            rankHtml = '=';
+        }
         return `<tr class="${rowClass}">
-            <td class="rank">${i + 1}</td>
+            <td class="rank">${rank26}</td>
+            <td style="text-align:center;font-size:11px">${rankHtml}</td>
             <td class="guide-name">${r.name}</td>
             <td><span class="city-dot" style="background:${CITY_COLS[r.city] || '#999'}"></span>${r.city}</td>
             <td>${fmt(r.freeTours)}</td>

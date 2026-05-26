@@ -34,6 +34,7 @@ PAGES.PageMgmt = PageMgmt;
 // that reference these by name — they must be on window to be callable from the DOM.
 window.Page25        = Page25;
 window.Page26        = Page26;
+window.PageCmp       = PageCmp;
 window.toggleSection = toggleSection;
 
 // ── Register callbacks (theme.js -> main.js to avoid circular dependency) ────

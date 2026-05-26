@@ -71,18 +71,17 @@ export function renderDirectOtaTrend() {
 
     function buildMonthChannelData(guides, monthChannelObj) {
         guides.forEach(g => {
-            if (!g.mgmt?.byDay) return;
-            Object.entries(g.mgmt.byDay).forEach(([dayKey, dayVal]) => {
-                const [m, d] = dayKey.split('-').map(Number);
-                if (m < cutoffMonth || (m === cutoffMonth && d <= cutoffDay)) {
-                    if (!monthChannelObj[m]) monthChannelObj[m] = { web: 0, ota: 0 };
-                    const gTotal = g.mgmt.revenue || 1;
-                    const webRatio = (g.mgmt.byChannel?.web?.revenue || 0) / gTotal;
-                    const otaRatio = ((g.mgmt.byChannel?.OTA?.revenue || 0) + (g.mgmt.byChannel?.b2b?.revenue || 0)) / gTotal;
-                    monthChannelObj[m].web += (dayVal.revenue || 0) * webRatio;
-                    monthChannelObj[m].ota += (dayVal.revenue || 0) * otaRatio;
-                }
-            });
+            if (!g.mgmt?.byMonth) return;
+            const gTotal = g.mgmt.revenue || 1;
+            const webRatio = (g.mgmt.byChannel?.web?.revenue || 0) / gTotal;
+            const otaRatio = ((g.mgmt.byChannel?.OTA?.revenue || 0) + (g.mgmt.byChannel?.b2b?.revenue || 0)) / gTotal;
+            for (const [mStr, mVal] of Object.entries(g.mgmt.byMonth)) {
+                const m = Number(mStr);
+                if (m > cutoffMonth) continue;
+                if (!monthChannelObj[m]) monthChannelObj[m] = { web: 0, ota: 0 };
+                monthChannelObj[m].web += (mVal.revenue || 0) * webRatio;
+                monthChannelObj[m].ota += (mVal.revenue || 0) * otaRatio;
+            }
         });
     }
 
@@ -173,7 +172,8 @@ export function renderTourTypeTable() {
             <td>${fmt(d.tours)}<br><small class="yoy">${dd(dTours)}</small></td>
             <td>${avgPax > 0 ? avgPax.toFixed(1) : '—'}</td>
             <td>${avgUnit > 0 ? fmtEur(avgUnit) : '—'}</td>
-            <td>${avgUnit25 > 0 ? fmtEur(avgUnit25) : '—'}<br><small class="yoy">${dd(dUnit, true)}</small></td>
+            <td>${avgUnit25 > 0 ? fmtEur(avgUnit25) : '—'}</td>
+            <td>${dd(dUnit, true)}</td>
             <td>${fmtEur(d.revenue)}</td>
             <td class="neg">${d.commissionCost > 0 ? fmtEur(-d.commissionCost) : '—'}</td>
             <td class="${gmClass(d.grossMargin)}">${fmtEur(d.grossMargin)}</td>

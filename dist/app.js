@@ -2761,6 +2761,34 @@
     },
     _buildKpisAndFilters() {
       return `        <div class="main">
+            <div class="filter-bar">
+                <div class="city-pill-group">
+                    ${["all", ...CITIES].map((c) => {
+        const col = CITY_COLS[c];
+        const label = c === "all" ? t("labels.all") : c;
+        const active = this.activeCity === c ? " active" : "";
+        const style = col ? ` style="--city-col:${col}"` : "";
+        return `<button class="city-filter-pill${active}" data-city="${c}"${style} onclick="PageCmp.filterCity('${c}')">${label}</button>`;
+      }).join("")}
+                </div>
+                <div class="filter-dropdowns">
+                    <select class="filter-select" id="lang-filter-cmp" onchange="PageCmp.filterLang(this.value)">
+                        <option value="all">${t("labels.all")}</option>
+                        <option value="eng">\u{1F1EC}\u{1F1E7} ENG</option>
+                        <option value="esp">\u{1F1EA}\u{1F1F8} ESP</option>
+                        <option value="fra">\u{1F1EB}\u{1F1F7} FRA</option>
+                    </select>
+                    <select class="filter-select" id="month-filter-cmp" onchange="PageCmp.filterMonth(this.value)">
+                        <option value="all">${t("labels.all")}</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="kpi-grid kpi-grid-4">
                 <div class="kpi hl-green">
                     <div class="kpi-label">${t("labels.freeToursPaxCountYtd")}</div>
@@ -2829,34 +2857,6 @@
                             <div class="kpi-2y-val" id="kv-guides26-cmp">\u2014</div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="filter-bar">
-                <div class="city-pill-group">
-                    ${["all", ...CITIES].map((c) => {
-        const col = CITY_COLS[c];
-        const label = c === "all" ? t("labels.all") : c;
-        const active = this.activeCity === c ? " active" : "";
-        const style = col ? ` style="--city-col:${col}"` : "";
-        return `<button class="city-filter-pill${active}" data-city="${c}"${style} onclick="PageCmp.filterCity('${c}')">${label}</button>`;
-      }).join("")}
-                </div>
-                <div class="filter-dropdowns">
-                    <select class="filter-select" id="lang-filter-cmp" onchange="PageCmp.filterLang(this.value)">
-                        <option value="all">${t("labels.all")}</option>
-                        <option value="eng">\u{1F1EC}\u{1F1E7} ENG</option>
-                        <option value="esp">\u{1F1EA}\u{1F1F8} ESP</option>
-                        <option value="fra">\u{1F1EB}\u{1F1F7} FRA</option>
-                    </select>
-                    <select class="filter-select" id="month-filter-cmp" onchange="PageCmp.filterMonth(this.value)">
-                        <option value="all">${t("labels.all")}</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
                 </div>
             </div>
 
@@ -3232,11 +3232,20 @@
     const result = {};
     for (let m = 1; m <= cutoffMonth; m++) result[m] = init();
     guides.forEach((g) => {
-      if (!g.mgmt?.byDay) return;
-      for (const [key, val] of Object.entries(g.mgmt.byDay)) {
-        const [m, d] = key.split("-").map(Number);
-        if (m < cutoffMonth || m === cutoffMonth && d <= cutoffDay) {
-          fields.forEach((f) => {
+      if (!g.mgmt) return;
+      if (g.mgmt.byDay) {
+        for (const [key, val] of Object.entries(g.mgmt.byDay)) {
+          const [m, d] = key.split("-").map(Number);
+          if (m < cutoffMonth || m === cutoffMonth && d <= cutoffDay) {
+            fields.forEach((f) => {
+              result[m][f] += val[f] || 0;
+            });
+          }
+        }
+      } else if (g.mgmt.byMonth) {
+        for (const [mStr, val] of Object.entries(g.mgmt.byMonth)) {
+          const m = Number(mStr);
+          if (m <= cutoffMonth) fields.forEach((f) => {
             result[m][f] += val[f] || 0;
           });
         }
@@ -3324,7 +3333,40 @@
   }
 
   // src/pages/management/pl.js
+  function _isoWeek(dateStr) {
+    const d = /* @__PURE__ */ new Date(dateStr + "T00:00:00");
+    const thu = new Date(d);
+    thu.setDate(d.getDate() + (4 - (d.getDay() || 7)));
+    const yearStart = new Date(thu.getFullYear(), 0, 1);
+    return Math.ceil(((thu - yearStart) / 864e5 + 1) / 7);
+  }
+  function renderWeekFlash() {
+    const el = document.getElementById("week-flash");
+    if (!el) return;
+    const wk = _isoWeek(getGlobalDate());
+    const wkStr = String(wk);
+    const w26 = kpiTotals26.mgmt.byWeek?.[wkStr];
+    const w25 = typeof kpiTotals25 !== "undefined" ? kpiTotals25.mgmt?.byWeek?.[wkStr] : null;
+    if (!w26) {
+      el.innerHTML = "";
+      return;
+    }
+    const gmPct = w26.revenue > 0 ? (w26.grossMargin / w26.revenue * 100).toFixed(1) : "\u2014";
+    const revDelta = w25 ? w26.revenue - w25.revenue : null;
+    const gmDelta = w25 ? w26.grossMargin - w25.grossMargin : null;
+    function chip(label, val, delta, isCurrency) {
+      let dHtml = "";
+      if (delta !== null) {
+        const sign = delta >= 0 ? "+" : "\u2212";
+        const dFmt = isCurrency ? `\u20AC${fmt(Math.abs(delta))}` : fmt(Math.abs(delta));
+        dHtml = ` <span class="${delta >= 0 ? "delta-pos" : "delta-neg"}">${sign}${dFmt} vs '25</span>`;
+      }
+      return `<div class="week-chip"><span class="week-chip-label">${label}</span><span class="week-chip-val">${val}</span>${dHtml}</div>`;
+    }
+    el.innerHTML = `<span class="week-chip-title">Week ${wk} so far</span>` + chip("Tours", fmt(w26.tours), w25 ? w26.tours - w25.tours : null, false) + chip("Revenue", fmtEur(w26.revenue), revDelta, true) + chip("GM", fmtEur(w26.grossMargin) + ` (${gmPct}%)`, gmDelta, true);
+  }
   function initPl(city) {
+    renderWeekFlash();
     renderPlKpis(city);
     renderWaterfall();
     renderMonthTrend();
@@ -3598,9 +3640,9 @@
     const m26 = buildMonthlyFromDays(guideStats26, cutoffMonth, cutoffDay);
     const m25 = has25 ? buildMonthlyFromDays(guideStats25, cutoffMonth, cutoffDay) : {};
     const allM = Array.from({ length: cutoffMonth }, (_, i) => i + 1);
-    const MONTH_SHORT2 = { 1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec" };
+    const MONTH_SHORT = { 1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec" };
     const { c25, c26 } = getThemeColors();
-    makeLineChart("month-gm-line", allM.map((m) => MONTH_SHORT2[m]), [
+    makeLineChart("month-gm-line", allM.map((m) => MONTH_SHORT[m]), [
       { label: t("management.grossMargin") + " 2025", data: allM.map((m) => m25[m]?.grossMargin || 0), borderColor: c25, backgroundColor: "transparent", tension: 0.3, borderDash: [5, 3] },
       { label: t("management.grossMargin") + " 2026", data: allM.map((m) => m26[m]?.grossMargin || 0), borderColor: c26, backgroundColor: c26 + "22", tension: 0.3, fill: true },
       { label: t("management.revenue") + " 2025", data: allM.map((m) => m25[m]?.revenue || 0), borderColor: c25, backgroundColor: "transparent", tension: 0.3, borderDash: [2, 2], borderWidth: 1.5 },
@@ -3644,33 +3686,9 @@
         return `GM: \u20AC${fmt(gm)} (${pct}%)`;
       } }
     });
-    const el = document.getElementById("billing-stats");
-    if (el) {
-      let bstat = function(label, d25, d26) {
-        const gm26pct = d26.revenue > 0 ? d26.grossMargin / d26.revenue * 100 : 0;
-        const gm25pct = d25.revenue > 0 ? d25.grossMargin / d25.revenue * 100 : 0;
-        const revDelta = d26.revenue - d25.revenue;
-        return `<div class="chart-card" style="padding:16px 20px">
-                <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);margin-bottom:8px">${label}</div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-                    <div>
-                        <div style="font-size:10px;color:var(--text3)">2025 ${t("management.revenue")}</div>
-                        <div style="font-family:var(--font-mono);font-size:15px">${fmtEur(d25.revenue)}</div>
-                        <div style="font-size:10px;color:var(--text3)">GM: ${gm25pct.toFixed(1)}%</div>
-                    </div>
-                    <div>
-                        <div style="font-size:10px;color:var(--text3)">2026 ${t("management.revenue")}</div>
-                        <div style="font-family:var(--font-mono);font-size:15px">${fmtEur(d26.revenue)}</div>
-                        <div style="font-size:14px;font-weight:600;color:var(--text);margin:4px 0">GM: <span class="${gmClass(gm26pct)}" style="font-size:16px;font-weight:700">${gm26pct.toFixed(1)}%</span></div>
-                        <div style="font-size:10px">${dd(revDelta, true)} ${t("management.vs2025")}</div>
-                    </div>
-                </div>
-            </div>`;
-      };
-      el.innerHTML = bstat(t("management.directCashCard"), billing25["POS"] || { revenue: 0, grossMargin: 0 }, billing26["POS"] || { revenue: 0, grossMargin: 0 }) + bstat(t("management.otaBankTransfer"), billing25["CPP"] || { revenue: 0, grossMargin: 0 }, billing26["CPP"] || { revenue: 0, grossMargin: 0 });
-    }
   }
   function refreshPl(city) {
+    renderWeekFlash();
     renderPlKpis(city);
     renderWaterfall();
     renderMonthTrend();
@@ -3683,8 +3701,19 @@
   function initGuides(city) {
     renderGuideTable(city);
   }
+  function _build25RankMap(city) {
+    if (typeof guideStats25 === "undefined") return {};
+    const guides25 = city === "all" ? guideStats25 : guideStats25.filter((g) => g.city === city);
+    const ranked = guides25.filter((g) => g.mgmt).map((g) => ({ name: g.name, gm: filterMgmtByDate(g.mgmt, getGlobalDate()).grossMargin })).sort((a, b) => b.gm - a.gm);
+    const map = {};
+    ranked.forEach((g, i) => {
+      map[g.name] = i + 1;
+    });
+    return map;
+  }
   function renderGuideTable(city) {
     const guides = guidesForCity(city);
+    const rank25Map = _build25RankMap(city);
     const rows = guides.map((g) => {
       const fin = filterMgmtByDate(g.mgmt, getGlobalDate());
       const sts = filterStatsByDate(g.stats.all, getGlobalDate());
@@ -3715,7 +3744,8 @@
         avgGm,
         paid25,
         rev25,
-        gm25
+        gm25,
+        rank25: rank25Map[g.name] ?? null
       };
     });
     rows.sort((a, b) => _sortDir * (a[_sortCol] - b[_sortCol]));
@@ -3731,8 +3761,17 @@
       if (r.commPct > 25) commClass = "neg";
       else if (r.commPct >= 15) commClass = "neu";
       else commClass = "pos";
+      const rank26 = i + 1;
+      const rankDelta = r.rank25 !== null ? r.rank25 - rank26 : null;
+      let rankHtml = "\u2014";
+      if (rankDelta !== null && rankDelta !== 0) {
+        rankHtml = `<span style="color:${rankDelta > 0 ? "var(--green)" : "var(--red)"}">${rankDelta > 0 ? "\u25B2" : "\u25BC"}${Math.abs(rankDelta)}</span>`;
+      } else if (rankDelta === 0) {
+        rankHtml = "=";
+      }
       return `<tr class="${rowClass}">
-            <td class="rank">${i + 1}</td>
+            <td class="rank">${rank26}</td>
+            <td style="text-align:center;font-size:11px">${rankHtml}</td>
             <td class="guide-name">${r.name}</td>
             <td><span class="city-dot" style="background:${CITY_COLS[r.city] || "#999"}"></span>${r.city}</td>
             <td>${fmt(r.freeTours)}</td>
@@ -3837,31 +3876,30 @@
   }
   function renderDirectOtaTrend() {
     const has25 = typeof guideStats25 !== "undefined";
-    const MONTH_SHORT2 = { 1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec" };
+    const MONTH_SHORT = { 1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec" };
     const { month: cutoffMonth, day: cutoffDay } = parseGlobalDate();
     const monthChannel26 = {};
     const monthChannel25 = {};
     function buildMonthChannelData(guides, monthChannelObj) {
       guides.forEach((g) => {
-        if (!g.mgmt?.byDay) return;
-        Object.entries(g.mgmt.byDay).forEach(([dayKey, dayVal]) => {
-          const [m, d] = dayKey.split("-").map(Number);
-          if (m < cutoffMonth || m === cutoffMonth && d <= cutoffDay) {
-            if (!monthChannelObj[m]) monthChannelObj[m] = { web: 0, ota: 0 };
-            const gTotal = g.mgmt.revenue || 1;
-            const webRatio = (g.mgmt.byChannel?.web?.revenue || 0) / gTotal;
-            const otaRatio = ((g.mgmt.byChannel?.OTA?.revenue || 0) + (g.mgmt.byChannel?.b2b?.revenue || 0)) / gTotal;
-            monthChannelObj[m].web += (dayVal.revenue || 0) * webRatio;
-            monthChannelObj[m].ota += (dayVal.revenue || 0) * otaRatio;
-          }
-        });
+        if (!g.mgmt?.byMonth) return;
+        const gTotal = g.mgmt.revenue || 1;
+        const webRatio = (g.mgmt.byChannel?.web?.revenue || 0) / gTotal;
+        const otaRatio = ((g.mgmt.byChannel?.OTA?.revenue || 0) + (g.mgmt.byChannel?.b2b?.revenue || 0)) / gTotal;
+        for (const [mStr, mVal] of Object.entries(g.mgmt.byMonth)) {
+          const m = Number(mStr);
+          if (m > cutoffMonth) continue;
+          if (!monthChannelObj[m]) monthChannelObj[m] = { web: 0, ota: 0 };
+          monthChannelObj[m].web += (mVal.revenue || 0) * webRatio;
+          monthChannelObj[m].ota += (mVal.revenue || 0) * otaRatio;
+        }
       });
     }
     buildMonthChannelData(guideStats26, monthChannel26);
     if (has25) buildMonthChannelData(guideStats25, monthChannel25);
     const allM = Array.from({ length: cutoffMonth }, (_, i) => i + 1);
     const { c25, c26, green } = getThemeColors();
-    makeLineChart("direct-ota-line", allM.map((m) => MONTH_SHORT2[m]), [
+    makeLineChart("direct-ota-line", allM.map((m) => MONTH_SHORT[m]), [
       { label: t("management.directRevenue") + " 2025", data: allM.map((m) => monthChannel25[String(m)]?.web || 0), borderColor: c25, borderDash: [5, 3], backgroundColor: "transparent", tension: 0.3 },
       { label: t("management.directRevenue") + " 2026", data: allM.map((m) => monthChannel26[String(m)]?.web || 0), borderColor: green, backgroundColor: green + "22", tension: 0.3, fill: true },
       { label: t("management.otaRevenue") + " 2025", data: allM.map((m) => monthChannel25[String(m)]?.ota || 0), borderColor: c25, borderDash: [2, 2], backgroundColor: "transparent", tension: 0.3, borderWidth: 1.5 },
@@ -3932,7 +3970,8 @@
             <td>${fmt(d.tours)}<br><small class="yoy">${dd(dTours)}</small></td>
             <td>${avgPax > 0 ? avgPax.toFixed(1) : "\u2014"}</td>
             <td>${avgUnit > 0 ? fmtEur(avgUnit) : "\u2014"}</td>
-            <td>${avgUnit25 > 0 ? fmtEur(avgUnit25) : "\u2014"}<br><small class="yoy">${dd(dUnit, true)}</small></td>
+            <td>${avgUnit25 > 0 ? fmtEur(avgUnit25) : "\u2014"}</td>
+            <td>${dd(dUnit, true)}</td>
             <td>${fmtEur(d.revenue)}</td>
             <td class="neg">${d.commissionCost > 0 ? fmtEur(-d.commissionCost) : "\u2014"}</td>
             <td class="${gmClass(d.grossMargin)}">${fmtEur(d.grossMargin)}</td>
@@ -3946,10 +3985,8 @@
 
   // src/pages/management/ops.js
   var DOW_ORDER = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  var SEASON_ORDER = ["low", "mid", "high", "peak"];
   var PAXBAND_ORDER = ["1-4", "5-10", "11-20", "21-30", "30+"];
   var GUIDE_PBAND_ORDER = ["1-5", "6-10", "11+"];
-  var MONTH_SHORT = { 1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec" };
   function initOps() {
     const mgmt26 = kpiTotals26.mgmt;
     const mgmt25 = typeof kpiTotals25 !== "undefined" ? kpiTotals25.mgmt : null;
@@ -3982,6 +4019,17 @@
         }),
         borderRadius: 4,
         borderSkipped: false
+      },
+      {
+        type: "line",
+        label: "Breakeven (0%)",
+        data: gpLabels.map(() => 0),
+        borderColor: red + "aa",
+        borderDash: [5, 4],
+        borderWidth: 1.5,
+        pointRadius: 0,
+        fill: false,
+        order: 0
       }
     ], {
       showLegend: true,
@@ -4016,42 +4064,6 @@ GM%: ${gmpct}%`;
         }
       }
     });
-    const time26 = mgmt26.byTime;
-    const time25 = mgmt25?.byTime || {};
-    const timeKeys = [.../* @__PURE__ */ new Set([...Object.keys(time26), ...Object.keys(time25)])].sort((a, b) => parseInt(a) - parseInt(b));
-    makeBarChart("time-bar", timeKeys.map((h) => `${h}:00`), [
-      { label: "2025", data: timeKeys.map((h) => time25[h]?.tours || 0), backgroundColor: c25 + "aa", borderRadius: 4, borderSkipped: false },
-      { label: "2026", data: timeKeys.map((h) => time26[h]?.tours || 0), backgroundColor: c26 + "aa", borderRadius: 4, borderSkipped: false }
-    ], {
-      showLegend: true,
-      tooltipCb: {
-        afterLabel: (ctx) => {
-          const d = ctx.datasetIndex === 0 ? time25[timeKeys[ctx.dataIndex]] : time26[timeKeys[ctx.dataIndex]];
-          if (!d) return "";
-          const gmpct = d.revenue > 0 ? (d.grossMargin / d.revenue * 100).toFixed(1) : "\u2014";
-          return `Revenue: \u20AC${fmt(d.revenue || 0)}
-GM%: ${gmpct}%`;
-        }
-      }
-    });
-    const sea26 = mgmt26.bySeason;
-    const sea25 = mgmt25?.bySeason || {};
-    const seaLabels = SEASON_ORDER.filter((k) => sea26[k] || sea25[k]);
-    makeBarChart("season-bar", seaLabels.map((k) => k[0].toUpperCase() + k.slice(1)), [
-      { label: "2025", data: seaLabels.map((k) => sea25[k]?.tours || 0), backgroundColor: c25 + "aa", borderRadius: 4, borderSkipped: false },
-      { label: "2026", data: seaLabels.map((k) => sea26[k]?.tours || 0), backgroundColor: c26 + "aa", borderRadius: 4, borderSkipped: false }
-    ], {
-      showLegend: true,
-      tooltipCb: {
-        afterLabel: (ctx) => {
-          const d = ctx.datasetIndex === 0 ? sea25[seaLabels[ctx.dataIndex]] : sea26[seaLabels[ctx.dataIndex]];
-          if (!d) return "";
-          const gmpct = d.revenue > 0 ? (d.grossMargin / d.revenue * 100).toFixed(1) : "\u2014";
-          return `Revenue: \u20AC${fmt(d.revenue || 0)}
-GM%: ${gmpct}%`;
-        }
-      }
-    });
     const pb26 = mgmt26.byPaxBand;
     const pb25 = mgmt25?.byPaxBand || {};
     const pbLabels = PAXBAND_ORDER.filter((k) => pb26[k] || pb25[k]);
@@ -4059,7 +4071,6 @@ GM%: ${gmpct}%`;
       { label: "2025", data: pbLabels.map((k) => pb25[k]?.tours || 0), backgroundColor: c25 + "aa", borderRadius: 4, borderSkipped: false },
       { label: "2026", data: pbLabels.map((k) => pb26[k]?.tours || 0), backgroundColor: c26 + "aa", borderRadius: 4, borderSkipped: false }
     ], { showLegend: true });
-    renderOpsMonthLine();
     renderPaxBandActionPanel();
     const wk26 = mgmt26.byWeek;
     const wk25 = mgmt25?.byWeek || {};
@@ -4089,20 +4100,6 @@ GM%: ${gmpct}%`;
     });
     renderPaymentMethod();
   }
-  function renderOpsMonthLine() {
-    const has25 = typeof guideStats25 !== "undefined";
-    const { c25, green } = getThemeColors();
-    const { month: cutoffMonth, day: cutoffDay } = parseGlobalDate();
-    const m26 = buildMonthlyFromDays(guideStats26, cutoffMonth, cutoffDay);
-    const m25 = has25 ? buildMonthlyFromDays(guideStats25, cutoffMonth, cutoffDay) : {};
-    const allM = Array.from({ length: cutoffMonth }, (_, i) => i + 1);
-    makeLineChart("month-line", allM.map((m) => MONTH_SHORT[m]), [
-      { label: t("management.revenue") + " 2025", data: allM.map((m) => m25[m]?.revenue || 0), borderColor: c25, backgroundColor: "transparent", tension: 0.3, borderDash: [5, 3] },
-      { label: t("management.revenue") + " 2026", data: allM.map((m) => m26[m]?.revenue || 0), borderColor: "#8FA8BC", backgroundColor: "#8FA8BC22", tension: 0.3, fill: true },
-      { label: t("management.grossMargin") + " 2025", data: allM.map((m) => m25[m]?.grossMargin || 0), borderColor: c25, backgroundColor: "transparent", tension: 0.3, borderDash: [2, 2], borderWidth: 1.5 },
-      { label: t("management.grossMargin") + " 2026", data: allM.map((m) => m26[m]?.grossMargin || 0), borderColor: green, backgroundColor: "transparent", tension: 0.3, borderWidth: 2 }
-    ]);
-  }
   function renderPaymentMethod() {
     const mgmt26 = kpiTotals26.mgmt;
     const mgmt25 = typeof kpiTotals25 !== "undefined" ? kpiTotals25.mgmt : null;
@@ -4112,8 +4109,8 @@ GM%: ${gmpct}%`;
     const container = document.getElementById("payment-stats-container");
     if (container) {
       container.innerHTML = "";
-      const methods2 = ["card", "bank trf", "cash"];
-      methods2.forEach((method) => {
+      const methods = ["card", "bank trf", "cash"];
+      methods.forEach((method) => {
         const d26 = pm26[method] || { revenue: 0, grossMargin: 0, tours: 0 };
         const d25 = pm25?.[method] || { revenue: 0, grossMargin: 0 };
         const gm26 = d26.revenue > 0 ? d26.grossMargin / d26.revenue * 100 : 0;
@@ -4133,23 +4130,6 @@ GM%: ${gmpct}%`;
             `;
       });
     }
-    const methods = ["card", "bank trf", "cash"];
-    makeBarChart("payment-bar", methods.map((m) => m === "bank trf" ? t("management.bankTransfer") : t(`management.${m}`)), [
-      { label: "2025", data: methods.map((m) => pm25?.[m]?.revenue || 0), backgroundColor: c25 + "aa", borderRadius: 4, borderSkipped: false },
-      { label: "2026", data: methods.map((m) => pm26?.[m]?.revenue || 0), backgroundColor: c26 + "aa", borderRadius: 4, borderSkipped: false }
-    ], {
-      showLegend: true,
-      tooltipCb: {
-        afterLabel: (ctx) => {
-          const method = methods[ctx.dataIndex];
-          const d = ctx.datasetIndex === 0 ? pm25?.[method] : pm26?.[method];
-          if (!d) return "";
-          const gmpct = d.revenue > 0 ? (d.grossMargin / d.revenue * 100).toFixed(1) : "\u2014";
-          return `Gross Margin: \u20AC${fmt(d.grossMargin || 0)}
-GM%: ${gmpct}%`;
-        }
-      }
-    });
   }
   function renderPaxBandActionPanel() {
     const mgmt26 = kpiTotals26.mgmt;
@@ -4163,21 +4143,30 @@ GM%: ${gmpct}%`;
     const smallGroupPct26 = totalTours26 > 0 ? smallGroup26.tours / totalTours26 * 100 : 0;
     const smallGroupPct25 = totalTours25 > 0 ? smallGroup25.tours / totalTours25 * 100 : 0;
     const pctChange = smallGroupPct26 - smallGroupPct25;
+    let breakevenBand = null;
+    for (const k of GUIDE_PBAND_ORDER) {
+      const d = gpb26[k];
+      if (d && d.revenue > 0 && d.grossMargin / d.revenue > 0) {
+        breakevenBand = k;
+        break;
+      }
+    }
     const lossFromSmallGroups = smallGroup26.grossMargin < 0 ? Math.abs(smallGroup26.grossMargin) : 0;
     const el = document.getElementById("paxband-action-panel");
     if (el) {
+      const breakevenNote = breakevenBand ? `<div><strong>\u26A1 Action:</strong> Raise minimum from 2 PAX to <strong>${breakevenBand.split("-")[0]} PAX</strong> to guarantee positive margin on every tour</div>` : "";
       el.innerHTML = `
             <div style="font-weight: 600; margin-bottom: 10px; color: var(--text);">${t("management.smallGroupProblem")}</div>
             <div style="color: var(--text2); line-height: 1.6; font-size: 11px;">
                 <div><strong>\u{1F4CA} ${t("management.prevalence")}:</strong> ${smallGroupPct26.toFixed(0)}% of paid tours are 1\u20135 PAX (${smallGroup26.tours} ${t("management.tours")})</div>
-                <div><strong>\u{1F4B0} ${t("management.marginLoss")}:</strong> \u20AC${fmt(lossFromSmallGroups)} total from small groups</div>
+                <div><strong>\u{1F4B0} ${t("management.marginLoss")}:</strong> \u20AC${fmt(lossFromSmallGroups)} margin lost on below-breakeven tours YTD</div>
                 <div><strong>\u{1F4C8} ${t("management.trend")}:</strong> ${pctChange > 0 ? "+" : ""}${pctChange.toFixed(1)}pp ${t("management.vs2025")} \u2014 getting ${pctChange > 0 ? "worse" : "better"}</div>
+                ${breakevenNote}
             </div>
         `;
     }
   }
   function refreshOps() {
-    renderOpsMonthLine();
     renderPaymentMethod();
   }
 
@@ -4473,6 +4462,7 @@ GM%: ${gmpct}%`;
   PAGES.PageMgmt = PageMgmt;
   window.Page25 = Page25;
   window.Page26 = Page26;
+  window.PageCmp = PageCmp;
   window.toggleSection = toggleSection;
   registerThemeChangeCallback(() => {
     mgmtUpdateCharts();

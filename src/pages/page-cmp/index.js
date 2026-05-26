@@ -909,6 +909,34 @@ export const PageCmp = {
 
     _buildKpisAndFilters() {
         return `        <div class="main">
+            <div class="filter-bar">
+                <div class="city-pill-group">
+                    ${['all', ...CITIES].map(c => {
+                        const col = CITY_COLS[c];
+                        const label = c === 'all' ? t('labels.all') : c;
+                        const active = this.activeCity === c ? ' active' : '';
+                        const style = col ? ` style="--city-col:${col}"` : '';
+                        return `<button class="city-filter-pill${active}" data-city="${c}"${style} onclick="PageCmp.filterCity('${c}')">${label}</button>`;
+                    }).join('')}
+                </div>
+                <div class="filter-dropdowns">
+                    <select class="filter-select" id="lang-filter-cmp" onchange="PageCmp.filterLang(this.value)">
+                        <option value="all">${t('labels.all')}</option>
+                        <option value="eng">🇬🇧 ENG</option>
+                        <option value="esp">🇪🇸 ESP</option>
+                        <option value="fra">🇫🇷 FRA</option>
+                    </select>
+                    <select class="filter-select" id="month-filter-cmp" onchange="PageCmp.filterMonth(this.value)">
+                        <option value="all">${t('labels.all')}</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="kpi-grid kpi-grid-4">
                 <div class="kpi hl-green">
                     <div class="kpi-label">${t('labels.freeToursPaxCountYtd')}</div>
@@ -977,34 +1005,6 @@ export const PageCmp = {
                             <div class="kpi-2y-val" id="kv-guides26-cmp">—</div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="filter-bar">
-                <div class="city-pill-group">
-                    ${['all', ...CITIES].map(c => {
-                        const col = CITY_COLS[c];
-                        const label = c === 'all' ? t('labels.all') : c;
-                        const active = this.activeCity === c ? ' active' : '';
-                        const style = col ? ` style="--city-col:${col}"` : '';
-                        return `<button class="city-filter-pill${active}" data-city="${c}"${style} onclick="PageCmp.filterCity('${c}')">${label}</button>`;
-                    }).join('')}
-                </div>
-                <div class="filter-dropdowns">
-                    <select class="filter-select" id="lang-filter-cmp" onchange="PageCmp.filterLang(this.value)">
-                        <option value="all">${t('labels.all')}</option>
-                        <option value="eng">🇬🇧 ENG</option>
-                        <option value="esp">🇪🇸 ESP</option>
-                        <option value="fra">🇫🇷 FRA</option>
-                    </select>
-                    <select class="filter-select" id="month-filter-cmp" onchange="PageCmp.filterMonth(this.value)">
-                        <option value="all">${t('labels.all')}</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
                 </div>
             </div>
 

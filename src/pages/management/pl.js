@@ -11,7 +11,45 @@ import {
 
 // ── P&L tab ───────────────────────────────────────────────────────────────────
 
+function _isoWeek(dateStr) {
+    const d = new Date(dateStr + 'T00:00:00');
+    const thu = new Date(d);
+    thu.setDate(d.getDate() + (4 - (d.getDay() || 7)));
+    const yearStart = new Date(thu.getFullYear(), 0, 1);
+    return Math.ceil(((thu - yearStart) / 86400000 + 1) / 7);
+}
+
+export function renderWeekFlash() {
+    const el = document.getElementById('week-flash');
+    if (!el) return;
+    const wk = _isoWeek(getGlobalDate());
+    const wkStr = String(wk);
+    const w26 = kpiTotals26.mgmt.byWeek?.[wkStr];
+    const w25 = typeof kpiTotals25 !== 'undefined' ? kpiTotals25.mgmt?.byWeek?.[wkStr] : null;
+    if (!w26) { el.innerHTML = ''; return; }
+
+    const gmPct = w26.revenue > 0 ? (w26.grossMargin / w26.revenue * 100).toFixed(1) : '—';
+    const revDelta = w25 ? w26.revenue - w25.revenue : null;
+    const gmDelta  = w25 ? w26.grossMargin - w25.grossMargin : null;
+
+    function chip(label, val, delta, isCurrency) {
+        let dHtml = '';
+        if (delta !== null) {
+            const sign = delta >= 0 ? '+' : '−';
+            const dFmt = isCurrency ? `€${fmt(Math.abs(delta))}` : fmt(Math.abs(delta));
+            dHtml = ` <span class="${delta >= 0 ? 'delta-pos' : 'delta-neg'}">${sign}${dFmt} vs '25</span>`;
+        }
+        return `<div class="week-chip"><span class="week-chip-label">${label}</span><span class="week-chip-val">${val}</span>${dHtml}</div>`;
+    }
+
+    el.innerHTML = `<span class="week-chip-title">Week ${wk} so far</span>` +
+        chip('Tours', fmt(w26.tours), w25 ? w26.tours - w25.tours : null, false) +
+        chip('Revenue', fmtEur(w26.revenue), revDelta, true) +
+        chip('GM', fmtEur(w26.grossMargin) + ` (${gmPct}%)`, gmDelta, true);
+}
+
 export function initPl(city) {
+    renderWeekFlash();
     renderPlKpis(city);
     renderWaterfall();
     renderMonthTrend();
@@ -364,35 +402,10 @@ export function renderBillingTrend() {
          }}
     });
 
-    const el = document.getElementById('billing-stats');
-    if (el) {
-        function bstat(label, d25, d26) {
-            const gm26pct = d26.revenue > 0 ? (d26.grossMargin / d26.revenue * 100) : 0;
-            const gm25pct = d25.revenue > 0 ? (d25.grossMargin / d25.revenue * 100) : 0;
-            const revDelta = d26.revenue - d25.revenue;
-            return `<div class="chart-card" style="padding:16px 20px">
-                <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);margin-bottom:8px">${label}</div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-                    <div>
-                        <div style="font-size:10px;color:var(--text3)">2025 ${t('management.revenue')}</div>
-                        <div style="font-family:var(--font-mono);font-size:15px">${fmtEur(d25.revenue)}</div>
-                        <div style="font-size:10px;color:var(--text3)">GM: ${gm25pct.toFixed(1)}%</div>
-                    </div>
-                    <div>
-                        <div style="font-size:10px;color:var(--text3)">2026 ${t('management.revenue')}</div>
-                        <div style="font-family:var(--font-mono);font-size:15px">${fmtEur(d26.revenue)}</div>
-                        <div style="font-size:14px;font-weight:600;color:var(--text);margin:4px 0">GM: <span class="${gmClass(gm26pct)}" style="font-size:16px;font-weight:700">${gm26pct.toFixed(1)}%</span></div>
-                        <div style="font-size:10px">${dd(revDelta, true)} ${t('management.vs2025')}</div>
-                    </div>
-                </div>
-            </div>`;
-        }
-        el.innerHTML = bstat(t('management.directCashCard'), billing25['POS']||{revenue:0,grossMargin:0}, billing26['POS']||{revenue:0,grossMargin:0})
-                     + bstat(t('management.otaBankTransfer'), billing25['CPP']||{revenue:0,grossMargin:0}, billing26['CPP']||{revenue:0,grossMargin:0});
-    }
 }
 
 export function refreshPl(city) {
+    renderWeekFlash();
     renderPlKpis(city);
     renderWaterfall();
     renderMonthTrend();

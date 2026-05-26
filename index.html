@@ -99,6 +99,8 @@
                 </div>
             </div>
             <div class="main">
+                <!-- This-week flash panel -->
+                <div id="week-flash" class="week-flash-bar"></div>
                 <!-- Primary KPIs -->
                 <div class="mgmt-kpi-grid">
                     <div class="kpi-card">
@@ -122,6 +124,12 @@
                         <div class="kpi-sub" id="kpi-gmpct">&#x2014;</div>
                         <div id="kpi-gm-delta"></div>
                     </div>
+                    <div class="kpi-card accent-green">
+                        <div class="kpi-label">Avg GM / Paid Tour</div>
+                        <div class="kpi-value" id="kpi-avg-gm">&#x2014;</div>
+                        <div class="kpi-sub" id="kpi-avg-gm-sub">&#x2014;</div>
+                        <div id="kpi-avg-gm-delta"></div>
+                    </div>
                 </div>
                 <!-- Secondary KPIs -->
                 <div class="mgmt-kpi-grid">
@@ -135,12 +143,6 @@
                         <div class="kpi-label">VAT Amount</div>
                         <div class="kpi-value" id="kpi-vat">&#x2014;</div>
                         <div class="kpi-sub">VAT paid</div>
-                    </div>
-                    <div class="kpi-card">
-                        <div class="kpi-label">Avg GM / Paid Tour</div>
-                        <div class="kpi-value" id="kpi-avg-gm">&#x2014;</div>
-                        <div class="kpi-sub" id="kpi-avg-gm-sub">&#x2014;</div>
-                        <div id="kpi-avg-gm-delta"></div>
                     </div>
                     <div class="kpi-card">
                         <div class="kpi-label">Active Guides</div>
@@ -176,12 +178,9 @@
 
                 <!-- Billing method -->
                 <h2 class="mgmt-section-title">Direct Booking vs OTA (Billing Method)</h2>
-                <div class="two-col">
-                    <div class="chart-card">
-                        <h3>POS vs CPP &#x2014; Revenue 2025 vs 2026</h3>
-                        <div class="chart-wrap h240"><canvas id="billing-bar"></canvas></div>
-                    </div>
-                    <div id="billing-stats" class="flex-col flex-gap-12"></div>
+                <div class="chart-card">
+                    <h3>POS vs CPP &#x2014; Revenue 2025 vs 2026</h3>
+                    <div class="chart-wrap h240"><canvas id="billing-bar"></canvas></div>
                 </div>
             </div>
         </div>
@@ -207,6 +206,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Δ Rank</th>
                                 <th>Guide</th>
                                 <th>City</th>
                                 <th class="sort-hdr" data-col="freeTours">Free</th>
@@ -246,7 +246,7 @@
                 <h2 class="mgmt-section-title">Direct Booking vs OTA Trend</h2>
                 <div class="chart-card mb-24">
                     <h3>Direct (Web) vs OTA Revenue by Month &#x2014; 2025 vs 2026</h3>
-                    <div class="approx-banner">&#x26A0; Approximate &#x2014; channel split estimated from guide-level ratios, not per-booking data</div>
+                    <div class="approx-banner">&#x26A0; Approximate &#x2014; monthly channel split estimated by applying each guide&#x27;s full-season ratio to monthly revenue; directional trend only</div>
                     <div class="chart-wrap h280"><canvas id="direct-ota-line"></canvas></div>
                 </div>
 
@@ -264,7 +264,8 @@
                                 <th>Tours '26<br><small class="yoy-sub">vs '25</small></th>
                                 <th>Avg PAX</th>
                                 <th>Unit Price '26</th>
-                                <th>Unit Price '25<br><small class="yoy-sub">&#x394;</small></th>
+                                <th>Unit Price '25</th>
+                                <th>&#x394; Price</th>
                                 <th>Revenue</th>
                                 <th>Commission</th>
                                 <th>GM &#x20ac;</th>
@@ -307,32 +308,13 @@
                         <div class="chart-wrap h280"><canvas id="dow-bar"></canvas></div>
                     </div>
                     <div class="chart-card">
-                        <h3>Tours by Time Slot &#x2014; 2025 vs 2026</h3>
-                        <div class="chart-wrap h280"><canvas id="time-bar"></canvas></div>
-                    </div>
-                </div>
-                <div class="two-col">
-                    <div class="chart-card">
-                        <h3>Tours by Season &#x2014; 2025 vs 2026</h3>
-                        <div class="chart-wrap h240"><canvas id="season-bar"></canvas></div>
-                    </div>
-                    <div class="chart-card">
                         <h3>Booking PAX Band &#x2014; 2025 vs 2026</h3>
-                        <div class="chart-wrap h240"><canvas id="paxband-bar"></canvas></div>
+                        <div class="chart-wrap h280"><canvas id="paxband-bar"></canvas></div>
                     </div>
                 </div>
 
                 <h2 class="mgmt-section-title">Payment Method Impact</h2>
                 <div class="mgmt-kpi-grid" id="payment-stats-container"></div>
-                <div class="chart-card mb-24">
-                    <h3>Revenue by Payment Method &#x2014; 2025 vs 2026</h3>
-                    <div class="chart-wrap h280"><canvas id="payment-bar"></canvas></div>
-                </div>
-
-                <div class="chart-card mb-24">
-                    <h3>Revenue &amp; Gross Margin by Month &#x2014; 2025 vs 2026</h3>
-                    <div class="chart-wrap h320"><canvas id="month-line"></canvas></div>
-                </div>
                 <div class="chart-card">
                     <h3>Week-by-Week Trend (2026) &#x2014; Tours / Revenue / GM</h3>
                     <div class="chart-wrap h320"><canvas id="week-line"></canvas></div>

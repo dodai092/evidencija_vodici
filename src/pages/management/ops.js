@@ -1,14 +1,12 @@
-import { getGlobalDate, parseGlobalDate } from '../../shared.js';
+import { getGlobalDate } from '../../shared.js';
 import { t } from '../../i18n.js';
 import {
     fmt, fmtEur, dd, deltaClass,
     filterMgmtByDate,
     makeBarChart, makeLineChart, axisDefaults, getThemeColors,
-    buildMonthlyFromDays,
 } from './helpers.js';
 
 const DOW_ORDER    = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-const SEASON_ORDER = ['low','mid','high','peak'];
 const PAXBAND_ORDER= ['1-4','5-10','11-20','21-30','30+'];
 const GUIDE_PBAND_ORDER = ['1-5','6-10','11+'];
 const MONTH_SHORT  = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
@@ -41,6 +39,17 @@ export function initOps() {
                 return gm >= 0 ? green + 'cc' : red + 'cc';
             }),
             borderRadius: 4, borderSkipped: false,
+        },
+        {
+            type: 'line',
+            label: 'Breakeven (0%)',
+            data: gpLabels.map(() => 0),
+            borderColor: red + 'aa',
+            borderDash: [5, 4],
+            borderWidth: 1.5,
+            pointRadius: 0,
+            fill: false,
+            order: 0,
         },
     ], {
         showLegend: true,
@@ -76,40 +85,6 @@ export function initOps() {
         }
     });
 
-    const time26 = mgmt26.byTime; const time25 = mgmt25?.byTime || {};
-    const timeKeys = [...new Set([...Object.keys(time26), ...Object.keys(time25)])].sort((a,b) => parseInt(a)-parseInt(b));
-    makeBarChart('time-bar', timeKeys.map(h => `${h}:00`), [
-        { label: '2025', data: timeKeys.map(h => time25[h]?.tours || 0), backgroundColor: c25 + 'aa', borderRadius: 4, borderSkipped: false },
-        { label: '2026', data: timeKeys.map(h => time26[h]?.tours || 0), backgroundColor: c26 + 'aa', borderRadius: 4, borderSkipped: false },
-    ], {
-        showLegend: true,
-        tooltipCb: {
-            afterLabel: ctx => {
-                const d = ctx.datasetIndex === 0 ? time25[timeKeys[ctx.dataIndex]] : time26[timeKeys[ctx.dataIndex]];
-                if (!d) return '';
-                const gmpct = d.revenue > 0 ? (d.grossMargin / d.revenue * 100).toFixed(1) : '—';
-                return `Revenue: €${fmt(d.revenue || 0)}\nGM%: ${gmpct}%`;
-            }
-        }
-    });
-
-    const sea26 = mgmt26.bySeason; const sea25 = mgmt25?.bySeason || {};
-    const seaLabels = SEASON_ORDER.filter(k => sea26[k] || sea25[k]);
-    makeBarChart('season-bar', seaLabels.map(k => k[0].toUpperCase() + k.slice(1)), [
-        { label: '2025', data: seaLabels.map(k => sea25[k]?.tours || 0), backgroundColor: c25 + 'aa', borderRadius: 4, borderSkipped: false },
-        { label: '2026', data: seaLabels.map(k => sea26[k]?.tours || 0), backgroundColor: c26 + 'aa', borderRadius: 4, borderSkipped: false },
-    ], {
-        showLegend: true,
-        tooltipCb: {
-            afterLabel: ctx => {
-                const d = ctx.datasetIndex === 0 ? sea25[seaLabels[ctx.dataIndex]] : sea26[seaLabels[ctx.dataIndex]];
-                if (!d) return '';
-                const gmpct = d.revenue > 0 ? (d.grossMargin / d.revenue * 100).toFixed(1) : '—';
-                return `Revenue: €${fmt(d.revenue || 0)}\nGM%: ${gmpct}%`;
-            }
-        }
-    });
-
     const pb26 = mgmt26.byPaxBand; const pb25 = mgmt25?.byPaxBand || {};
     const pbLabels = PAXBAND_ORDER.filter(k => pb26[k] || pb25[k]);
     makeBarChart('paxband-bar', pbLabels, [
@@ -117,7 +92,6 @@ export function initOps() {
         { label: '2026', data: pbLabels.map(k => pb26[k]?.tours || 0), backgroundColor: c26 + 'aa', borderRadius: 4, borderSkipped: false },
     ], { showLegend: true });
 
-    renderOpsMonthLine();
     renderPaxBandActionPanel();
 
     const wk26 = mgmt26.byWeek;
@@ -148,23 +122,6 @@ export function initOps() {
     });
 
     renderPaymentMethod();
-}
-
-export function renderOpsMonthLine() {
-    const has25 = typeof guideStats25 !== 'undefined';
-    const { c25, green } = getThemeColors();
-    const { month: cutoffMonth, day: cutoffDay } = parseGlobalDate();
-
-    const m26 = buildMonthlyFromDays(guideStats26, cutoffMonth, cutoffDay);
-    const m25 = has25 ? buildMonthlyFromDays(guideStats25, cutoffMonth, cutoffDay) : {};
-
-    const allM = Array.from({length: cutoffMonth}, (_, i) => i + 1);
-    makeLineChart('month-line', allM.map(m => MONTH_SHORT[m]), [
-        { label: t('management.revenue') + ' 2025', data: allM.map(m => m25[m]?.revenue || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [5,3] },
-        { label: t('management.revenue') + ' 2026', data: allM.map(m => m26[m]?.revenue || 0), borderColor: '#8FA8BC', backgroundColor: '#8FA8BC22', tension: 0.3, fill: true },
-        { label: t('management.grossMargin') + ' 2025', data: allM.map(m => m25[m]?.grossMargin || 0), borderColor: c25, backgroundColor: 'transparent', tension: 0.3, borderDash: [2,2], borderWidth: 1.5 },
-        { label: t('management.grossMargin') + ' 2026', data: allM.map(m => m26[m]?.grossMargin || 0), borderColor: green, backgroundColor: 'transparent', tension: 0.3, borderWidth: 2 },
-    ]);
 }
 
 export function renderPaymentMethod() {
@@ -200,22 +157,6 @@ export function renderPaymentMethod() {
         });
     }
 
-    const methods = ['card', 'bank trf', 'cash'];
-    makeBarChart('payment-bar', methods.map(m => m === 'bank trf' ? t('management.bankTransfer') : t(`management.${m}`)), [
-        { label: '2025', data: methods.map(m => pm25?.[m]?.revenue || 0), backgroundColor: c25 + 'aa', borderRadius: 4, borderSkipped: false },
-        { label: '2026', data: methods.map(m => pm26?.[m]?.revenue || 0), backgroundColor: c26 + 'aa', borderRadius: 4, borderSkipped: false },
-    ], {
-        showLegend: true,
-        tooltipCb: {
-            afterLabel: ctx => {
-                const method = methods[ctx.dataIndex];
-                const d = ctx.datasetIndex === 0 ? pm25?.[method] : pm26?.[method];
-                if (!d) return '';
-                const gmpct = d.revenue > 0 ? (d.grossMargin / d.revenue * 100).toFixed(1) : '—';
-                return `Gross Margin: €${fmt(d.grossMargin || 0)}\nGM%: ${gmpct}%`;
-            }
-        }
-    });
 }
 
 export function renderPaxBandActionPanel() {
@@ -234,22 +175,33 @@ export function renderPaxBandActionPanel() {
     const smallGroupPct25 = totalTours25 > 0 ? (smallGroup25.tours / totalTours25 * 100) : 0;
     const pctChange = smallGroupPct26 - smallGroupPct25;
 
+    // Find the first PAX band with positive GM% in 2026
+    let breakevenBand = null;
+    for (const k of GUIDE_PBAND_ORDER) {
+        const d = gpb26[k];
+        if (d && d.revenue > 0 && d.grossMargin / d.revenue > 0) { breakevenBand = k; break; }
+    }
+
+    // Total margin lost on below-breakeven tours (negative GM only)
     const lossFromSmallGroups = smallGroup26.grossMargin < 0 ? Math.abs(smallGroup26.grossMargin) : 0;
 
     const el = document.getElementById('paxband-action-panel');
     if (el) {
+        const breakevenNote = breakevenBand
+            ? `<div><strong>⚡ Action:</strong> Raise minimum from 2 PAX to <strong>${breakevenBand.split('-')[0]} PAX</strong> to guarantee positive margin on every tour</div>`
+            : '';
         el.innerHTML = `
             <div style="font-weight: 600; margin-bottom: 10px; color: var(--text);">${t('management.smallGroupProblem')}</div>
             <div style="color: var(--text2); line-height: 1.6; font-size: 11px;">
                 <div><strong>📊 ${t('management.prevalence')}:</strong> ${smallGroupPct26.toFixed(0)}% of paid tours are 1–5 PAX (${smallGroup26.tours} ${t('management.tours')})</div>
-                <div><strong>💰 ${t('management.marginLoss')}:</strong> €${fmt(lossFromSmallGroups)} total from small groups</div>
+                <div><strong>💰 ${t('management.marginLoss')}:</strong> €${fmt(lossFromSmallGroups)} margin lost on below-breakeven tours YTD</div>
                 <div><strong>📈 ${t('management.trend')}:</strong> ${pctChange > 0 ? '+' : ''}${pctChange.toFixed(1)}pp ${t('management.vs2025')} — getting ${pctChange > 0 ? 'worse' : 'better'}</div>
+                ${breakevenNote}
             </div>
         `;
     }
 }
 
 export function refreshOps() {
-    renderOpsMonthLine();
     renderPaymentMethod();
 }

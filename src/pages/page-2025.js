@@ -408,10 +408,8 @@ export const Page25 = {
         });
         this._el('kv-free-tours').textContent = fmtN(freeTours);
         this._el('kv-free').textContent      = fmtN(freePax);
-        this._el('kv-free-pax').textContent  = freeTours + ' t';
         this._el('kv-avg-pax').textContent   = freeTours > 0 ? (freePax / freeTours).toFixed(1) : '—';
         this._el('kv-paid').textContent      = paidTours;
-        this._el('kv-paid-pax').textContent  = fmtN(paidPax) + ' pax';
     },
 
     filterCity(city) {
@@ -472,23 +470,27 @@ export const Page25 = {
             <div class="kpi-grid kpi-grid-4">
                 <div class="kpi hl-green">
                     <div class="kpi-label">${t('labels.freeToursPaxCount')}</div>
-                    <div class="kpi-value" id="kv-free-25">—</div>
-                    <div class="kpi-sub" id="kv-free-pax-25">— t</div>
+                    <div class="kpi-2y">
+                        <div><div class="kpi-2y-label">2025</div><div class="kpi-2y-val" id="kv-free-25">—</div></div>
+                    </div>
                 </div>
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t('labels.avgPaxFreeTour')}</div>
-                    <div class="kpi-value" id="kv-avg-pax-25">—</div>
-                    <div class="kpi-sub">${t('labels.paxPerTour')}</div>
+                    <div class="kpi-label">${t('labels.avgPaxPerFreeTour')}</div>
+                    <div class="kpi-2y">
+                        <div><div class="kpi-2y-label">2025</div><div class="kpi-2y-val" id="kv-avg-pax-25">—</div></div>
+                    </div>
                 </div>
                 <div class="kpi hl-green">
                     <div class="kpi-label">${t('labels.totalFreeTours')}</div>
-                    <div class="kpi-value" id="kv-free-tours-25">—</div>
-                    <div class="kpi-sub">${t('labels.in2025')}</div>
+                    <div class="kpi-2y">
+                        <div><div class="kpi-2y-label">2025</div><div class="kpi-2y-val" id="kv-free-tours-25">—</div></div>
+                    </div>
                 </div>
                 <div class="kpi hl-blue">
                     <div class="kpi-label">${t('labels.paidToursCount')}</div>
-                    <div class="kpi-value" id="kv-paid-25">—</div>
-                    <div class="kpi-sub" id="kv-paid-pax-25">— pax</div>
+                    <div class="kpi-2y">
+                        <div><div class="kpi-2y-label">2025</div><div class="kpi-2y-val" id="kv-paid-25">—</div></div>
+                    </div>
                 </div>
             </div>`;
     },

@@ -9,11 +9,20 @@
   --split: #9bb09b;
   --zadar: #c4b48a;
 
+  /* darker city variants for pill active states — pass WCAG AA 4.5:1 with white text */
+  --zagreb-pill: #2a5f7c;
+  --dubrovnik-pill: #8a4530;
+  --split-pill: #3d6b42;
+  --zadar-pill: #7a5a1e;
+
   --y25: #6366f1;
   --y26: #1d9e75;
   --delta-pos: #1d9e75;
   --delta-neg: #d4545a;
   --delta-neu: #999999;
+
+  /* override shared text3 for WCAG AA: #767676 = 4.54:1 on white */
+  --text3: #767676;
 }
 
 /* ── NAV ACTIONS & CONTROLS ── */
@@ -451,11 +460,16 @@ body.dark-mode .filter-select {
   border-radius: var(--radius);
   padding: 0;
   overflow: hidden;
-  transition: box-shadow 0.15s;
+  transition:
+    box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.2s;
 }
 
 .guide-card:hover {
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  border-color: var(--border-dark);
 }
 
 .gc-stripe {
@@ -894,13 +908,47 @@ body.dark-mode .filter-select {
   border-bottom-color: var(--amber);
 }
 
-/* ── PAGE SHOW/HIDE ──────────────────────────────── */
+/* ── PAGE SHOW/HIDE & TRANSITIONS ───────────────── */
+@keyframes pageIn {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes subPageIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .page {
   display: none;
 }
 
 .page.active {
   display: block;
+  animation: pageIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.mgmt-page.active {
+  animation: subPageIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media print {
+  .page.active,
+  .mgmt-page.active {
+    animation: none;
+  }
 }
 
 /* ── COMPARISON KPI ─────────────────────────────── */
@@ -1376,16 +1424,16 @@ body.dark-mode .filter-select {
   background: var(--text);
 }
 .city-pill[data-city="Zagreb"].active {
-  background: var(--zagreb);
+  background: var(--zagreb-pill);
 }
 .city-pill[data-city="Dubrovnik"].active {
-  background: var(--dubrovnik);
+  background: var(--dubrovnik-pill);
 }
 .city-pill[data-city="Split"].active {
-  background: var(--split);
+  background: var(--split-pill);
 }
 .city-pill[data-city="Zadar"].active {
-  background: var(--zadar);
+  background: var(--zadar-pill);
 }
 .mgmt-table {
   width: 100%;
@@ -1449,14 +1497,14 @@ body.dark-mode .filter-select {
 }
 /* Warning/info banners */
 .approx-banner {
-  padding: 12px;
-  border-left: 3px solid var(--amber);
+  padding: 10px 14px;
+  border: 1px solid rgba(186, 117, 23, 0.35);
   background: rgba(186, 117, 23, 0.06);
   font-size: 12px;
   color: var(--text2);
   margin-top: 16px;
   margin-bottom: 12px;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 .sort-hdr {
   cursor: pointer;
@@ -1501,6 +1549,14 @@ small.yoy {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 20px 24px;
+  transition:
+    box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.2s;
+}
+
+.chart-card:hover {
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
+  border-color: var(--border-dark);
 }
 .chart-card h3 {
   font-family: var(--font-serif);
@@ -1920,9 +1976,50 @@ small.yoy {
 }
 .action-panel {
   margin-top: 16px;
-  padding: 12px;
+  padding: 12px 14px;
   background: rgba(186, 117, 23, 0.06);
-  border-radius: 4px;
+  border: 1px solid rgba(186, 117, 23, 0.35);
+  border-radius: 6px;
   font-size: 12px;
-  border-left: 3px solid var(--amber);
+}
+
+/* ── FOCUS MANAGEMENT ────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.city-pill:focus-visible,
+.city-filter-pill:focus-visible,
+.pill:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+  border-radius: 20px;
+}
+
+.nav-tab:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: -3px;
+  border-radius: 0;
+}
+
+.sort-hdr:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: -2px;
+}
+
+/* ── REDUCED MOTION ──────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .header-badge::before {
+    animation: none;
+    opacity: 1;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }

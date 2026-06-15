@@ -252,3 +252,21 @@ export function makeLineChart(canvasId, labels, datasets, extraScales = null) {
         },
     });
 }
+
+// ── Count-up animation ────────────────────────────────────────────────────────
+
+export function countUp(el, endValue, formatter, delayMs = 0) {
+    const duration = 650;
+    const absEnd = Math.abs(endValue);
+    const sign = endValue < 0 ? -1 : 1;
+    const startAt = performance.now() + delayMs;
+
+    function tick(now) {
+        if (now < startAt) { requestAnimationFrame(tick); return; }
+        const progress = Math.min((now - startAt) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); // ease-out-cubic
+        el.textContent = formatter(Math.round(sign * absEnd * eased));
+        if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+}

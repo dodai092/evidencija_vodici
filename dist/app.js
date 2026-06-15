@@ -3336,8 +3336,26 @@
       }
     });
   }
+  function countUp(el, endValue, formatter, delayMs = 0) {
+    const duration = 650;
+    const absEnd = Math.abs(endValue);
+    const sign = endValue < 0 ? -1 : 1;
+    const startAt = performance.now() + delayMs;
+    function tick(now) {
+      if (now < startAt) {
+        requestAnimationFrame(tick);
+        return;
+      }
+      const progress = Math.min((now - startAt) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = formatter(Math.round(sign * absEnd * eased));
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
 
   // src/pages/management/pl.js
+  var _kpiFirstRender = true;
   function _isoWeek(dateStr) {
     const d = /* @__PURE__ */ new Date(dateStr + "T00:00:00");
     const thu = new Date(d);
@@ -3409,18 +3427,26 @@
       const pctStr = pct !== null ? ` (${d >= 0 ? "+" : ""}${pct.toFixed(1)}%)` : "";
       return `<div class="mgmt-kpi-delta ${cls}">${sign}\u20AC${fmt(Math.abs(d))}${pctStr} vs 2025</div>`;
     }
-    document.getElementById("kpi-revenue").textContent = fmtEur(k.revenue);
+    const _animate = _kpiFirstRender;
+    if (_kpiFirstRender) _kpiFirstRender = false;
+    function setVal(id, value, formatter, delay = 0) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (_animate) countUp(el, value, formatter, delay);
+      else el.textContent = formatter(value);
+    }
+    setVal("kpi-revenue", k.revenue, fmtEur, 0);
     document.getElementById("kpi-revenue-sub").innerHTML = `${t("management.gmOfRevenue")}: ${gmPct.toFixed(1)}% ${t("management.ofRevenue")}` + kpiDelta(k.revenue, k25?.revenue);
-    document.getElementById("kpi-commission").textContent = fmtEur(k.commissionCost);
+    setVal("kpi-commission", k.commissionCost, fmtEur, 80);
     document.getElementById("kpi-commission-sub").innerHTML = `${commPct.toFixed(1)}% ${t("management.ofRevenue")}` + kpiDelta(k.commissionCost, k25?.commissionCost);
-    document.getElementById("kpi-vcost").textContent = fmtEur(k.vendorCost);
+    setVal("kpi-vcost", k.vendorCost, fmtEur, 160);
     document.getElementById("kpi-vcost-sub").innerHTML = t("management.guideFeesPaid") + kpiDelta(k.vendorCost, k25?.vendorCost);
-    document.getElementById("kpi-gm").textContent = fmtEur(k.grossMargin);
+    setVal("kpi-gm", k.grossMargin, fmtEur, 240);
     document.getElementById("kpi-gmpct").innerHTML = `<span class="${gmClass(gmPct)}">${gmPct.toFixed(1)}% ${t("management.margin")}</span>`;
     document.getElementById("kpi-gm-delta").innerHTML = kpiDelta(k.grossMargin, k25?.grossMargin);
     document.getElementById("kpi-tour-cost").textContent = fmtEur(k.tourCost);
     document.getElementById("kpi-vat").textContent = fmtEur(k.vatAmount);
-    document.getElementById("kpi-avg-gm").textContent = fmtEur(avgGm);
+    setVal("kpi-avg-gm", avgGm, fmtEur, 320);
     document.getElementById("kpi-avg-gm-sub").textContent = `${t("management.perPaidTour")} (${fmt(k.paidTours)} ${t("management.tours")})`;
     document.getElementById("kpi-guides").textContent = fmt(guidesForCity(city).length);
     document.getElementById("kpi-guides-sub").textContent = city === "all" ? t("management.acrossAllCities") : city;

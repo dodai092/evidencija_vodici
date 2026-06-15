@@ -6,8 +6,10 @@ import {
     filterMgmtByDate, filterStatsByDate,
     computeFilteredKpis, computeCity25,
     makeBarChart, makeLineChart, axisDefaults, tooltipDefaults, getThemeColors,
-    buildMonthlyFromDays,
+    buildMonthlyFromDays, countUp,
 } from './helpers.js';
+
+let _kpiFirstRender = true;
 
 // ── P&L tab ───────────────────────────────────────────────────────────────────
 
@@ -93,22 +95,32 @@ export function renderPlKpis(city) {
         return `<div class="mgmt-kpi-delta ${cls}">${sign}€${fmt(Math.abs(d))}${pctStr} vs 2025</div>`;
     }
 
-    document.getElementById('kpi-revenue').textContent    = fmtEur(k.revenue);
+    const _animate = _kpiFirstRender;
+    if (_kpiFirstRender) _kpiFirstRender = false;
+
+    function setVal(id, value, formatter, delay = 0) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (_animate) countUp(el, value, formatter, delay);
+        else el.textContent = formatter(value);
+    }
+
+    setVal('kpi-revenue', k.revenue, fmtEur, 0);
     document.getElementById('kpi-revenue-sub').innerHTML  = `${t('management.gmOfRevenue')}: ${gmPct.toFixed(1)}% ${t('management.ofRevenue')}` + kpiDelta(k.revenue, k25?.revenue);
 
-    document.getElementById('kpi-commission').textContent   = fmtEur(k.commissionCost);
+    setVal('kpi-commission', k.commissionCost, fmtEur, 80);
     document.getElementById('kpi-commission-sub').innerHTML = `${commPct.toFixed(1)}% ${t('management.ofRevenue')}` + kpiDelta(k.commissionCost, k25?.commissionCost);
 
-    document.getElementById('kpi-vcost').textContent      = fmtEur(k.vendorCost);
+    setVal('kpi-vcost', k.vendorCost, fmtEur, 160);
     document.getElementById('kpi-vcost-sub').innerHTML    = t('management.guideFeesPaid') + kpiDelta(k.vendorCost, k25?.vendorCost);
 
-    document.getElementById('kpi-gm').textContent         = fmtEur(k.grossMargin);
+    setVal('kpi-gm', k.grossMargin, fmtEur, 240);
     document.getElementById('kpi-gmpct').innerHTML        = `<span class="${gmClass(gmPct)}">${gmPct.toFixed(1)}% ${t('management.margin')}</span>`;
     document.getElementById('kpi-gm-delta').innerHTML     = kpiDelta(k.grossMargin, k25?.grossMargin);
 
     document.getElementById('kpi-tour-cost').textContent  = fmtEur(k.tourCost);
     document.getElementById('kpi-vat').textContent        = fmtEur(k.vatAmount);
-    document.getElementById('kpi-avg-gm').textContent     = fmtEur(avgGm);
+    setVal('kpi-avg-gm', avgGm, fmtEur, 320);
     document.getElementById('kpi-avg-gm-sub').textContent = `${t('management.perPaidTour')} (${fmt(k.paidTours)} ${t('management.tours')})`;
     document.getElementById('kpi-guides').textContent     = fmt(guidesForCity(city).length);
     document.getElementById('kpi-guides-sub').textContent = city === 'all' ? t('management.acrossAllCities') : city;

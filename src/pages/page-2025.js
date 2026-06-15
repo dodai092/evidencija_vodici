@@ -1,4 +1,4 @@
-import { CITY_COLS, CITY_CLS, CITIES, MONTH_NAMES_HR, filteredStats, safeName, fmtN, getCutoffMonth, getGlobalDate, registerPage } from '../shared.js';
+import { getCityColor, getChartColors as _chartColors, CITY_CLS, CITIES, MONTH_NAMES_HR, filteredStats, safeName, fmtN, getCutoffMonth, getGlobalDate, registerPage } from '../shared.js';
 import { t, titleAttr } from '../i18n.js';
 
 export const Page25 = {
@@ -20,13 +20,8 @@ export const Page25 = {
     _scope(sel) { return document.querySelectorAll('#page-25 ' + sel); },
 
     getChartColors() {
-        const isDark = document.body.classList.contains('dark-mode');
-        return {
-            text:   isDark ? '#eeeeee' : '#111111',
-            text3:  isDark ? '#888888' : '#999999',
-            border: isDark ? '#333333' : '#e8e8e8',
-            accent: '#6366F1',
-        };
+        const c = _chartColors();
+        return { ...c, accent: c.y25 };
     },
 
     _setActivePill(groupId, activeBtn) {
@@ -40,7 +35,7 @@ export const Page25 = {
         const st = g.stats[this.activeLang];
         const fs = filteredStats(st, this.activeMonths);
         const sid = 'p25_' + safeName(g.name);
-        const col = CITY_COLS[g.city] || '#999';
+        const col = getCityColor(g.city) || '#999';
         const init = g.name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
         const isExternal = g.city === 'Unknown';
 
@@ -94,9 +89,9 @@ export const Page25 = {
             `</div>` +
             `</div>` +
             `${typeBarsHtml}` +
-            `<div class="monthly-toggle" onclick="Page25.toggleMonthly('${sid}')">` +
+            `<button type="button" class="monthly-toggle" aria-expanded="false" onclick="Page25.toggleMonthly('${sid}')">` +
             `<span class="mt-arrow" id="mta-${sid}">&#9660;</span> ${t('labels.monthly')}` +
-            `</div>` +
+            `</button>` +
             `<div class="monthly-table" id="mt-${sid}">` +
             `<table>` +
             `<thead><tr>` +
@@ -164,7 +159,7 @@ export const Page25 = {
                     type: 'bar',
                     data: {
                         labels: citiesToShow,
-                        datasets: [{ data: dataArr, backgroundColor: citiesToShow.map(c => CITY_COLS[c]), borderRadius: 4 }]
+                        datasets: [{ data: dataArr, backgroundColor: citiesToShow.map(c => getCityColor(c)), borderRadius: 4 }]
                     },
                     options: {
                         responsive: true, maintainAspectRatio: false,
@@ -371,7 +366,7 @@ export const Page25 = {
                 });
                 return tours > 0 ? +(pax / tours).toFixed(1) : null;
             });
-            const col = CITY_COLS[city];
+            const col = getCityColor(city);
             return { label: city, data, borderColor: col, backgroundColor: col + '18', borderWidth: 2, fill: false, tension: 0.3, pointRadius: 4, spanGaps: false };
         });
 
@@ -425,8 +420,9 @@ export const Page25 = {
         const table = document.getElementById('mt-' + sid);
         const arrow = document.getElementById('mta-' + sid);
         if (!table) return;
-        table.classList.toggle('open');
+        const open = table.classList.toggle('open');
         if (arrow) arrow.classList.toggle('open');
+        table.previousElementSibling?.setAttribute('aria-expanded', String(open));
     },
 
     _buildHeader() {
@@ -443,7 +439,7 @@ export const Page25 = {
 
     _buildFilters() {
         const cityPills = ['all', ...CITIES].map(c => {
-            const col = CITY_COLS[c];
+            const col = getCityColor(c);
             const label = c === 'all' ? t('labels.all') : c;
             const active = this.activeCity === c ? ' active' : '';
             const style = col ? ` style="--city-col:${col}"` : '';
@@ -496,10 +492,10 @@ export const Page25 = {
     },
 
     _buildFreeTours() {
-        return `<div class="section-divider" onclick="toggleSection('free-section-body-25')">
+        return `<button type="button" class="section-divider" aria-expanded="true" onclick="toggleSection('free-section-body-25')">
                 <span>${t('sections.freeTours')}</span>
                 <span class="section-chevron">▾</span>
-            </div>
+            </button>
             <div id="free-section-body-25" class="section-body">
                 <div class="charts-row">
                     <div class="chart-card">
@@ -518,10 +514,10 @@ export const Page25 = {
     },
 
     _buildPaidTours() {
-        return `<div class="section-divider" onclick="toggleSection('paid-section-body-25')">
+        return `<button type="button" class="section-divider" aria-expanded="true" onclick="toggleSection('paid-section-body-25')">
                 <span>${t('sections.paidTours')}</span>
                 <span class="section-chevron">▾</span>
-            </div>
+            </button>
             <div id="paid-section-body-25" class="section-body">
                 <div class="charts-row">
                     <div class="chart-card">
@@ -571,10 +567,10 @@ export const Page25 = {
     },
 
     _buildGuides() {
-        return `<div class="section-divider" onclick="toggleSection('guides-body-25')">
+        return `<button type="button" class="section-divider" aria-expanded="true" onclick="toggleSection('guides-body-25')">
                 <span>${t('labels.guides')}</span>
                 <span class="section-chevron">▾</span>
-            </div>
+            </button>
             <div id="guides-body-25" class="section-body">
                 <div id="guide-sections-25"></div>
             </div>

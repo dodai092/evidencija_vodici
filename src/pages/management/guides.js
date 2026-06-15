@@ -1,4 +1,4 @@
-import { getGlobalDate, CITY_COLS } from '../../shared.js';
+import { getGlobalDate, getCityColor } from '../../shared.js';
 import { t } from '../../i18n.js';
 import {
     fmt, fmtEur, dd, gmClass,
@@ -84,7 +84,7 @@ export function renderGuideTable(city) {
             <td class="rank">${rank26}</td>
             <td style="text-align:center;font-size:11px">${rankHtml}</td>
             <td class="guide-name">${r.name}</td>
-            <td><span class="city-dot" style="background:${CITY_COLS[r.city] || '#999'}"></span>${r.city}</td>
+            <td><span class="city-dot" style="background:${getCityColor(r.city)}"></span>${r.city}</td>
             <td>${fmt(r.freeTours)}</td>
             <td>${fmt(r.paidTours)}<br><small class="yoy">${dd(dPaid)}</small></td>
             <td>${r.avgPax > 0 ? r.avgPax.toFixed(1) : '—'}</td>
@@ -123,7 +123,11 @@ export function mgmtSort(col) {
     else { _sortCol = col; _sortDir = -1; }
     document.querySelectorAll('.sort-hdr').forEach(th => {
         th.classList.remove('sorted-asc', 'sorted-desc');
-        if (th.dataset.col === col) th.classList.add(_sortDir === -1 ? 'sorted-desc' : 'sorted-asc');
+        th.setAttribute('aria-sort', 'none');
+        if (th.dataset.col === col) {
+            th.classList.add(_sortDir === -1 ? 'sorted-desc' : 'sorted-asc');
+            th.setAttribute('aria-sort', _sortDir === -1 ? 'descending' : 'ascending');
+        }
     });
     // Read active city from DOM
     const activePill = document.querySelector('.city-pill.active');

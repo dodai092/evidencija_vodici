@@ -85,7 +85,7 @@
   font-size: 11px;
   outline: none;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: border-color 0.2s;
 }
 
 .date-picker-ui:hover {
@@ -190,8 +190,8 @@ body.dark-mode .filter-select {
   font-weight: 500;
   text-transform: uppercase;
   border-radius: var(--radius-sm);
-  background: rgba(14, 124, 123, 0.08);
-  border: 1px solid rgba(14, 124, 123, 0.25);
+  background: color-mix(in srgb, var(--teal) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--teal) 25%, transparent);
   color: var(--teal);
 }
 
@@ -349,7 +349,7 @@ body.dark-mode .filter-select {
 }
 
 .section-title.teal::after {
-  background: rgba(14, 124, 123, 0.2);
+  background: color-mix(in srgb, var(--teal) 20%, transparent);
 }
 
 .section-title.zagreb {
@@ -365,7 +365,7 @@ body.dark-mode .filter-select {
 }
 
 .section-title.dubrovnik::after {
-  background: rgba(212, 84, 90, 0.2);
+  background: color-mix(in srgb, var(--delta-neg) 20%, transparent);
 }
 
 .section-title.split {
@@ -756,7 +756,8 @@ body.dark-mode .filter-select {
   .nav-actions {
     display: flex;
     align-items: center;
-    gap: 60px;
+    justify-content: space-between;
+    gap: 8px;
     flex-shrink: 0;
   }
 
@@ -877,7 +878,7 @@ body.dark-mode .filter-select {
   color: var(--text3);
   cursor: pointer;
   border-bottom: 2px solid transparent;
-  transition: all 0.2s;
+  transition: color 0.2s, border-color 0.2s;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-family: var(--font-sans);
@@ -1055,7 +1056,7 @@ body.dark-mode .filter-select {
 }
 
 .gc-cmp-table .delta.neu {
-  color: var(--delta-neu);
+  color: var(--text3);
 }
 
 .gc-cmp-table .dash {
@@ -1342,6 +1343,11 @@ body.dark-mode .filter-select {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+@media (max-width: 600px) {
+  .mgmt-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+}
 .kpi-card {
   background: var(--card-bg);
   border: 1px solid var(--border);
@@ -1468,10 +1474,10 @@ body.dark-mode .filter-select {
 }
 /* Row health indicators */
 .mgmt-table tr.row-poor td {
-  background: rgba(212, 84, 90, 0.06);
+  background: color-mix(in srgb, var(--delta-neg) 6%, transparent);
 }
 .mgmt-table tr.row-warn td {
-  background: rgba(186, 117, 23, 0.07);
+  background: color-mix(in srgb, var(--amber) 7%, transparent);
 }
 .mgmt-table tr.row-healthy td {
   background: transparent;
@@ -1498,8 +1504,8 @@ body.dark-mode .filter-select {
 /* Warning/info banners */
 .approx-banner {
   padding: 10px 14px;
-  border: 1px solid rgba(186, 117, 23, 0.35);
-  background: rgba(186, 117, 23, 0.06);
+  border: 1px solid color-mix(in srgb, var(--amber) 35%, transparent);
+  background: color-mix(in srgb, var(--amber) 6%, transparent);
   font-size: 12px;
   color: var(--text2);
   margin-top: 16px;
@@ -1977,10 +1983,30 @@ small.yoy {
 .action-panel {
   margin-top: 16px;
   padding: 12px 14px;
-  background: rgba(186, 117, 23, 0.06);
-  border: 1px solid rgba(186, 117, 23, 0.35);
+  background: color-mix(in srgb, var(--amber) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--amber) 35%, transparent);
   border-radius: 6px;
   font-size: 12px;
+}
+
+/* ── BUTTON RESETS (interactive divs converted to buttons) ── */
+button.section-divider {
+  border: none;
+  border-bottom: 2px solid var(--border-dark);
+  font-family: var(--font-sans);
+  width: 100%;
+}
+
+button.monthly-toggle {
+  border: none;
+  border-top: 1px solid var(--border);
+  background: none;
+  font-family: var(--font-sans);
+  width: 100%;
+}
+
+button.city-pill {
+  font-family: var(--font-sans);
 }
 
 /* ── FOCUS MANAGEMENT ────────────────────────────── */

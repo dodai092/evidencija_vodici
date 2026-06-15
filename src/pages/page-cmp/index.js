@@ -1,5 +1,5 @@
 import {
-    CITIES, CITY_COLS, CITY_CLS,
+    CITIES, getCityColor, getChartColors as _chartColors, CITY_CLS,
     fmtN, filteredStats, getCutoffMonth, getGlobalDate, getRangeLabel,
     toggleSection, registerPage, safeName,
 } from '../../shared.js';
@@ -91,7 +91,7 @@ export const PageCmp = {
         const st26 = m.g26 ? m.g26.stats[this.activeLang] : null;
         const ytd25 = st25 ? filteredStats(st25, this.activeMonths) : null;
         const ytd26 = st26 ? filteredStats(st26, this.activeMonths) : null;
-        const col = CITY_COLS[m.city] || '#999';
+        const col = getCityColor(m.city);
         const init = m.name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
         const inactive = !m.g26;
 
@@ -177,16 +177,7 @@ export const PageCmp = {
         setDelta('kd-avg-pax-abs', 'kd-avg-pax-pct', ft25 > 0 ? fp25/ft25 : 0, ft26 > 0 ? fp26/ft26 : 0, v => v.toFixed(1));
     },
 
-    getChartColors() {
-        const isDark = document.body.classList.contains('dark-mode');
-        return {
-            text:   isDark ? '#eeeeee' : '#111111',
-            text3:  isDark ? '#888888' : '#999999',
-            border: isDark ? '#333333' : '#e8e8e8',
-            y25: '#6366F1',
-            y26: '#1D9E75',
-        };
-    },
+    getChartColors() { return _chartColors(); },
 
     updateCharts() {
         const self = this;
@@ -911,7 +902,7 @@ export const PageCmp = {
             <div class="filter-bar">
                 <div class="city-pill-group">
                     ${['all', ...CITIES].map(c => {
-                        const col = CITY_COLS[c];
+                        const col = getCityColor(c);
                         const label = c === 'all' ? t('labels.all') : c;
                         const active = this.activeCity === c ? ' active' : '';
                         const style = col ? ` style="--city-col:${col}"` : '';

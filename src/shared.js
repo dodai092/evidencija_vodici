@@ -1,4 +1,13 @@
-export const CITY_COLS = { Zagreb:'#8FA8BC', Dubrovnik:'#C49A8A', Split:'#9BB09B', Zadar:'#C4B48A', Unknown:'#999999' };
+export function getCityColor(city) {
+    if (!city || city === 'Unknown') return '#999999';
+    return getComputedStyle(document.documentElement).getPropertyValue('--' + city.toLowerCase()).trim() || '#999999';
+}
+
+export function getChartColors() {
+    const s = getComputedStyle(document.documentElement);
+    const tok = n => s.getPropertyValue(n).trim();
+    return { text: tok('--text'), text3: tok('--text3'), border: tok('--border'), y25: tok('--y25'), y26: tok('--y26') };
+}
 export const CITY_CLS  = { Zagreb:'zagreb', Dubrovnik:'dubrovnik', Split:'split', Zadar:'zadar', Unknown:'' };
 export const CITIES    = ['Zagreb','Dubrovnik','Split','Zadar'];
 export const MONTH_NAMES_HR = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
@@ -123,6 +132,7 @@ export function toggleSection(id) {
     const collapsed = body.classList.toggle('collapsed');
     const chevron = body.previousElementSibling?.querySelector('.section-chevron');
     if (chevron) chevron.textContent = collapsed ? '▸' : '▾';
+    body.previousElementSibling?.setAttribute('aria-expanded', String(!collapsed));
 }
 
 export function showPage(id, tab) {

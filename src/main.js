@@ -51,12 +51,32 @@ registerLanguageChangeCallback(() => {
 
 const shortcutOverlay = () => document.getElementById('shortcut-overlay');
 
+let _overlayPreviousFocus = null;
+
 function toggleShortcutOverlay() {
     const el = shortcutOverlay();
     if (!el) return;
     const isOpen = el.style.display === 'block';
-    el.style.display = isOpen ? 'none' : 'block';
-    el.setAttribute('aria-hidden', isOpen ? 'true' : 'false');
+    if (isOpen) {
+        el.style.display = 'none';
+        el.setAttribute('aria-hidden', 'true');
+        el.removeEventListener('keydown', _overlayTrapFocus);
+        _overlayPreviousFocus?.focus();
+        _overlayPreviousFocus = null;
+    } else {
+        _overlayPreviousFocus = document.activeElement;
+        el.style.display = 'block';
+        el.setAttribute('aria-hidden', 'false');
+        el.addEventListener('keydown', _overlayTrapFocus);
+        el.querySelector('.overlay-close')?.focus();
+    }
+}
+
+function _overlayTrapFocus(e) {
+    if (e.key === 'Escape') { toggleShortcutOverlay(); return; }
+    if (e.key !== 'Tab') return;
+    e.preventDefault();
+    shortcutOverlay()?.querySelector('.overlay-close')?.focus();
 }
 
 // ── Event wiring ──────────────────────────────────────────────────────────────
@@ -91,8 +111,12 @@ function initEventListeners() {
         el.addEventListener('click', () => mgmtFilterCityPl(el.dataset.city)));
 
     // Sort headers in guide table (static thead in index.html)
-    document.querySelectorAll('.sort-hdr').forEach(el =>
-        el.addEventListener('click', () => mgmtSort(el.dataset.col)));
+    document.querySelectorAll('.sort-hdr').forEach(el => {
+        el.addEventListener('click', () => mgmtSort(el.dataset.col));
+        el.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); mgmtSort(el.dataset.col); }
+        });
+    });
 
     // Shortcut overlay close button
     document.querySelector('.overlay-close')?.addEventListener('click', toggleShortcutOverlay);

@@ -1,4 +1,4 @@
-import { CITY_COLS, CITIES } from '../../shared.js';
+import { getCityColor, CITIES } from '../../shared.js';
 
 // ── Theme helpers ─────────────────────────────────────────────────────────────
 
@@ -38,8 +38,8 @@ export function createFreePaxCityChart(ctx, cityLabels, cityData25, cityData26, 
         data: {
             labels: cityLabels,
             datasets: [
-                { label: `${rangeLabel} 2025`, data: cityLabels.map(c => cityData25[c]), backgroundColor: cityLabels.map(c => CITY_COLS[c] + '80'), borderRadius: 4 },
-                { label: `${rangeLabel} 2026`, data: cityLabels.map(c => cityData26[c]), backgroundColor: cityLabels.map(c => CITY_COLS[c]), borderRadius: 4 }
+                { label: `${rangeLabel} 2025`, data: cityLabels.map(c => cityData25[c]), backgroundColor: cityLabels.map(c => getCityColor(c) + '80'), borderRadius: 4 },
+                { label: `${rangeLabel} 2026`, data: cityLabels.map(c => cityData26[c]), backgroundColor: cityLabels.map(c => getCityColor(c)), borderRadius: 4 }
             ]
         },
         options: {
@@ -63,8 +63,8 @@ export function createPaidCityChart(ctx, cityLabels, paidCityData25, paidCityDat
         data: {
             labels: cityLabels,
             datasets: [
-                { label: `${rangeLabel} 2025`, data: cityLabels.map(c => paidCityData25[c]), backgroundColor: cityLabels.map(c => CITY_COLS[c] + '80'), borderRadius: 4 },
-                { label: `${rangeLabel} 2026`, data: cityLabels.map(c => paidCityData26[c]), backgroundColor: cityLabels.map(c => CITY_COLS[c]), borderRadius: 4 }
+                { label: `${rangeLabel} 2025`, data: cityLabels.map(c => paidCityData25[c]), backgroundColor: cityLabels.map(c => getCityColor(c) + '80'), borderRadius: 4 },
+                { label: `${rangeLabel} 2026`, data: cityLabels.map(c => paidCityData26[c]), backgroundColor: cityLabels.map(c => getCityColor(c)), borderRadius: 4 }
             ]
         },
         options: {

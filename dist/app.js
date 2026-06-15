@@ -1,6 +1,14 @@
 (() => {
   // src/shared.js
-  var CITY_COLS = { Zagreb: "#8FA8BC", Dubrovnik: "#C49A8A", Split: "#9BB09B", Zadar: "#C4B48A", Unknown: "#999999" };
+  function getCityColor(city) {
+    if (!city || city === "Unknown") return "#999999";
+    return getComputedStyle(document.documentElement).getPropertyValue("--" + city.toLowerCase()).trim() || "#999999";
+  }
+  function getChartColors() {
+    const s = getComputedStyle(document.documentElement);
+    const tok = (n) => s.getPropertyValue(n).trim();
+    return { text: tok("--text"), text3: tok("--text3"), border: tok("--border"), y25: tok("--y25"), y26: tok("--y26") };
+  }
   var CITY_CLS = { Zagreb: "zagreb", Dubrovnik: "dubrovnik", Split: "split", Zadar: "zadar", Unknown: "" };
   var CITIES = ["Zagreb", "Dubrovnik", "Split", "Zadar"];
   var MONTH_NAMES_HR = { 1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec" };
@@ -117,6 +125,7 @@
     const collapsed = body.classList.toggle("collapsed");
     const chevron = body.previousElementSibling?.querySelector(".section-chevron");
     if (chevron) chevron.textContent = collapsed ? "\u25B8" : "\u25BE";
+    body.previousElementSibling?.setAttribute("aria-expanded", String(!collapsed));
   }
   function showPage(id, tab) {
     document.querySelectorAll(`.${CSS.PAGE}`).forEach((p) => p.classList.remove(CSS.ACTIVE));
@@ -538,13 +547,8 @@
       return document.querySelectorAll("#page-25 " + sel);
     },
     getChartColors() {
-      const isDark = document.body.classList.contains("dark-mode");
-      return {
-        text: isDark ? "#eeeeee" : "#111111",
-        text3: isDark ? "#888888" : "#999999",
-        border: isDark ? "#333333" : "#e8e8e8",
-        accent: "#6366F1"
-      };
+      const c = getChartColors();
+      return { ...c, accent: c.y25 };
     },
     _setActivePill(groupId, activeBtn) {
       const group = document.getElementById(groupId);
@@ -556,7 +560,7 @@
       const st = g.stats[this.activeLang];
       const fs = filteredStats(st, this.activeMonths);
       const sid = "p25_" + safeName(g.name);
-      const col = CITY_COLS[g.city] || "#999";
+      const col = getCityColor(g.city) || "#999";
       const init = g.name.split(" ").map((w) => w[0]).join("").substring(0, 2).toUpperCase();
       const isExternal = g.city === "Unknown";
       const typeEntries = Object.entries(st.byType).sort((a, b) => b[1].tours - a[1].tours);
@@ -570,7 +574,7 @@
         return `<tr><td>${md.name}</td><td class="num free-col">${md.free.tours || 0}</td><td class="num">${md.free.pax || 0}</td><td class="num paid-col">${md.paid.tours || 0}</td><td class="num">${md.paid.pax || 0}</td></tr>`;
       }).join("");
       const cityDisplay = isExternal ? t("labels.external") : g.city;
-      return `<div class="guide-card" data-city="${g.city}" data-name="${g.name}"><div class="gc-stripe" style="background:${col}"></div><div class="gc-body"><div class="gc-header"><div class="avatar" style="background:${col}18;color:${col};border:1px solid ${col}40">${init}</div><span class="gc-name">${g.name}</span>` + (isExternal ? `<span class="badge-ext">${t("labels.external")}</span>` : `<span class="city-pill" style="background:${col}18;color:${col}">${cityDisplay}</span>`) + `</div><div class="gc-stats"><div class="gc-half"><div class="gc-stat-label">${t("labels.freeTours")}</div><div class="gc-stat-num" style="color:var(--green)">${fs.freeTours}</div><div class="gc-stat-sub">${fs.freePax} pax</div></div><div class="gc-divider"></div><div class="gc-half" style="text-align:right"><div class="gc-stat-label">${t("labels.paidTours")}</div><div class="gc-stat-num" style="color:${col}">${fs.paidTours}</div><div class="gc-stat-sub">${fs.paidPax} pax</div></div></div></div>${typeBarsHtml}<div class="monthly-toggle" onclick="Page25.toggleMonthly('${sid}')"><span class="mt-arrow" id="mta-${sid}">&#9660;</span> ${t("labels.monthly")}</div><div class="monthly-table" id="mt-${sid}"><table><thead><tr><th>${t("table.month")}</th><th class="num" style="color:var(--green)">${t("table.free")} t</th><th class="num">${t("table.free")} p</th><th class="num" style="color:var(--teal)">$ t</th><th class="num">$ p</th></tr></thead><tbody>${monthRowsHtml}</tbody><tfoot><tr><td>${t("labels.total")}</td><td class="num free-col">${fs.freeTours}</td><td class="num">${fs.freePax}</td><td class="num paid-col">${fs.paidTours}</td><td class="num">${fs.paidPax}</td></tr></tfoot></table></div></div>`;
+      return `<div class="guide-card" data-city="${g.city}" data-name="${g.name}"><div class="gc-stripe" style="background:${col}"></div><div class="gc-body"><div class="gc-header"><div class="avatar" style="background:${col}18;color:${col};border:1px solid ${col}40">${init}</div><span class="gc-name">${g.name}</span>` + (isExternal ? `<span class="badge-ext">${t("labels.external")}</span>` : `<span class="city-pill" style="background:${col}18;color:${col}">${cityDisplay}</span>`) + `</div><div class="gc-stats"><div class="gc-half"><div class="gc-stat-label">${t("labels.freeTours")}</div><div class="gc-stat-num" style="color:var(--green)">${fs.freeTours}</div><div class="gc-stat-sub">${fs.freePax} pax</div></div><div class="gc-divider"></div><div class="gc-half" style="text-align:right"><div class="gc-stat-label">${t("labels.paidTours")}</div><div class="gc-stat-num" style="color:${col}">${fs.paidTours}</div><div class="gc-stat-sub">${fs.paidPax} pax</div></div></div></div>${typeBarsHtml}<button type="button" class="monthly-toggle" aria-expanded="false" onclick="Page25.toggleMonthly('${sid}')"><span class="mt-arrow" id="mta-${sid}">&#9660;</span> ${t("labels.monthly")}</button><div class="monthly-table" id="mt-${sid}"><table><thead><tr><th>${t("table.month")}</th><th class="num" style="color:var(--green)">${t("table.free")} t</th><th class="num">${t("table.free")} p</th><th class="num" style="color:var(--teal)">$ t</th><th class="num">$ p</th></tr></thead><tbody>${monthRowsHtml}</tbody><tfoot><tr><td>${t("labels.total")}</td><td class="num free-col">${fs.freeTours}</td><td class="num">${fs.freePax}</td><td class="num paid-col">${fs.paidTours}</td><td class="num">${fs.paidPax}</td></tr></tfoot></table></div></div>`;
     },
     renderAll() {
       const container = this._el("guide-sections");
@@ -617,7 +621,7 @@
             type: "bar",
             data: {
               labels: citiesToShow,
-              datasets: [{ data: dataArr, backgroundColor: citiesToShow.map((c) => CITY_COLS[c]), borderRadius: 4 }]
+              datasets: [{ data: dataArr, backgroundColor: citiesToShow.map((c) => getCityColor(c)), borderRadius: 4 }]
             },
             options: {
               responsive: true,
@@ -823,7 +827,7 @@
           });
           return tours > 0 ? +(pax / tours).toFixed(1) : null;
         });
-        const col = CITY_COLS[city];
+        const col = getCityColor(city);
         return { label: city, data, borderColor: col, backgroundColor: col + "18", borderWidth: 2, fill: false, tension: 0.3, pointRadius: 4, spanGaps: false };
       });
       const ctx = document.getElementById("avgFreePaxChart-25")?.getContext("2d");
@@ -879,8 +883,9 @@
       const table = document.getElementById("mt-" + sid);
       const arrow = document.getElementById("mta-" + sid);
       if (!table) return;
-      table.classList.toggle("open");
+      const open = table.classList.toggle("open");
       if (arrow) arrow.classList.toggle("open");
+      table.previousElementSibling?.setAttribute("aria-expanded", String(open));
     },
     _buildHeader() {
       return `<div class="header">
@@ -895,7 +900,7 @@
     },
     _buildFilters() {
       const cityPills = ["all", ...CITIES].map((c) => {
-        const col = CITY_COLS[c];
+        const col = getCityColor(c);
         const label = c === "all" ? t("labels.all") : c;
         const active = this.activeCity === c ? " active" : "";
         const style = col ? ` style="--city-col:${col}"` : "";
@@ -946,10 +951,10 @@
             </div>`;
     },
     _buildFreeTours() {
-      return `<div class="section-divider" onclick="toggleSection('free-section-body-25')">
+      return `<button type="button" class="section-divider" aria-expanded="true" onclick="toggleSection('free-section-body-25')">
                 <span>${t("sections.freeTours")}</span>
                 <span class="section-chevron">\u25BE</span>
-            </div>
+            </button>
             <div id="free-section-body-25" class="section-body">
                 <div class="charts-row">
                     <div class="chart-card">
@@ -967,10 +972,10 @@
             </div>`;
     },
     _buildPaidTours() {
-      return `<div class="section-divider" onclick="toggleSection('paid-section-body-25')">
+      return `<button type="button" class="section-divider" aria-expanded="true" onclick="toggleSection('paid-section-body-25')">
                 <span>${t("sections.paidTours")}</span>
                 <span class="section-chevron">\u25BE</span>
-            </div>
+            </button>
             <div id="paid-section-body-25" class="section-body">
                 <div class="charts-row">
                     <div class="chart-card">
@@ -1019,10 +1024,10 @@
             </div>`;
     },
     _buildGuides() {
-      return `<div class="section-divider" onclick="toggleSection('guides-body-25')">
+      return `<button type="button" class="section-divider" aria-expanded="true" onclick="toggleSection('guides-body-25')">
                 <span>${t("labels.guides")}</span>
                 <span class="section-chevron">\u25BE</span>
-            </div>
+            </button>
             <div id="guides-body-25" class="section-body">
                 <div id="guide-sections-25"></div>
             </div>
@@ -1086,13 +1091,8 @@
       return document.querySelectorAll("#page-26 " + sel);
     },
     getChartColors() {
-      const isDark = document.body.classList.contains("dark-mode");
-      return {
-        text: isDark ? "#eeeeee" : "#111111",
-        text3: isDark ? "#888888" : "#999999",
-        border: isDark ? "#333333" : "#e8e8e8",
-        accent: "#1D9E75"
-      };
+      const c = getChartColors();
+      return { ...c, accent: c.y26 };
     },
     _setActivePill(groupId, activeBtn) {
       const group = document.getElementById(groupId);
@@ -1104,7 +1104,7 @@
       const st = g.stats[this.activeLang];
       const fs = filteredStats(st, this.activeMonths);
       const sid = "p26_" + safeName(g.name);
-      const col = CITY_COLS[g.city] || "#999";
+      const col = getCityColor(g.city);
       const init = g.name.split(" ").map((w) => w[0]).join("").substring(0, 2).toUpperCase();
       const typeEntries = Object.entries(st.byType).sort((a, b) => b[1].tours - a[1].tours);
       const maxT = typeEntries.length > 0 ? typeEntries[0][1].tours : 1;
@@ -1116,7 +1116,7 @@
         const md = st.byMonth[m];
         return `<tr><td>${md.name}</td><td class="num free-col">${md.free.tours || 0}</td><td class="num">${md.free.pax || 0}</td><td class="num paid-col">${md.paid.tours || 0}</td><td class="num">${md.paid.pax || 0}</td></tr>`;
       }).join("");
-      return `<div class="guide-card" data-city="${g.city}" data-name="${g.name}"><div class="gc-stripe" style="background:${col}"></div><div class="gc-body"><div class="gc-header"><div class="avatar" style="background:${col}18;color:${col};border:1px solid ${col}40">${init}</div><span class="gc-name">${g.name}</span><span class="city-pill" style="background:${col}18;color:${col}">${g.city}</span></div><div class="gc-stats"><div class="gc-half"><div class="gc-stat-label">${t("labels.freeTours")}</div><div class="gc-stat-num" style="color:var(--green)">${fs.freeTours}</div><div class="gc-stat-sub">${fs.freePax} pax</div></div><div class="gc-divider"></div><div class="gc-half" style="text-align:right"><div class="gc-stat-label">${t("labels.paidTours")}</div><div class="gc-stat-num" style="color:${col}">${fs.paidTours}</div><div class="gc-stat-sub">${fs.paidPax} pax</div></div></div></div>${typeBarsHtml}<div class="monthly-toggle" onclick="Page26.toggleMonthly('${sid}')"><span class="mt-arrow" id="mta-${sid}">&#9660;</span> ${t("labels.monthly")}</div><div class="monthly-table" id="mt-${sid}"><table><thead><tr><th>${t("table.month")}</th><th class="num" style="color:var(--green)">${t("table.free")} t</th><th class="num">${t("table.free")} p</th><th class="num" style="color:var(--teal)">$ t</th><th class="num">$ p</th></tr></thead><tbody>${monthRowsHtml}</tbody><tfoot><tr><td>${t("labels.total")}</td><td class="num free-col">${fs.freeTours}</td><td class="num">${fs.freePax}</td><td class="num paid-col">${fs.paidTours}</td><td class="num">${fs.paidPax}</td></tr></tfoot></table></div></div>`;
+      return `<div class="guide-card" data-city="${g.city}" data-name="${g.name}"><div class="gc-stripe" style="background:${col}"></div><div class="gc-body"><div class="gc-header"><div class="avatar" style="background:${col}18;color:${col};border:1px solid ${col}40">${init}</div><span class="gc-name">${g.name}</span><span class="city-pill" style="background:${col}18;color:${col}">${g.city}</span></div><div class="gc-stats"><div class="gc-half"><div class="gc-stat-label">${t("labels.freeTours")}</div><div class="gc-stat-num" style="color:var(--green)">${fs.freeTours}</div><div class="gc-stat-sub">${fs.freePax} pax</div></div><div class="gc-divider"></div><div class="gc-half" style="text-align:right"><div class="gc-stat-label">${t("labels.paidTours")}</div><div class="gc-stat-num" style="color:${col}">${fs.paidTours}</div><div class="gc-stat-sub">${fs.paidPax} pax</div></div></div></div>${typeBarsHtml}<button type="button" class="monthly-toggle" aria-expanded="false" onclick="Page26.toggleMonthly('${sid}')"><span class="mt-arrow" id="mta-${sid}">&#9660;</span> ${t("labels.monthly")}</button><div class="monthly-table" id="mt-${sid}"><table><thead><tr><th>${t("table.month")}</th><th class="num" style="color:var(--green)">${t("table.free")} t</th><th class="num">${t("table.free")} p</th><th class="num" style="color:var(--teal)">$ t</th><th class="num">$ p</th></tr></thead><tbody>${monthRowsHtml}</tbody><tfoot><tr><td>${t("labels.total")}</td><td class="num free-col">${fs.freeTours}</td><td class="num">${fs.freePax}</td><td class="num paid-col">${fs.paidTours}</td><td class="num">${fs.paidPax}</td></tr></tfoot></table></div></div>`;
     },
     renderAll() {
       const container = this._el("guide-sections");
@@ -1163,7 +1163,7 @@
             type: "bar",
             data: {
               labels: citiesToShow,
-              datasets: [{ data: dataArr, backgroundColor: citiesToShow.map((c) => CITY_COLS[c]), borderRadius: 4 }]
+              datasets: [{ data: dataArr, backgroundColor: citiesToShow.map((c) => getCityColor(c)), borderRadius: 4 }]
             },
             options: {
               responsive: true,
@@ -1429,7 +1429,7 @@
           }
           return tours > 0 ? +(pax / tours).toFixed(1) : null;
         });
-        const col = CITY_COLS[city];
+        const col = getCityColor(city);
         return { label: city, data, borderColor: col, backgroundColor: col + "18", borderWidth: 2, fill: false, tension: 0.3, pointRadius: 4, spanGaps: false };
       });
       const ctx = document.getElementById("avgFreePaxChart-26")?.getContext("2d");
@@ -1485,8 +1485,9 @@
       const table = document.getElementById("mt-" + sid);
       const arrow = document.getElementById("mta-" + sid);
       if (!table) return;
-      table.classList.toggle("open");
+      const open = table.classList.toggle("open");
       if (arrow) arrow.classList.toggle("open");
+      table.previousElementSibling?.setAttribute("aria-expanded", String(open));
     },
     _buildHeader() {
       return `<div class="header">
@@ -1502,7 +1503,7 @@
     },
     _buildFilters() {
       const cityPills = ["all", ...CITIES].map((c) => {
-        const col = CITY_COLS[c];
+        const col = getCityColor(c);
         const label = c === "all" ? t("labels.all") : c;
         const active = this.activeCity === c ? " active" : "";
         const style = col ? ` style="--city-col:${col}"` : "";
@@ -1557,10 +1558,10 @@
             </div>`;
     },
     _buildFreeTours() {
-      return `<div class="section-divider" onclick="toggleSection('free-section-body-26')">
+      return `<button type="button" class="section-divider" aria-expanded="true" onclick="toggleSection('free-section-body-26')">
                 <span>${t("sections.freeTours")}</span>
                 <span class="section-chevron">\u25BE</span>
-            </div>
+            </button>
             <div id="free-section-body-26" class="section-body">
                 <div class="charts-row">
                     <div class="chart-card">
@@ -1578,10 +1579,10 @@
             </div>`;
     },
     _buildPaidTours() {
-      return `<div class="section-divider" onclick="toggleSection('paid-section-body-26')">
+      return `<button type="button" class="section-divider" aria-expanded="true" onclick="toggleSection('paid-section-body-26')">
                 <span>${t("sections.paidTours")}</span>
                 <span class="section-chevron">\u25BE</span>
-            </div>
+            </button>
             <div id="paid-section-body-26" class="section-body">
                 <div class="charts-row">
                     <div class="chart-card">
@@ -1630,10 +1631,10 @@
             </div>`;
     },
     _buildGuides() {
-      return `<div class="section-divider" onclick="toggleSection('guides-body-26')">
+      return `<button type="button" class="section-divider" aria-expanded="true" onclick="toggleSection('guides-body-26')">
                 <span>${t("labels.guides")}</span>
                 <span class="section-chevron">\u25BE</span>
-            </div>
+            </button>
             <div id="guides-body-26" class="section-body">
                 <div id="guide-sections-26"></div>
             </div>
@@ -1699,8 +1700,8 @@
       data: {
         labels: cityLabels,
         datasets: [
-          { label: `${rangeLabel} 2025`, data: cityLabels.map((c) => cityData25[c]), backgroundColor: cityLabels.map((c) => CITY_COLS[c] + "80"), borderRadius: 4 },
-          { label: `${rangeLabel} 2026`, data: cityLabels.map((c) => cityData26[c]), backgroundColor: cityLabels.map((c) => CITY_COLS[c]), borderRadius: 4 }
+          { label: `${rangeLabel} 2025`, data: cityLabels.map((c) => cityData25[c]), backgroundColor: cityLabels.map((c) => getCityColor(c) + "80"), borderRadius: 4 },
+          { label: `${rangeLabel} 2026`, data: cityLabels.map((c) => cityData26[c]), backgroundColor: cityLabels.map((c) => getCityColor(c)), borderRadius: 4 }
         ]
       },
       options: {
@@ -1724,8 +1725,8 @@
       data: {
         labels: cityLabels,
         datasets: [
-          { label: `${rangeLabel} 2025`, data: cityLabels.map((c) => paidCityData25[c]), backgroundColor: cityLabels.map((c) => CITY_COLS[c] + "80"), borderRadius: 4 },
-          { label: `${rangeLabel} 2026`, data: cityLabels.map((c) => paidCityData26[c]), backgroundColor: cityLabels.map((c) => CITY_COLS[c]), borderRadius: 4 }
+          { label: `${rangeLabel} 2025`, data: cityLabels.map((c) => paidCityData25[c]), backgroundColor: cityLabels.map((c) => getCityColor(c) + "80"), borderRadius: 4 },
+          { label: `${rangeLabel} 2026`, data: cityLabels.map((c) => paidCityData26[c]), backgroundColor: cityLabels.map((c) => getCityColor(c)), borderRadius: 4 }
         ]
       },
       options: {
@@ -1990,7 +1991,7 @@
       const st26 = m.g26 ? m.g26.stats[this.activeLang] : null;
       const ytd25 = st25 ? filteredStats(st25, this.activeMonths) : null;
       const ytd26 = st26 ? filteredStats(st26, this.activeMonths) : null;
-      const col = CITY_COLS[m.city] || "#999";
+      const col = getCityColor(m.city);
       const init = m.name.split(" ").map((w) => w[0]).join("").substring(0, 2).toUpperCase();
       const inactive = !m.g26;
       return `<div class="guide-card ${inactive ? "inactive" : ""}" data-city="${m.city}" data-name="${safeName(m.name)}"><div class="gc-stripe" style="background:${col}"></div><div class="gc-body"><div class="gc-header"><div class="avatar" style="background:${col}18;color:${col};border:1px solid ${col}40">${init}</div><span class="gc-name">${m.name}</span><span class="city-pill" style="background:${col}18;color:${col}">${m.city}</span></div><table class="gc-cmp-table"><tbody><tr><td class="label">${t("labels.freeT")}</td><td class="v25">${ytd25 ? ytd25.freeTours : "\u2014"}</td><td class="v26">${ytd26 ? ytd26.freeTours : "\u2014"}</td><td class="delta">${ytd25 && ytd26 ? this.fmtDelta(ytd25.freeTours, ytd26.freeTours) : "\u2014"}</td></tr><tr><td class="label">${t("labels.freeP")}</td><td class="v25">${ytd25 ? ytd25.freePax : "\u2014"}</td><td class="v26">${ytd26 ? ytd26.freePax : "\u2014"}</td><td class="delta">${ytd25 && ytd26 ? this.fmtDelta(ytd25.freePax, ytd26.freePax) : "\u2014"}</td></tr><tr><td class="label">${t("labels.paidT")}</td><td class="v25">${ytd25 ? ytd25.paidTours : "\u2014"}</td><td class="v26">${ytd26 ? ytd26.paidTours : "\u2014"}</td><td class="delta">${ytd25 && ytd26 ? this.fmtDelta(ytd25.paidTours, ytd26.paidTours) : "\u2014"}</td></tr><tr><td class="label">${t("labels.paidP")}</td><td class="v25">${ytd25 ? ytd25.paidPax : "\u2014"}</td><td class="v26">${ytd26 ? ytd26.paidPax : "\u2014"}</td><td class="delta">${ytd25 && ytd26 ? this.fmtDelta(ytd25.paidPax, ytd26.paidPax) : "\u2014"}</td></tr></tbody></table></div></div>`;
@@ -2048,14 +2049,7 @@
       setDelta("kd-avg-pax-abs", "kd-avg-pax-pct", ft25 > 0 ? fp25 / ft25 : 0, ft26 > 0 ? fp26 / ft26 : 0, (v) => v.toFixed(1));
     },
     getChartColors() {
-      const isDark = document.body.classList.contains("dark-mode");
-      return {
-        text: isDark ? "#eeeeee" : "#111111",
-        text3: isDark ? "#888888" : "#999999",
-        border: isDark ? "#333333" : "#e8e8e8",
-        y25: "#6366F1",
-        y26: "#1D9E75"
-      };
+      return getChartColors();
     },
     updateCharts() {
       const self = this;
@@ -2769,7 +2763,7 @@
             <div class="filter-bar">
                 <div class="city-pill-group">
                     ${["all", ...CITIES].map((c) => {
-        const col = CITY_COLS[c];
+        const col = getCityColor(c);
         const label = c === "all" ? t("labels.all") : c;
         const active = this.activeCity === c ? " active" : "";
         const style = col ? ` style="--city-col:${col}"` : "";
@@ -3804,7 +3798,7 @@
             <td class="rank">${rank26}</td>
             <td style="text-align:center;font-size:11px">${rankHtml}</td>
             <td class="guide-name">${r.name}</td>
-            <td><span class="city-dot" style="background:${CITY_COLS[r.city] || "#999"}"></span>${r.city}</td>
+            <td><span class="city-dot" style="background:${getCityColor(r.city)}"></span>${r.city}</td>
             <td>${fmt(r.freeTours)}</td>
             <td>${fmt(r.paidTours)}<br><small class="yoy">${dd(dPaid)}</small></td>
             <td>${r.avgPax > 0 ? r.avgPax.toFixed(1) : "\u2014"}</td>
@@ -3843,7 +3837,11 @@
     }
     document.querySelectorAll(".sort-hdr").forEach((th) => {
       th.classList.remove("sorted-asc", "sorted-desc");
-      if (th.dataset.col === col) th.classList.add(_sortDir === -1 ? "sorted-desc" : "sorted-asc");
+      th.setAttribute("aria-sort", "none");
+      if (th.dataset.col === col) {
+        th.classList.add(_sortDir === -1 ? "sorted-desc" : "sorted-asc");
+        th.setAttribute("aria-sort", _sortDir === -1 ? "descending" : "ascending");
+      }
     });
     const activePill = document.querySelector(".city-pill.active");
     const activeCity = activePill?.dataset.city || "all";
@@ -4502,12 +4500,33 @@ GM%: ${gmpct}%`;
     updateManagementTabs();
   });
   var shortcutOverlay = () => document.getElementById("shortcut-overlay");
+  var _overlayPreviousFocus = null;
   function toggleShortcutOverlay() {
     const el = shortcutOverlay();
     if (!el) return;
     const isOpen = el.style.display === "block";
-    el.style.display = isOpen ? "none" : "block";
-    el.setAttribute("aria-hidden", isOpen ? "true" : "false");
+    if (isOpen) {
+      el.style.display = "none";
+      el.setAttribute("aria-hidden", "true");
+      el.removeEventListener("keydown", _overlayTrapFocus);
+      _overlayPreviousFocus?.focus();
+      _overlayPreviousFocus = null;
+    } else {
+      _overlayPreviousFocus = document.activeElement;
+      el.style.display = "block";
+      el.setAttribute("aria-hidden", "false");
+      el.addEventListener("keydown", _overlayTrapFocus);
+      el.querySelector(".overlay-close")?.focus();
+    }
+  }
+  function _overlayTrapFocus(e) {
+    if (e.key === "Escape") {
+      toggleShortcutOverlay();
+      return;
+    }
+    if (e.key !== "Tab") return;
+    e.preventDefault();
+    shortcutOverlay()?.querySelector(".overlay-close")?.focus();
   }
   var PAGE_MAP = {
     "tab-25": "page-25",
@@ -4528,7 +4547,15 @@ GM%: ${gmpct}%`;
     document.getElementById("cutoff-picker")?.addEventListener("change", (e) => updateDateAsOf(e.target.value));
     document.querySelector(".print-btn")?.addEventListener("click", () => window.print());
     document.querySelectorAll(".city-pill").forEach((el) => el.addEventListener("click", () => mgmtFilterCityPl(el.dataset.city)));
-    document.querySelectorAll(".sort-hdr").forEach((el) => el.addEventListener("click", () => mgmtSort2(el.dataset.col)));
+    document.querySelectorAll(".sort-hdr").forEach((el) => {
+      el.addEventListener("click", () => mgmtSort2(el.dataset.col));
+      el.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          mgmtSort2(el.dataset.col);
+        }
+      });
+    });
     document.querySelector(".overlay-close")?.addEventListener("click", toggleShortcutOverlay);
     const mainTabs = Array.from(document.querySelectorAll(".nav-tabs .nav-tab"));
     mainTabs.forEach((tab, i) => {

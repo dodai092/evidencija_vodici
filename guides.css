@@ -1363,9 +1363,9 @@ body.dark-mode .filter-select {
   margin-bottom: 8px;
 }
 .kpi-card .kpi-value {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 26px;
-  font-weight: 400;
+  font-weight: 500;
   color: var(--text);
 }
 .kpi-card .kpi-sub {

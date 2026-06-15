@@ -125,11 +125,10 @@ Each guide entry in `guideStats25` / `guideStats26`:
 
 ### Extending the comparison date range
 
-The comparison tab (`page-cmp/index.js`) shows Jan–May by default. To extend to June after June data lands:
+The comparison tab (`page-cmp/index.js`) shows Jan–Jun by default. To extend beyond June after new months land:
 
-1. In `src/pages/page-cmp/index.js`, update the `_buildHeader()` method:
-   - Change the subtitle text from `Jan–May` to `Jan–Jun`
-   - Update the `ytd()` loop if it exists: change `m <= 5` → `m <= 6`
+1. In `src/pages/page-cmp/index.js`, update all instances of the range label (search for `Jan–Jun` and replace with the new range, e.g., `Jan–Jul`)
+   - There are multiple chart titles with the ytd-range-label span that need updating
 
 ### Theme system
 

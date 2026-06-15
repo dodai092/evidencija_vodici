@@ -897,7 +897,7 @@ export const PageCmp = {
         return `        <div class="header">
             <div class="header-left">
                 <h1>${t('sections.guideComparison')}</h1>
-                <p><span class="ytd-range-label">Jan–May</span> 2025 vs. 2026 &middot; ${t('sections.productionByGuide')}</p>
+                <p><span class="ytd-range-label">Jan–Jun</span> 2025 vs. 2026 &middot; ${t('sections.productionByGuide')}</p>
             </div>
             <div class="header-right">
                 <div id="date-pov-cmp" class="mb-6"></div>
@@ -1025,7 +1025,7 @@ export const PageCmp = {
                         </div>
                     </div>
                     <div class="chart-card">
-                        <div class="chart-card-title"${titleAttr('charts.avgFreePaxCmp')}>${t('charts.avgFreePaxCmp')} — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
+                        <div class="chart-card-title"${titleAttr('charts.avgFreePaxCmp')}>${t('charts.avgFreePaxCmp')} — <span class="ytd-range-label">Jan–Jun</span> 2025 vs. 2026</div>
                         <div class="chart-container">
                             <canvas id="avgFreePaxCmpChart-cmp"></canvas>
                         </div>
@@ -1033,7 +1033,7 @@ export const PageCmp = {
                 </div>
                 <div class="charts-row">
                     <div class="chart-card">
-                        <div class="chart-card-title"${titleAttr('charts.cumulativeFreePax')}>${t('charts.cumulativeFreePax')} (<span class="ytd-range-label">Jan–May</span>)</div>
+                        <div class="chart-card-title"${titleAttr('charts.cumulativeFreePax')}>${t('charts.cumulativeFreePax')} (<span class="ytd-range-label">Jan–Jun</span>)</div>
                         <div class="chart-container">
                             <canvas id="monthlyChart-cmp"></canvas>
                         </div>
@@ -1041,7 +1041,7 @@ export const PageCmp = {
                 </div>
                 <div class="charts-row">
                     <div class="chart-card">
-                        <div class="chart-card-title"${titleAttr('charts.cityMonthlyCumulative')}>${t('charts.cityMonthlyCumulative')} (<span class="ytd-range-label">Jan–May</span>)</div>
+                        <div class="chart-card-title"${titleAttr('charts.cityMonthlyCumulative')}>${t('charts.cityMonthlyCumulative')} (<span class="ytd-range-label">Jan–Jun</span>)</div>
                         <div id="city-monthly-badges-cmp" class="city-monthly-badges"></div>
                         <div class="chart-container">
                             <canvas id="cityMonthlyChart-cmp"></canvas>
@@ -1071,7 +1071,7 @@ export const PageCmp = {
                         </div>
                     </div>
                     <div class="chart-card">
-                        <div class="chart-card-title"${titleAttr('charts.cumulativePaidTours')}>${t('charts.cumulativePaidTours')} (<span class="ytd-range-label">Jan–May</span>)</div>
+                        <div class="chart-card-title"${titleAttr('charts.cumulativePaidTours')}>${t('charts.cumulativePaidTours')} (<span class="ytd-range-label">Jan–Jun</span>)</div>
                         <div class="chart-container">
                             <canvas id="paidChart-cmp"></canvas>
                         </div>
@@ -1079,7 +1079,7 @@ export const PageCmp = {
                 </div>
                 <div class="charts-row">
                     <div class="chart-card type-chart-card">
-                        <div class="chart-card-title"${titleAttr('charts.privatePaidTours')}>${t('charts.privatePaidTours')} — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
+                        <div class="chart-card-title"${titleAttr('charts.privatePaidTours')}>${t('charts.privatePaidTours')} — <span class="ytd-range-label">Jan–Jun</span> 2025 vs. 2026</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
                                 <span class="type-filter-label">${t('labels.city')}</span>
@@ -1111,7 +1111,7 @@ export const PageCmp = {
                 </div>
                 <div class="charts-row">
                     <div class="chart-card type-chart-card">
-                        <div class="chart-card-title"${titleAttr('charts.avgPaxByType')}>${t('charts.avgPaxByType')} — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
+                        <div class="chart-card-title"${titleAttr('charts.avgPaxByType')}>${t('charts.avgPaxByType')} — <span class="ytd-range-label">Jan–Jun</span> 2025 vs. 2026</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
                                 <span class="type-filter-label">${t('labels.type')}</span>
@@ -1134,7 +1134,7 @@ export const PageCmp = {
                 </div>
                 <div class="charts-row">
                     <div class="chart-card type-chart-card">
-                        <div class="chart-card-title"${titleAttr('charts.sharedPaidTours')}>${t('charts.sharedPaidTours')} — <span class="ytd-range-label">Jan–May</span> 2025 vs. 2026</div>
+                        <div class="chart-card-title"${titleAttr('charts.sharedPaidTours')}>${t('charts.sharedPaidTours')} — <span class="ytd-range-label">Jan–Jun</span> 2025 vs. 2026</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
                                 <span class="type-filter-label">${t('labels.city')}</span>

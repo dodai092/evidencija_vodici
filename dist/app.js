@@ -201,9 +201,10 @@
         paidToursCountYtd: "Paid Tours \u2013 Count YTD",
         freeT: "Free t",
         freeP: "Free p",
-        paidT: "$ t",
-        paidP: "$ p",
-        dataThrough: "data through"
+        paidT: "Paid t",
+        paidP: "Paid p",
+        dataThrough: "data through",
+        moreDetail: "More detail"
       },
       charts: {
         freePaxByCity: "Free PAX by City",
@@ -347,9 +348,10 @@
         paidToursCountYtd: "Pla\u0107ene ture \u2013 Broj YTD",
         freeT: "Bespl. t",
         freeP: "Bespl. p",
-        paidT: "$ t",
-        paidP: "$ p",
-        dataThrough: "podaci kroz"
+        paidT: "Pla\u0107. t",
+        paidP: "Pla\u0107. p",
+        dataThrough: "podaci kroz",
+        moreDetail: "Vi\u0161e detalja"
       },
       charts: {
         freePaxByCity: "Besplatni PAX po gradu",
@@ -523,6 +525,10 @@
       const el = document.getElementById(id);
       if (el) el.textContent = text;
     });
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      const val = t(el.getAttribute("data-i18n"));
+      if (val && val !== el.getAttribute("data-i18n")) el.textContent = val;
+    });
   }
 
   // src/pages/page-2025.js
@@ -574,7 +580,7 @@
         return `<tr><td>${md.name}</td><td class="num free-col">${md.free.tours || 0}</td><td class="num">${md.free.pax || 0}</td><td class="num paid-col">${md.paid.tours || 0}</td><td class="num">${md.paid.pax || 0}</td></tr>`;
       }).join("");
       const cityDisplay = isExternal ? t("labels.external") : g.city;
-      return `<div class="guide-card" data-city="${g.city}" data-name="${g.name}"><div class="gc-stripe" style="background:${col}"></div><div class="gc-body"><div class="gc-header"><div class="avatar" style="background:${col}18;color:${col};border:1px solid ${col}40">${init}</div><span class="gc-name">${g.name}</span>` + (isExternal ? `<span class="badge-ext">${t("labels.external")}</span>` : `<span class="city-pill" style="background:${col}18;color:${col}">${cityDisplay}</span>`) + `</div><div class="gc-stats"><div class="gc-half"><div class="gc-stat-label">${t("labels.freeTours")}</div><div class="gc-stat-num" style="color:var(--green)">${fs.freeTours}</div><div class="gc-stat-sub">${fs.freePax} pax</div></div><div class="gc-divider"></div><div class="gc-half" style="text-align:right"><div class="gc-stat-label">${t("labels.paidTours")}</div><div class="gc-stat-num" style="color:${col}">${fs.paidTours}</div><div class="gc-stat-sub">${fs.paidPax} pax</div></div></div></div>${typeBarsHtml}<button type="button" class="monthly-toggle" aria-expanded="false" onclick="Page25.toggleMonthly('${sid}')"><span class="mt-arrow" id="mta-${sid}">&#9660;</span> ${t("labels.monthly")}</button><div class="monthly-table" id="mt-${sid}"><table><thead><tr><th>${t("table.month")}</th><th class="num" style="color:var(--green)">${t("table.free")} t</th><th class="num">${t("table.free")} p</th><th class="num" style="color:var(--teal)">$ t</th><th class="num">$ p</th></tr></thead><tbody>${monthRowsHtml}</tbody><tfoot><tr><td>${t("labels.total")}</td><td class="num free-col">${fs.freeTours}</td><td class="num">${fs.freePax}</td><td class="num paid-col">${fs.paidTours}</td><td class="num">${fs.paidPax}</td></tr></tfoot></table></div></div>`;
+      return `<div class="guide-card" data-city="${g.city}" data-name="${g.name}"><div class="gc-stripe" style="background:${col}"></div><div class="gc-body"><div class="gc-header"><div class="avatar" style="background:${col}18;color:${col};border:1px solid ${col}40">${init}</div><span class="gc-name">${g.name}</span>` + (isExternal ? `<span class="badge-ext">${t("labels.external")}</span>` : `<span class="city-pill" style="background:${col}18;color:${col}">${cityDisplay}</span>`) + `</div><div class="gc-stats"><div class="gc-half"><div class="gc-stat-label">${t("labels.freeTours")}</div><div class="gc-stat-num" style="color:var(--green)">${fs.freeTours}</div><div class="gc-stat-sub">${fs.freePax} pax</div></div><div class="gc-divider"></div><div class="gc-half" style="text-align:right"><div class="gc-stat-label">${t("labels.paidTours")}</div><div class="gc-stat-num" style="color:${col}">${fs.paidTours}</div><div class="gc-stat-sub">${fs.paidPax} pax</div></div></div></div>${typeBarsHtml}<button type="button" class="monthly-toggle" aria-expanded="false" onclick="Page25.toggleMonthly('${sid}')"><span class="mt-arrow" id="mta-${sid}">&#9660;</span> ${t("labels.monthly")}</button><div class="monthly-table" id="mt-${sid}"><table><thead><tr><th>${t("table.month")}</th><th class="num" style="color:var(--green)">${t("table.free")} t</th><th class="num">${t("table.free")} p</th><th class="num" style="color:var(--teal)">${t("table.paid")} t</th><th class="num">${t("table.paid")} p</th></tr></thead><tbody>${monthRowsHtml}</tbody><tfoot><tr><td>${t("labels.total")}</td><td class="num free-col">${fs.freeTours}</td><td class="num">${fs.freePax}</td><td class="num paid-col">${fs.paidTours}</td><td class="num">${fs.paidPax}</td></tr></tfoot></table></div></div>`;
     },
     renderAll() {
       const container = this._el("guide-sections");
@@ -891,7 +897,7 @@
       return `<div class="header">
             <div class="header-left">
                 <h1>Tours <span class="accent">2025</span></h1>
-                <p>Tour production by guide &middot; Free vs. Paid &middot; <span class="ytd-range-label">Jan\u2013May</span></p>
+                <p>Tour production by guide &middot; Free vs. Paid &middot; <span class="ytd-range-label">${getRangeLabel()}</span></p>
             </div>
             <div class="header-right">
                 <div id="date-pov-25" class="mb-6"></div>
@@ -918,7 +924,7 @@
                     </select>
                     <select class="filter-select" id="month-filter-25" onchange="Page25.filterMonth(this.value)">
                         <option value="all">${t("labels.all")}</option>
-                        ${Array.from({ length: 12 }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join("")}
+                        ${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((n, i) => `<option value="${i + 1}">${n}</option>`).join("")}
                     </select>
                 </div>
             </div>
@@ -1116,7 +1122,7 @@
         const md = st.byMonth[m];
         return `<tr><td>${md.name}</td><td class="num free-col">${md.free.tours || 0}</td><td class="num">${md.free.pax || 0}</td><td class="num paid-col">${md.paid.tours || 0}</td><td class="num">${md.paid.pax || 0}</td></tr>`;
       }).join("");
-      return `<div class="guide-card" data-city="${g.city}" data-name="${g.name}"><div class="gc-stripe" style="background:${col}"></div><div class="gc-body"><div class="gc-header"><div class="avatar" style="background:${col}18;color:${col};border:1px solid ${col}40">${init}</div><span class="gc-name">${g.name}</span><span class="city-pill" style="background:${col}18;color:${col}">${g.city}</span></div><div class="gc-stats"><div class="gc-half"><div class="gc-stat-label">${t("labels.freeTours")}</div><div class="gc-stat-num" style="color:var(--green)">${fs.freeTours}</div><div class="gc-stat-sub">${fs.freePax} pax</div></div><div class="gc-divider"></div><div class="gc-half" style="text-align:right"><div class="gc-stat-label">${t("labels.paidTours")}</div><div class="gc-stat-num" style="color:${col}">${fs.paidTours}</div><div class="gc-stat-sub">${fs.paidPax} pax</div></div></div></div>${typeBarsHtml}<button type="button" class="monthly-toggle" aria-expanded="false" onclick="Page26.toggleMonthly('${sid}')"><span class="mt-arrow" id="mta-${sid}">&#9660;</span> ${t("labels.monthly")}</button><div class="monthly-table" id="mt-${sid}"><table><thead><tr><th>${t("table.month")}</th><th class="num" style="color:var(--green)">${t("table.free")} t</th><th class="num">${t("table.free")} p</th><th class="num" style="color:var(--teal)">$ t</th><th class="num">$ p</th></tr></thead><tbody>${monthRowsHtml}</tbody><tfoot><tr><td>${t("labels.total")}</td><td class="num free-col">${fs.freeTours}</td><td class="num">${fs.freePax}</td><td class="num paid-col">${fs.paidTours}</td><td class="num">${fs.paidPax}</td></tr></tfoot></table></div></div>`;
+      return `<div class="guide-card" data-city="${g.city}" data-name="${g.name}"><div class="gc-stripe" style="background:${col}"></div><div class="gc-body"><div class="gc-header"><div class="avatar" style="background:${col}18;color:${col};border:1px solid ${col}40">${init}</div><span class="gc-name">${g.name}</span><span class="city-pill" style="background:${col}18;color:${col}">${g.city}</span></div><div class="gc-stats"><div class="gc-half"><div class="gc-stat-label">${t("labels.freeTours")}</div><div class="gc-stat-num" style="color:var(--green)">${fs.freeTours}</div><div class="gc-stat-sub">${fs.freePax} pax</div></div><div class="gc-divider"></div><div class="gc-half" style="text-align:right"><div class="gc-stat-label">${t("labels.paidTours")}</div><div class="gc-stat-num" style="color:${col}">${fs.paidTours}</div><div class="gc-stat-sub">${fs.paidPax} pax</div></div></div></div>${typeBarsHtml}<button type="button" class="monthly-toggle" aria-expanded="false" onclick="Page26.toggleMonthly('${sid}')"><span class="mt-arrow" id="mta-${sid}">&#9660;</span> ${t("labels.monthly")}</button><div class="monthly-table" id="mt-${sid}"><table><thead><tr><th>${t("table.month")}</th><th class="num" style="color:var(--green)">${t("table.free")} t</th><th class="num">${t("table.free")} p</th><th class="num" style="color:var(--teal)">${t("table.paid")} t</th><th class="num">${t("table.paid")} p</th></tr></thead><tbody>${monthRowsHtml}</tbody><tfoot><tr><td>${t("labels.total")}</td><td class="num free-col">${fs.freeTours}</td><td class="num">${fs.freePax}</td><td class="num paid-col">${fs.paidTours}</td><td class="num">${fs.paidPax}</td></tr></tfoot></table></div></div>`;
     },
     renderAll() {
       const container = this._el("guide-sections");
@@ -1521,11 +1527,11 @@
                     </select>
                     <select class="filter-select" id="month-filter-26" onchange="Page26.filterMonth(this.value)">
                         <option value="all">${t("labels.all")}</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
+                        <option value="1">Jan</option>
+                        <option value="2">Feb</option>
+                        <option value="3">Mar</option>
+                        <option value="4">Apr</option>
+                        <option value="5">May</option>
                     </select>
                 </div>
             </div>
@@ -3362,10 +3368,16 @@
     if (!el) return;
     const wk = _isoWeek(getGlobalDate());
     const wkStr = String(wk);
+    const _d = /* @__PURE__ */ new Date(getGlobalDate() + "T00:00:00");
+    _d.setDate(_d.getDate() - (_d.getDay() + 6) % 7);
+    const _sun = new Date(_d);
+    _sun.setDate(_d.getDate() + 6);
+    const _M = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const dateRangeLabel = `${_d.getDate()} ${_M[_d.getMonth()]} \u2013 ${_sun.getDate()} ${_M[_sun.getMonth()]}`;
     const w26 = kpiTotals26.mgmt.byWeek?.[wkStr];
     const w25 = typeof kpiTotals25 !== "undefined" ? kpiTotals25.mgmt?.byWeek?.[wkStr] : null;
     if (!w26) {
-      el.innerHTML = "";
+      el.innerHTML = `<span class="week-chip-title">Week ${wk} \xB7 ${dateRangeLabel} \u2014 no data</span>`;
       return;
     }
     const gmPct = w26.revenue > 0 ? (w26.grossMargin / w26.revenue * 100).toFixed(1) : "\u2014";
@@ -3380,7 +3392,7 @@
       }
       return `<div class="week-chip"><span class="week-chip-label">${label}</span><span class="week-chip-val">${val}</span>${dHtml}</div>`;
     }
-    el.innerHTML = `<span class="week-chip-title">Week ${wk} so far</span>` + chip("Tours", fmt(w26.tours), w25 ? w26.tours - w25.tours : null, false) + chip("Revenue", fmtEur(w26.revenue), revDelta, true) + chip("GM", fmtEur(w26.grossMargin) + ` (${gmPct}%)`, gmDelta, true);
+    el.innerHTML = `<span class="week-chip-title">Week ${wk} \xB7 ${dateRangeLabel}</span>` + chip("Tours", fmt(w26.tours), w25 ? w26.tours - w25.tours : null, false) + chip("Revenue", fmtEur(w26.revenue), revDelta, true) + chip("GM", fmtEur(w26.grossMargin) + ` (${gmPct}%)`, gmDelta, true);
   }
   function initPl(city) {
     renderWeekFlash();
@@ -3508,8 +3520,7 @@
         positive: true
       }
     ];
-    candidates.sort((a, b) => Math.abs(b.pct ?? b.val) - Math.abs(a.pct ?? a.val));
-    const top = candidates.slice(0, 3);
+    const top = candidates.filter((c) => ["Revenue", "Gross Margin", "GM%"].includes(c.label));
     el.innerHTML = top.map((c) => {
       const isGood = c.positive ? c.val >= 0 : c.val <= 0;
       const cls = isGood ? "insight-pos" : "insight-neg";
@@ -3757,7 +3768,6 @@
       return {
         name: g.name,
         city: g.city,
-        freeTours: sts.freeTours,
         paidTours: sts.paidTours,
         avgPax,
         revenue: m.revenue,
@@ -3799,7 +3809,6 @@
             <td style="text-align:center;font-size:11px">${rankHtml}</td>
             <td class="guide-name">${r.name}</td>
             <td><span class="city-dot" style="background:${getCityColor(r.city)}"></span>${r.city}</td>
-            <td>${fmt(r.freeTours)}</td>
             <td>${fmt(r.paidTours)}<br><small class="yoy">${dd(dPaid)}</small></td>
             <td>${r.avgPax > 0 ? r.avgPax.toFixed(1) : "\u2014"}</td>
             <td>${fmtEur(r.revenue)}<br><small class="yoy">${dd(dRev, true)}</small></td>
@@ -3949,7 +3958,6 @@
             <th>${t("management.vendorCost")}</th>
             <th>${t("management.grossMargin")} '26</th><th>${t("management.gmPercent")}</th>
             <th>${t("management.grossMargin")} '25</th><th>\u0394 GM</th>
-            <th>Action</th>
         </tr></thead>
         <tbody>${srcKeys.map((k) => {
       const d = srcData[k];
@@ -3957,11 +3965,6 @@
       const gmpct = d.revenue > 0 ? d.grossMargin / d.revenue * 100 : 0;
       const commpct = d.revenue > 0 ? (d.commissionCost || 0) / d.revenue * 100 : 0;
       const dgm = d25 ? d.grossMargin - d25.grossMargin : null;
-      let action = "\u2014";
-      if (d.tours < 5) action = t("management.lowVolume");
-      else if (commpct > 25) action = t("management.highCommission");
-      else if (commpct < 15 && d.tours >= 20) action = t("management.keepPushing");
-      else if (dgm !== null && dgm < -200) action = t("management.declining");
       return `<tr>
                 <td><strong>${k}</strong></td>
                 <td>${fmt(d.tours)}</td>
@@ -3973,7 +3976,6 @@
                 <td class="${gmClass(gmpct)}">${gmpct.toFixed(1)}%</td>
                 <td>${d25 ? fmtEur(d25.grossMargin) : "\u2014"}</td>
                 <td>${dd(dgm, true)}</td>
-                <td style="font-size:11px;color:var(--text2)">${action}</td>
             </tr>`;
     }).join("")}</tbody>
     </table>`;
@@ -4204,7 +4206,6 @@ GM%: ${gmpct}%`;
     renderCitiesTab();
   }
   function renderCitiesTab() {
-    const { c25, c26, green, red } = getThemeColors();
     let cardsHtml = "";
     CITIES.forEach((city) => {
       const k26 = computeFilteredKpis(city);
@@ -4247,11 +4248,8 @@ GM%: ${gmpct}%`;
       CITIES.forEach((city) => {
         const data = ttByCity[city]?.[type] || { revenue: 0, grossMargin: 0 };
         const gm = data.revenue > 0 ? data.grossMargin / data.revenue * 100 : 0;
-        const bgHue = gm >= 25 ? 120 : gm >= 10 ? 45 : 0;
-        const bgSat = gm > 0 ? 60 : 0;
-        const bgLight = gm > 0 ? 85 : 95;
-        const bgColor = `hsl(${bgHue}, ${bgSat}%, ${bgLight}%)`;
-        ttHtml += `<td class="pos" style="background: ${bgColor}">\u20AC${fmt(data.revenue)}<br><strong>${gm.toFixed(1)}%</strong></td>`;
+        const gmCls = gm >= 25 ? "tt-gm-high" : gm >= 10 ? "tt-gm-mid" : gm > 0 ? "tt-gm-low" : "";
+        ttHtml += `<td class="${gmCls}">\u20AC${fmt(data.revenue)}<br><strong>${gm.toFixed(1)}%</strong></td>`;
         cityTotals[city].revenue += data.revenue;
         cityTotals[city].grossMargin += data.grossMargin;
         typeTotal.revenue += data.revenue;
@@ -4289,8 +4287,8 @@ GM%: ${gmpct}%`;
       CITIES.forEach((city) => {
         const data = srcByCity[city]?.[source] || { revenue: 0, commissionCost: 0, tours: 0 };
         const commRate = data.revenue > 0 ? data.commissionCost / data.revenue * 100 : 0;
-        const commColor = commRate > 25 ? red + "44" : commRate > 15 ? "#BA751744" : green + "22";
-        srcHtml += `<td style="background: ${commColor}">\u20AC${fmt(data.revenue)}<br>${commRate.toFixed(1)}% comm</td>`;
+        const commCls = commRate > 25 ? "tt-gm-low" : commRate > 15 ? "tt-gm-mid" : "tt-gm-high";
+        srcHtml += `<td class="${commCls}">\u20AC${fmt(data.revenue)}<br>${commRate.toFixed(1)}% comm</td>`;
       });
       srcHtml += "</tr>";
     });

@@ -117,7 +117,6 @@ export function renderOtaSourceTable() {
             <th>${t('management.vendorCost')}</th>
             <th>${t('management.grossMargin')} '26</th><th>${t('management.gmPercent')}</th>
             <th>${t('management.grossMargin')} '25</th><th>Δ GM</th>
-            <th>Action</th>
         </tr></thead>
         <tbody>${srcKeys.map(k => {
             const d = srcData[k];
@@ -125,12 +124,6 @@ export function renderOtaSourceTable() {
             const gmpct = d.revenue > 0 ? (d.grossMargin / d.revenue * 100) : 0;
             const commpct = d.revenue > 0 ? ((d.commissionCost||0) / d.revenue * 100) : 0;
             const dgm = d25 ? d.grossMargin - d25.grossMargin : null;
-
-            let action = '—';
-            if (d.tours < 5) action = t('management.lowVolume');
-            else if (commpct > 25) action = t('management.highCommission');
-            else if (commpct < 15 && d.tours >= 20) action = t('management.keepPushing');
-            else if (dgm !== null && dgm < -200) action = t('management.declining');
 
             return `<tr>
                 <td><strong>${k}</strong></td>
@@ -143,7 +136,6 @@ export function renderOtaSourceTable() {
                 <td class="${gmClass(gmpct)}">${gmpct.toFixed(1)}%</td>
                 <td>${d25 ? fmtEur(d25.grossMargin) : '—'}</td>
                 <td>${dd(dgm, true)}</td>
-                <td style="font-size:11px;color:var(--text2)">${action}</td>
             </tr>`;
         }).join('')}</tbody>
     </table>`;

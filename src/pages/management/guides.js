@@ -49,7 +49,7 @@ export function renderGuideTable(city) {
 
         return {
             name: g.name, city: g.city,
-            freeTours: sts.freeTours, paidTours: sts.paidTours,
+            paidTours: sts.paidTours,
             avgPax, revenue: m.revenue, vendorCost: m.vendorCost,
             commissionCost: comm, commPct,
             grossMargin: m.grossMargin, gmPct, avgGm,
@@ -85,7 +85,6 @@ export function renderGuideTable(city) {
             <td style="text-align:center;font-size:11px">${rankHtml}</td>
             <td class="guide-name">${r.name}</td>
             <td><span class="city-dot" style="background:${getCityColor(r.city)}"></span>${r.city}</td>
-            <td>${fmt(r.freeTours)}</td>
             <td>${fmt(r.paidTours)}<br><small class="yoy">${dd(dPaid)}</small></td>
             <td>${r.avgPax > 0 ? r.avgPax.toFixed(1) : '—'}</td>
             <td>${fmtEur(r.revenue)}<br><small class="yoy">${dd(dRev, true)}</small></td>

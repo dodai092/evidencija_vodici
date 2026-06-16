@@ -1,4 +1,4 @@
-import { getCityColor, getChartColors as _chartColors, CITY_CLS, CITIES, MONTH_NAMES_HR, filteredStats, safeName, fmtN, getCutoffMonth, getGlobalDate, registerPage } from '../shared.js';
+import { getCityColor, getChartColors as _chartColors, CITY_CLS, CITIES, MONTH_NAMES_HR, filteredStats, safeName, fmtN, getCutoffMonth, getGlobalDate, getRangeLabel, registerPage } from '../shared.js';
 import { t, titleAttr } from '../i18n.js';
 
 export const Page25 = {
@@ -98,8 +98,8 @@ export const Page25 = {
             `<th>${t('table.month')}</th>` +
             `<th class="num" style="color:var(--green)">${t('table.free')} t</th>` +
             `<th class="num">${t('table.free')} p</th>` +
-            `<th class="num" style="color:var(--teal)">$ t</th>` +
-            `<th class="num">$ p</th>` +
+            `<th class="num" style="color:var(--teal)">${t('table.paid')} t</th>` +
+            `<th class="num">${t('table.paid')} p</th>` +
             `</tr></thead>` +
             `<tbody>${monthRowsHtml}</tbody>` +
             `<tfoot><tr>` +
@@ -429,7 +429,7 @@ export const Page25 = {
         return `<div class="header">
             <div class="header-left">
                 <h1>Tours <span class="accent">2025</span></h1>
-                <p>Tour production by guide &middot; Free vs. Paid &middot; <span class="ytd-range-label">Jan–May</span></p>
+                <p>Tour production by guide &middot; Free vs. Paid &middot; <span class="ytd-range-label">${getRangeLabel()}</span></p>
             </div>
             <div class="header-right">
                 <div id="date-pov-25" class="mb-6"></div>
@@ -458,7 +458,7 @@ export const Page25 = {
                     </select>
                     <select class="filter-select" id="month-filter-25" onchange="Page25.filterMonth(this.value)">
                         <option value="all">${t('labels.all')}</option>
-                        ${Array.from({length:12},(_,i)=>`<option value="${i+1}">${i+1}</option>`).join('')}
+                        ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map((n,i)=>`<option value="${i+1}">${n}</option>`).join('')}
                     </select>
                 </div>
             </div>

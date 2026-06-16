@@ -26,9 +26,15 @@ export function renderWeekFlash() {
     if (!el) return;
     const wk = _isoWeek(getGlobalDate());
     const wkStr = String(wk);
+    const _d = new Date(getGlobalDate() + 'T00:00:00');
+    _d.setDate(_d.getDate() - ((_d.getDay() + 6) % 7));
+    const _sun = new Date(_d);
+    _sun.setDate(_d.getDate() + 6);
+    const _M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const dateRangeLabel = `${_d.getDate()} ${_M[_d.getMonth()]} – ${_sun.getDate()} ${_M[_sun.getMonth()]}`;
     const w26 = kpiTotals26.mgmt.byWeek?.[wkStr];
     const w25 = typeof kpiTotals25 !== 'undefined' ? kpiTotals25.mgmt?.byWeek?.[wkStr] : null;
-    if (!w26) { el.innerHTML = ''; return; }
+    if (!w26) { el.innerHTML = `<span class="week-chip-title">Week ${wk} · ${dateRangeLabel} — no data</span>`; return; }
 
     const gmPct = w26.revenue > 0 ? (w26.grossMargin / w26.revenue * 100).toFixed(1) : '—';
     const revDelta = w25 ? w26.revenue - w25.revenue : null;
@@ -44,7 +50,7 @@ export function renderWeekFlash() {
         return `<div class="week-chip"><span class="week-chip-label">${label}</span><span class="week-chip-val">${val}</span>${dHtml}</div>`;
     }
 
-    el.innerHTML = `<span class="week-chip-title">Week ${wk} so far</span>` +
+    el.innerHTML = `<span class="week-chip-title">Week ${wk} · ${dateRangeLabel}</span>` +
         chip('Tours', fmt(w26.tours), w25 ? w26.tours - w25.tours : null, false) +
         chip('Revenue', fmtEur(w26.revenue), revDelta, true) +
         chip('GM', fmtEur(w26.grossMargin) + ` (${gmPct}%)`, gmDelta, true);
@@ -192,8 +198,7 @@ function renderInsightCallouts(k, k25) {
         },
     ];
 
-    candidates.sort((a, b) => Math.abs(b.pct ?? b.val) - Math.abs(a.pct ?? a.val));
-    const top = candidates.slice(0, 3);
+    const top = candidates.filter(c => ['Revenue', 'Gross Margin', 'GM%'].includes(c.label));
 
     el.innerHTML = top.map(c => {
         const isGood = c.positive ? c.val >= 0 : c.val <= 0;

@@ -3,7 +3,7 @@ import { t } from '../../i18n.js';
 import {
     fmt, fmtEur, deltaClass, gmClass,
     filterStatsByDate, computeFilteredKpis, computeCity25,
-    makeBarChart, getThemeColors,
+    makeBarChart,
 } from './helpers.js';
 
 export function initCities() {
@@ -11,7 +11,6 @@ export function initCities() {
 }
 
 export function renderCitiesTab() {
-    const { c25, c26, green, red } = getThemeColors();
 
     let cardsHtml = '';
     CITIES.forEach(city => {
@@ -58,11 +57,8 @@ export function renderCitiesTab() {
         CITIES.forEach(city => {
             const data = ttByCity[city]?.[type] || { revenue: 0, grossMargin: 0 };
             const gm = data.revenue > 0 ? (data.grossMargin / data.revenue * 100) : 0;
-            const bgHue = gm >= 25 ? 120 : gm >= 10 ? 45 : 0;
-            const bgSat = gm > 0 ? 60 : 0;
-            const bgLight = gm > 0 ? 85 : 95;
-            const bgColor = `hsl(${bgHue}, ${bgSat}%, ${bgLight}%)`;
-            ttHtml += `<td class="pos" style="background: ${bgColor}">€${fmt(data.revenue)}<br><strong>${gm.toFixed(1)}%</strong></td>`;
+            const gmCls = gm >= 25 ? 'tt-gm-high' : gm >= 10 ? 'tt-gm-mid' : gm > 0 ? 'tt-gm-low' : '';
+            ttHtml += `<td class="${gmCls}">€${fmt(data.revenue)}<br><strong>${gm.toFixed(1)}%</strong></td>`;
             cityTotals[city].revenue += data.revenue;
             cityTotals[city].grossMargin += data.grossMargin;
             typeTotal.revenue += data.revenue;
@@ -104,8 +100,8 @@ export function renderCitiesTab() {
         CITIES.forEach(city => {
             const data = srcByCity[city]?.[source] || { revenue: 0, commissionCost: 0, tours: 0 };
             const commRate = data.revenue > 0 ? (data.commissionCost / data.revenue * 100) : 0;
-            const commColor = commRate > 25 ? red + '44' : commRate > 15 ? '#BA7517' + '44' : green + '22';
-            srcHtml += `<td style="background: ${commColor}">€${fmt(data.revenue)}<br>${commRate.toFixed(1)}% comm</td>`;
+            const commCls = commRate > 25 ? 'tt-gm-low' : commRate > 15 ? 'tt-gm-mid' : 'tt-gm-high';
+            srcHtml += `<td class="${commCls}">€${fmt(data.revenue)}<br>${commRate.toFixed(1)}% comm</td>`;
         });
         srcHtml += '</tr>';
     });

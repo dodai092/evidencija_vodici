@@ -71,6 +71,10 @@ export function updateNavigationLabels() {
         const el = document.getElementById(id);
         if (el) el.textContent = text;
     });
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const val = t(el.getAttribute('data-i18n'));
+        if (val && val !== el.getAttribute('data-i18n')) el.textContent = val;
+    });
 }
 
 export function toggleLanguage(onToggleComplete) {

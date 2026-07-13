@@ -35,6 +35,12 @@ To regenerate 2025 data (rarely needed — only to correct historical data):
 python3 scripts/extract_guides.py --year 2025 > data-2025.js
 ```
 
+If the workbook has both years combined in a single `Evidencija` sheet (distinguished by the `Year` column) instead of a separate `Evidencija_25` tab, override the sheet explicitly:
+```bash
+python3 scripts/extract_guides.py --year 2025 --sheet Evidencija > data-2025.js
+```
+The script filters rows by the `Year` column when present, so this works correctly either way.
+
 ## Architecture
 
 ### Build pipeline
@@ -114,9 +120,27 @@ Each guide entry in `guideStats25` / `guideStats26`:
 
 `kpiTotals26` / `kpiTotals25` are flat objects with `guides`, `freeTours`, `paidTours`, `freePax`, `paidPax`, and a `mgmt` sub-object with aggregates.
 
+### City totals (`cityStats25` / `cityStats26`)
+
+Every city-based chart or KPI (Free/Paid Pax by City, Free Pax by Month and City, the top KPI cards) must read from `cityStats25` / `cityStats26`, **not** by grouping `guideStats*` by each guide's `city` field. A guide's `city` field is only their assigned home city (from `GUIDE_ORDER`, used purely to group/order their card in the guide list) — a guide can tour in a different city than their assignment, and guides missing from `GUIDE_ORDER` fall back to `city: "Unknown"`. Summing by guide's `city` silently mis-attributes or drops pax from any such tour.
+
+`cityStats{suffix}` is built in `extract_guides.py` from each row's own `City` column, independent of vendor/guide identity:
+
+```js
+const cityStats26 = {
+  Zagreb:     { eng: {...}, esp: {...}, fra: {...}, all: {...} },  // same shape as a guideStats stats-per-lang object
+  Dubrovnik:  { ... },
+  Split:      { ... },
+  Zadar:      { ... },
+  // + any other raw City code present in the sheet (e.g. 'pu'/'rv' = Pula/Rovinj) — out of this report's scope, see below
+};
+```
+
+**Report scope is strictly the 4 tracked cities** (Zagreb, Dubrovnik, Split, Zadar) — `CITIES` in `shared.js`. Any row whose `City` column maps to something else (e.g. `pu`/Pula, `rv`/Rovinj) is excluded from every city-scoped total consistently: KPI cards, city charts/tables, and guide-city filters. All `updateKPIs()` implementations and any `mergedGuides`/`guideStats*` filtering by city must include `CITIES.includes(g.city)` (or sum only over `CITIES`) so headline numbers always equal the sum of the city breakdown — never sum "all guides" and expect it to match a city-scoped chart.
+
 ### Filtering and date cutoff
 
-`GLOBAL_DATE` in `shared.js` is the as-of date (default `'2026-05-06'`). The date picker in the nav calls `updateDateAsOf()` which re-renders all initialized pages including management.
+`GLOBAL_DATE` in `shared.js` is the as-of date, defaulting to today's date. The date picker in the nav calls `updateDateAsOf()` which re-renders all initialized pages including management.
 
 `filteredStats(stats, months)` in `shared.js` is the central filtering function:
 - For complete months (< cutoff month): sums `byMonth` aggregates.
@@ -136,7 +160,9 @@ CSS variables and `body.dark-mode` overrides are defined in `../shared/fs-core.c
 
 ### Guide ordering
 
-`extract_guides.py` contains `GUIDE_ORDER` — a hardcoded city → name list that controls output order in `data-2026.js`. Guides not in this list appear at the end under their city. Update this list when new guides are added permanently.
+`extract_guides.py` contains `GUIDE_ORDER` — a hardcoded city → name list that controls output order in `data-2026.js` and which city a guide's own card is grouped under in the guide list. Guides not in this list get `city: "Unknown"` and appear at the end. Update this list when new guides are added permanently.
+
+This list has **no effect on city-scoped totals** (KPI cards, city charts) — those come from `cityStats*`, built from each row's real `City` column. A guide missing from `GUIDE_ORDER` will show up in the wrong section of the guide list (or not at all, since `"Unknown"` isn't rendered), but their pax still count correctly under the right city everywhere else.
 
 ## Troubleshooting `extract_guides.py`
 
@@ -145,3 +171,4 @@ CSS variables and `body.dark-mode` overrides are defined in `../shared/fs-core.c
 | `Column "X" not found` | Header row renamed in Excel | Check column names in the sheet |
 | Guide missing | Name typo or extra space in Excel | Names must match exactly |
 | `ModuleNotFoundError: openpyxl` | venv not active | `source venv/bin/activate` |
+| KPI card total ≠ sum of city chart/table | Something is summing `guideStats*` grouped by guide's `city` instead of reading `cityStats*` | See "City totals" above — use `cityStats*`, and scope every "all cities" sum to `CITIES` only |

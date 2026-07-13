@@ -504,11 +504,7 @@ export const Page26 = {
                     </select>
                     <select class="filter-select" id="month-filter-26" onchange="Page26.filterMonth(this.value)">
                         <option value="all">${t('labels.all')}</option>
-                        <option value="1">Jan</option>
-                        <option value="2">Feb</option>
-                        <option value="3">Mar</option>
-                        <option value="4">Apr</option>
-                        <option value="5">May</option>
+                        ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].slice(0, getCutoffMonth()).map((n,i)=>`<option value="${i+1}">${n}</option>`).join('')}
                     </select>
                 </div>
             </div>

@@ -142,12 +142,11 @@ export const Page25 = {
         const citiesToShow = this.activeCity === 'all' ? CITIES : [this.activeCity];
 
         const freePaxByCity = {}, paidToursByCity = {};
-        CITIES.forEach(c => { freePaxByCity[c] = 0; paidToursByCity[c] = 0; });
-        guideStats25.forEach(g => {
-            if (!CITIES.includes(g.city)) return;
-            const fs = filteredStats(g.stats[lang], this.activeMonths);
-            freePaxByCity[g.city] += fs.freePax;
-            paidToursByCity[g.city] += fs.paidTours;
+        CITIES.forEach(c => {
+            const st = cityStats25[c]?.[lang];
+            const fs = st ? filteredStats(st, this.activeMonths) : { freePax: 0, paidTours: 0 };
+            freePaxByCity[c] = fs.freePax;
+            paidToursByCity[c] = fs.paidTours;
         });
 
         const makeBar = (canvasId, instanceKey, dataArr, yLabel, tooltipLabel) => {
@@ -186,9 +185,7 @@ export const Page25 = {
         const data = months.map(m => {
             const row = { m };
             CITIES.forEach(city => {
-                row[city] = guideStats25
-                    .filter(g => g.city === city)
-                    .reduce((s, g) => s + (g.stats[lang]?.byMonth?.[String(m)]?.free?.pax || 0), 0);
+                row[city] = cityStats25[city]?.[lang]?.byMonth?.[String(m)]?.free?.pax || 0;
             });
             return row;
         });

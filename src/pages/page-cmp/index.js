@@ -190,17 +190,14 @@ export const PageCmp = {
         const paidCityData25 = { Zagreb: 0, Dubrovnik: 0, Split: 0, Zadar: 0 };
         const paidCityData26 = { Zagreb: 0, Dubrovnik: 0, Split: 0, Zadar: 0 };
 
-        fc.forEach(m => {
-            const s25 = m.g25 ? filteredStats(m.g25.stats[this.activeLang], this.activeMonths) : null;
-            const s26 = m.g26 ? filteredStats(m.g26.stats[this.activeLang], this.activeMonths) : null;
-            if (s25) {
-                cityData25[m.city] += s25.freePax;
-                paidCityData25[m.city] += s25.paidTours;
-            }
-            if (s26) {
-                cityData26[m.city] += s26.freePax;
-                paidCityData26[m.city] += s26.paidTours;
-            }
+        CITIES.forEach(city => {
+            if (this.activeCity !== 'all' && this.activeCity !== city) return;
+            const st25 = cityStats25[city]?.[this.activeLang];
+            const st26 = cityStats26[city]?.[this.activeLang];
+            const s25 = st25 ? filteredStats(st25, this.activeMonths) : null;
+            const s26 = st26 ? filteredStats(st26, this.activeMonths) : null;
+            if (s25) { cityData25[city] = s25.freePax; paidCityData25[city] = s25.paidTours; }
+            if (s26) { cityData26[city] = s26.freePax; paidCityData26[city] = s26.paidTours; }
         });
 
         const cityDeltaPlugin = {
@@ -496,8 +493,7 @@ export const PageCmp = {
             ? this.activeMonths
             : Array.from({length: cutoffMonth}, (_, i) => i + 1);
 
-        const getPax = (guide, lang, m) => {
-            const st = guide?.stats?.[lang];
+        const getCityPax = (st, m) => {
             if (!st) return 0;
             if (m < cutoffMonth) {
                 return st.byMonth?.[String(m)]?.free?.pax || 0;
@@ -519,11 +515,8 @@ export const PageCmp = {
             const isPartial = m === cutoffMonth && this.activeMonths.length === 0;
             const row = { m, isPartial };
             CITIES.forEach(city => {
-                let p25 = 0, p26 = 0;
-                this.mergedGuides.filter(g => g.city === city).forEach(mg => {
-                    if (mg.g25) p25 += getPax(mg.g25, this.activeLang, m);
-                    if (mg.g26) p26 += getPax(mg.g26, this.activeLang, m);
-                });
+                const p25 = getCityPax(cityStats25[city]?.[this.activeLang], m);
+                const p26 = getCityPax(cityStats26[city]?.[this.activeLang], m);
                 row[city] = { p25, p26 };
             });
             return row;

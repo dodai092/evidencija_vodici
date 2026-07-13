@@ -1151,14 +1151,10 @@
       const citiesToShow = this.activeCity === "all" ? CITIES : [this.activeCity];
       const freePaxByCity = {}, paidToursByCity = {};
       CITIES.forEach((c) => {
-        freePaxByCity[c] = 0;
-        paidToursByCity[c] = 0;
-      });
-      guideStats26.forEach((g) => {
-        if (!CITIES.includes(g.city)) return;
-        const fs = filteredStats(g.stats[lang], this.activeMonths);
-        freePaxByCity[g.city] += fs.freePax;
-        paidToursByCity[g.city] += fs.paidTours;
+        const st = cityStats26[c]?.[lang];
+        const fs = st ? filteredStats(st, this.activeMonths) : { freePax: 0, paidTours: 0 };
+        freePaxByCity[c] = fs.freePax;
+        paidToursByCity[c] = fs.paidTours;
       });
       const makeBar = (canvasId, instanceKey, dataArr, yLabel, tooltipLabel) => {
         try {
@@ -1195,8 +1191,8 @@
       const cutoffDay = parseInt(getGlobalDate().split("-")[2]);
       const months = this.activeMonths.length > 0 ? this.activeMonths : Array.from({ length: cutoffMonth }, (_, i) => i + 1);
       const citiesToShow = this.activeCity === "all" ? CITIES : [this.activeCity];
-      const getPax = (g, m) => {
-        const st = g.stats[lang];
+      const getCityPax = (city, m) => {
+        const st = cityStats26[city]?.[lang];
         if (!st) return 0;
         if (m < cutoffMonth) return st.byMonth?.[String(m)]?.free?.pax || 0;
         if (m === cutoffMonth) {
@@ -1215,7 +1211,7 @@
         const isPartial = m === cutoffMonth && this.activeMonths.length === 0;
         const row = { m, isPartial };
         CITIES.forEach((city) => {
-          row[city] = guideStats26.filter((g) => g.city === city).reduce((s, g) => s + getPax(g, m), 0);
+          row[city] = getCityPax(city, m);
         });
         return row;
       });
@@ -2062,16 +2058,19 @@
       const cityData26 = { Zagreb: 0, Dubrovnik: 0, Split: 0, Zadar: 0 };
       const paidCityData25 = { Zagreb: 0, Dubrovnik: 0, Split: 0, Zadar: 0 };
       const paidCityData26 = { Zagreb: 0, Dubrovnik: 0, Split: 0, Zadar: 0 };
-      fc.forEach((m) => {
-        const s25 = m.g25 ? filteredStats(m.g25.stats[this.activeLang], this.activeMonths) : null;
-        const s26 = m.g26 ? filteredStats(m.g26.stats[this.activeLang], this.activeMonths) : null;
+      CITIES.forEach((city) => {
+        if (this.activeCity !== "all" && this.activeCity !== city) return;
+        const st25 = cityStats25[city]?.[this.activeLang];
+        const st26 = cityStats26[city]?.[this.activeLang];
+        const s25 = st25 ? filteredStats(st25, this.activeMonths) : null;
+        const s26 = st26 ? filteredStats(st26, this.activeMonths) : null;
         if (s25) {
-          cityData25[m.city] += s25.freePax;
-          paidCityData25[m.city] += s25.paidTours;
+          cityData25[city] = s25.freePax;
+          paidCityData25[city] = s25.paidTours;
         }
         if (s26) {
-          cityData26[m.city] += s26.freePax;
-          paidCityData26[m.city] += s26.paidTours;
+          cityData26[city] = s26.freePax;
+          paidCityData26[city] = s26.paidTours;
         }
       });
       const cityDeltaPlugin = {
@@ -2381,8 +2380,7 @@
       const cutoffDay = parseInt(getGlobalDate().split("-")[2]);
       const MONTH_NAMES = { 1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec" };
       const months = this.activeMonths.length > 0 ? this.activeMonths : Array.from({ length: cutoffMonth }, (_, i) => i + 1);
-      const getPax = (guide, lang, m) => {
-        const st = guide?.stats?.[lang];
+      const getCityPax = (st, m) => {
         if (!st) return 0;
         if (m < cutoffMonth) {
           return st.byMonth?.[String(m)]?.free?.pax || 0;
@@ -2403,11 +2401,8 @@
         const isPartial = m === cutoffMonth && this.activeMonths.length === 0;
         const row = { m, isPartial };
         CITIES.forEach((city) => {
-          let p25 = 0, p26 = 0;
-          this.mergedGuides.filter((g) => g.city === city).forEach((mg) => {
-            if (mg.g25) p25 += getPax(mg.g25, this.activeLang, m);
-            if (mg.g26) p26 += getPax(mg.g26, this.activeLang, m);
-          });
+          const p25 = getCityPax(cityStats25[city]?.[this.activeLang], m);
+          const p26 = getCityPax(cityStats26[city]?.[this.activeLang], m);
           row[city] = { p25, p26 };
         });
         return row;

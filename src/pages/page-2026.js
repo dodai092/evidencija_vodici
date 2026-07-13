@@ -139,12 +139,11 @@ export const Page26 = {
         const citiesToShow = this.activeCity === 'all' ? CITIES : [this.activeCity];
 
         const freePaxByCity = {}, paidToursByCity = {};
-        CITIES.forEach(c => { freePaxByCity[c] = 0; paidToursByCity[c] = 0; });
-        guideStats26.forEach(g => {
-            if (!CITIES.includes(g.city)) return;
-            const fs = filteredStats(g.stats[lang], this.activeMonths);
-            freePaxByCity[g.city] += fs.freePax;
-            paidToursByCity[g.city] += fs.paidTours;
+        CITIES.forEach(c => {
+            const st = cityStats26[c]?.[lang];
+            const fs = st ? filteredStats(st, this.activeMonths) : { freePax: 0, paidTours: 0 };
+            freePaxByCity[c] = fs.freePax;
+            paidToursByCity[c] = fs.paidTours;
         });
 
         const makeBar = (canvasId, instanceKey, dataArr, yLabel, tooltipLabel) => {
@@ -182,8 +181,8 @@ export const Page26 = {
         const months = this.activeMonths.length > 0 ? this.activeMonths : Array.from({length: cutoffMonth}, (_, i) => i + 1);
         const citiesToShow = this.activeCity === 'all' ? CITIES : [this.activeCity];
 
-        const getPax = (g, m) => {
-            const st = g.stats[lang];
+        const getCityPax = (city, m) => {
+            const st = cityStats26[city]?.[lang];
             if (!st) return 0;
             if (m < cutoffMonth) return st.byMonth?.[String(m)]?.free?.pax || 0;
             if (m === cutoffMonth) {
@@ -201,7 +200,7 @@ export const Page26 = {
             const isPartial = m === cutoffMonth && this.activeMonths.length === 0;
             const row = { m, isPartial };
             CITIES.forEach(city => {
-                row[city] = guideStats26.filter(g => g.city === city).reduce((s, g) => s + getPax(g, m), 0);
+                row[city] = getCityPax(city, m);
             });
             return row;
         });

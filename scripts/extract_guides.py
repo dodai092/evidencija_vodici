@@ -380,6 +380,9 @@ def main():
     # raw[vendor][lang] = stats ; mgmt_raw[vendor] = mgmt
     raw      = defaultdict(lambda: {lang: empty_stats() for lang in ('eng', 'esp', 'fra')})
     mgmt_raw = defaultdict(empty_mgmt)
+    # raw_city[city][lang] = stats — keyed by each row's own City column (not the guide's home city),
+    # so city totals stay correct regardless of which guide covered the tour.
+    raw_city = defaultdict(lambda: {lang: empty_stats() for lang in ('eng', 'esp', 'fra')})
 
     for row in data_rows:
         vendor = _val(row[C_VENDOR])
@@ -420,6 +423,10 @@ def main():
 
         is_free = (tour == 'free')
         add_row(raw[vendor][lang], is_free, tour, month, pax, day)
+
+        city_raw = _val(row[C_CITY])
+        city = CITY_MAP.get(city_raw, city_raw or 'Unknown')
+        add_row(raw_city[city][lang], is_free, tour, month, pax, day)
 
         if HAS_MGMT:
             raw_pax    = _int(row[C_PAX_RAW]) if C_PAX_RAW is not None else pax
@@ -492,6 +499,18 @@ def main():
             entry['mgmt'] = to_plain_mgmt(mgmt_raw[name])
         result.append(entry)
 
+    # City totals — built from each row's own City column, independent of guide identity
+    city_stats = {}
+    for city, langs in raw_city.items():
+        all_s = empty_stats()
+        lang_stats = {}
+        for lang in ('eng', 'esp', 'fra'):
+            ls = langs[lang]
+            merge_stats(all_s, ls)
+            lang_stats[lang] = to_plain(ls)
+        lang_stats['all'] = to_plain(all_s)
+        city_stats[city] = lang_stats
+
     # KPI totals
     total_free_tours = sum(g['stats']['all']['free']['tours'] for g in result)
     total_paid_tours = sum(g['stats']['all']['paid']['tours'] for g in result)
@@ -528,6 +547,8 @@ def main():
     print(f'const kpiTotals{suffix} = {js(kpi)};')
     print()
     print(f'const guideStats{suffix} = {js(result)};')
+    print()
+    print(f'const cityStats{suffix} = {js(city_stats)};')
 
 if __name__ == '__main__':
     main()

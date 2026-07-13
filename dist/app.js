@@ -687,7 +687,7 @@
       const lang = this.activeLang;
       return Array.from({ length: 12 }, (_, i) => i + 1).map((mo) => {
         let tours = 0, pax = 0;
-        guideStats25.filter((g) => this.activeCity === "all" || g.city === this.activeCity).forEach((g) => {
+        guideStats25.filter((g) => CITIES.includes(g.city) && (this.activeCity === "all" || g.city === this.activeCity)).forEach((g) => {
           const bmt = g.stats[lang]?.byMonthType?.[String(mo)];
           if (!bmt) return;
           types.forEach((tp) => {
@@ -853,11 +853,13 @@
       });
     },
     updateKPIs() {
-      const filtered = guideStats25.filter((g) => this.activeCity === "all" || g.city === this.activeCity);
+      const citiesToSum = this.activeCity === "all" ? CITIES : [this.activeCity];
       const k = this.activeLang;
       let freeTours = 0, paidTours = 0, freePax = 0, paidPax = 0;
-      filtered.forEach((g) => {
-        const fs = filteredStats(g.stats[k], this.activeMonths);
+      citiesToSum.forEach((city) => {
+        const st = cityStats25[city]?.[k];
+        if (!st) return;
+        const fs = filteredStats(st, this.activeMonths);
         freeTours += fs.freeTours;
         paidTours += fs.paidTours;
         freePax += fs.freePax;
@@ -1248,7 +1250,7 @@
       const cutoffMonth = getCutoffMonth();
       const cutoffDay = parseInt(getGlobalDate().split("-")[2]);
       const maxMonth = this.activeMonths.length > 0 ? Math.max(...this.activeMonths) : cutoffMonth;
-      const fc = guideStats26.filter((g) => this.activeCity === "all" || g.city === this.activeCity);
+      const fc = guideStats26.filter((g) => CITIES.includes(g.city) && (this.activeCity === "all" || g.city === this.activeCity));
       return Array.from({ length: maxMonth }, (_, i) => i + 1).map((mo) => {
         let tours = 0, pax = 0;
         if (mo < cutoffMonth) {
@@ -1451,11 +1453,13 @@
       });
     },
     updateKPIs() {
-      const filtered = guideStats26.filter((g) => this.activeCity === "all" || g.city === this.activeCity);
+      const citiesToSum = this.activeCity === "all" ? CITIES : [this.activeCity];
       const k = this.activeLang;
       let freeTours = 0, paidTours = 0, freePax = 0, paidPax = 0;
-      filtered.forEach((g) => {
-        const fs = filteredStats(g.stats[k], this.activeMonths);
+      citiesToSum.forEach((city) => {
+        const st = cityStats26[city]?.[k];
+        if (!st) return;
+        const fs = filteredStats(st, this.activeMonths);
         freeTours += fs.freeTours;
         paidTours += fs.paidTours;
         freePax += fs.freePax;
@@ -1992,7 +1996,7 @@
     },
     renderAll() {
       let html = "";
-      const fc = this.mergedGuides.filter((m) => this.activeCity === "all" || m.city === this.activeCity);
+      const fc = this.mergedGuides.filter((m) => CITIES.includes(m.city) && (this.activeCity === "all" || m.city === this.activeCity));
       CITIES.forEach((city) => {
         const cg = fc.filter((m) => m.city === city);
         if (!cg.length) return;
@@ -2004,17 +2008,19 @@
       setTimeout(() => this.updateCharts(), 100);
     },
     updateKPIs() {
-      const fc = this.mergedGuides.filter((m) => this.activeCity === "all" || m.city === this.activeCity);
+      const citiesToSum = this.activeCity === "all" ? CITIES : [this.activeCity];
       let pt25 = 0, pt26 = 0, fp25 = 0, fp26 = 0, ft25 = 0, ft26 = 0;
-      fc.forEach((m) => {
-        if (m.g25) {
-          const s25 = filteredStats(m.g25.stats[this.activeLang], this.activeMonths);
+      citiesToSum.forEach((city) => {
+        const st25 = cityStats25[city]?.[this.activeLang];
+        const st26 = cityStats26[city]?.[this.activeLang];
+        if (st25) {
+          const s25 = filteredStats(st25, this.activeMonths);
           fp25 += s25.freePax;
           pt25 += s25.paidTours;
           ft25 += s25.freeTours;
         }
-        if (m.g26) {
-          const s26 = filteredStats(m.g26.stats[this.activeLang], this.activeMonths);
+        if (st26) {
+          const s26 = filteredStats(st26, this.activeMonths);
           fp26 += s26.freePax;
           pt26 += s26.paidTours;
           ft26 += s26.freeTours;
@@ -2047,7 +2053,7 @@
     },
     updateCharts() {
       const self = this;
-      const fc = this.mergedGuides.filter((m) => this.activeCity === "all" || m.city === this.activeCity);
+      const fc = this.mergedGuides.filter((m) => CITIES.includes(m.city) && (this.activeCity === "all" || m.city === this.activeCity));
       const colors = this.getChartColors();
       const rangeLabel = getRangeLabel();
       const cityData25 = { Zagreb: 0, Dubrovnik: 0, Split: 0, Zadar: 0 };
@@ -2498,7 +2504,7 @@
       const cutoffMonth = getCutoffMonth();
       const cutoffDay = parseInt(getGlobalDate().split("-")[2]);
       const maxMonth = this.activeMonths.length > 0 ? Math.max(...this.activeMonths) : cutoffMonth;
-      const fc = this.mergedGuides.filter((m) => city === "all" || m.city === city);
+      const fc = this.mergedGuides.filter((m) => CITIES.includes(m.city) && (city === "all" || m.city === city));
       return Array.from({ length: maxMonth }, (_, i) => i + 1).map((mo) => {
         let primary = 0, secondary = 0;
         const secondaryKey = primaryKey === "tours" ? "pax" : "tours";
@@ -2678,7 +2684,7 @@
       this.renderPaidTypeTable("private-type-table-cmp", this.activePrivateCity, this.activePrivateType, this.PRIVATE_TYPES, "tours");
       buildTypeChart("sharedPaidChart-cmp", "sharedPaidChartInstance", this.activeSharedCity, this.activeSharedType, this.SHARED_TYPES, "tours");
       this.renderPaidTypeTable("shared-type-table-cmp", this.activeSharedCity, this.activeSharedType, this.SHARED_TYPES, "pax");
-      const fc = this.mergedGuides.filter((m) => this.activeCity === "all" || m.city === this.activeCity);
+      const fc = this.mergedGuides.filter((m) => CITIES.includes(m.city) && (this.activeCity === "all" || m.city === this.activeCity));
       const typesToShow = this.activeAvgType === "all" ? this.ALL_PAID_TYPES : [this.activeAvgType];
       const getTypeAvg = (year, types) => Array.from({ length: maxMonth }, (_, i) => i + 1).map((mo) => {
         let pax = 0, tours = 0;

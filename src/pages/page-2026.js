@@ -244,7 +244,7 @@ export const Page26 = {
         const cutoffMonth = getCutoffMonth();
         const cutoffDay   = parseInt(getGlobalDate().split('-')[2]);
         const maxMonth = this.activeMonths.length > 0 ? Math.max(...this.activeMonths) : cutoffMonth;
-        const fc = guideStats26.filter(g => this.activeCity === 'all' || g.city === this.activeCity);
+        const fc = guideStats26.filter(g => CITIES.includes(g.city) && (this.activeCity === 'all' || g.city === this.activeCity));
 
         return Array.from({length: maxMonth}, (_, i) => i + 1).map(mo => {
             let tours = 0, pax = 0;
@@ -435,11 +435,13 @@ export const Page26 = {
     },
 
     updateKPIs() {
-        const filtered = guideStats26.filter(g => this.activeCity === 'all' || g.city === this.activeCity);
+        const citiesToSum = this.activeCity === 'all' ? CITIES : [this.activeCity];
         const k = this.activeLang;
         let freeTours = 0, paidTours = 0, freePax = 0, paidPax = 0;
-        filtered.forEach(g => {
-            const fs = filteredStats(g.stats[k], this.activeMonths);
+        citiesToSum.forEach(city => {
+            const st = cityStats26[city]?.[k];
+            if (!st) return;
+            const fs = filteredStats(st, this.activeMonths);
             freeTours += fs.freeTours;
             paidTours += fs.paidTours;
             freePax   += fs.freePax;

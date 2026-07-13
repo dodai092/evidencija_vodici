@@ -226,7 +226,7 @@ export const Page25 = {
         return Array.from({length: 12}, (_, i) => i + 1).map(mo => {
             let tours = 0, pax = 0;
             guideStats25
-                .filter(g => this.activeCity === 'all' || g.city === this.activeCity)
+                .filter(g => CITIES.includes(g.city) && (this.activeCity === 'all' || g.city === this.activeCity))
                 .forEach(g => {
                     const bmt = g.stats[lang]?.byMonthType?.[String(mo)];
                     if (!bmt) return;
@@ -388,11 +388,13 @@ export const Page25 = {
     },
 
     updateKPIs() {
-        const filtered = guideStats25.filter(g => this.activeCity === 'all' || g.city === this.activeCity);
+        const citiesToSum = this.activeCity === 'all' ? CITIES : [this.activeCity];
         const k = this.activeLang;
         let freeTours = 0, paidTours = 0, freePax = 0, paidPax = 0;
-        filtered.forEach(g => {
-            const fs = filteredStats(g.stats[k], this.activeMonths);
+        citiesToSum.forEach(city => {
+            const st = cityStats25[city]?.[k];
+            if (!st) return;
+            const fs = filteredStats(st, this.activeMonths);
             freeTours += fs.freeTours;
             paidTours += fs.paidTours;
             freePax   += fs.freePax;

@@ -10,7 +10,7 @@ When new monthly data is entered in the Excel file, regenerating the dashboard t
 
 | File | Role |
 |------|------|
-| `Copy of 1.1 Evidencija prodaje 26.xlsx` | Source of truth — all tour data lives here |
+| `Copy of 1.1 Evidencija prodaje 26 new.xlsx` | Source of truth — all tour data lives here |
 | `scripts/extract_guides.py` | Reads the Excel file, outputs JS data |
 | `data-2026.js` | Generated data file consumed by `index.html` |
 | `dist/app.js` | Bundled JS app — must be rebuilt and committed after any source change |
@@ -22,7 +22,7 @@ When new monthly data is entered in the Excel file, regenerating the dashboard t
 
 ### 1. Enter data in the Excel file
 
-Open `Copy of 1.1 Evidencija prodaje 26.xlsx` and add the new month's tour rows to the **`helper_2026`** sheet. Each row represents one tour booking with columns for guide name, city, language, tour type, month, and pax count.
+Open `Copy of 1.1 Evidencija prodaje 26 new.xlsx` and add the new month's tour rows to the **`helper_2026`** sheet. Each row represents one tour booking with columns for guide name, city, language, tour type, month, and pax count.
 
 ### 2. Regenerate `data-2026.js`
 

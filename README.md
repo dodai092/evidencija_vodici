@@ -48,7 +48,7 @@ CI runs both suites automatically on every push and pull request (GitHub Actions
 
 ## Monthly data update
 
-Source of truth is a local Excel file (`Copy of 1.1 Evidencija prodaje 26.xlsx`) not in this repo.
+Source of truth is a local Excel file (`Copy of 1.1 Evidencija prodaje 26 new.xlsx`) not in this repo.
 
 ```bash
 source venv/bin/activate

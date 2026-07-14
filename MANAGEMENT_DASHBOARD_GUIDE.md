@@ -589,7 +589,7 @@ Commission: 22.3%
 ## Data Source
 
 ### Excel File
-**Location:** `Copy of 1.1 Evidencija prodaje 26.xlsx`  
+**Location:** `Copy of 1.1 Evidencija prodaje 26 new.xlsx`  
 **Status:** Local file (not in repo)
 
 ### Sheet Names

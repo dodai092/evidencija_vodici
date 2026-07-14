@@ -1,8 +1,6 @@
 name: Update guide data
 
 on:
-  schedule:
-    - cron: '15 10 * * 1'  # Every Monday at 12:15 Europe/Zagreb (CEST, UTC+2)
   workflow_dispatch:       # Manual trigger from GitHub UI
 
 jobs:

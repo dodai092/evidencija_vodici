@@ -2,7 +2,7 @@ name: Update guide data
 
 on:
   schedule:
-    - cron: '0 6 * * 1'  # Every Monday at 6am UTC
+    - cron: '15 10 * * 1'  # Every Monday at 12:15 Europe/Zagreb (CEST, UTC+2)
   workflow_dispatch:       # Manual trigger from GitHub UI
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
           python-version: '3.11'
 
       - name: Regenerate data-2026.js
-        run: python3 extract_guides.py --year 2026 > data-2026.js
+        run: python3 scripts/extract_guides.py --year 2026 > data-2026.js
         env:
           SHEET_URL: ${{ secrets.SHEET_URL }}
 

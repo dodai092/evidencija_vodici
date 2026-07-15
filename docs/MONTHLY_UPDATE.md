@@ -13,7 +13,7 @@ When new monthly data is entered in the Excel file, regenerating the dashboard t
 | `Copy of 1.1 Evidencija prodaje 26 new.xlsx` | Source of truth — all tour data lives here |
 | `scripts/extract_guides.py` | Reads the Excel file, outputs JS data |
 | `data-2026.js` | Generated data file consumed by `index.html` |
-| `dist/app.js` | Bundled JS app — must be rebuilt and committed after any source change |
+| `dist/app.js` | Bundled JS app — built from `src/`. `data-2026.js` is loaded as a separate `<script>` tag, not bundled, so a data-only update does **not** require a rebuild |
 | `index.html` | The site shell — never needs to be edited for data updates |
 
 ---
@@ -22,7 +22,7 @@ When new monthly data is entered in the Excel file, regenerating the dashboard t
 
 ### 1. Enter data in the Excel file
 
-Open `Copy of 1.1 Evidencija prodaje 26 new.xlsx` and add the new month's tour rows to the **`helper_2026`** sheet. Each row represents one tour booking with columns for guide name, city, language, tour type, month, and pax count.
+Open `Copy of 1.1 Evidencija prodaje 26 new.xlsx` and add the new month's tour rows to the **`Evidencija`** sheet. Each row represents one tour booking with columns for guide name, city, language, tour type, month, and pax count.
 
 ### 2. Regenerate `data-2026.js`
 
@@ -36,7 +36,7 @@ source venv/bin/activate
 python3 scripts/extract_guides.py --year 2026 > data-2026.js
 ```
 
-This reads the `helper_2026` sheet and outputs a fresh `data-2026.js` with updated `guideStats26` and `kpiTotals26`.
+This reads the `Evidencija` sheet and outputs a fresh `data-2026.js` with updated `guideStats26` and `kpiTotals26`.
 
 > **Note:** The script detects column positions automatically from the header row, so column order in the sheet does not need to match exactly.
 
@@ -47,18 +47,10 @@ Open `index.html` in a browser and check:
 - The new month appears in each guide's monthly breakdown (click "Mjesečno" to expand)
 - The **Usporedba** tab reflects the updated data in charts and comparison tables
 
-### 4. Rebuild the bundle
+### 4. Push to GitHub Pages
 
 ```bash
-npm run build
-```
-
-This regenerates `dist/app.js` from the source files in `src/`. The built file must be committed — GitHub Pages serves it directly.
-
-### 5. Push to GitHub Pages
-
-```bash
-git add data-2026.js dist/app.js
+git add data-2026.js
 git commit -m "Update: guides data $(date +%Y-%m)"
 git push
 ```
@@ -85,19 +77,13 @@ The **Usporedba** tab will show them as a new guide (no 2025 comparison row), gr
 
 ## Updating the comparison date range
 
-The comparison tab currently shows **January–May** (months 1–5). To extend it to June after June data is available, edit `src/pages/page-cmp/index.js`:
+The comparison tab currently shows **January–June** (months 1–6). To extend it to July after July data is available, edit `src/pages/page-cmp/index.js`:
 
-1. In the `_buildHeader()` method, update the subtitle text:
-```html
-<!-- Change: -->
-<p><span class="ytd-range-label">Jan–May</span> 2025 vs. 2026 &middot; ...</p>
-<!-- To: -->
-<p><span class="ytd-range-label">Jan–Jun</span> 2025 vs. 2026 &middot; ...</p>
-```
+1. Search for `Jan–Jun` and replace all occurrences of the range label with `Jan–Jul` (multiple chart titles use the `ytd-range-label` span).
 
-2. If you're also adding June data processing, look for any month loops (`m <= 5`) and update them to `m <= 6`.
+2. If you're also adding July data processing, look for any month loops (`m <= 6`) and update them to `m <= 7`.
 
-3. After editing, run `npm run build` and commit `dist/app.js` along with the source change.
+3. After editing, run `npm run build` and commit `dist/app.js` along with the source change — unlike a data-only update, a `src/` change does require rebuilding the bundle.
 
 ---
 
@@ -109,4 +95,4 @@ The comparison tab currently shows **January–May** (months 1–5). To extend i
 
 **`ModuleNotFoundError: openpyxl`** — run `pip install openpyxl` inside the venv, or activate the venv with `source venv/bin/activate` before running the script.
 
-**Site is blank on GitHub Pages** — `dist/app.js` was not committed. Run `npm run build`, then `git add dist/app.js` and push.
+**Site is blank on GitHub Pages** — only relevant after a `src/` code change: `dist/app.js` was not rebuilt/committed. Run `npm run build`, then `git add dist/app.js` and push. Not applicable to data-only updates.

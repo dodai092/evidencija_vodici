@@ -9,7 +9,7 @@ import sys
 import openpyxl
 from collections import defaultdict
 
-EXCEL_FILE = 'Copy of 1.1 Evidencija prodaje 26 new.xlsx'
+EXCEL_FILE = '1.1 Evidencija prodaje 26.xlsx'
 DATA_FILE  = 'data-2026.js'
 SHEET      = 'helper_2026'
 

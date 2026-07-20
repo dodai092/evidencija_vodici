@@ -24,7 +24,7 @@ import io
 from collections import defaultdict
 
 SHEET_URL  = os.environ.get('SHEET_URL')
-EXCEL_FILE = 'Copy of 1.1 Evidencija prodaje 26 new.xlsx'
+EXCEL_FILE = '1.1 Evidencija prodaje 26.xlsx'
 
 # Parse CLI args
 args = sys.argv[1:]

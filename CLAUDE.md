@@ -17,7 +17,7 @@ Open `index.html` directly in a browser, or use VS Code Live Server (port 5501).
 
 ## Monthly Data Update
 
-Source of truth is a local Excel file (`Copy of 1.1 Evidencija prodaje 26 new.xlsx`) that is **not** in this repo.
+Source of truth is a local Excel file (`1.1 Evidencija prodaje 26.xlsx`) that is **not** in this repo.
 
 ```bash
 source venv/bin/activate
@@ -28,7 +28,7 @@ git commit -m "Update: guides data $(date +%Y-%m)"
 git push
 ```
 
-`scripts/extract_guides.py` reads the `Evidencija` sheet (2026) or `Evidencija_25` sheet (2025) and auto-detects column positions from the header row. Both years use the same Excel file: `Copy of 1.1 Evidencija prodaje 26 new.xlsx`.
+`scripts/extract_guides.py` reads the `Evidencija` sheet (2026) or `Evidencija_25` sheet (2025) and auto-detects column positions from the header row. Both years use the same Excel file: `1.1 Evidencija prodaje 26.xlsx`.
 
 To regenerate 2025 data (rarely needed — only to correct historical data):
 ```bash

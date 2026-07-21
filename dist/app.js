@@ -4183,7 +4183,7 @@ GM%: ${gmpct}%`;
             <div style="font-weight: 600; margin-bottom: 10px; color: var(--text);">${t("management.smallGroupProblem")}</div>
             <div style="color: var(--text2); line-height: 1.6; font-size: 11px;">
                 <div><strong>\u{1F4CA} ${t("management.prevalence")}:</strong> ${smallGroupPct26.toFixed(0)}% of paid tours are 1\u20135 PAX (${smallGroup26.tours} ${t("management.tours")})</div>
-                <div><strong>\u{1F4B0} ${t("management.marginLoss")}:</strong> \u20AC${fmt(lossFromSmallGroups)} margin lost on below-breakeven tours YTD</div>
+                <div><strong>\u{1F4B0} ${t("management.marginLoss")}:</strong> \u20AC${fmt(lossFromSmallGroups)} net margin loss, 1\u20135 PAX band YTD (band average \u2014 doesn't capture individual below-breakeven tours)</div>
                 <div><strong>\u{1F4C8} ${t("management.trend")}:</strong> ${pctChange > 0 ? "+" : ""}${pctChange.toFixed(1)}pp ${t("management.vs2025")} \u2014 getting ${pctChange > 0 ? "worse" : "better"}</div>
                 ${breakevenNote}
             </div>

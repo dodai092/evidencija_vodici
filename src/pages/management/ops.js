@@ -194,7 +194,7 @@ export function renderPaxBandActionPanel() {
             <div style="font-weight: 600; margin-bottom: 10px; color: var(--text);">${t('management.smallGroupProblem')}</div>
             <div style="color: var(--text2); line-height: 1.6; font-size: 11px;">
                 <div><strong>📊 ${t('management.prevalence')}:</strong> ${smallGroupPct26.toFixed(0)}% of paid tours are 1–5 PAX (${smallGroup26.tours} ${t('management.tours')})</div>
-                <div><strong>💰 ${t('management.marginLoss')}:</strong> €${fmt(lossFromSmallGroups)} margin lost on below-breakeven tours YTD</div>
+                <div><strong>💰 ${t('management.marginLoss')}:</strong> €${fmt(lossFromSmallGroups)} net margin loss, 1–5 PAX band YTD (band average — doesn't capture individual below-breakeven tours)</div>
                 <div><strong>📈 ${t('management.trend')}:</strong> ${pctChange > 0 ? '+' : ''}${pctChange.toFixed(1)}pp ${t('management.vs2025')} — getting ${pctChange > 0 ? 'worse' : 'better'}</div>
                 ${breakevenNote}
             </div>

@@ -4347,16 +4347,16 @@ GM%: ${gmpct}%`;
   }
   function buildLangByCity() {
     const result = {};
-    ["Zagreb", "Dubrovnik", "Split", "Zadar"].forEach((city) => {
+    CITIES.forEach((city) => {
       result[city] = { eng: { tours: 0, pax: 0 }, esp: { tours: 0, pax: 0 }, fra: { tours: 0, pax: 0 } };
     });
-    guideStats26.forEach((g) => {
-      const city = g.city;
+    CITIES.forEach((city) => {
       ["eng", "esp", "fra"].forEach((lang) => {
-        if (g.stats?.[lang]) {
-          const langStats = filterStatsByDate(g.stats[lang], getGlobalDate());
-          result[city][lang].tours += langStats.paidTours || 0;
-          result[city][lang].pax += langStats.paidPax || 0;
+        const cityLangStats = cityStats26[city]?.[lang];
+        if (cityLangStats) {
+          const filtered = filterStatsByDate(cityLangStats, getGlobalDate());
+          result[city][lang].tours += filtered.paidTours || 0;
+          result[city][lang].pax += filtered.paidPax || 0;
         }
       });
     });

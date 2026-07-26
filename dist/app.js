@@ -12,7 +12,7 @@
   var CITY_CLS = { Zagreb: "zagreb", Dubrovnik: "dubrovnik", Split: "split", Zadar: "zadar", Unknown: "" };
   var CITIES = ["Zagreb", "Dubrovnik", "Split", "Zadar"];
   var MONTH_NAMES_HR = { 1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec" };
-  var CSS = {
+  var CSS2 = {
     ACTIVE: "active",
     NAV_Y25: "y25",
     NAV_Y26: "y26",
@@ -128,19 +128,19 @@
     body.previousElementSibling?.setAttribute("aria-expanded", String(!collapsed));
   }
   function showPage(id, tab) {
-    document.querySelectorAll(`.${CSS.PAGE}`).forEach((p) => p.classList.remove(CSS.ACTIVE));
-    document.querySelectorAll(`.nav-tabs .${CSS.NAV_TAB}`).forEach((t2) => {
-      t2.classList.remove(CSS.ACTIVE, CSS.NAV_Y25, CSS.NAV_Y26, CSS.NAV_CMP);
+    document.querySelectorAll(`.${CSS2.PAGE}`).forEach((p) => p.classList.remove(CSS2.ACTIVE));
+    document.querySelectorAll(`.nav-tabs .${CSS2.NAV_TAB}`).forEach((t2) => {
+      t2.classList.remove(CSS2.ACTIVE, CSS2.NAV_Y25, CSS2.NAV_Y26, CSS2.NAV_CMP);
       t2.setAttribute("aria-selected", "false");
       t2.setAttribute("tabindex", "-1");
     });
-    document.getElementById(id).classList.add(CSS.ACTIVE);
-    tab.classList.add(CSS.ACTIVE);
+    document.getElementById(id).classList.add(CSS2.ACTIVE);
+    tab.classList.add(CSS2.ACTIVE);
     tab.setAttribute("aria-selected", "true");
     tab.setAttribute("tabindex", "0");
-    if (id === "page-25") tab.classList.add(CSS.NAV_Y25);
-    if (id === "page-26") tab.classList.add(CSS.NAV_Y26);
-    if (id === "page-cmp") tab.classList.add(CSS.NAV_CMP);
+    if (id === "page-25") tab.classList.add(CSS2.NAV_Y25);
+    if (id === "page-26") tab.classList.add(CSS2.NAV_Y26);
+    if (id === "page-cmp") tab.classList.add(CSS2.NAV_CMP);
     const titles = {
       "page-25": "Guides 2025",
       "page-26": "Guides 2026",
@@ -489,8 +489,8 @@
   }
   function initTheme() {
     if (localStorage.getItem("theme") === "dark") {
-      document.documentElement.classList.add(CSS.DARK_MODE);
-      document.body.classList.add(CSS.DARK_MODE);
+      document.documentElement.classList.add(CSS2.DARK_MODE);
+      document.body.classList.add(CSS2.DARK_MODE);
     }
   }
   function initLanguage() {
@@ -503,7 +503,7 @@
     if (btn) btn.setAttribute("title", isDark ? "Switch to light mode" : "Switch to dark mode");
   }
   function toggleTheme(onToggleComplete) {
-    const isDark = document.body.classList.toggle(CSS.DARK_MODE);
+    const isDark = document.body.classList.toggle(CSS2.DARK_MODE);
     localStorage.setItem("theme", isDark ? "dark" : "light");
     updateThemeButton(isDark);
     if (onToggleComplete) {
@@ -540,6 +540,7 @@
     activeMonths: [],
     activePrivateType: "all",
     activeSharedType: "all",
+    searchTerm: "",
     PRIVATE_TYPES: ["war PR", "food PR", "best", "old", "big"],
     SHARED_TYPES: ["war", "food", "best"],
     chartInstance: null,
@@ -599,6 +600,7 @@
         html += `</div></section>`;
       });
       container.innerHTML = html;
+      this.applySearchFilter();
       this.updateKPIs();
       this.updateChart();
       this.renderCityBars();
@@ -885,6 +887,17 @@
       this.activeMonths = m === "all" ? [] : [parseInt(m)];
       this.renderAll();
     },
+    applySearchFilter() {
+      const term = (this.searchTerm || "").toLowerCase();
+      this._scope(".guide-card").forEach((card) => {
+        const name = (card.dataset.name || "").toLowerCase();
+        card.style.display = !term || name.includes(term) ? "" : "none";
+      });
+    },
+    filterGuideSearch(term) {
+      this.searchTerm = term;
+      this.applySearchFilter();
+    },
     toggleMonthly(sid) {
       const table = document.getElementById("mt-" + sid);
       const arrow = document.getElementById("mta-" + sid);
@@ -1035,6 +1048,9 @@
                 <span class="section-chevron">\u25BE</span>
             </button>
             <div id="guides-body-25" class="section-body">
+                <input type="text" id="guide-search-25" class="guide-search-input"
+                       placeholder="${t("labels.searchGuide")}"
+                       oninput="Page25.filterGuideSearch(this.value)">
                 <div id="guide-sections-25"></div>
             </div>
         </div>`;
@@ -1497,6 +1513,23 @@
     filterGuideSearch(term) {
       this.searchTerm = term;
       this.applySearchFilter();
+    },
+    jumpToGuide(name) {
+      const tabEl = document.getElementById("tab-26");
+      if (tabEl) showPage("page-26", tabEl);
+      this.activeCity = "all";
+      this.searchTerm = "";
+      const searchInput = this._el("guide-search");
+      if (searchInput) searchInput.value = "";
+      document.querySelectorAll("#page-26 .city-filter-pill").forEach((p) => p.classList.toggle("active", p.dataset.city === "all"));
+      this.renderAll();
+      requestAnimationFrame(() => {
+        const card = document.querySelector(`#page-26 .guide-card[data-name="${CSS.escape(name)}"]`);
+        if (!card) return;
+        card.scrollIntoView({ behavior: "smooth", block: "center" });
+        card.classList.add("guide-card-highlight");
+        setTimeout(() => card.classList.remove("guide-card-highlight"), 1500);
+      });
     },
     toggleMonthly(sid) {
       const table = document.getElementById("mt-" + sid);
@@ -3818,7 +3851,7 @@
       return `<tr class="${rowClass}">
             <td class="rank">${rank26}</td>
             <td style="text-align:center;font-size:11px">${rankHtml}</td>
-            <td class="guide-name">${r.name}</td>
+            <td class="guide-name"><a href="#" class="guide-name-link" onclick="Page26.jumpToGuide('${r.name.replace(/'/g, "\\'")}'); return false;">${r.name}</a></td>
             <td><span class="city-dot" style="background:${getCityColor(r.city)}"></span>${r.city}</td>
             <td>${fmt(r.paidTours)}<br><small class="yoy">${dd(dPaid)}</small></td>
             <td>${r.avgPax > 0 ? r.avgPax.toFixed(1) : "\u2014"}</td>

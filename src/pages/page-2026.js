@@ -1,4 +1,4 @@
-import { getCityColor, getChartColors as _chartColors, CITY_CLS, CITIES, MONTH_NAMES_HR, filteredStats, safeName, fmtN, getCutoffMonth, getGlobalDate, registerPage } from '../shared.js';
+import { getCityColor, getChartColors as _chartColors, CITY_CLS, CITIES, MONTH_NAMES_HR, filteredStats, safeName, fmtN, getCutoffMonth, getGlobalDate, registerPage, showPage } from '../shared.js';
 import { t, titleAttr } from '../i18n.js';
 
 export const Page26 = {
@@ -474,6 +474,24 @@ export const Page26 = {
     filterGuideSearch(term) {
         this.searchTerm = term;
         this.applySearchFilter();
+    },
+    jumpToGuide(name) {
+        const tabEl = document.getElementById('tab-26');
+        if (tabEl) showPage('page-26', tabEl);
+        this.activeCity = 'all';
+        this.searchTerm = '';
+        const searchInput = this._el('guide-search');
+        if (searchInput) searchInput.value = '';
+        document.querySelectorAll('#page-26 .city-filter-pill').forEach(p =>
+            p.classList.toggle('active', p.dataset.city === 'all'));
+        this.renderAll();
+        requestAnimationFrame(() => {
+            const card = document.querySelector(`#page-26 .guide-card[data-name="${CSS.escape(name)}"]`);
+            if (!card) return;
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            card.classList.add('guide-card-highlight');
+            setTimeout(() => card.classList.remove('guide-card-highlight'), 1500);
+        });
     },
 
     toggleMonthly(sid) {

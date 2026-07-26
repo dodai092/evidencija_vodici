@@ -83,7 +83,7 @@ export function renderGuideTable(city) {
         return `<tr class="${rowClass}">
             <td class="rank">${rank26}</td>
             <td style="text-align:center;font-size:11px">${rankHtml}</td>
-            <td class="guide-name">${r.name}</td>
+            <td class="guide-name"><a href="#" class="guide-name-link" onclick="Page26.jumpToGuide('${r.name.replace(/'/g, "\\'")}'); return false;">${r.name}</a></td>
             <td><span class="city-dot" style="background:${getCityColor(r.city)}"></span>${r.city}</td>
             <td>${fmt(r.paidTours)}<br><small class="yoy">${dd(dPaid)}</small></td>
             <td>${r.avgPax > 0 ? r.avgPax.toFixed(1) : '—'}</td>

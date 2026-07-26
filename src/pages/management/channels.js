@@ -4,11 +4,13 @@ import {
     fmt, fmtEur, dd, gmClass,
     guidesForCity, filterMgmtByDate,
     makeBarChart, makeLineChart, getThemeColors,
+    findBiggestNegativeMover,
 } from './helpers.js';
 
 const OTA_COLORS = ['#C49A8A','#8FA8BC','#9BB09B','#C4B48A','#B0AAEE','#A8C4C4','#C4A8B0'];
 
 export function initChannels() {
+    renderBiggestMoverChannel();
     renderCommissionWaterfall();
     renderDirectOtaTrend();
     renderOtaSourceTable();
@@ -59,6 +61,32 @@ export function renderCommissionWaterfall() {
             }
         }
     });
+}
+
+export function renderBiggestMoverChannel() {
+    const el = document.getElementById('biggest-mover-channels');
+    if (!el) return;
+
+    const src26 = kpiTotals26.mgmt.bySource || {};
+    const src25 = typeof kpiTotals25 !== 'undefined' ? (kpiTotals25.mgmt?.bySource || {}) : {};
+    const names = new Set([...Object.keys(src26), ...Object.keys(src25)]);
+    const entries = Array.from(names).map(name => ({
+        name,
+        revenue26: src26[name]?.revenue || 0,
+        gm26: src26[name]?.grossMargin || 0,
+        revenue25: src25[name]?.revenue || 0,
+        gm25: src25[name]?.grossMargin || 0,
+    }));
+
+    const mover = findBiggestNegativeMover(entries);
+    if (!mover) { el.innerHTML = ''; return; }
+
+    const commPct26 = mover.revenue26 > 0
+        ? ((src26[mover.name]?.commissionCost || 0) / mover.revenue26 * 100)
+        : 0;
+
+    el.innerHTML = `<strong>⚡ Biggest swing:</strong> ${mover.name} gross margin ${dd(mover.delta, true)} vs 2025 ` +
+        `(${fmtEur(mover.gm25)} → ${fmtEur(mover.gm26)}), on ${fmtEur(mover.revenue26)} revenue at ${commPct26.toFixed(1)}% commission.`;
 }
 
 export function renderDirectOtaTrend() {
@@ -175,5 +203,6 @@ export function renderTourTypeTable() {
 }
 
 export function refreshChannels() {
+    renderBiggestMoverChannel();
     renderDirectOtaTrend();
 }

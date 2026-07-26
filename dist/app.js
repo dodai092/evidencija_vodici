@@ -3302,6 +3302,9 @@
     });
     return result;
   }
+  function findBiggestNegativeMover(entries, minRevenue = 500) {
+    return entries.filter((e) => e.revenue26 >= minRevenue || e.revenue25 >= minRevenue).map((e) => ({ ...e, delta: e.gm26 - e.gm25 })).filter((e) => e.delta < 0).sort((a, b) => a.delta - b.delta)[0] || null;
+  }
   function axisDefaults2() {
     const s = getComputedStyle(document.body);
     return {
@@ -3906,6 +3909,7 @@
 
   // src/pages/management/channels.js
   function initChannels() {
+    renderBiggestMoverChannel();
     renderCommissionWaterfall();
     renderDirectOtaTrend();
     renderOtaSourceTable();
@@ -3955,6 +3959,27 @@
         }
       }
     });
+  }
+  function renderBiggestMoverChannel() {
+    const el = document.getElementById("biggest-mover-channels");
+    if (!el) return;
+    const src26 = kpiTotals26.mgmt.bySource || {};
+    const src25 = typeof kpiTotals25 !== "undefined" ? kpiTotals25.mgmt?.bySource || {} : {};
+    const names = /* @__PURE__ */ new Set([...Object.keys(src26), ...Object.keys(src25)]);
+    const entries = Array.from(names).map((name) => ({
+      name,
+      revenue26: src26[name]?.revenue || 0,
+      gm26: src26[name]?.grossMargin || 0,
+      revenue25: src25[name]?.revenue || 0,
+      gm25: src25[name]?.grossMargin || 0
+    }));
+    const mover = findBiggestNegativeMover(entries);
+    if (!mover) {
+      el.innerHTML = "";
+      return;
+    }
+    const commPct26 = mover.revenue26 > 0 ? (src26[mover.name]?.commissionCost || 0) / mover.revenue26 * 100 : 0;
+    el.innerHTML = `<strong>\u26A1 Biggest swing:</strong> ${mover.name} gross margin ${dd(mover.delta, true)} vs 2025 (${fmtEur(mover.gm25)} \u2192 ${fmtEur(mover.gm26)}), on ${fmtEur(mover.revenue26)} revenue at ${commPct26.toFixed(1)}% commission.`;
   }
   function renderDirectOtaTrend() {
     const has25 = typeof guideStats25 !== "undefined";
@@ -4055,6 +4080,7 @@
     }).join("");
   }
   function refreshChannels() {
+    renderBiggestMoverChannel();
     renderDirectOtaTrend();
   }
 

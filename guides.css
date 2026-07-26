@@ -1795,7 +1795,7 @@ small.yoy {
   font-family: var(--font-sans);
 }
 /* ── Insight callout strip ───────────────────────────── */
-#insight-strip {
+.insight-strip {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;

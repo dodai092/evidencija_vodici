@@ -178,6 +178,66 @@ export function findBiggestNegativeMover(entries, minRevenue = 500) {
         .sort((a, b) => a.delta - b.delta)[0] || null;
 }
 
+export function renderInsightCallouts(k, k25, elId = 'insight-strip') {
+    const el = document.getElementById(elId);
+    if (!el || !k25) { if (el) el.innerHTML = ''; return; }
+
+    const gmPct26 = k.revenue > 0 ? k.grossMargin / k.revenue * 100 : 0;
+    const gmPct25 = k25.revenue > 0 ? k25.grossMargin / k25.revenue * 100 : 0;
+    const commPct26 = k.revenue > 0 ? k.commissionCost / k.revenue * 100 : 0;
+    const commPct25 = k25.revenue > 0 ? k25.commissionCost / k25.revenue * 100 : 0;
+    const avgGm26 = k.paidTours > 0 ? k.grossMargin / k.paidTours : 0;
+    const avgGm25 = k25.paidTours > 0 ? k25.grossMargin / k25.paidTours : 0;
+
+    const candidates = [
+        {
+            label: 'Revenue',
+            val: k.revenue - k25.revenue,
+            fmt: v => (v >= 0 ? '+' : '−') + '€' + fmt(Math.abs(v)),
+            pct: k25.revenue !== 0 ? (k.revenue - k25.revenue) / Math.abs(k25.revenue) * 100 : null,
+            positive: true,
+        },
+        {
+            label: 'Gross Margin',
+            val: k.grossMargin - k25.grossMargin,
+            fmt: v => (v >= 0 ? '+' : '−') + '€' + fmt(Math.abs(v)),
+            pct: k25.grossMargin !== 0 ? (k.grossMargin - k25.grossMargin) / Math.abs(k25.grossMargin) * 100 : null,
+            positive: true,
+        },
+        {
+            label: 'GM%',
+            val: gmPct26 - gmPct25,
+            fmt: v => (v >= 0 ? '+' : '') + v.toFixed(1) + 'pp margin',
+            pct: null,
+            positive: true,
+        },
+        {
+            label: 'Commission rate',
+            val: commPct26 - commPct25,
+            fmt: v => (v >= 0 ? '+' : '') + v.toFixed(1) + 'pp of rev',
+            pct: null,
+            positive: false,
+        },
+        {
+            label: 'Avg GM/tour',
+            val: avgGm26 - avgGm25,
+            fmt: v => (v >= 0 ? '+' : '−') + '€' + fmt(Math.abs(v)) + '/tour',
+            pct: null,
+            positive: true,
+        },
+    ];
+
+    const top = candidates.filter(c => ['Revenue', 'Gross Margin', 'GM%'].includes(c.label));
+
+    el.innerHTML = top.map(c => {
+        const isGood = c.positive ? c.val >= 0 : c.val <= 0;
+        const cls = isGood ? 'insight-pos' : 'insight-neg';
+        const arrow = isGood ? '▲' : '▼';
+        const pctStr = c.pct !== null ? ` (${c.pct >= 0 ? '+' : ''}${c.pct.toFixed(1)}%)` : '';
+        return `<span class="insight-pill ${cls}">${arrow} ${c.label} ${c.fmt(c.val)}${pctStr} vs 2025</span>`;
+    }).join('');
+}
+
 // ── Chart theming ─────────────────────────────────────────────────────────────
 
 export function axisDefaults() {

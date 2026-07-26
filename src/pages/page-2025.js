@@ -7,6 +7,7 @@ export const Page25 = {
     activeMonths: [],
     activePrivateType: 'all',
     activeSharedType: 'all',
+    searchTerm: '',
     PRIVATE_TYPES: ['war PR', 'food PR', 'best', 'old', 'big'],
     SHARED_TYPES: ['war', 'food', 'best'],
     chartInstance: null,
@@ -129,6 +130,7 @@ export const Page25 = {
             html += `</div></section>`;
         });
         container.innerHTML = html;
+        this.applySearchFilter();
         this.updateKPIs();
         this.updateChart();
         this.renderCityBars();
@@ -415,6 +417,18 @@ export const Page25 = {
     filterLang(lang) { this.activeLang = lang; this.renderAll(); },
     filterMonth(m)   { this.activeMonths = m === 'all' ? [] : [parseInt(m)]; this.renderAll(); },
 
+    applySearchFilter() {
+        const term = (this.searchTerm || '').toLowerCase();
+        this._scope('.guide-card').forEach(card => {
+            const name = (card.dataset.name || '').toLowerCase();
+            card.style.display = !term || name.includes(term) ? '' : 'none';
+        });
+    },
+    filterGuideSearch(term) {
+        this.searchTerm = term;
+        this.applySearchFilter();
+    },
+
     toggleMonthly(sid) {
         const table = document.getElementById('mt-' + sid);
         const arrow = document.getElementById('mta-' + sid);
@@ -571,6 +585,9 @@ export const Page25 = {
                 <span class="section-chevron">▾</span>
             </button>
             <div id="guides-body-25" class="section-body">
+                <input type="text" id="guide-search-25" class="guide-search-input"
+                       placeholder="${t('labels.searchGuide')}"
+                       oninput="Page25.filterGuideSearch(this.value)">
                 <div id="guide-sections-25"></div>
             </div>
         </div>`;

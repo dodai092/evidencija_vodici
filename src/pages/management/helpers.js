@@ -166,6 +166,18 @@ export function buildMonthlyFromDays(guides, cutoffMonth, cutoffDay, fields = ['
     return result;
 }
 
+// entries: [{ name, revenue26, gm26, revenue25, gm25 }]
+// Returns the single worst YoY € gross-margin swing (most negative delta),
+// excluding entries with revenue below minRevenue in BOTH years. Returns
+// null if no entry qualifies or none has a negative delta.
+export function findBiggestNegativeMover(entries, minRevenue = 500) {
+    return entries
+        .filter(e => e.revenue26 >= minRevenue || e.revenue25 >= minRevenue)
+        .map(e => ({ ...e, delta: e.gm26 - e.gm25 }))
+        .filter(e => e.delta < 0)
+        .sort((a, b) => a.delta - b.delta)[0] || null;
+}
+
 // ── Chart theming ─────────────────────────────────────────────────────────────
 
 export function axisDefaults() {

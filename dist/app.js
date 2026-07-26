@@ -175,6 +175,7 @@
         monthly: "Monthly",
         external: "External",
         avgPaxPerTour: "Avg PAX per Tour",
+        searchGuide: "Search guide\u2026",
         city: "City",
         language: "Language",
         mo: "Month",
@@ -322,6 +323,7 @@
         monthly: "Mjese\u010Dno",
         external: "Vanjski",
         avgPaxPerTour: "Prosje\u010Dan PAX po turi",
+        searchGuide: "Pretra\u017Ei vodi\u010Da\u2026",
         city: "Grad",
         language: "Jezik",
         mo: "Mj.",
@@ -1080,6 +1082,7 @@
     activeMonths: [],
     activePrivateType: "all",
     activeSharedType: "all",
+    searchTerm: "",
     PRIVATE_TYPES: ["war PR", "food PR", "best", "old", "big"],
     SHARED_TYPES: ["war", "food", "best"],
     chartInstance: null,
@@ -1137,6 +1140,7 @@
         html += `</div></section>`;
       });
       container.innerHTML = html;
+      this.applySearchFilter();
       this.updateKPIs();
       this.updateChart();
       this.renderCityBars();
@@ -1483,6 +1487,17 @@
       this.activeMonths = m === "all" ? [] : [parseInt(m)];
       this.renderAll();
     },
+    applySearchFilter() {
+      const term = (this.searchTerm || "").toLowerCase();
+      this._scope(".guide-card").forEach((card) => {
+        const name = (card.dataset.name || "").toLowerCase();
+        card.style.display = !term || name.includes(term) ? "" : "none";
+      });
+    },
+    filterGuideSearch(term) {
+      this.searchTerm = term;
+      this.applySearchFilter();
+    },
     toggleMonthly(sid) {
       const table = document.getElementById("mt-" + sid);
       const arrow = document.getElementById("mta-" + sid);
@@ -1634,6 +1649,9 @@
                 <span class="section-chevron">\u25BE</span>
             </button>
             <div id="guides-body-26" class="section-body">
+                <input type="text" id="guide-search-26" class="guide-search-input"
+                       placeholder="${t("labels.searchGuide")}"
+                       oninput="Page26.filterGuideSearch(this.value)">
                 <div id="guide-sections-26"></div>
             </div>
         </div>`;
@@ -4178,7 +4196,7 @@ GM%: ${gmpct}%`;
     const lossFromSmallGroups = smallGroup26.grossMargin < 0 ? Math.abs(smallGroup26.grossMargin) : 0;
     const el = document.getElementById("paxband-action-panel");
     if (el) {
-      const breakevenNote = breakevenBand ? `<div><strong>\u26A1 Action:</strong> Raise minimum from 2 PAX to <strong>${breakevenBand.split("-")[0]} PAX</strong> to guarantee positive margin on every tour</div>` : "";
+      const breakevenNote = smallGroup26.grossMargin < 0 && breakevenBand ? `<div><strong>\u26A1 Action:</strong> Enforce a minimum of <strong>${breakevenBand.split("-")[0]} PAX</strong> per booking to guarantee positive margin on every tour</div>` : "";
       el.innerHTML = `
             <div style="font-weight: 600; margin-bottom: 10px; color: var(--text);">${t("management.smallGroupProblem")}</div>
             <div style="color: var(--text2); line-height: 1.6; font-size: 11px;">

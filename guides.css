@@ -112,6 +112,25 @@ body.dark-mode .filter-select {
   color-scheme: dark;
 }
 
+.guide-search-input {
+  display: block;
+  background: var(--smoke);
+  border: 1px solid var(--border-dark);
+  color: var(--text2);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  outline: none;
+  width: 220px;
+  max-width: 100%;
+  margin: 0 0 16px;
+}
+
+body.dark-mode .guide-search-input {
+  color-scheme: dark;
+}
+
 .date-picker-label {
   font-size: 11px;
   color: var(--text3);

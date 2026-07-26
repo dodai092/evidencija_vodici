@@ -187,8 +187,8 @@ export function renderPaxBandActionPanel() {
 
     const el = document.getElementById('paxband-action-panel');
     if (el) {
-        const breakevenNote = breakevenBand
-            ? `<div><strong>⚡ Action:</strong> Raise minimum from 2 PAX to <strong>${breakevenBand.split('-')[0]} PAX</strong> to guarantee positive margin on every tour</div>`
+        const breakevenNote = (smallGroup26.grossMargin < 0 && breakevenBand)
+            ? `<div><strong>⚡ Action:</strong> Enforce a minimum of <strong>${breakevenBand.split('-')[0]} PAX</strong> per booking to guarantee positive margin on every tour</div>`
             : '';
         el.innerHTML = `
             <div style="font-weight: 600; margin-bottom: 10px; color: var(--text);">${t('management.smallGroupProblem')}</div>

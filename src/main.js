@@ -104,6 +104,7 @@ function initEventListeners() {
     // Controls
     document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
     document.getElementById('cutoff-picker')?.addEventListener('change', e => updateDateAsOf(e.target.value));
+    document.getElementById('cutoff-picker')?.addEventListener('click', e => e.target.showPicker?.());
     document.querySelector('.print-btn')?.addEventListener('click', () => window.print());
 
     // Management city filter pills (two static sets in index.html)

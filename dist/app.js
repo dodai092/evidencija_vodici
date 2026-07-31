@@ -4591,6 +4591,7 @@ GM%: ${gmpct}%`;
     });
     document.getElementById("theme-toggle")?.addEventListener("click", toggleTheme);
     document.getElementById("cutoff-picker")?.addEventListener("change", (e) => updateDateAsOf(e.target.value));
+    document.getElementById("cutoff-picker")?.addEventListener("click", (e) => e.target.showPicker?.());
     document.querySelector(".print-btn")?.addEventListener("click", () => window.print());
     document.querySelectorAll(".city-pill").forEach((el) => el.addEventListener("click", () => mgmtFilterCityPl(el.dataset.city)));
     document.querySelectorAll(".sort-hdr").forEach((el) => {

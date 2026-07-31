@@ -2527,24 +2527,9 @@
       this._setActivePill("private-city-pills-cmp", btn);
       this.updatePaidTypeCharts();
     },
-    filterPrivateType(type, btn) {
-      this.activePrivateType = type;
-      this._setActivePill("private-type-pills-cmp", btn);
-      this.updatePaidTypeCharts();
-    },
     filterSharedCity(city, btn) {
       this.activeSharedCity = city;
       this._setActivePill("shared-city-pills-cmp", btn);
-      this.updatePaidTypeCharts();
-    },
-    filterSharedType(type, btn) {
-      this.activeSharedType = type;
-      this._setActivePill("shared-type-pills-cmp", btn);
-      this.updatePaidTypeCharts();
-    },
-    filterAvgType(type, btn) {
-      this.activeAvgType = type;
-      this._setActivePill("avg-type-pills-cmp", btn);
       this.updatePaidTypeCharts();
     },
     filterTourType(type, btn) {
@@ -2552,9 +2537,6 @@
       this.activeSharedType = type === "all" || this.SHARED_TYPES.includes(type) ? type : "all";
       this.activeAvgType = type;
       this._setActivePill("unified-type-pills-cmp", btn);
-      this._setActivePillByValue("private-type-pills-cmp", this.activePrivateType);
-      this._setActivePillByValue("shared-type-pills-cmp", this.activeSharedType);
-      this._setActivePillByValue("avg-type-pills-cmp", this.activeAvgType);
       this.updatePaidTypeCharts();
     },
     _setActivePill(groupId, activeBtn) {
@@ -2562,11 +2544,6 @@
       if (!group) return;
       group.querySelectorAll(".pill").forEach((p) => p.classList.remove("active"));
       if (activeBtn) activeBtn.classList.add("active");
-    },
-    _setActivePillByValue(groupId, value) {
-      const group = document.getElementById(groupId);
-      if (!group) return;
-      group.querySelectorAll(".pill").forEach((p) => p.classList.toggle("active", p.dataset.value === value));
     },
     _getTypeMonthData(city, types, primaryKey, year) {
       const cutoffMonth = getCutoffMonth();
@@ -2976,7 +2953,7 @@
                 <span class="section-chevron">\u25BE</span>
             </div>
             <div id="paid-section-body" class="section-body">
-                <div class="type-filter-row" style="margin-bottom:10px">
+                <div class="type-filter-row sticky-type-filter" id="tour-type-sticky-cmp">
                     <span class="type-filter-label">${t("labels.tourType")}</span>
                     <div id="unified-type-pills-cmp" class="pill-group">
                         <button class="pill active" data-value="all" onclick="PageCmp.filterTourType('all',this)">${t("labels.all")}</button>
@@ -3017,17 +2994,6 @@
                                     <button class="pill" onclick="PageCmp.filterPrivateCity('Zadar',this)">Zadar</button>
                                 </div>
                             </div>
-                            <div class="type-filter-row">
-                                <span class="type-filter-label">${t("labels.type")}</span>
-                                <div id="private-type-pills-cmp" class="pill-group">
-                                    <button class="pill active" data-value="all" onclick="PageCmp.filterPrivateType('all',this)">${t("labels.all")}</button>
-                                    <button class="pill" data-value="war PR" onclick="PageCmp.filterPrivateType('war PR',this)">war PR</button>
-                                    <button class="pill" data-value="food PR" onclick="PageCmp.filterPrivateType('food PR',this)">food PR</button>
-                                    <button class="pill" data-value="best" onclick="PageCmp.filterPrivateType('best',this)">best</button>
-                                    <button class="pill" data-value="old" onclick="PageCmp.filterPrivateType('old',this)">old</button>
-                                    <button class="pill" data-value="big" onclick="PageCmp.filterPrivateType('big',this)">big</button>
-                                </div>
-                            </div>
                         </div>
                         <div class="chart-container">
                             <canvas id="privatePaidChart-cmp"></canvas>
@@ -3038,21 +3004,6 @@
                 <div class="charts-row">
                     <div class="chart-card type-chart-card">
                         <div class="chart-card-title"${titleAttr("charts.avgPaxByType")}>${t("charts.avgPaxByType")} \u2014 <span class="ytd-range-label">Jan\u2013Jun</span> 2025 vs. 2026</div>
-                        <div class="type-chart-filters">
-                            <div class="type-filter-row">
-                                <span class="type-filter-label">${t("labels.type")}</span>
-                                <div id="avg-type-pills-cmp" class="pill-group">
-                                    <button class="pill active" data-value="all" onclick="PageCmp.filterAvgType('all',this)">${t("labels.all")}</button>
-                                    <button class="pill" data-value="war" onclick="PageCmp.filterAvgType('war',this)">war</button>
-                                    <button class="pill" data-value="food" onclick="PageCmp.filterAvgType('food',this)">food</button>
-                                    <button class="pill" data-value="best" onclick="PageCmp.filterAvgType('best',this)">best</button>
-                                    <button class="pill" data-value="war PR" onclick="PageCmp.filterAvgType('war PR',this)">war PR</button>
-                                    <button class="pill" data-value="food PR" onclick="PageCmp.filterAvgType('food PR',this)">food PR</button>
-                                    <button class="pill" data-value="old" onclick="PageCmp.filterAvgType('old',this)">old</button>
-                                    <button class="pill" data-value="big" onclick="PageCmp.filterAvgType('big',this)">big</button>
-                                </div>
-                            </div>
-                        </div>
                         <div class="chart-container">
                             <canvas id="warAvgChart-cmp"></canvas>
                         </div>
@@ -3070,15 +3021,6 @@
                                     <button class="pill" onclick="PageCmp.filterSharedCity('Dubrovnik',this)">Dubrovnik</button>
                                     <button class="pill" onclick="PageCmp.filterSharedCity('Split',this)">Split</button>
                                     <button class="pill" onclick="PageCmp.filterSharedCity('Zadar',this)">Zadar</button>
-                                </div>
-                            </div>
-                            <div class="type-filter-row">
-                                <span class="type-filter-label">${t("labels.type")}</span>
-                                <div id="shared-type-pills-cmp" class="pill-group">
-                                    <button class="pill active" data-value="all" onclick="PageCmp.filterSharedType('all',this)">${t("labels.all")}</button>
-                                    <button class="pill" data-value="war" onclick="PageCmp.filterSharedType('war',this)">war</button>
-                                    <button class="pill" data-value="food" onclick="PageCmp.filterSharedType('food',this)">food</button>
-                                    <button class="pill" data-value="best" onclick="PageCmp.filterSharedType('best',this)">best</button>
                                 </div>
                             </div>
                         </div>
@@ -3136,12 +3078,22 @@
       const datePov = this._el("date-pov");
       if (datePov) datePov.textContent = now;
     },
+    _positionTourTypeSticky() {
+      const nav = document.querySelector(".nav");
+      const divider = document.getElementById("paid-section-body")?.previousElementSibling;
+      const bar = document.getElementById("tour-type-sticky-cmp");
+      if (nav && divider && bar) {
+        bar.style.top = nav.offsetHeight + divider.offsetHeight + "px";
+      }
+    },
     init() {
       if (this._initialized) return;
       this._initialized = true;
       this.rebuildStructure();
       this.mergedGuides = this.buildMerged();
       this.renderAll();
+      this._positionTourTypeSticky();
+      window.addEventListener("resize", () => this._positionTourTypeSticky());
     }
   };
   registerPage("PageCmp", PageCmp);

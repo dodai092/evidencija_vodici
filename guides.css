@@ -437,6 +437,15 @@ body.dark-mode .guide-search-input {
   flex-wrap: wrap;
 }
 
+.sticky-type-filter {
+  position: sticky;
+  z-index: 90;
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--border);
+  margin: 0 calc(-1 * var(--pad));
+  padding: 10px var(--pad);
+}
+
 .type-filter-label {
   font-size: 10px;
   font-weight: 600;

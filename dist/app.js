@@ -2829,11 +2829,7 @@
                     </select>
                     <select class="filter-select" id="month-filter-cmp" onchange="PageCmp.filterMonth(this.value)">
                         <option value="all">${t("labels.all")}</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
+                        ${Array.from({ length: getCutoffMonth() }, (_, i) => i + 1).map((m) => `<option value="${m}">${m}</option>`).join("")}
                     </select>
                 </div>
             </div>

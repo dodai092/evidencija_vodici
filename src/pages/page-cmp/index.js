@@ -27,12 +27,12 @@ export const PageCmp = {
     warAvgChartInstance: null,
     avgFreePaxCmpChartInstance: null,
     activeAvgType: 'all',
-    ALL_PAID_TYPES: ['war', 'food', 'best', 'war PR', 'food PR', 'old', 'big'],
+    ALL_PAID_TYPES: ['war', 'food', 'best', 'war PR', 'food PR', 'old', 'big', 'food kuoni'],
     activePrivateCity: 'all',
     activePrivateType: 'all',
     activeSharedCity: 'all',
     activeSharedType: 'all',
-    PRIVATE_TYPES: ['war PR', 'food PR', 'best', 'old', 'big'],
+    PRIVATE_TYPES: ['war PR', 'food PR', 'best', 'old', 'big', 'food kuoni'],
     SHARED_TYPES: ['war', 'food', 'best'],
     _initialized: false,
 
@@ -1023,6 +1023,7 @@ export const PageCmp = {
                         <button class="pill" data-value="food PR" onclick="PageCmp.filterTourType('food PR',this)">food PR</button>
                         <button class="pill" data-value="old" onclick="PageCmp.filterTourType('old',this)">old</button>
                         <button class="pill" data-value="big" onclick="PageCmp.filterTourType('big',this)">big</button>
+                        <button class="pill" data-value="food kuoni" onclick="PageCmp.filterTourType('food kuoni',this)">food kuoni</button>
                     </div>
                 </div>
                 <div class="charts-row">

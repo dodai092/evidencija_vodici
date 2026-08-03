@@ -2303,22 +2303,22 @@
         selectedMonths.forEach((i) => {
           CITIES.forEach((city) => {
             let pax25 = 0, pax26 = 0;
-            fc.filter((m) => m.city === city).forEach((m) => {
-              if (i < cutoffMonth) {
-                const b25 = m.g25 && m.g25.stats[this.activeLang].byMonth[String(i)];
-                const b26 = m.g26 && m.g26.stats[this.activeLang].byMonth[String(i)];
-                if (b25) pax25 += b25.free?.pax || 0;
-                if (b26) pax26 += b26.free?.pax || 0;
-              } else {
-                for (let d = 1; d <= cutoffDay2; d++) {
-                  const key = `${i}-${d}`;
-                  const d25 = m.g25 && m.g25.stats[this.activeLang].byDay?.[key];
-                  const d26 = m.g26 && m.g26.stats[this.activeLang].byDay?.[key];
-                  if (d25) pax25 += d25.free?.pax || 0;
-                  if (d26) pax26 += d26.free?.pax || 0;
-                }
+            const st25 = cityStats25[city]?.[this.activeLang];
+            const st26 = cityStats26[city]?.[this.activeLang];
+            if (i < cutoffMonth) {
+              const b25 = st25?.byMonth[String(i)];
+              const b26 = st26?.byMonth[String(i)];
+              if (b25) pax25 += b25.free?.pax || 0;
+              if (b26) pax26 += b26.free?.pax || 0;
+            } else {
+              for (let d = 1; d <= cutoffDay2; d++) {
+                const key = `${i}-${d}`;
+                const d25 = st25?.byDay?.[key];
+                const d26 = st26?.byDay?.[key];
+                if (d25) pax25 += d25.free?.pax || 0;
+                if (d26) pax26 += d26.free?.pax || 0;
               }
-            });
+            }
             cityMonthly25[city].push(pax25);
             cityMonthly26[city].push(pax26);
           });
@@ -2549,15 +2549,15 @@
       const cutoffMonth = getCutoffMonth();
       const cutoffDay = parseInt(getGlobalDate().split("-")[2]);
       const maxMonth = this.activeMonths.length > 0 ? Math.max(...this.activeMonths) : cutoffMonth;
-      const fc = this.mergedGuides.filter((m) => CITIES.includes(m.city) && (city === "all" || m.city === city));
+      const cityStats = year === 25 ? cityStats25 : cityStats26;
+      const citiesToSum = city === "all" ? CITIES : [city];
       return Array.from({ length: maxMonth }, (_, i) => i + 1).map((mo) => {
         let primary = 0, secondary = 0;
         const secondaryKey = primaryKey === "tours" ? "pax" : "tours";
         if (mo < cutoffMonth) {
-          fc.forEach((m) => {
-            const g = year === 25 ? m.g25 : m.g26;
-            if (!g) return;
-            const bmt = g.stats[this.activeLang]?.byMonthType?.[String(mo)];
+          citiesToSum.forEach((c) => {
+            const st = cityStats[c]?.[this.activeLang];
+            const bmt = st?.byMonthType?.[String(mo)];
             if (!bmt) return;
             types.forEach((tp) => {
               const td = bmt[tp];
@@ -2570,10 +2570,9 @@
         } else if (mo === cutoffMonth) {
           for (let d = 1; d <= cutoffDay; d++) {
             const key = `${mo}-${d}`;
-            fc.forEach((m) => {
-              const g = year === 25 ? m.g25 : m.g26;
-              if (!g) return;
-              const bdt = g.stats[this.activeLang]?.byDayType?.[key];
+            citiesToSum.forEach((c) => {
+              const st = cityStats[c]?.[this.activeLang];
+              const bdt = st?.byDayType?.[key];
               if (!bdt) return;
               types.forEach((tp) => {
                 const td = bdt[tp];
@@ -2671,7 +2670,6 @@
       const maxMonth = this.activeMonths.length > 0 ? Math.max(...this.activeMonths) : cutoffMonth;
       const months = Array.from({ length: maxMonth }, (_, i) => MONTH_NAMES[i + 1]);
       const rangeLabel = getRangeLabel();
-      const cutoffDay = parseInt(getGlobalDate().split("-")[2]);
       const secondaryLabelPlugin = (secondaryKey) => ({
         id: "secondaryLabel",
         afterDraw(chart) {
@@ -2729,42 +2727,8 @@
       this.renderPaidTypeTable("private-type-table-cmp", this.activePrivateCity, this.activePrivateType, this.PRIVATE_TYPES, "tours");
       buildTypeChart("sharedPaidChart-cmp", "sharedPaidChartInstance", this.activeSharedCity, this.activeSharedType, this.SHARED_TYPES, "tours");
       this.renderPaidTypeTable("shared-type-table-cmp", this.activeSharedCity, this.activeSharedType, this.SHARED_TYPES, "pax");
-      const fc = this.mergedGuides.filter((m) => CITIES.includes(m.city) && (this.activeCity === "all" || m.city === this.activeCity));
       const typesToShow = this.activeAvgType === "all" ? this.ALL_PAID_TYPES : [this.activeAvgType];
-      const getTypeAvg = (year, types) => Array.from({ length: maxMonth }, (_, i) => i + 1).map((mo) => {
-        let pax = 0, tours = 0;
-        if (mo < cutoffMonth) {
-          fc.forEach((m) => {
-            const g = year === 25 ? m.g25 : m.g26;
-            const bmt = g?.stats[this.activeLang]?.byMonthType?.[String(mo)];
-            if (!bmt) return;
-            types.forEach((tp) => {
-              const d = bmt[tp];
-              if (d) {
-                pax += d.pax || 0;
-                tours += d.tours || 0;
-              }
-            });
-          });
-        } else if (mo === cutoffMonth) {
-          for (let d = 1; d <= cutoffDay; d++) {
-            const key = `${mo}-${d}`;
-            fc.forEach((m) => {
-              const g = year === 25 ? m.g25 : m.g26;
-              const bdt = g?.stats[this.activeLang]?.byDayType?.[key];
-              if (!bdt) return;
-              types.forEach((tp) => {
-                const td = bdt[tp];
-                if (td) {
-                  pax += td.pax || 0;
-                  tours += td.tours || 0;
-                }
-              });
-            });
-          }
-        }
-        return tours > 0 ? +(pax / tours).toFixed(1) : null;
-      });
+      const getTypeAvg = (year, types) => this._getTypeMonthData(this.activeCity, types, "pax", year).map((d) => d.secondary > 0 ? +(d.primary / d.secondary).toFixed(1) : null);
       try {
         if (this.warAvgChartInstance) this.warAvgChartInstance.destroy();
         const warCtx = document.getElementById("warAvgChart-cmp")?.getContext("2d");

@@ -57,11 +57,12 @@ GUIDE_ORDER = [
         'Ivana Čakarić', 'Katarina Novoselac', 'Iva Pavlović', 'Nikolina Folnović',
         'Katija Crnčević', 'Kristina Božić', 'Ena Matacun', 'Nadir Ivanović',
         'Antonio Sičić', 'Dora Mlinarek Dominik', 'Josipa Šiklić',
+        'Alan Sopta', 'Tomislav Štefanić', 'Daria Justinijanović', 'Doris Cvetko P',
     ]),
     ('Dubrovnik', [
         'Marin Kalauz', 'Pero Kusalo', 'Andrea Rendulić', 'Sara Žanetić',
         'Maja Musulin', 'Nikolina Vidojević', 'Ivo Miličić', 'Lorena Arias',
-        'Nikolina Vukanović',
+        'Nikolina Vukanović', 'Romana Tomičić',
     ]),
     ('Split', [
         'Bruno Beara', 'Ivana Čagalj', 'Lorena Ćelić', 'Marija Močić',
@@ -69,6 +70,7 @@ GUIDE_ORDER = [
     ]),
     ('Zadar', [
         'Andrija Grubić', 'Iva Zaplatić', 'Matea Duka', 'Tonka Baričević',
+        'Nikolina Kuzman',
     ]),
 ]
 

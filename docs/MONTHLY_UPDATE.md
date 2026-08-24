@@ -20,9 +20,12 @@ When new monthly data is entered in the Excel file, regenerating the dashboard t
 
 ## Step-by-step
 
-### 1. Enter data in the Excel file
+### 1. Get the latest data into the Excel file
 
-Open `1.1 Evidencija prodaje 26.xlsx` and add the new month's tour rows to the **`Evidencija`** sheet. Each row represents one tour booking with columns for guide name, city, language, tour type, month, and pax count.
+Two ways, depending on the session:
+
+- **In a Claude session with the Google Drive connector available (fastest):** ask Claude to pull the live sheet — it calls `get_file_metadata`/`download_file_content` on the sheet's Drive file ID with `exportMimeType: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet` and overwrites `1.1 Evidencija prodaje 26.xlsx` with the result. See `docs/adr/0002-authenticated-drive-pull-for-guide-data.md` — this works because the connector is authenticated as a user the sheet is shared with, unlike the anonymous CSV export ADR 0001 ruled out.
+- **Otherwise (fallback):** open `1.1 Evidencija prodaje 26.xlsx` and add the new month's tour rows to the **`Evidencija`** sheet manually, or have whoever owns the Google Sheet export it and drop it at that path. Each row represents one tour booking with columns for guide name, city, language, tour type, month, and pax count.
 
 ### 2. Regenerate `data-2026.js`
 
@@ -39,6 +42,8 @@ python3 scripts/extract_guides.py --year 2026 > data-2026.js
 This reads the `Evidencija` sheet and outputs a fresh `data-2026.js` with updated `guideStats26` and `kpiTotals26`.
 
 > **Note:** The script detects column positions automatically from the header row, so column order in the sheet does not need to match exactly.
+
+> **There's also a GitHub Actions workflow** ("Update guide data", `.github/workflows/update-data.yml`) that can run this same extraction remotely and push the result, reading the sheet via a `SHEET_URL` secret instead of the local Excel file. As of this writing that secret is **not set** on this repo (`gh secret list` returns none) — triggering that workflow today would fail. The steps above (local Excel, manual run) are the process that actually works. If a `SHEET_URL` secret is ever added, this note should be revisited.
 
 ### 3. Verify locally
 
@@ -75,15 +80,9 @@ The **Usporedba** tab will show them as a new guide (no 2025 comparison row), gr
 
 ---
 
-## Updating the comparison date range
+## The comparison date range
 
-The comparison tab currently shows **January–June** (months 1–6). To extend it to July after July data is available, edit `src/pages/page-cmp/index.js`:
-
-1. Search for `Jan–Jun` and replace all occurrences of the range label with `Jan–Jul` (multiple chart titles use the `ytd-range-label` span).
-
-2. If you're also adding July data processing, look for any month loops (`m <= 6`) and update them to `m <= 7`.
-
-3. After editing, run `npm run build` and commit `dist/app.js` along with the source change — unlike a data-only update, a `src/` change does require rebuilding the bundle.
+The Comparison tab's range (shown as e.g. "Jan–Jun" or "Jan–Aug") and its month dropdown are computed automatically from the "as-of" date cutoff (or the active month filter, if one is set) every time the tab renders — there is nothing to edit here as new months land. The `Jan–Jun` text hardcoded in `index.html`'s `<span class="ytd-range-label">` elements is only a placeholder shown before JS first runs; `page-cmp/index.js` overwrites it on render. A data-only update (Steps 1–4 above) is enough to extend the comparison range — no `src/` edit or rebuild required for this.
 
 ---
 

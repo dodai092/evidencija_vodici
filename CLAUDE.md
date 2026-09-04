@@ -22,11 +22,21 @@ Source of truth is a local Excel file (`1.1 Evidencija prodaje 26.xlsx`) that is
 ```bash
 source venv/bin/activate
 python3 scripts/extract_guides.py --year 2026 > data-2026.js
-# Verify in browser, then:
+# Verify in browser (see below), then:
 git add data-2026.js
 git commit -m "Update: guides data $(date +%Y-%m)"
 git push
 ```
+
+### Verifying the update in browser
+
+Before committing, confirm the new numbers actually render correctly (not just that `extract_guides.py` ran without error):
+
+1. Serve the directory locally (e.g. `python3 -m http.server`) and use the Playwright MCP tools to navigate to `index.html`.
+2. Screenshot the 2026 tab and check the console for JS errors.
+3. Compare the rendered KPI totals (guides, free/paid tours & pax) against the new `kpiTotals26` values in the freshly generated `data-2026.js` — a page that loads without errors can still show stale or mis-summed numbers.
+4. Click through the 2025, Comparison, and Management tabs and screenshot each — these read the same underlying data and are where a bad `cityStats`/`filteredStats` change would surface as a KPI/chart mismatch (see the troubleshooting table below).
+5. Toggle dark mode and change the date-as-of picker once to confirm `updateDateAsOf()` re-renders without breaking.
 
 `scripts/extract_guides.py` reads the `Evidencija` sheet (2026) or `Evidencija_25` sheet (2025) and auto-detects column positions from the header row. Both years use the same Excel file: `1.1 Evidencija prodaje 26.xlsx`.
 
@@ -147,12 +157,9 @@ const cityStats26 = {
 - For the partial current month: sums individual `byDay` entries up to `cutoffDay`.
 - Falls back to full-month `byMonth` if `byDay` is absent (older 2025 data).
 
-### Extending the comparison date range
+### The comparison date range
 
-The comparison tab (`page-cmp/index.js`) shows Jan–Jun by default. To extend beyond June after new months land:
-
-1. In `src/pages/page-cmp/index.js`, update all instances of the range label (search for `Jan–Jun` and replace with the new range, e.g., `Jan–Jul`)
-   - There are multiple chart titles with the ytd-range-label span that need updating
+The comparison tab (`page-cmp/index.js`) computes its range label and month dropdown automatically from `getCutoffMonth()` (or the active month filter) on every render — the `Jan–Jun` text in `index.html`'s `.ytd-range-label` spans is only a pre-JS placeholder. No source edit or rebuild is needed as new months land; a data-only update is sufficient. (This used to require a manual edit; fixed in `61e73ba` — don't reintroduce a hardcoded range.)
 
 ### Theme system
 

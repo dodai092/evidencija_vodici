@@ -194,7 +194,6 @@
         paidToursCount: "Paid Tours \u2013 Count",
         paxPerTour: "pax per tour",
         byMonth: "by Month",
-        ytdRange: "Jan\u2013May",
         travelYear2026: "Travel Year 2026",
         ytd: "YTD",
         partial: "Partial month",
@@ -343,7 +342,6 @@
         paidToursCount: "Pla\u0107ene ture \u2013 Broj",
         paxPerTour: "pax po turi",
         byMonth: "po mjesecu",
-        ytdRange: "Jan\u2013Maj",
         travelYear2026: "Putna godina 2026",
         ytd: "YTD",
         partial: "Dijelom mjesec",
@@ -1545,7 +1543,7 @@
       return `<div class="header">
             <div class="header-left">
                 <h1>${t("table.tours")} <span class="accent">2026</span></h1>
-                <p>Tour production by guide &middot; ${t("labels.freeTours")} vs. ${t("labels.paidTours")} &middot; <span class="ytd-range-label">${t("labels.ytdRange")}</span></p>
+                <p>Tour production by guide &middot; ${t("labels.freeTours")} vs. ${t("labels.paidTours")} &middot; <span class="ytd-range-label">${getRangeLabel()}</span></p>
             </div>
             <div class="header-right">
                 <div id="date-pov-26" class="mb-6"></div>

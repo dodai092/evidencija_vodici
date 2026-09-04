@@ -1,4 +1,4 @@
-import { getCityColor, getChartColors as _chartColors, CITY_CLS, CITIES, MONTH_NAMES_HR, filteredStats, safeName, fmtN, getCutoffMonth, getGlobalDate, registerPage, showPage } from '../shared.js';
+import { getCityColor, getChartColors as _chartColors, CITY_CLS, CITIES, MONTH_NAMES_HR, filteredStats, safeName, fmtN, getCutoffMonth, getGlobalDate, getRangeLabel, registerPage, showPage } from '../shared.js';
 import { t, titleAttr } from '../i18n.js';
 
 export const Page26 = {
@@ -507,7 +507,7 @@ export const Page26 = {
         return `<div class="header">
             <div class="header-left">
                 <h1>${t('table.tours')} <span class="accent">2026</span></h1>
-                <p>Tour production by guide &middot; ${t('labels.freeTours')} vs. ${t('labels.paidTours')} &middot; <span class="ytd-range-label">${t('labels.ytdRange')}</span></p>
+                <p>Tour production by guide &middot; ${t('labels.freeTours')} vs. ${t('labels.paidTours')} &middot; <span class="ytd-range-label">${getRangeLabel()}</span></p>
             </div>
             <div class="header-right">
                 <div id="date-pov-26" class="mb-6"></div>

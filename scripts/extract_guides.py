@@ -62,7 +62,7 @@ GUIDE_ORDER = [
     ('Dubrovnik', [
         'Marin Kalauz', 'Pero Kusalo', 'Andrea Rendulić', 'Sara Žanetić',
         'Maja Musulin', 'Nikolina Vidojević', 'Ivo Miličić', 'Lorena Arias',
-        'Nikolina Vukanović', 'Romana Tomičić',
+        'Nikolina Vukanović', 'Romana Tomičić', 'Emma Martinović',
     ]),
     ('Split', [
         'Bruno Beara', 'Ivana Čagalj', 'Lorena Ćelić', 'Marija Močić',

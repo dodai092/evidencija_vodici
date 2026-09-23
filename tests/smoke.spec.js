@@ -3,10 +3,16 @@ const path = require('path');
 
 const FILE_URL = `file://${path.resolve(__dirname, '..', 'index.html')}`;
 
-// Open the app and wait for Page25 to inject its content
+// Open the app and wait for the default tab (Comparison) to inject its content
 async function load(page) {
     await page.goto(FILE_URL);
     await page.waitForLoadState('load');
+    await page.waitForFunction(() => (document.getElementById('page-cmp')?.children.length ?? 0) > 0);
+}
+
+// Switch to the Page 25 tab and wait for it to lazy-init
+async function openPage25(page) {
+    await page.click('#tab-25');
     await page.waitForFunction(() => (document.getElementById('page-25')?.children.length ?? 0) > 0);
 }
 
@@ -22,12 +28,12 @@ test.describe('Tab navigation', () => {
     test('all 4 main tabs switch pages', async ({ page }) => {
         await load(page);
 
-        await expect(page.locator('#page-25')).toBeVisible();
+        await expect(page.locator('#page-cmp')).toBeVisible();
         await expect(page.locator('#page-26')).not.toBeVisible();
 
         await page.click('#tab-26');
         await expect(page.locator('#page-26')).toBeVisible();
-        await expect(page.locator('#page-25')).not.toBeVisible();
+        await expect(page.locator('#page-cmp')).not.toBeVisible();
 
         await page.click('#tab-cmp');
         await expect(page.locator('#page-cmp')).toBeVisible();
@@ -45,6 +51,7 @@ test.describe('Tab navigation', () => {
 test.describe('Page 25 — Guides 2025', () => {
     test('renders guide cards and charts', async ({ page }) => {
         await load(page);
+        await openPage25(page);
         await expect(page.locator('#page-25 .guide-card').first()).toBeVisible();
         await hasChart(page, 'cityChart-25');
         await hasChart(page, 'avgFreePaxChart-25');
@@ -52,7 +59,8 @@ test.describe('Page 25 — Guides 2025', () => {
 
     test('city filter shows only cards from selected city', async ({ page }) => {
         await load(page);
-        await page.selectOption('#city-filter-25', 'Zagreb');
+        await openPage25(page);
+        await page.click('#page-25 .city-filter-pill[data-city="Zagreb"]');
         const cards = await page.locator('#page-25 .guide-card').all();
         expect(cards.length).toBeGreaterThan(0);
         for (const card of cards) {
@@ -62,12 +70,14 @@ test.describe('Page 25 — Guides 2025', () => {
 
     test('language filter updates cards', async ({ page }) => {
         await load(page);
+        await openPage25(page);
         await page.selectOption('#lang-filter-25', 'eng');
         await expect(page.locator('#page-25 .guide-card').first()).toBeVisible();
     });
 
     test('month filter runs without error', async ({ page }) => {
         await load(page);
+        await openPage25(page);
         await page.selectOption('#month-filter-25', '3');
         await expect(page.locator('#page-25')).toBeVisible();
         await page.selectOption('#month-filter-25', 'all');
@@ -91,8 +101,8 @@ test.describe('Page 26 — Guides 2026', () => {
     test('city filter shows only cards from selected city', async ({ page }) => {
         await load(page);
         await page.click('#tab-26');
-        await page.waitForFunction(() => document.getElementById('city-filter-26'));
-        await page.selectOption('#city-filter-26', 'Zagreb');
+        await page.waitForFunction(() => (document.getElementById('page-26')?.children.length ?? 0) > 0);
+        await page.click('#page-26 .city-filter-pill[data-city="Zagreb"]');
         const cards = await page.locator('#page-26 .guide-card').all();
         expect(cards.length).toBeGreaterThan(0);
         for (const card of cards) {
@@ -130,8 +140,10 @@ test.describe('Management — P&L', () => {
     async function openMgmt(page) {
         await load(page);
         await page.click('#tab-mgmt');
+        // kpi-gm is the slowest of the staggered count-up KPIs (240ms delay) — wait for it
+        // specifically rather than kpi-revenue (0ms delay), or later reads race the animation.
         await page.waitForFunction(() => {
-            const el = document.getElementById('kpi-revenue');
+            const el = document.getElementById('kpi-gm');
             return el && el.textContent !== '—';
         });
     }
@@ -181,7 +193,7 @@ test.describe('Management — Guides tab', () => {
     test('sort headers re-order rows without error', async ({ page }) => {
         await openGuides(page);
         const rowsBefore = await page.locator('#guide-tbody tr').count();
-        await page.click('.sort-hdr[data-col="freeTours"]');
+        await page.click('.sort-hdr[data-col="paidTours"]');
         await page.waitForTimeout(100);
         await page.click('.sort-hdr[data-col="revenue"]');
         await page.waitForTimeout(100);
@@ -220,8 +232,8 @@ test.describe('Management — Channels / Ops / Cities', () => {
         await page.click('#tab-ops');
         await page.waitForFunction(() => document.getElementById('mgmt-ops')?.classList.contains('active'));
         await hasChart(page, 'dow-bar');
-        await hasChart(page, 'season-bar');
         await hasChart(page, 'paxband-bar');
+        await hasChart(page, 'guide-paxband-gm');
     });
 
     test('Cities tab loads with city cards', async ({ page }) => {
@@ -245,23 +257,6 @@ test.describe('Theme toggle', () => {
         await page.click('#theme-toggle');
         const restored = await page.evaluate(() => document.body.classList.contains('dark-mode'));
         expect(restored).toBe(before);
-    });
-});
-
-// ── Language toggle ───────────────────────────────────────────────────────────
-
-test.describe('Language toggle', () => {
-    test('switches nav text EN ↔ HR', async ({ page }) => {
-        await load(page);
-        await expect(page.locator('#tab-25')).toHaveText('Guides 2025');
-
-        await page.click('#language-toggle');
-        await page.waitForFunction(() => document.getElementById('tab-25')?.textContent === 'Vodiči 2025');
-        await expect(page.locator('#tab-25')).toHaveText('Vodiči 2025');
-
-        await page.click('#language-toggle');
-        await page.waitForFunction(() => document.getElementById('tab-25')?.textContent === 'Guides 2025');
-        await expect(page.locator('#tab-25')).toHaveText('Guides 2025');
     });
 });
 

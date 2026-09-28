@@ -1,0 +1,309 @@
+/* jura-theme.css: makes evidencija look like jura-guide-report.
+   Loaded after guides.css. To switch the theme off, remove its <link> in index.html.
+   Spec: docs/superpowers/specs/2026-09-28-jura-theme-design.md */
+
+:root {
+  --font-sans: 'IBM Plex Sans', -apple-system, 'Helvetica Neue', sans-serif;
+  --font-serif: var(--font-sans);
+  --font-mono: var(--font-sans);
+  --radius: 4px;
+  --radius-sm: 4px;
+
+  --white: #ffffff;
+  --smoke: #f5f5f5;
+  --card-bg: #f5f5f5;
+  --nav-bg: #ffffff;
+  --border: #dddddd;
+  --border-dark: #dddddd;
+  --text: #1a1a1a;
+  --text2: #4d4d4d;
+  --text3: #767676;
+
+  --zagreb: #2a78d6;
+  --dubrovnik: #eb6834;
+  --split: #1baf7a;
+  --zadar: #eda100;
+  /* text-safe city hues (white text on these clears 4.5:1) */
+  --zagreb-pill: #2771ca;
+  --dubrovnik-pill: #ce4914;
+  --split-pill: #15875e;
+  --zadar-pill: #916300;
+
+  --y25: #4a3aa7;
+  --y26: #1a1a1a;
+}
+
+body.dark-mode {
+  --white: #121212;
+  --smoke: #1e1e1e;
+  --card-bg: #1e1e1e;
+  --nav-bg: #121212;
+  --border: #333333;
+  --border-dark: #333333;
+  --text: #f0f0f0;
+  --text2: #c0c0c0;
+  --text3: #a0a0a0;
+
+  --zagreb-pill: #3780d8;
+  --dubrovnik-pill: #eb6834;
+  --split-pill: #1baf7a;
+  --zadar-pill: #eda100;
+
+  /* lifted from Jura's #4a3aa7, which is about 2:1 on #121212 */
+  --y25: #7b6df0;
+  --y26: #f0f0f0;
+}
+
+@media (min-width: 769px) {
+  :root {
+    --nav-h: 56px;
+    --pad: 24px;
+    --max-w: 1440px;
+  }
+
+  .nav {
+    height: var(--nav-h);
+    padding: 0 var(--pad);
+  }
+}
+
+body {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── NAV (desktop only: the phone layout is left as is) ── */
+@media (min-width: 769px) {
+  .nav-tabs { gap: 22px; margin-left: 12px; }
+  .nav-tabs .nav-tab {
+    padding: 6px 0 10px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--text3);
+  }
+  .nav-tabs .nav-tab:hover { color: var(--text); }
+  .nav-tabs .nav-tab.active {
+    color: var(--text);
+    font-weight: 600;
+    border-bottom-color: var(--text);
+  }
+}
+
+.nav img { height: 28px; }
+.nav-actions { gap: 8px; }
+.theme-toggle-icon { border: 1px solid var(--border); border-radius: var(--radius); }
+.print-btn {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.print-btn:hover,
+body.dark-mode .print-btn:hover { background: var(--smoke); }
+.date-picker-ui,
+.filter-select {
+  background: var(--white);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: var(--radius);
+}
+
+/* Management sub-nav */
+.mgmt-subnav { background: var(--white); border-bottom: 1px solid var(--border); }
+.mgmt-subnav .nav-tab {
+  padding: 10px 12px 8px;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text3);
+}
+.mgmt-subnav .nav-tab:hover { color: var(--text); }
+.mgmt-subnav .nav-tab.active,
+.nav-tab.mgmt-tab-active {
+  color: var(--text);
+  font-weight: 600;
+  border-bottom-color: var(--text);
+}
+
+/* ── PAGE HEADER: compact title row, badge hidden ── */
+.header-left h1 {
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+.header-left h1 .accent { color: var(--text3); font-weight: 400; }
+.header-left p {
+  font-size: 13px;
+  letter-spacing: 0;
+  text-transform: none;
+  margin-top: 4px;
+}
+.section-title { letter-spacing: 0.04em; font-weight: 600; }
+.section-title::after { display: none; }
+
+/* ── FILTER CHIPS ── */
+.city-filter-pill,
+.pill {
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  line-height: 1.4;
+}
+.city-filter-pill:hover,
+.pill:hover { border-color: var(--text3); color: var(--text); }
+.city-filter-pill.active,
+.pill.active {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--white);
+}
+.city-filter-pill[data-city="Zagreb"] { --chip-hue: var(--zagreb); }
+.city-filter-pill[data-city="Dubrovnik"] { --chip-hue: var(--dubrovnik); }
+.city-filter-pill[data-city="Split"] { --chip-hue: var(--split); }
+.city-filter-pill[data-city="Zadar"] { --chip-hue: var(--zadar); }
+.city-filter-pill.active[data-city="Zagreb"],
+.city-filter-pill.active[data-city="Dubrovnik"],
+.city-filter-pill.active[data-city="Split"],
+.city-filter-pill.active[data-city="Zadar"] {
+  background: color-mix(in srgb, var(--chip-hue) 16%, var(--white));
+  border-color: var(--chip-hue);
+  color: var(--text);
+}
+button.city-pill { border-radius: var(--radius); font-family: var(--font-sans); }
+
+/* ── KPI + CARDS ── */
+.kpi-grid { background: transparent; }
+.kpi:hover { background: var(--white); }
+.kpi.hl-teal,
+.kpi.hl-green,
+.kpi.hl-blue { border-top: 1px solid var(--border); }
+.kpi-label,
+.chart-card-title,
+.card-title {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--text3);
+}
+/* headline numbers: .kpi-delta-abs on Comparison, .kpi-2y-val on the two tour pages */
+@media (min-width: 769px) {
+  .kpi-delta-abs,
+  #page-25 .kpi-2y-val,
+  #page-26 .kpi-2y-val { font-size: 26px; font-weight: 600; line-height: 1.2; }
+  .kpi-delta-pct { font-size: 18px; }
+}
+
+.card,
+.chart-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: none;
+}
+.card:hover,
+.chart-card:hover,
+body.dark-mode .card,
+body.dark-mode .card:hover {
+  box-shadow: none;
+  border-color: var(--border);
+}
+.chart-card h3 { font-size: 15px; font-weight: 600; }
+
+/* ── GUIDE CARDS ── */
+.guide-card[data-city="Zagreb"] { --avatar-hue: var(--zagreb); }
+.guide-card[data-city="Dubrovnik"] { --avatar-hue: var(--dubrovnik); }
+.guide-card[data-city="Split"] { --avatar-hue: var(--split); }
+.guide-card[data-city="Zadar"] { --avatar-hue: var(--zadar); }
+.guide-card {
+  background: color-mix(in srgb, var(--avatar-hue, var(--white)) 10%, var(--white));
+  border-radius: var(--radius);
+}
+.guide-card:hover {
+  box-shadow: none;
+  transform: none;
+  border-color: var(--text3);
+}
+.gc-stripe { display: none; }
+.gc-body { padding: 14px 16px 0; }
+.avatar { border-radius: var(--radius); }
+.gc-name { font-weight: 600; }
+.guide-card .city-pill {
+  border-radius: var(--radius);
+  letter-spacing: 0.04em;
+}
+.gc-badge {
+  border-radius: var(--radius);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.gc-badge-new { color: var(--delta-pos); border-color: var(--delta-pos); }
+
+/* ── MOVERS BANNER + MODAL ── */
+.guide-flag-line {
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  background: var(--smoke);
+  margin-bottom: 6px;
+}
+.guide-flag-line:last-child { margin-bottom: 0; }
+.guide-flag-line.neg { color: var(--delta-neg); }
+.guide-flag-line.pos { color: var(--delta-pos); }
+.guide-detail-modal {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.guide-detail-city { text-transform: uppercase; letter-spacing: 0.04em; }
+
+/* ── TABLES ── */
+.mpax-table { font-size: 13px; font-family: var(--font-sans); }
+.mpax-table th,
+.mpax-table td {
+  border: none;
+  border-bottom: 1px solid var(--border);
+}
+.mpax-table .mpax-city-head {
+  color: var(--text);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.mpax-city-head.zagreb { background: color-mix(in srgb, var(--zagreb) 22%, var(--white)); }
+.mpax-city-head.dubrovnik { background: color-mix(in srgb, var(--dubrovnik) 22%, var(--white)); }
+.mpax-city-head.split { background: color-mix(in srgb, var(--split) 22%, var(--white)); }
+.mpax-city-head.zadar { background: color-mix(in srgb, var(--zadar) 22%, var(--white)); }
+.mpax-table tr.mpax-total td {
+  background: transparent;
+  border-top: 2px solid var(--text);
+}
+.mpax-table td.mpax-month { font-size: 12px; }
+.mpax-note { font-size: 11px; }
+.city-monthly-badge { font-family: var(--font-sans); }
+
+.gc-cmp-table td { border-bottom: 1px solid var(--border); }
+.mgmt-table th { letter-spacing: 0.04em; }
+
+/* Layout that must not touch the phone: desktop only */
+@media (min-width: 769px) {
+  .date-picker-label { font-size: 12px; }
+  .date-picker-ui,
+  .filter-select { padding: 6px 10px; font-size: 13px; }
+  .header { padding: 20px var(--pad) 14px; align-items: baseline; }
+  .header-left h1 { font-size: 20px; }
+  .header-right { font-size: 13px; }
+  .header-badge { display: none; }
+  .main { padding: 24px var(--pad); }
+  .kpi-grid { padding: 0; gap: 12px; margin-bottom: 20px; }
+  .kpi { padding: 14px 16px; }
+  .card,
+  .chart-card { padding: 16px; }
+  .print-btn { padding: 6px 12px; font-size: 13px; }
+  .city-filter-pill,
+  .pill { padding: 6px 10px; font-size: 12px; }
+}

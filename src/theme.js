@@ -35,15 +35,16 @@ export function updateThemeButton(isDark) {
 
 export function toggleTheme(onToggleComplete) {
     const isDark = document.body.classList.toggle(CSS.DARK_MODE);
+    document.documentElement.classList.toggle(CSS.DARK_MODE, isDark);
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
     updateThemeButton(isDark);
 
-    if (onToggleComplete) {
+    if (typeof onToggleComplete === 'function') {
         setTimeout(onToggleComplete, 100);
     } else {
         setTimeout(() => {
-            if (PAGES.Page25 && PAGES.Page25._initialized) PAGES.Page25.updateChart();
-            if (PAGES.Page26 && PAGES.Page26._initialized) PAGES.Page26.updateChart();
+            if (PAGES.Page25 && PAGES.Page25._initialized) PAGES.Page25.renderAll();
+            if (PAGES.Page26 && PAGES.Page26._initialized) PAGES.Page26.renderAll();
             if (PAGES.PageCmp && PAGES.PageCmp._initialized) PAGES.PageCmp.updateCharts();
             if (_onThemeChange) _onThemeChange();
         }, 100);
@@ -99,6 +100,10 @@ export function toggleLanguage(onToggleComplete) {
             PAGES.PageCmp.mergedGuides = PAGES.PageCmp.buildMerged();
             PAGES.PageCmp.renderAll();
             PAGES.PageCmp.updateCharts();
+        }
+        if (PAGES.PageGuides && PAGES.PageGuides._initialized) {
+            PAGES.PageGuides.rebuildStructure();
+            PAGES.PageGuides.renderAll();
         }
         if (_onLanguageChange) _onLanguageChange();
         if (onToggleComplete) onToggleComplete();

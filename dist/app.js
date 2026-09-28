@@ -2,10 +2,10 @@
   // src/shared.js
   function getCityColor(city) {
     if (!city || city === "Unknown") return "#999999";
-    return getComputedStyle(document.documentElement).getPropertyValue("--" + city.toLowerCase()).trim() || "#999999";
+    return getComputedStyle(document.body).getPropertyValue("--" + city.toLowerCase()).trim() || "#999999";
   }
   function getChartColors() {
-    const s = getComputedStyle(document.documentElement);
+    const s = getComputedStyle(document.body);
     const tok = (n) => s.getPropertyValue(n).trim();
     return { text: tok("--text"), text3: tok("--text3"), border: tok("--border"), y25: tok("--y25"), y26: tok("--y26") };
   }
@@ -27,6 +27,7 @@
     Page25: null,
     Page26: null,
     PageCmp: null,
+    PageGuides: null,
     PageMgmt: null
   };
   function registerPage(name, page) {
@@ -81,12 +82,13 @@
         PAGES.PageCmp.mergedGuides = PAGES.PageCmp.buildMerged();
         PAGES.PageCmp.renderAll();
       }
+      if (PAGES.PageGuides && PAGES.PageGuides._initialized) PAGES.PageGuides.renderAll();
       if (PAGES.PageMgmt?._initialized) PAGES.PageMgmt.renderAll();
     });
   }
-  function filteredStats(st, months) {
-    const cutoffMonth = getCutoffMonth();
-    const cutoffDay = parseInt(GLOBAL_DATE.split("-")[2]);
+  function filteredStats(st, months, cutoff) {
+    const cutoffMonth = cutoff ? cutoff.month : getCutoffMonth();
+    const cutoffDay = cutoff ? cutoff.day : parseInt(GLOBAL_DATE.split("-")[2]);
     const activeMonths = months && months.length > 0 ? months : Array.from({ length: cutoffMonth }, (_, i) => i + 1);
     return activeMonths.reduce((acc, m) => {
       if (m < cutoffMonth) {
@@ -145,6 +147,7 @@
       "page-25": "Guides 2025",
       "page-26": "Guides 2026",
       "page-cmp": "Comparison 25/26",
+      "page-gd": "Guides",
       "page-mgmt": "Management"
     };
     document.title = `${titles[id] || "Guide Production"} \xB7 FreeSpirit`;
@@ -152,6 +155,10 @@
     if (id === "page-26" && PAGES.Page26 && !PAGES.Page26._initialized) PAGES.Page26.init();
     if (id === "page-cmp" && PAGES.PageCmp && !PAGES.PageCmp._initialized) PAGES.PageCmp.init();
     else if (id === "page-cmp" && PAGES.PageCmp) setTimeout(() => PAGES.PageCmp.updateCharts(), 50);
+    if (id === "page-gd" && PAGES.PageGuides) {
+      if (!PAGES.PageGuides._initialized) PAGES.PageGuides.init();
+      else PAGES.PageGuides.renderAll();
+    }
     if (id === "page-mgmt" && PAGES.PageMgmt) {
       if (!PAGES.PageMgmt._initialized) PAGES.PageMgmt.init();
       else PAGES.PageMgmt.renderAll();
@@ -205,7 +212,23 @@
         paidT: "Paid t",
         paidP: "Paid p",
         dataThrough: "data through",
-        moreDetail: "More detail"
+        moreDetail: "More detail",
+        totalTours: "Total Tours",
+        totalT: "Total t",
+        sortDefault: "By city",
+        sortName: "Name",
+        sortGain: "PAX \u2191",
+        sortDrop: "PAX \u2193",
+        badgeNew: "New",
+        badgeInactive: "Inactive in 2026",
+        flagDown: "Down over 30%",
+        flagUp: "Up over 30%",
+        noGuidesFound: "No guides found",
+        viewCards: "Cards",
+        viewTable: "Table",
+        guide: "Guide",
+        guideTotalNote: "Totals add up each listed guide, grouped by their home city. They can differ from the city-based figures on the other tabs.",
+        modalNote: "2025 full year vs 2026 through"
       },
       charts: {
         freePaxByCity: "Free PAX by City",
@@ -243,7 +266,6 @@
         paidTours: "Paid Tours",
         byCity: "by City",
         byType: "by Type",
-        guides: "Guides",
         guideComparison: "Tour Comparison",
         productionByGuide: "Production by guide",
         comparisonYtd: "Comparison YTD"
@@ -353,7 +375,23 @@
         paidT: "Pla\u0107. t",
         paidP: "Pla\u0107. p",
         dataThrough: "podaci kroz",
-        moreDetail: "Vi\u0161e detalja"
+        moreDetail: "Vi\u0161e detalja",
+        totalTours: "Ukupno tura",
+        totalT: "Ukupno t",
+        sortDefault: "Po gradu",
+        sortName: "Ime",
+        sortGain: "PAX \u2191",
+        sortDrop: "PAX \u2193",
+        badgeNew: "Novo",
+        badgeInactive: "Neaktivan u 2026.",
+        flagDown: "Pad ve\u0107i od 30%",
+        flagUp: "Rast ve\u0107i od 30%",
+        noGuidesFound: "Nema prona\u0111enih vodi\u010Da",
+        viewCards: "Kartice",
+        viewTable: "Tablica",
+        guide: "Vodi\u010D",
+        guideTotalNote: "Zbrojevi obuhva\u0107aju svakog navedenog vodi\u010Da, grupirano po mati\u010Dnom gradu. Mogu se razlikovati od brojki po gradu na drugim karticama.",
+        modalNote: "2025 cijela godina naspram 2026 do"
       },
       charts: {
         freePaxByCity: "Besplatni PAX po gradu",
@@ -391,7 +429,6 @@
         paidTours: "Pla\u0107ene ture",
         byCity: "po gradu",
         byType: "po vrsti",
-        guides: "Vodi\u010Di",
         guideComparison: "Usporedba tura",
         productionByGuide: "Proizvodnja po vo\u0111enju",
         comparisonYtd: "Usporedba YTD"
@@ -504,14 +541,15 @@
   }
   function toggleTheme(onToggleComplete) {
     const isDark = document.body.classList.toggle(CSS2.DARK_MODE);
+    document.documentElement.classList.toggle(CSS2.DARK_MODE, isDark);
     localStorage.setItem("theme", isDark ? "dark" : "light");
     updateThemeButton(isDark);
-    if (onToggleComplete) {
+    if (typeof onToggleComplete === "function") {
       setTimeout(onToggleComplete, 100);
     } else {
       setTimeout(() => {
-        if (PAGES.Page25 && PAGES.Page25._initialized) PAGES.Page25.updateChart();
-        if (PAGES.Page26 && PAGES.Page26._initialized) PAGES.Page26.updateChart();
+        if (PAGES.Page25 && PAGES.Page25._initialized) PAGES.Page25.renderAll();
+        if (PAGES.Page26 && PAGES.Page26._initialized) PAGES.Page26.renderAll();
         if (PAGES.PageCmp && PAGES.PageCmp._initialized) PAGES.PageCmp.updateCharts();
         if (_onThemeChange) _onThemeChange();
       }, 100);
@@ -540,7 +578,6 @@
     activeMonths: [],
     activePrivateType: "all",
     activeSharedType: "all",
-    searchTerm: "",
     PRIVATE_TYPES: ["war PR", "food PR", "best", "old", "big"],
     SHARED_TYPES: ["war", "food", "best"],
     chartInstance: null,
@@ -552,9 +589,6 @@
     _el(id) {
       return document.getElementById(id + "-25");
     },
-    _scope(sel) {
-      return document.querySelectorAll("#page-25 " + sel);
-    },
     getChartColors() {
       const c = getChartColors();
       return { ...c, accent: c.y25 };
@@ -565,42 +599,7 @@
       group.querySelectorAll(".pill").forEach((p) => p.classList.remove("active"));
       if (activeBtn) activeBtn.classList.add("active");
     },
-    renderCard(g) {
-      const st = g.stats[this.activeLang];
-      const fs = filteredStats(st, this.activeMonths);
-      const sid = "p25_" + safeName(g.name);
-      const col = getCityColor(g.city) || "#999";
-      const init = g.name.split(" ").map((w) => w[0]).join("").substring(0, 2).toUpperCase();
-      const isExternal = g.city === "Unknown";
-      const typeEntries = Object.entries(st.byType).sort((a, b) => b[1].tours - a[1].tours);
-      const maxT = typeEntries.length > 0 ? typeEntries[0][1].tours : 1;
-      const typeBarsHtml = typeEntries.length > 0 ? '<div class="gc-types">' + typeEntries.map(
-        ([type, d]) => `<div class="type-bar-row"><span class="type-lbl">${type}</span><div class="type-track"><div class="type-fill" style="width:${(d.tours / maxT * 100).toFixed(0)}%;background:${col}"></div></div><span class="type-val">${d.tours}t &middot; ${d.pax}p</span></div>`
-      ).join("") + "</div>" : "";
-      const months = Object.keys(st.byMonth).map(Number).sort((a, b) => a - b);
-      const monthRowsHtml = months.map((m) => {
-        const md = st.byMonth[m];
-        return `<tr><td>${md.name}</td><td class="num free-col">${md.free.tours || 0}</td><td class="num">${md.free.pax || 0}</td><td class="num paid-col">${md.paid.tours || 0}</td><td class="num">${md.paid.pax || 0}</td></tr>`;
-      }).join("");
-      const cityDisplay = isExternal ? t("labels.external") : g.city;
-      return `<div class="guide-card" data-city="${g.city}" data-name="${g.name}"><div class="gc-stripe" style="background:${col}"></div><div class="gc-body"><div class="gc-header"><div class="avatar" style="background:${col}18;color:${col};border:1px solid ${col}40">${init}</div><span class="gc-name">${g.name}</span>` + (isExternal ? `<span class="badge-ext">${t("labels.external")}</span>` : `<span class="city-pill" style="background:${col}18;color:${col}">${cityDisplay}</span>`) + `</div><div class="gc-stats"><div class="gc-half"><div class="gc-stat-label">${t("labels.freeTours")}</div><div class="gc-stat-num" style="color:var(--green)">${fs.freeTours}</div><div class="gc-stat-sub">${fs.freePax} pax</div></div><div class="gc-divider"></div><div class="gc-half" style="text-align:right"><div class="gc-stat-label">${t("labels.paidTours")}</div><div class="gc-stat-num" style="color:${col}">${fs.paidTours}</div><div class="gc-stat-sub">${fs.paidPax} pax</div></div></div></div>${typeBarsHtml}<button type="button" class="monthly-toggle" aria-expanded="false" onclick="Page25.toggleMonthly('${sid}')"><span class="mt-arrow" id="mta-${sid}">&#9660;</span> ${t("labels.monthly")}</button><div class="monthly-table" id="mt-${sid}"><table><thead><tr><th>${t("table.month")}</th><th class="num" style="color:var(--green)">${t("table.free")} t</th><th class="num">${t("table.free")} p</th><th class="num" style="color:var(--teal)">${t("table.paid")} t</th><th class="num">${t("table.paid")} p</th></tr></thead><tbody>${monthRowsHtml}</tbody><tfoot><tr><td>${t("labels.total")}</td><td class="num free-col">${fs.freeTours}</td><td class="num">${fs.freePax}</td><td class="num paid-col">${fs.paidTours}</td><td class="num">${fs.paidPax}</td></tr></tfoot></table></div></div>`;
-    },
     renderAll() {
-      const container = this._el("guide-sections");
-      let html = "";
-      CITIES.forEach((city) => {
-        if (this.activeCity !== "all" && this.activeCity !== city) return;
-        const cityGuides = guideStats25.filter((g) => g.city === city);
-        if (cityGuides.length === 0) return;
-        const cls = CITY_CLS[city] || "";
-        html += `<section class="city-section" data-city="${city}">`;
-        html += `<div class="section-title ${cls}">${city}</div>`;
-        html += `<div class="guide-grid">`;
-        html += cityGuides.map((g) => this.renderCard(g)).join("");
-        html += `</div></section>`;
-      });
-      container.innerHTML = html;
-      this.applySearchFilter();
       this.updateKPIs();
       this.updateChart();
       this.renderCityBars();
@@ -715,7 +714,7 @@
           const ctx = chart.ctx;
           const meta = chart.getDatasetMeta(0);
           ctx.save();
-          ctx.font = "500 9px 'Montserrat',sans-serif";
+          ctx.font = "500 9px 'IBM Plex Sans',sans-serif";
           ctx.textAlign = "center";
           ctx.fillStyle = colors.text3;
           const paxData = chart.data.datasets[0]._paxData || [];
@@ -846,7 +845,7 @@
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 12 } },
+            legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 12 } },
             tooltip: { callbacks: { label: (i) => `${i.dataset.label}: ${i.raw} ${t("table.pax")}/tour` } }
           },
           scales: {
@@ -886,25 +885,6 @@
     filterMonth(m) {
       this.activeMonths = m === "all" ? [] : [parseInt(m)];
       this.renderAll();
-    },
-    applySearchFilter() {
-      const term = (this.searchTerm || "").toLowerCase();
-      this._scope(".guide-card").forEach((card) => {
-        const name = (card.dataset.name || "").toLowerCase();
-        card.style.display = !term || name.includes(term) ? "" : "none";
-      });
-    },
-    filterGuideSearch(term) {
-      this.searchTerm = term;
-      this.applySearchFilter();
-    },
-    toggleMonthly(sid) {
-      const table = document.getElementById("mt-" + sid);
-      const arrow = document.getElementById("mta-" + sid);
-      if (!table) return;
-      const open = table.classList.toggle("open");
-      if (arrow) arrow.classList.toggle("open");
-      table.previousElementSibling?.setAttribute("aria-expanded", String(open));
     },
     _buildHeader() {
       return `<div class="header">
@@ -1042,19 +1022,6 @@
                 </div>
             </div>`;
     },
-    _buildGuides() {
-      return `<button type="button" class="section-divider" aria-expanded="true" onclick="toggleSection('guides-body-25')">
-                <span>${t("labels.guides")}</span>
-                <span class="section-chevron">\u25BE</span>
-            </button>
-            <div id="guides-body-25" class="section-body">
-                <input type="text" id="guide-search-25" class="guide-search-input"
-                       placeholder="${t("labels.searchGuide")}"
-                       oninput="Page25.filterGuideSearch(this.value)">
-                <div id="guide-sections-25"></div>
-            </div>
-        </div>`;
-    },
     _destroyCharts() {
       [
         this.chartInstance,
@@ -1076,7 +1043,7 @@
     },
     rebuildStructure() {
       this._destroyCharts();
-      document.getElementById("page-25").innerHTML = this._buildHeader() + this._buildFilters() + this._buildFreeTours() + this._buildPaidTours() + this._buildGuides();
+      document.getElementById("page-25").innerHTML = this._buildHeader() + this._buildFilters() + this._buildFreeTours() + this._buildPaidTours() + "</div>";
       const d = new Date(getGlobalDate());
       const fmt2 = d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
       const datePov = this._el("date-pov");
@@ -1098,7 +1065,6 @@
     activeMonths: [],
     activePrivateType: "all",
     activeSharedType: "all",
-    searchTerm: "",
     PRIVATE_TYPES: ["war PR", "food PR", "best", "old", "big"],
     SHARED_TYPES: ["war", "food", "best"],
     chartInstance: null,
@@ -1110,9 +1076,6 @@
     _el(id) {
       return document.getElementById(id + "-26");
     },
-    _scope(sel) {
-      return document.querySelectorAll("#page-26 " + sel);
-    },
     getChartColors() {
       const c = getChartColors();
       return { ...c, accent: c.y26 };
@@ -1123,40 +1086,7 @@
       group.querySelectorAll(".pill").forEach((p) => p.classList.remove("active"));
       if (activeBtn) activeBtn.classList.add("active");
     },
-    renderCard(g) {
-      const st = g.stats[this.activeLang];
-      const fs = filteredStats(st, this.activeMonths);
-      const sid = "p26_" + safeName(g.name);
-      const col = getCityColor(g.city);
-      const init = g.name.split(" ").map((w) => w[0]).join("").substring(0, 2).toUpperCase();
-      const typeEntries = Object.entries(st.byType).sort((a, b) => b[1].tours - a[1].tours);
-      const maxT = typeEntries.length > 0 ? typeEntries[0][1].tours : 1;
-      const typeBarsHtml = typeEntries.length > 0 ? '<div class="gc-types">' + typeEntries.map(
-        ([type, d]) => `<div class="type-bar-row"><span class="type-lbl">${type}</span><div class="type-track"><div class="type-fill" style="width:${(d.tours / maxT * 100).toFixed(0)}%;background:${col}"></div></div><span class="type-val">${d.tours}t &middot; ${d.pax}p</span></div>`
-      ).join("") + "</div>" : "";
-      const months = Object.keys(st.byMonth).map(Number).sort((a, b) => a - b);
-      const monthRowsHtml = months.map((m) => {
-        const md = st.byMonth[m];
-        return `<tr><td>${md.name}</td><td class="num free-col">${md.free.tours || 0}</td><td class="num">${md.free.pax || 0}</td><td class="num paid-col">${md.paid.tours || 0}</td><td class="num">${md.paid.pax || 0}</td></tr>`;
-      }).join("");
-      return `<div class="guide-card" data-city="${g.city}" data-name="${g.name}"><div class="gc-stripe" style="background:${col}"></div><div class="gc-body"><div class="gc-header"><div class="avatar" style="background:${col}18;color:${col};border:1px solid ${col}40">${init}</div><span class="gc-name">${g.name}</span><span class="city-pill" style="background:${col}18;color:${col}">${g.city}</span></div><div class="gc-stats"><div class="gc-half"><div class="gc-stat-label">${t("labels.freeTours")}</div><div class="gc-stat-num" style="color:var(--green)">${fs.freeTours}</div><div class="gc-stat-sub">${fs.freePax} pax</div></div><div class="gc-divider"></div><div class="gc-half" style="text-align:right"><div class="gc-stat-label">${t("labels.paidTours")}</div><div class="gc-stat-num" style="color:${col}">${fs.paidTours}</div><div class="gc-stat-sub">${fs.paidPax} pax</div></div></div></div>${typeBarsHtml}<button type="button" class="monthly-toggle" aria-expanded="false" onclick="Page26.toggleMonthly('${sid}')"><span class="mt-arrow" id="mta-${sid}">&#9660;</span> ${t("labels.monthly")}</button><div class="monthly-table" id="mt-${sid}"><table><thead><tr><th>${t("table.month")}</th><th class="num" style="color:var(--green)">${t("table.free")} t</th><th class="num">${t("table.free")} p</th><th class="num" style="color:var(--teal)">${t("table.paid")} t</th><th class="num">${t("table.paid")} p</th></tr></thead><tbody>${monthRowsHtml}</tbody><tfoot><tr><td>${t("labels.total")}</td><td class="num free-col">${fs.freeTours}</td><td class="num">${fs.freePax}</td><td class="num paid-col">${fs.paidTours}</td><td class="num">${fs.paidPax}</td></tr></tfoot></table></div></div>`;
-    },
     renderAll() {
-      const container = this._el("guide-sections");
-      let html = "";
-      CITIES.forEach((city) => {
-        if (this.activeCity !== "all" && this.activeCity !== city) return;
-        const cityGuides = guideStats26.filter((g) => g.city === city);
-        if (cityGuides.length === 0) return;
-        const cls = CITY_CLS[city] || "";
-        html += `<section class="city-section" data-city="${city}">`;
-        html += `<div class="section-title ${cls}">${city}</div>`;
-        html += `<div class="guide-grid">`;
-        html += cityGuides.map((g) => this.renderCard(g)).join("");
-        html += `</div></section>`;
-      });
-      container.innerHTML = html;
-      this.applySearchFilter();
       this.updateKPIs();
       this.updateChart();
       this.renderCityBars();
@@ -1316,7 +1246,7 @@
           const ctx = chart.ctx;
           const meta = chart.getDatasetMeta(0);
           ctx.save();
-          ctx.font = "500 9px 'Montserrat',sans-serif";
+          ctx.font = "500 9px 'IBM Plex Sans',sans-serif";
           ctx.textAlign = "center";
           ctx.fillStyle = colors.text3;
           const paxData = chart.data.datasets[0]._paxData || [];
@@ -1462,7 +1392,7 @@
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 12 } },
+            legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 12 } },
             tooltip: { callbacks: { label: (i) => `${i.dataset.label}: ${i.raw} ${t("table.pax")}/tour` } }
           },
           scales: {
@@ -1502,42 +1432,6 @@
     filterMonth(m) {
       this.activeMonths = m === "all" ? [] : [parseInt(m)];
       this.renderAll();
-    },
-    applySearchFilter() {
-      const term = (this.searchTerm || "").toLowerCase();
-      this._scope(".guide-card").forEach((card) => {
-        const name = (card.dataset.name || "").toLowerCase();
-        card.style.display = !term || name.includes(term) ? "" : "none";
-      });
-    },
-    filterGuideSearch(term) {
-      this.searchTerm = term;
-      this.applySearchFilter();
-    },
-    jumpToGuide(name) {
-      const tabEl = document.getElementById("tab-26");
-      if (tabEl) showPage("page-26", tabEl);
-      this.activeCity = "all";
-      this.searchTerm = "";
-      const searchInput = this._el("guide-search");
-      if (searchInput) searchInput.value = "";
-      document.querySelectorAll("#page-26 .city-filter-pill").forEach((p) => p.classList.toggle("active", p.dataset.city === "all"));
-      this.renderAll();
-      requestAnimationFrame(() => {
-        const card = document.querySelector(`#page-26 .guide-card[data-name="${CSS.escape(name)}"]`);
-        if (!card) return;
-        card.scrollIntoView({ behavior: "smooth", block: "center" });
-        card.classList.add("guide-card-highlight");
-        setTimeout(() => card.classList.remove("guide-card-highlight"), 1500);
-      });
-    },
-    toggleMonthly(sid) {
-      const table = document.getElementById("mt-" + sid);
-      const arrow = document.getElementById("mta-" + sid);
-      if (!table) return;
-      const open = table.classList.toggle("open");
-      if (arrow) arrow.classList.toggle("open");
-      table.previousElementSibling?.setAttribute("aria-expanded", String(open));
     },
     _buildHeader() {
       return `<div class="header">
@@ -1676,19 +1570,6 @@
                 </div>
             </div>`;
     },
-    _buildGuides() {
-      return `<button type="button" class="section-divider" aria-expanded="true" onclick="toggleSection('guides-body-26')">
-                <span>${t("labels.guides")}</span>
-                <span class="section-chevron">\u25BE</span>
-            </button>
-            <div id="guides-body-26" class="section-body">
-                <input type="text" id="guide-search-26" class="guide-search-input"
-                       placeholder="${t("labels.searchGuide")}"
-                       oninput="Page26.filterGuideSearch(this.value)">
-                <div id="guide-sections-26"></div>
-            </div>
-        </div>`;
-    },
     _destroyCharts() {
       [
         this.chartInstance,
@@ -1710,7 +1591,7 @@
     },
     rebuildStructure() {
       this._destroyCharts();
-      document.getElementById("page-26").innerHTML = this._buildHeader() + this._buildFilters() + this._buildFreeTours() + this._buildPaidTours() + this._buildGuides();
+      document.getElementById("page-26").innerHTML = this._buildHeader() + this._buildFilters() + this._buildFreeTours() + this._buildPaidTours() + "</div>";
       const d = new Date(getGlobalDate());
       const fmt2 = d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
       const datePov = this._el("date-pov");
@@ -1729,7 +1610,7 @@
   function axisDefaults() {
     const s = getComputedStyle(document.body);
     return {
-      ticks: { color: s.getPropertyValue("--text2").trim(), font: { family: "Montserrat", size: 11 } },
+      ticks: { color: s.getPropertyValue("--text2").trim(), font: { family: "IBM Plex Sans", size: 11 } },
       grid: { color: s.getPropertyValue("--border").trim() }
     };
   }
@@ -1758,7 +1639,7 @@
         maintainAspectRatio: false,
         layout: { padding: { bottom: 45, right: 55 } },
         plugins: {
-          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } }
         },
         scales: {
           x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
@@ -1783,7 +1664,7 @@
         maintainAspectRatio: false,
         layout: { padding: { bottom: 45, right: 55 } },
         plugins: {
-          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } }
         },
         scales: {
           x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
@@ -1808,7 +1689,7 @@
         maintainAspectRatio: false,
         layout: { padding: { bottom: 45, right: 55 } },
         plugins: {
-          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } }
         },
         scales: {
           x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
@@ -1833,7 +1714,7 @@
         maintainAspectRatio: false,
         layout: { padding: { bottom: 45, right: 55 } },
         plugins: {
-          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } }
         },
         scales: {
           x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
@@ -1855,7 +1736,7 @@
             display: true,
             labels: {
               color: colors.text,
-              font: { size: 10, family: "'Montserrat',sans-serif" },
+              font: { size: 10, family: "'IBM Plex Sans',sans-serif" },
               boxWidth: 12,
               padding: 12,
               filter: (item) => !item.text.includes("2025")
@@ -1883,7 +1764,7 @@
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } },
+          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } },
           tooltip: { callbacks: { label: (i) => `${i.dataset.label}: ${i.raw} PAX/tour` } }
         },
         scales: {
@@ -1902,7 +1783,7 @@
         maintainAspectRatio: false,
         layout: { padding: { top: 20, bottom: 30 } },
         plugins: {
-          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } },
+          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } },
           tooltip: {
             callbacks: {
               afterLabel: (item) => {
@@ -1934,7 +1815,7 @@
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } },
+          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } },
           tooltip: { callbacks: { label: (i) => `${i.dataset.label}: ${i.raw} PAX/tour` } }
         },
         scales: {
@@ -1958,6 +1839,29 @@
       if (c.options.plugins?.tooltip) Object.assign(c.options.plugins.tooltip, tt);
       if (c.options.plugins?.legend?.labels) c.options.plugins.legend.labels.color = ax.ticks.color;
       c.update();
+    });
+  }
+  function createGuideTrendChart(ctx, months, pax25, pax26, colors) {
+    return new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: months,
+        datasets: [
+          { label: "2025", data: pax25, borderColor: colors.y25, backgroundColor: colors.y25 + "33", borderWidth: 2, tension: 0.3, pointRadius: 3 },
+          { label: "2026", data: pax26, borderColor: colors.y26, backgroundColor: colors.y26 + "33", borderWidth: 2, tension: 0.3, pointRadius: 3, spanGaps: false }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } }
+        },
+        scales: {
+          x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
+          y: { beginAtZero: true, ticks: { color: colors.text3 }, grid: { color: colors.border } }
+        }
+      }
     });
   }
 
@@ -1988,9 +1892,6 @@
     _el(id) {
       return document.getElementById(id + "-cmp");
     },
-    _scope(sel) {
-      return document.querySelectorAll("#page-cmp " + sel);
-    },
     fmtDelta(v25, v26) {
       if (v25 === 0 && v26 === 0) return '<span class="dash">\u2014</span>';
       if (v25 === 0) return '<span class="delta pos">NEW</span>';
@@ -2000,14 +1901,6 @@
       const cls = d > 0 ? "pos" : d < 0 ? "neg" : "neu";
       const sign = d > 0 ? "+" : "";
       return `<span class="delta ${cls}">${sym}${Math.abs(d)} (${sign}${p}%)</span>`;
-    },
-    pctChange(v25, v26) {
-      if (v25 === 0 && v26 === 0) return "\u2014";
-      if (v25 === 0) return "+\u221E%";
-      const p = ((v26 - v25) / v25 * 100).toFixed(0);
-      const cls = v26 > v25 ? "pos" : v26 < v25 ? "neg" : "neu";
-      const sign = v26 >= v25 ? "+" : "";
-      return `<span class="kpi-pct ${cls}">${sign}${p}%</span>`;
     },
     buildMerged() {
       const map = {};
@@ -2035,25 +1928,7 @@
       });
       return result;
     },
-    renderCard(m) {
-      const st25 = m.g25 ? m.g25.stats[this.activeLang] : null;
-      const st26 = m.g26 ? m.g26.stats[this.activeLang] : null;
-      const ytd25 = st25 ? filteredStats(st25, this.activeMonths) : null;
-      const ytd26 = st26 ? filteredStats(st26, this.activeMonths) : null;
-      const col = getCityColor(m.city);
-      const init = m.name.split(" ").map((w) => w[0]).join("").substring(0, 2).toUpperCase();
-      const inactive = !m.g26;
-      return `<div class="guide-card ${inactive ? "inactive" : ""}" data-city="${m.city}" data-name="${safeName(m.name)}"><div class="gc-stripe" style="background:${col}"></div><div class="gc-body"><div class="gc-header"><div class="avatar" style="background:${col}18;color:${col};border:1px solid ${col}40">${init}</div><span class="gc-name">${m.name}</span><span class="city-pill" style="background:${col}18;color:${col}">${m.city}</span></div><table class="gc-cmp-table"><tbody><tr><td class="label">${t("labels.freeT")}</td><td class="v25">${ytd25 ? ytd25.freeTours : "\u2014"}</td><td class="v26">${ytd26 ? ytd26.freeTours : "\u2014"}</td><td class="delta">${ytd25 && ytd26 ? this.fmtDelta(ytd25.freeTours, ytd26.freeTours) : "\u2014"}</td></tr><tr><td class="label">${t("labels.freeP")}</td><td class="v25">${ytd25 ? ytd25.freePax : "\u2014"}</td><td class="v26">${ytd26 ? ytd26.freePax : "\u2014"}</td><td class="delta">${ytd25 && ytd26 ? this.fmtDelta(ytd25.freePax, ytd26.freePax) : "\u2014"}</td></tr><tr><td class="label">${t("labels.paidT")}</td><td class="v25">${ytd25 ? ytd25.paidTours : "\u2014"}</td><td class="v26">${ytd26 ? ytd26.paidTours : "\u2014"}</td><td class="delta">${ytd25 && ytd26 ? this.fmtDelta(ytd25.paidTours, ytd26.paidTours) : "\u2014"}</td></tr><tr><td class="label">${t("labels.paidP")}</td><td class="v25">${ytd25 ? ytd25.paidPax : "\u2014"}</td><td class="v26">${ytd26 ? ytd26.paidPax : "\u2014"}</td><td class="delta">${ytd25 && ytd26 ? this.fmtDelta(ytd25.paidPax, ytd26.paidPax) : "\u2014"}</td></tr></tbody></table></div></div>`;
-    },
     renderAll() {
-      let html = "";
-      const fc = this.mergedGuides.filter((m) => CITIES.includes(m.city) && (this.activeCity === "all" || m.city === this.activeCity));
-      CITIES.forEach((city) => {
-        const cg = fc.filter((m) => m.city === city);
-        if (!cg.length) return;
-        html += `<section class="city-section" data-city="${city}"><div class="section-title ${CITY_CLS[city] || ""}">${city}</div><div class="guide-grid">${cg.map((m) => this.renderCard(m)).join("")}</div></section>`;
-      });
-      this._el("guide-sections").innerHTML = html;
       this.updateKPIs();
       this.renderMonthlyTable();
       setTimeout(() => this.updateCharts(), 100);
@@ -2145,11 +2020,11 @@
             const x = xAxis.getPixelForValue(i);
             const y = xAxis.bottom + 12;
             ctx.fillStyle = chartColors.text3;
-            ctx.font = "500 10px 'Montserrat',sans-serif";
+            ctx.font = "500 10px 'IBM Plex Sans',sans-serif";
             ctx.textAlign = "center";
             ctx.fillText(`${fmtN(v25)} / ${fmtN(v26)}`, x, y);
             ctx.fillStyle = color;
-            ctx.font = "bold 10px 'Montserrat',sans-serif";
+            ctx.font = "bold 10px 'IBM Plex Sans',sans-serif";
             ctx.fillText(`${arrow} ${fmtN(Math.abs(d))} (${sign}${pct}%)`, x, y + 13);
           });
           ctx.restore();
@@ -2241,7 +2116,7 @@
           const color = d > 0 ? "#1D9E75" : d < 0 ? "#D4545A" : "#999";
           ctx.save();
           ctx.fillStyle = color;
-          ctx.font = "bold 11px 'Montserrat',sans-serif";
+          ctx.font = "bold 11px 'IBM Plex Sans',sans-serif";
           ctx.textAlign = "right";
           ctx.fillText(`${arrow} ${fmtN(Math.abs(d))} (${sign}${pct}%)`, right - 8, top + 18);
           ctx.restore();
@@ -2266,11 +2141,11 @@
             const x = xAxis.getPixelForValue(i);
             const y = xAxis.bottom + 12;
             ctx.fillStyle = chartColors.text3;
-            ctx.font = "500 10px 'Montserrat',sans-serif";
+            ctx.font = "500 10px 'IBM Plex Sans',sans-serif";
             ctx.textAlign = "center";
             ctx.fillText(`${fmtN(v25)} / ${fmtN(v26)}`, x, y);
             ctx.fillStyle = color;
-            ctx.font = "bold 10px 'Montserrat',sans-serif";
+            ctx.font = "bold 10px 'IBM Plex Sans',sans-serif";
             ctx.fillText(`${arrow} ${fmtN(Math.abs(d))} (${sign}${pct}%)`, x, y + 13);
           });
           ctx.restore();
@@ -2675,7 +2550,7 @@
           const meta0 = chart.getDatasetMeta(0);
           const meta1 = chart.getDatasetMeta(1);
           ctx.save();
-          ctx.font = "500 9px 'Montserrat',sans-serif";
+          ctx.font = "500 9px 'IBM Plex Sans',sans-serif";
           ctx.textAlign = "center";
           const secData25 = chart.data.datasets[0]._secondaryData || [];
           const secData26 = chart.data.datasets[1]._secondaryData || [];
@@ -2997,16 +2872,6 @@
 
 `;
     },
-    _buildGuides() {
-      return `            <div class="section-divider" onclick="toggleSection('guides-body-cmp')">
-                <span>${t("sections.guides")}</span>
-                <span class="section-chevron">\u25BE</span>
-            </div>
-            <div id="guides-body-cmp" class="section-body">
-                <div id="guide-sections-cmp"></div>
-            </div>
-        </div>`;
-    },
     _destroyCharts() {
       [
         this.cityChartInstance,
@@ -3036,7 +2901,7 @@
     },
     rebuildStructure() {
       this._destroyCharts();
-      document.getElementById("page-cmp").innerHTML = this._buildHeader() + this._buildKpisAndFilters() + this._buildFreeTours() + this._buildPaidTours() + this._buildGuides();
+      document.getElementById("page-cmp").innerHTML = this._buildHeader() + this._buildKpisAndFilters() + this._buildFreeTours() + this._buildPaidTours() + "</div>";
       const now = (/* @__PURE__ */ new Date()).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
       const datePov = this._el("date-pov");
       if (datePov) datePov.textContent = now;
@@ -3060,6 +2925,452 @@
     }
   };
   registerPage("PageCmp", PageCmp);
+
+  // src/guide-table.js
+  var ZERO = { freeTours: 0, freePax: 0, paidTours: 0, paidPax: 0 };
+  var ALL_METRICS = ["freeTours", "freePax", "paidTours", "paidPax", "totalTours", "totalPax"];
+  var TABLE_METRICS = ["freeTours", "freePax", "paidTours", "paidPax", "totalTours"];
+  function mergeGuides(list25, list26) {
+    const map = /* @__PURE__ */ new Map();
+    list25.forEach((g) => map.set(g.name, { name: g.name, city: g.city, g25: g, g26: null }));
+    list26.forEach((g) => {
+      const cur = map.get(g.name);
+      if (cur) {
+        cur.g26 = g;
+        cur.city = g.city;
+      } else map.set(g.name, { name: g.name, city: g.city, g25: null, g26: g });
+    });
+    return [...map.values()];
+  }
+  function deltaRow(v25, v26) {
+    const delta = v26 - v25;
+    const pct = v25 <= 0 ? null : Math.round(delta / v25 * 1e3) / 10;
+    return { v25, v26, delta, pct };
+  }
+  function pctLabel(d, newText = "new") {
+    if (d.pct === null) return d.v26 > 0 ? newText : "\u2014";
+    return `${d.delta > 0 ? "+" : ""}${d.pct}%`;
+  }
+  function statsOrZero(guide, lang, months, cutoff) {
+    const st = guide && guide.stats[lang];
+    return st ? filteredStats(st, months, cutoff) : ZERO;
+  }
+  function buildGuideRows(merged, lang, months) {
+    return merged.map((m) => {
+      const f25 = statsOrZero(m.g25, lang, months);
+      const f26 = statsOrZero(m.g26, lang, months);
+      const a25 = statsOrZero(m.g25, "all", []);
+      const a26 = statsOrZero(m.g26, "all", []);
+      const act25 = a25.freeTours + a25.paidTours;
+      const act26 = a26.freeTours + a26.paidTours;
+      return {
+        name: m.name,
+        city: m.city,
+        stopped: act25 > 0 && act26 === 0,
+        isNew: act25 === 0 && act26 > 0,
+        freeTours: deltaRow(f25.freeTours, f26.freeTours),
+        freePax: deltaRow(f25.freePax, f26.freePax),
+        paidTours: deltaRow(f25.paidTours, f26.paidTours),
+        paidPax: deltaRow(f25.paidPax, f26.paidPax),
+        totalTours: deltaRow(f25.freeTours + f25.paidTours, f26.freeTours + f26.paidTours),
+        totalPax: deltaRow(f25.freePax + f25.paidPax, f26.freePax + f26.paidPax)
+      };
+    });
+  }
+  function sumRows(rows) {
+    const total = { name: "TOTAL" };
+    ALL_METRICS.forEach((k) => {
+      total[k] = deltaRow(
+        rows.reduce((s, r) => s + r[k].v25, 0),
+        rows.reduce((s, r) => s + r[k].v26, 0)
+      );
+    });
+    return total;
+  }
+  function filterByName(rows, query) {
+    const q = query.trim().toLowerCase();
+    return q ? rows.filter((r) => r.name.toLowerCase().includes(q)) : rows;
+  }
+  var cityIndex = (c) => {
+    const i = CITIES.indexOf(c);
+    return i < 0 ? CITIES.length : i;
+  };
+  function rankGuides(rows, sort) {
+    if (sort === "name") return [...rows].sort((a, b) => a.name.localeCompare(b.name));
+    if (sort === "gain") return [...rows].sort((a, b) => b.totalPax.delta - a.totalPax.delta);
+    if (sort === "drop") return [...rows].sort((a, b) => a.totalPax.delta - b.totalPax.delta);
+    return [...rows].sort((a, b) => cityIndex(a.city) - cityIndex(b.city) || b.freeTours.v26 - a.freeTours.v26 || b.freeTours.v25 - a.freeTours.v25 || a.name.localeCompare(b.name));
+  }
+  function flagDeclines(rows, threshold = -30) {
+    return rows.filter((r) => r.totalPax.v25 > 0 && r.totalPax.v26 > 0 && r.totalPax.pct <= threshold).sort((a, b) => a.totalPax.delta - b.totalPax.delta);
+  }
+  function flagGainers(rows, threshold = 30) {
+    return rows.filter((r) => r.totalPax.v25 > 0 && r.totalPax.v26 > 0 && r.totalPax.pct >= threshold).sort((a, b) => b.totalPax.delta - a.totalPax.delta);
+  }
+  function guideMonthlyDetail(g25, g26, lang, cutoffMonth, cutoffDay) {
+    const st25 = g25 && g25.stats[lang];
+    const st26 = g26 && g26.stats[lang];
+    return Array.from({ length: 12 }, (_, i) => {
+      const month = i + 1;
+      return {
+        month,
+        y25: st25 ? filteredStats(st25, [month], { month: 12, day: 31 }) : ZERO,
+        y26: st26 && month <= cutoffMonth ? filteredStats(st26, [month], { month: cutoffMonth, day: cutoffDay }) : null
+      };
+    });
+  }
+  function guideMonthlyTrend(g25, g26, lang, cutoffMonth, cutoffDay) {
+    return guideMonthlyDetail(g25, g26, lang, cutoffMonth, cutoffDay).map((r) => ({
+      month: r.month,
+      pax25: r.y25.freePax + r.y25.paidPax,
+      pax26: r.y26 ? r.y26.freePax + r.y26.paidPax : null
+    }));
+  }
+  function typeTotals(st, cutoffMonth, cutoffDay) {
+    const acc = {};
+    const add = (map) => {
+      if (!map) return;
+      Object.entries(map).forEach(([type, v]) => {
+        const a = acc[type] || (acc[type] = { tours: 0, pax: 0 });
+        a.tours += v.tours || 0;
+        a.pax += v.pax || 0;
+      });
+    };
+    for (let m = 1; m <= 12; m++) {
+      if (m < cutoffMonth) {
+        add(st.byMonthType && st.byMonthType[String(m)]);
+      } else if (m === cutoffMonth) {
+        if (st.byDayType && Object.keys(st.byDayType).length > 0) {
+          for (let d = 1; d <= cutoffDay; d++) add(st.byDayType[`${m}-${d}`]);
+        } else {
+          add(st.byMonthType && st.byMonthType[String(m)]);
+        }
+      }
+    }
+    return acc;
+  }
+  function guideTypeMix(g25, g26, lang, cutoffMonth, cutoffDay) {
+    const st25 = g25 && g25.stats[lang];
+    const st26 = g26 && g26.stats[lang];
+    const a = st25 ? typeTotals(st25, 12, 31) : {};
+    const b = st26 ? typeTotals(st26, cutoffMonth, cutoffDay) : {};
+    return [.../* @__PURE__ */ new Set([...Object.keys(a), ...Object.keys(b)])].map((type) => ({
+      type,
+      t25: a[type] ? a[type].tours : 0,
+      p25: a[type] ? a[type].pax : 0,
+      t26: b[type] ? b[type].tours : 0,
+      p26: b[type] ? b[type].pax : 0
+    })).sort((x, y) => y.t26 - x.t26 || y.t25 - x.t25 || x.type.localeCompare(y.type));
+  }
+
+  // src/pages/page-guides.js
+  var PageGuides = {
+    activeCity: "all",
+    activeLang: "all",
+    activeMonths: [],
+    activeSort: "default",
+    guideQuery: "",
+    guideView: "cards",
+    guideTrendChartInstance: null,
+    _detailTrigger: null,
+    _initialized: false,
+    _el(id) {
+      return document.getElementById(id + "-gd");
+    },
+    // Read from body: the dark-mode variables are defined on body.dark-mode, not :root.
+    getChartColors() {
+      const cs = getComputedStyle(document.body);
+      const tok = (n) => cs.getPropertyValue(n).trim();
+      return { text: tok("--text"), text3: tok("--text3"), border: tok("--border"), y25: tok("--y25"), y26: tok("--y26") };
+    },
+    _setActivePill(groupId, activeBtn) {
+      const group = document.getElementById(groupId);
+      if (!group) return;
+      group.querySelectorAll(".pill").forEach((p) => p.classList.remove("active"));
+      if (activeBtn) activeBtn.classList.add("active");
+    },
+    // Month options depend on the as-of date, so they are rebuilt on every render.
+    _syncMonthOptions() {
+      const sel = this._el("month-filter");
+      if (!sel) return;
+      const current = this.activeMonths.length ? String(this.activeMonths[0]) : "all";
+      sel.innerHTML = `<option value="all">${t("labels.all")}</option>` + Array.from({ length: getCutoffMonth() }, (_, i) => `<option value="${i + 1}">${MONTH_NAMES_HR[i + 1]}</option>`).join("");
+      sel.value = current;
+    },
+    _deltaBadge(d) {
+      if (d.v25 === 0 && d.v26 === 0) return '<span class="dash">\u2014</span>';
+      if (d.pct === null) return `<span class="delta pos">${t("labels.badgeNew").toUpperCase()}</span>`;
+      const cls = d.delta > 0 ? "pos" : d.delta < 0 ? "neg" : "neu";
+      const sym = d.delta > 0 ? "\u25B2" : d.delta < 0 ? "\u25BC" : "=";
+      return `<span class="delta ${cls}">${sym}${fmtN(Math.abs(d.delta))} (${pctLabel(d)})</span>`;
+    },
+    cardHtml(r, m, extra = {}) {
+      const col = getCityColor(r.city);
+      const init = r.name.split(" ").map((w) => w[0]).join("").substring(0, 2).toUpperCase();
+      const rank = extra.rank ? `<span class="gc-rank">#${extra.rank}</span>` : "";
+      const badges = (r.isNew ? `<span class="gc-badge gc-badge-new">${t("labels.badgeNew")}</span>` : "") + (r.stopped ? `<span class="gc-badge">${t("labels.badgeInactive")}</span>` : "");
+      const line = (labelKey, d) => `<tr><td class="label">${t(labelKey)}</td><td class="v25">${m.g25 ? fmtN(d.v25) : "\u2014"}</td><td class="v26">${m.g26 ? fmtN(d.v26) : "\u2014"}</td><td class="delta">${m.g25 && m.g26 ? this._deltaBadge(d) : "\u2014"}</td></tr>`;
+      return `<div class="guide-card ${m.g26 ? "" : "inactive"}" role="button" tabindex="0" aria-label="${r.name}" data-city="${r.city}" data-name="${safeName(r.name)}"><div class="gc-stripe" style="background:${col}"></div><div class="gc-body"><div class="gc-header">${rank}<div class="avatar" style="background:${col}18;color:${col};border:1px solid ${col}40">${init}</div><span class="gc-name">${r.name}</span>${badges}<span class="city-pill" style="background:${col}18;color:${col}">${r.city}</span></div><table class="gc-cmp-table"><tbody>` + line("labels.freeT", r.freeTours) + line("labels.freeP", r.freePax) + line("labels.paidT", r.paidTours) + line("labels.paidP", r.paidPax) + line("labels.totalT", r.totalTours) + `</tbody></table></div></div>`;
+    },
+    flagsHtml(rows) {
+      const list = (items) => items.slice(0, 5).map((r) => `${r.name} (${pctLabel(r.totalPax, t("labels.badgeNew"))})`).join(", ") + (items.length > 5 ? ` +${items.length - 5}` : "");
+      const down = flagDeclines(rows);
+      const up = flagGainers(rows);
+      if (!down.length && !up.length) return "";
+      return `<div class="guide-flags">` + (down.length ? `<div class="guide-flag-line neg">\u25BC ${t("labels.flagDown")} (${down.length}): ${list(down)}</div>` : "") + (up.length ? `<div class="guide-flag-line pos">\u25B2 ${t("labels.flagUp")} (${up.length}): ${list(up)}</div>` : "") + `</div>`;
+    },
+    renderAll() {
+      this._syncMonthOptions();
+      const merged = mergeGuides(guideStats25, guideStats26).filter((m) => CITIES.includes(m.city) && (this.activeCity === "all" || m.city === this.activeCity));
+      const byName = new Map(merged.map((m) => [m.name, m]));
+      const rows = buildGuideRows(merged, this.activeLang, this.activeMonths);
+      const shown = rankGuides(filterByName(rows, this.guideQuery), this.activeSort);
+      const ranked = this.activeSort === "gain" || this.activeSort === "drop";
+      const cardFor = (r, i) => this.cardHtml(r, byName.get(r.name), { rank: ranked ? i + 1 : null });
+      this._el("guide-flags").innerHTML = this.flagsHtml(rows);
+      let html;
+      if (!shown.length) {
+        html = `<div class="guide-empty">${t("labels.noGuidesFound")}</div>`;
+      } else if (this.guideView === "table") {
+        html = this.guideTableHtml(shown, sumRows(rows));
+      } else if (this.activeSort === "default") {
+        html = "";
+        CITIES.forEach((city) => {
+          const inCity = shown.filter((r) => r.city === city);
+          if (!inCity.length) return;
+          html += `<section class="city-section" data-city="${city}"><div class="section-title ${CITY_CLS[city] || ""}">${city}</div><div class="guide-grid">${inCity.map(cardFor).join("")}</div></section>`;
+        });
+      } else {
+        html = `<section class="city-section"><div class="guide-grid">${shown.map(cardFor).join("")}</div></section>`;
+      }
+      this._el("guide-sections").innerHTML = html;
+    },
+    filterCity(city) {
+      this.activeCity = city;
+      document.querySelectorAll("#page-gd .city-filter-pill").forEach((p) => p.classList.toggle("active", p.dataset.city === city));
+      this.renderAll();
+    },
+    filterLang(lang) {
+      this.activeLang = lang;
+      this.renderAll();
+    },
+    filterMonth(m) {
+      this.activeMonths = m === "all" ? [] : [parseInt(m)];
+      this.renderAll();
+    },
+    setGuideSort(value, btn) {
+      this.activeSort = value;
+      this._setActivePill("guide-sort-pills-gd", btn);
+      this.renderAll();
+    },
+    setGuideQuery(value) {
+      this.guideQuery = value;
+      this.renderAll();
+    },
+    setGuideView(view) {
+      this.guideView = view;
+      this._el("guide-view-cards").classList.toggle("active", view === "cards");
+      this._el("guide-view-table").classList.toggle("active", view === "table");
+      this.renderAll();
+    },
+    _typeMixHtml(mix) {
+      if (!mix.length) return "";
+      const maxT = Math.max(...mix.map((x) => Math.max(x.t25, x.t26)), 1);
+      const bar = (tours, pax, cls, year) => `<div class="type-bar-row"><span class="type-lbl">${year}</span><div class="type-track"><div class="type-fill ${cls}" style="width:${(tours / maxT * 100).toFixed(0)}%"></div></div><span class="type-val">${tours}t &middot; ${pax}p</span></div>`;
+      return mix.map((x) => `<div class="guide-type-group"><div class="guide-type-name">${x.type}</div>${bar(x.t25, x.p25, "y25", "2025")}${bar(x.t26, x.p26, "y26", "2026")}</div>`).join("");
+    },
+    _monthlyTableHtml(detail) {
+      const zero = { freeTours: 0, freePax: 0, paidTours: 0, paidPax: 0 };
+      const any = (s) => s && (s.freeTours || s.freePax || s.paidTours || s.paidPax);
+      const cells = (s) => s ? `<td>${s.freeTours}</td><td>${s.freePax}</td><td>${s.paidTours}</td><td>${s.paidPax}</td>` : "<td>\u2014</td><td>\u2014</td><td>\u2014</td><td>\u2014</td>";
+      const rows = detail.filter((r) => any(r.y25) || any(r.y26));
+      if (!rows.length) return "";
+      const sum = (key) => detail.reduce((a, r) => {
+        const s = r[key] || zero;
+        return { freeTours: a.freeTours + s.freeTours, freePax: a.freePax + s.freePax, paidTours: a.paidTours + s.paidTours, paidPax: a.paidPax + s.paidPax };
+      }, zero);
+      const sub = `<th class="mpax-sub-head">${t("table.free")} t</th><th class="mpax-sub-head">${t("table.free")} p</th><th class="mpax-sub-head">${t("table.paid")} t</th><th class="mpax-sub-head">${t("table.paid")} p</th>`;
+      return `<div class="mpax-wrap"><table class="mpax-table"><thead><tr><th class="mpax-month-head" rowspan="2">${t("table.month")}</th><th colspan="4" class="mpax-city-head">2025</th><th colspan="4" class="mpax-city-head">2026</th></tr><tr>${sub}${sub}</tr></thead><tbody>${rows.map((r) => `<tr><td class="mpax-month">${MONTH_NAMES_HR[r.month]}</td>${cells(r.y25)}${cells(r.y26)}</tr>`).join("")}<tr class="mpax-total"><td class="mpax-month">${t("labels.total")}</td>${cells(sum("y25"))}${cells(sum("y26"))}</tr></tbody></table></div>`;
+    },
+    openGuideDetail(safeKey, trigger) {
+      const m = mergeGuides(guideStats25, guideStats26).find((x) => safeName(x.name) === safeKey);
+      if (!m) return;
+      this._detailTrigger = trigger;
+      this._el("guide-detail-name").textContent = m.name;
+      this._el("guide-detail-city").textContent = m.city;
+      this._el("guide-detail-note").textContent = `${t("labels.modalNote")} ${getGlobalDate()}`;
+      this._el("guide-detail-backdrop").classList.add("open");
+      this._el("guide-detail-modal").classList.add("open");
+      this._el("guide-detail-close").focus();
+      const cutoffMonth = getCutoffMonth();
+      const cutoffDay = parseGlobalDate().day;
+      this._el("guide-detail-types").innerHTML = this._typeMixHtml(guideTypeMix(m.g25, m.g26, this.activeLang, cutoffMonth, cutoffDay));
+      this._el("guide-detail-months").innerHTML = this._monthlyTableHtml(guideMonthlyDetail(m.g25, m.g26, this.activeLang, cutoffMonth, cutoffDay));
+      const trend = guideMonthlyTrend(m.g25, m.g26, this.activeLang, cutoffMonth, cutoffDay);
+      if (this.guideTrendChartInstance) this.guideTrendChartInstance.destroy();
+      this.guideTrendChartInstance = createGuideTrendChart(
+        this._el("guideTrendChart").getContext("2d"),
+        trend.map((x) => MONTH_NAMES_HR[x.month]),
+        trend.map((x) => x.pax25),
+        trend.map((x) => x.pax26),
+        this.getChartColors()
+      );
+    },
+    closeGuideDetail() {
+      const modal = this._el("guide-detail-modal");
+      if (!modal || !modal.classList.contains("open")) return;
+      modal.classList.remove("open");
+      this._el("guide-detail-backdrop").classList.remove("open");
+      if (this.guideTrendChartInstance) {
+        this.guideTrendChartInstance.destroy();
+        this.guideTrendChartInstance = null;
+      }
+      if (this._detailTrigger && document.contains(this._detailTrigger)) this._detailTrigger.focus();
+      this._detailTrigger = null;
+    },
+    jumpToGuide(name) {
+      this.activeCity = "all";
+      this.guideQuery = "";
+      this.activeSort = "default";
+      this.guideView = "cards";
+      const wasInitialized = this._initialized;
+      showPage("page-gd", document.getElementById("tab-gd"));
+      if (wasInitialized) {
+        this.rebuildStructure();
+        this.renderAll();
+      }
+      requestAnimationFrame(() => {
+        const card = document.querySelector(`#page-gd .guide-card[data-name="${CSS.escape(safeName(name))}"]`);
+        if (!card) return;
+        card.scrollIntoView({ behavior: "smooth", block: "center" });
+        card.classList.add("guide-card-highlight");
+        setTimeout(() => card.classList.remove("guide-card-highlight"), 1500);
+      });
+    },
+    _deltaCells(d) {
+      const cls = d.delta > 0 ? "pos" : d.delta < 0 ? "neg" : "neu";
+      const sign = d.delta > 0 ? "+" : "";
+      return `<td>${fmtN(d.v25)}</td><td>${fmtN(d.v26)}</td><td><span class="${cls}">${sign}${fmtN(d.delta)}</span></td><td><span class="${cls}">${pctLabel(d, t("labels.badgeNew"))}</span></td>`;
+    },
+    guideTableHtml(shown, totalRow) {
+      const heads = { freeTours: "labels.freeTours", freePax: "labels.freePax", paidTours: "labels.paidTours", paidPax: "labels.paidPax", totalTours: "labels.totalTours" };
+      const groupHeads = TABLE_METRICS.map((k) => `<th colspan="4" class="mpax-city-head gd-group-head">${t(heads[k])}</th>`).join("");
+      const subHeads = TABLE_METRICS.map(() => `<th class="mpax-sub-head">'25</th><th class="mpax-sub-head">'26</th><th class="mpax-sub-head">\xB1</th><th class="mpax-sub-head">\xB1%</th>`).join("");
+      const body = shown.map((r) => `<tr><td class="mpax-month">${r.name} <span class="gd-city">${r.city}</span></td>${TABLE_METRICS.map((k) => this._deltaCells(r[k])).join("")}</tr>`).join("");
+      const foot = `<tr class="mpax-total"><td class="mpax-month">${t("labels.total")}</td>${TABLE_METRICS.map((k) => this._deltaCells(totalRow[k])).join("")}</tr>`;
+      return `<div class="chart-card"><div class="mpax-wrap"><table class="mpax-table" id="guide-table-gd"><thead><tr><th class="mpax-month-head" rowspan="2">${t("labels.guide")}</th>${groupHeads}</tr><tr>${subHeads}</tr></thead><tbody>${body}${foot}</tbody></table></div><div class="mpax-note">${t("labels.guideTotalNote")}</div></div>`;
+    },
+    _buildHeader() {
+      return `<div class="header">
+            <div class="header-left">
+                <h1>${t("labels.guides")} <span class="accent">25/26</span></h1>
+                <p><span class="ytd-range-label">${getRangeLabel()}</span> 2025 vs. 2026 &middot; ${t("sections.productionByGuide")}</p>
+            </div>
+            <div class="header-right">
+                <div id="date-pov-gd" class="mb-6"></div>
+                <div class="header-badge">${t("sections.comparisonYtd")}</div>
+            </div>
+        </div>`;
+    },
+    _buildFilters() {
+      const cityPills = ["all", ...CITIES].map((c) => {
+        const col = getCityColor(c);
+        const label = c === "all" ? t("labels.all") : c;
+        const active = this.activeCity === c ? " active" : "";
+        const style = col ? ` style="--city-col:${col}"` : "";
+        return `<button class="city-filter-pill${active}" data-city="${c}"${style} onclick="PageGuides.filterCity('${c}')">${label}</button>`;
+      }).join("");
+      const pill = (value, key) => `<button class="pill${this.activeSort === value ? " active" : ""}" data-value="${value}" onclick="PageGuides.setGuideSort('${value}',this)">${t(key)}</button>`;
+      return `<div class="main">
+            <div class="filter-bar">
+                <div class="city-pill-group">${cityPills}</div>
+                <div class="filter-dropdowns">
+                    <select class="filter-select" id="lang-filter-gd" onchange="PageGuides.filterLang(this.value)">
+                        <option value="all">${t("labels.all")}</option>
+                        <option value="eng">\u{1F1EC}\u{1F1E7} ENG</option>
+                        <option value="esp">\u{1F1EA}\u{1F1F8} ESP</option>
+                        <option value="fra">\u{1F1EB}\u{1F1F7} FRA</option>
+                    </select>
+                    <select class="filter-select" id="month-filter-gd" onchange="PageGuides.filterMonth(this.value)"></select>
+                </div>
+            </div>
+            <div class="guide-tools">
+                <div id="guide-sort-pills-gd" class="pill-group">
+                    ${pill("default", "labels.sortDefault")}${pill("name", "labels.sortName")}${pill("gain", "labels.sortGain")}${pill("drop", "labels.sortDrop")}
+                </div>
+                <input type="text" id="guide-search-gd" class="guide-search" placeholder="${t("labels.searchGuide")}" oninput="PageGuides.setGuideQuery(this.value)">
+                <div class="pill-group" id="guide-view-pills-gd">
+                    <button class="pill${this.guideView === "cards" ? " active" : ""}" id="guide-view-cards-gd" onclick="PageGuides.setGuideView('cards')">${t("labels.viewCards")}</button>
+                    <button class="pill${this.guideView === "table" ? " active" : ""}" id="guide-view-table-gd" onclick="PageGuides.setGuideView('table')">${t("labels.viewTable")}</button>
+                </div>
+            </div>
+            <div id="guide-flags-gd"></div>
+            <div id="guide-sections-gd"></div>
+        </div>`;
+    },
+    // Mounted on body, not inside the page: .page.active keeps a transform from its
+    // entry animation, which would make it the containing block of position:fixed.
+    _mountModal() {
+      document.querySelectorAll("#guide-detail-backdrop-gd, #guide-detail-modal-gd").forEach((el) => el.remove());
+      document.body.insertAdjacentHTML("beforeend", `
+            <div class="guide-detail-backdrop" id="guide-detail-backdrop-gd"></div>
+            <div class="guide-detail-modal" id="guide-detail-modal-gd" role="dialog" aria-modal="true" aria-labelledby="guide-detail-name-gd">
+                <button class="guide-detail-close" id="guide-detail-close-gd" aria-label="Close">&times;</button>
+                <div class="guide-detail-head">
+                    <h3 id="guide-detail-name-gd"></h3>
+                    <span id="guide-detail-city-gd" class="guide-detail-city"></span>
+                </div>
+                <div class="guide-detail-note" id="guide-detail-note-gd"></div>
+                <div class="guide-detail-chart-wrap"><canvas id="guideTrendChart-gd"></canvas></div>
+                <div class="guide-detail-section-title">${t("labels.tourType")}</div>
+                <div id="guide-detail-types-gd"></div>
+                <div class="guide-detail-section-title">${t("labels.monthly")}</div>
+                <div id="guide-detail-months-gd"></div>
+            </div>
+        `);
+    },
+    rebuildStructure() {
+      this.closeGuideDetail();
+      document.getElementById("page-gd").innerHTML = this._buildHeader() + this._buildFilters();
+      this._mountModal();
+      this._el("lang-filter").value = this.activeLang;
+      this._el("guide-search").value = this.guideQuery;
+      const d = new Date(getGlobalDate());
+      const fmt2 = d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+      const datePov = this._el("date-pov");
+      if (datePov) datePov.textContent = fmt2;
+    },
+    init() {
+      if (this._initialized) return;
+      this._initialized = true;
+      this.rebuildStructure();
+      this.renderAll();
+      const root = document.getElementById("page-gd");
+      root.addEventListener("click", (e) => {
+        const card = e.target.closest(".guide-card");
+        if (card) this.openGuideDetail(card.dataset.name, card);
+      });
+      document.addEventListener("click", (e) => {
+        if (e.target.id === "guide-detail-backdrop-gd" || e.target.id === "guide-detail-close-gd") this.closeGuideDetail();
+      });
+      root.addEventListener("keydown", (e) => {
+        if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("guide-card")) {
+          e.preventDefault();
+          this.openGuideDetail(e.target.dataset.name, e.target);
+        }
+      });
+      document.addEventListener("keydown", (e) => {
+        const modal = this._el("guide-detail-modal");
+        if (!modal || !modal.classList.contains("open")) return;
+        if (e.key === "Escape" || /^[1-5]$/.test(e.key)) this.closeGuideDetail();
+        if (e.key === "Tab") {
+          e.preventDefault();
+          this._el("guide-detail-close").focus();
+        }
+      });
+    }
+  };
+  registerPage("PageGuides", PageGuides);
 
   // src/pages/management/helpers.js
   function fmt(v, dec = 0) {
@@ -3307,7 +3618,7 @@
   function axisDefaults2() {
     const s = getComputedStyle(document.body);
     return {
-      ticks: { color: s.getPropertyValue("--text2").trim(), font: { family: "Montserrat", size: 11 } },
+      ticks: { color: s.getPropertyValue("--text2").trim(), font: { family: "IBM Plex Sans", size: 11 } },
       grid: { color: s.getPropertyValue("--border").trim() }
     };
   }
@@ -3795,7 +4106,7 @@
       return `<tr class="${rowClass}">
             <td class="rank">${rank26}</td>
             <td style="text-align:center;font-size:11px">${rankHtml}</td>
-            <td class="guide-name"><a href="#" class="guide-name-link" onclick="Page26.jumpToGuide('${r.name.replace(/'/g, "\\'")}'); return false;">${r.name}</a></td>
+            <td class="guide-name"><a href="#" class="guide-name-link" onclick="PageGuides.jumpToGuide('${r.name.replace(/'/g, "\\'")}'); return false;">${r.name}</a></td>
             <td><span class="city-dot" style="background:${getCityColor(r.city)}"></span>${r.city}</td>
             <td>${fmt(r.paidTours)}<br><small class="yoy">${dd(dPaid)}</small></td>
             <td>${r.avgPax > 0 ? r.avgPax.toFixed(1) : "\u2014"}</td>
@@ -4497,12 +4808,15 @@ GM%: ${gmpct}%`;
   PAGES.Page25 = Page25;
   PAGES.Page26 = Page26;
   PAGES.PageCmp = PageCmp;
+  PAGES.PageGuides = PageGuides;
   PAGES.PageMgmt = PageMgmt;
   window.Page25 = Page25;
   window.Page26 = Page26;
   window.PageCmp = PageCmp;
+  window.PageGuides = PageGuides;
   window.toggleSection = toggleSection;
   registerThemeChangeCallback(() => {
+    PAGES.PageGuides.closeGuideDetail();
     mgmtUpdateCharts();
   });
   registerLanguageChangeCallback(() => {
@@ -4541,6 +4855,7 @@ GM%: ${gmpct}%`;
     "tab-25": "page-25",
     "tab-26": "page-26",
     "tab-cmp": "page-cmp",
+    "tab-gd": "page-gd",
     "tab-mgmt": "page-mgmt"
   };
   function initEventListeners() {
@@ -4613,6 +4928,10 @@ GM%: ${gmpct}%`;
         if (el) showPage("page-cmp", el);
       },
       "4": () => {
+        const el = document.getElementById("tab-gd");
+        if (el) showPage("page-gd", el);
+      },
+      "5": () => {
         const el = document.getElementById("tab-mgmt");
         if (el) showPage("page-mgmt", el);
       },

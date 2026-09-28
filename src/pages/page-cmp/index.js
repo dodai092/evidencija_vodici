@@ -962,7 +962,7 @@ export const PageCmp = {
             </div>
             <div id="paid-section-body" class="section-body">
                 <div class="type-filter-row sticky-type-filter" id="tour-type-sticky-cmp">
-                    <span class="type-filter-label">${t('labels.tourType')}</span>
+                    <span class="type-filter-label">${t('sections.paidTours')}</span>
                     <div id="unified-type-pills-cmp" class="pill-group">
                         <button class="pill active" data-value="all" onclick="PageCmp.filterTourType('all',this)">${t('labels.all')}</button>
                         <button class="pill" data-value="war" onclick="PageCmp.filterTourType('war',this)">war</button>

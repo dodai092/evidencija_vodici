@@ -1033,3 +1033,10 @@ test.describe('Monthly table metric header', () => {
         });
     }
 });
+
+test('Comparison paid-tours sticky row is labelled Paid Tours', async ({ page }) => {
+    await load(page);
+    await page.waitForSelector('#tour-type-sticky-cmp .type-filter-label', { state: 'attached' });
+    const label = await page.locator('#tour-type-sticky-cmp .type-filter-label').textContent();
+    expect(label.trim()).toBe('Paid Tours');
+});

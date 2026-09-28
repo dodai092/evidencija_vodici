@@ -958,3 +958,24 @@ test.describe('Jura theme: review fixes', () => {
         expect(await styleOf(page, 'body', 'color')).toBe('rgb(26, 26, 26)');
     });
 });
+
+test.describe('Sticky filter bars', () => {
+    const tabs = [['tab-25', 'page-25'], ['tab-26', 'page-26'], ['tab-cmp', 'page-cmp'], ['tab-gd', 'page-gd']];
+    for (const [width, height] of [[1400, 900], [390, 844]]) {
+        for (const [tab, pageId] of tabs) {
+            test(`${pageId} filter bar sticks under the nav at ${width}px`, async ({ page }) => {
+                await page.setViewportSize({ width, height });
+                await load(page);
+                await page.click(`#${tab}`);
+                await page.waitForFunction(id => document.querySelector(`#${id} .filter-bar`), pageId);
+                await page.evaluate(() => Promise.all(document.getAnimations().filter(a => a.effect.getComputedTiming().iterations !== Infinity).map(a => a.finished)));
+                await page.evaluate(() => window.scrollTo(0, 1500));
+                const { barTop, navBottom } = await page.evaluate(id => ({
+                    barTop: document.querySelector(`#${id} .filter-bar`).getBoundingClientRect().top,
+                    navBottom: document.querySelector('.nav').getBoundingClientRect().bottom,
+                }), pageId);
+                expect(Math.abs(barTop - navBottom)).toBeLessThanOrEqual(1);
+            });
+        }
+    }
+});

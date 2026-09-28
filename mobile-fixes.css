@@ -1,6 +1,25 @@
 /* Pre-existing phone-layout bugs, not from the Jura restyle theme.
    Kept separate from jura-theme.css, which stays phone-untouched. */
+
+/* Filter bars (Tours 2025/2026, Comparison, Guides) stay pinned under the
+   sticky top nav. Applies at every width, so it sits outside the phone
+   media query; jura-theme.css and guides.css are not touched. */
+.filter-bar {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 90;
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--border);
+  margin: 0 calc(-1 * var(--pad));
+  padding: 10px var(--pad);
+}
+
 @media (max-width: 768px) {
+  /* The phone top nav is 33px tall, not the 60px --nav-h from guides.css. */
+  .filter-bar {
+    top: 33px;
+  }
+
   /* Bottom tab bar: flex items default to a content-based min-width,
      so long labels (e.g. "Comparison 25/26") never actually shrink to
      fit and push the last tabs off screen. Let them shrink and wrap. */

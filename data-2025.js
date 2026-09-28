@@ -140865,7 +140865,7 @@ const guideStats25 = [
   },
   {
     "name": "Tina Ćenan",
-    "city": "Unknown",
+    "city": "Split",
     "stats": {
       "eng": {
         "free": {
@@ -148466,7 +148466,7 @@ const guideStats25 = [
   },
   {
     "name": "Tanja Žilić",
-    "city": "Unknown",
+    "city": "Zadar",
     "stats": {
       "eng": {
         "free": {
@@ -150979,7 +150979,7 @@ const guideStats25 = [
   },
   {
     "name": "Marino Milin Aljinović",
-    "city": "Unknown",
+    "city": "Split",
     "stats": {
       "eng": {
         "free": {

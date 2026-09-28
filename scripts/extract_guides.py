@@ -50,6 +50,10 @@ CITY_MAP = {'zg': 'Zagreb', 'du': 'Dubrovnik', 'st': 'Split', 'zd': 'Zadar'}
 LANG_MAP = {'eng': 'eng', 'esp': 'esp', 'fra': 'fra'}
 MONTH_NAMES = {1:'Sij',2:'Velj',3:'Ožu',4:'Tra',5:'Svi',6:'Lip',7:'Srp',8:'Kol',9:'Ruj',10:'Lis',11:'Stu',12:'Pro'}
 
+# Same guide under two names in the sheet: the 2025 rows use her maiden name, 2026 the married name.
+# Always report her under the 2026 name.
+NAME_ALIASES = {'Nikolina Vukanović': 'Nikolina Vidojević'}
+
 # Canonical guide order (city → [names])
 GUIDE_ORDER = [
     ('Zagreb', [
@@ -62,15 +66,16 @@ GUIDE_ORDER = [
     ('Dubrovnik', [
         'Marin Kalauz', 'Pero Kusalo', 'Andrea Rendulić', 'Sara Žanetić',
         'Maja Musulin', 'Nikolina Vidojević', 'Ivo Miličić', 'Lorena Arias',
-        'Nikolina Vukanović', 'Romana Tomičić', 'Emma Martinović',
+        'Romana Tomičić', 'Emma Martinović',
     ]),
     ('Split', [
         'Bruno Beara', 'Ivana Čagalj', 'Lorena Ćelić', 'Marija Močić',
         'Marina Krolo', 'Petra Lučev', 'Boris Čerina', 'Maja Baranović Ordulj',
+        'Tina Ćenan', 'Marino Milin Aljinović',
     ]),
     ('Zadar', [
         'Andrija Grubić', 'Iva Zaplatić', 'Matea Duka', 'Tonka Baričević',
-        'Nikolina Kuzman',
+        'Nikolina Kuzman', 'Tanja Žilić',
     ]),
 ]
 
@@ -387,7 +392,7 @@ def main():
     raw_city = defaultdict(lambda: {lang: empty_stats() for lang in ('eng', 'esp', 'fra')})
 
     for row in data_rows:
-        vendor = _val(row[C_VENDOR])
+        vendor = NAME_ALIASES.get(_val(row[C_VENDOR]), _val(row[C_VENDOR]))
         if not vendor or vendor == 'vanjski vodič':
             continue
         tour_no = _int(row[C_TOUR_NO])

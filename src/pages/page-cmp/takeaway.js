@@ -6,10 +6,13 @@ function change(v25, v26) {
     return `${pct}% ${v26 > v25 ? 'up' : 'down'}`;
 }
 
-export function comparisonTakeaway({ fp25, fp26, pt25, pt26 }) {
-    if (fp25 === 0 || pt25 === 0) {
-        return `Free pax are ${fmtN(fp26)} vs ${fmtN(fp25)} in 2025; paid tours are ${fmtN(pt26)} vs ${fmtN(pt25)}.`;
+// Free pax = tours x average group size, so say which of the two moved.
+export function comparisonTakeaway({ fp25, fp26, ft25, ft26 }) {
+    if (fp25 === 0 || ft25 === 0 || ft26 === 0) {
+        return `Free pax are ${fmtN(fp26)} vs ${fmtN(fp25)} in 2025.`;
     }
-    return `Free pax are ${change(fp25, fp26)} on 2025 (${fmtN(fp26)} vs ${fmtN(fp25)}); `
-        + `paid tours are ${change(pt25, pt26)} (${fmtN(pt26)} vs ${fmtN(pt25)}).`;
+    const avg25 = fp25 / ft25, avg26 = fp26 / ft26;
+    return `Free pax are ${change(fp25, fp26)} on 2025 (${fmtN(fp26)} vs ${fmtN(fp25)}): `
+        + `tours are ${change(ft25, ft26)}, `
+        + `average group size is ${change(avg25, avg26)} (${avg26.toFixed(1)} vs ${avg25.toFixed(1)}).`;
 }

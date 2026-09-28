@@ -107,7 +107,7 @@ export const PageCmp = {
             this._el(pctId).innerHTML = `<span class="${cls}">${pct}</span>`;
         };
 
-        this._el('takeaway').textContent = comparisonTakeaway({ fp25, fp26, pt25, pt26 });
+        this._el('takeaway').textContent = comparisonTakeaway({ fp25, fp26, ft25, ft26 });
 
         setDelta('kd-free-abs', 'kd-free-pct', fp25, fp26, fmtN);
         setDelta('kd-paid-abs', 'kd-paid-pct', pt25, pt26, v => v);

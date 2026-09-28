@@ -985,7 +985,7 @@ test.describe('Comparison takeaway sentence', () => {
         const text = await page.locator('#takeaway-cmp').innerText();
         const plain = text.replace(/,/g, '');
         const val = async id => (await page.locator(`#${id}`).innerText()).trim().replace(/,/g, '');
-        for (const id of ['kv-free25-cmp', 'kv-free26-cmp', 'kv-paid25-cmp', 'kv-paid26-cmp']) {
+        for (const id of ['kv-free25-cmp', 'kv-free26-cmp', 'kv-avg-pax25-cmp', 'kv-avg-pax26-cmp']) {
             expect(plain, id).toContain(await val(id));
         }
         return text;
@@ -999,7 +999,7 @@ test.describe('Comparison takeaway sentence', () => {
             return s.getBoundingClientRect().bottom <= f.getBoundingClientRect().top;
         });
         expect(above).toBe(true);
-        expect(await numbersMatchCards(page)).toMatch(/^Free pax are .+; paid tours are .+\.$/);
+        expect(await numbersMatchCards(page)).toMatch(/^Free pax are .+: tours are .+, average group size is .+\.$/);
     });
 
     test('follows the city filter', async ({ page }) => {

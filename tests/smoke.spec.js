@@ -866,6 +866,35 @@ test.describe('Jura theme: charts', () => {
             () => Chart.getChart('monthlyChart-cmp')?.data.datasets[1].borderColor === '#f0f0f0',
             null, { timeout: 5000 });
     });
+
+    test('hovering a two-year chart shows both years and the change in the tooltip footer', async ({ page }) => {
+        await load(page);
+        await page.waitForFunction(() => window.Chart && Chart.getChart('cityChart-cmp'));
+        const r = await page.evaluate(() => {
+            const chart = Chart.getChart('cityChart-cmp');
+            chart.tooltip.setActiveElements([{ datasetIndex: 0, index: 0 }, { datasetIndex: 1, index: 0 }], { x: 0, y: 0 });
+            chart.update();
+            return { body: chart.tooltip.body.map(b => b.lines[0]), footer: chart.tooltip.footer };
+        });
+        expect(r.body[0]).toContain('2025');
+        expect(r.body[1]).toContain('2026');
+        expect(r.footer.join(' ')).toMatch(/2026 vs 2025: [+-][\d,]+ \([+-]\d+%\)/);
+    });
+
+    test('tooltip footer color matches body text, not the white default, in both themes', async ({ page }) => {
+        await load(page);
+        await page.waitForFunction(() => window.Chart && Chart.getChart('cityChart-cmp'));
+        for (const dark of [false, true]) {
+            await setDark(page, dark);
+            const colors = await page.evaluate(() => {
+                const chart = Chart.getChart('cityChart-cmp');
+                const t = chart.options.plugins.tooltip;
+                return { footer: t.footerColor, body: t.bodyColor };
+            });
+            expect(colors.footer, dark ? 'dark' : 'light').toBe(colors.body);
+            expect(colors.footer).not.toBe('#fff');
+        }
+    });
 });
 
 test.describe('Jura theme: print', () => {

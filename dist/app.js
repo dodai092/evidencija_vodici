@@ -1638,9 +1638,23 @@
       backgroundColor: s.getPropertyValue("--card-bg").trim(),
       titleColor: s.getPropertyValue("--text").trim(),
       bodyColor: s.getPropertyValue("--text2").trim(),
+      footerColor: s.getPropertyValue("--text2").trim(),
       borderColor: s.getPropertyValue("--border-dark").trim(),
       borderWidth: 1
     };
+  }
+  function yearDeltaFooter(items) {
+    if (!items || items.length < 2) return "";
+    const v25 = items.find((i) => /2025/.test(i.label))?.value;
+    const v26 = items.find((i) => /2026/.test(i.label))?.value;
+    if (v25 == null || v26 == null) return "";
+    const delta = v26 - v25;
+    const sign = delta >= 0 ? "+" : "";
+    const pct = v25 !== 0 ? ` (${sign}${Math.round(delta / v25 * 100)}%)` : "";
+    return `2026 vs 2025: ${sign}${delta.toLocaleString("en-GB")}${pct}`;
+  }
+  function footerCallback(tooltipItems) {
+    return yearDeltaFooter(tooltipItems.map((ti) => ({ label: ti.dataset.label, value: ti.raw })));
   }
   function createFreePaxCityChart(ctx, cityLabels, cityData25, cityData26, cityDeltaPlugin, colors, rangeLabel) {
     return new Chart(ctx, {
@@ -1656,8 +1670,10 @@
         responsive: true,
         maintainAspectRatio: false,
         layout: { padding: { bottom: 45, right: 55 } },
+        interaction: { mode: "index", intersect: false },
         plugins: {
-          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } }
+          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } },
+          tooltip: { callbacks: { footer: footerCallback } }
         },
         scales: {
           x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
@@ -1681,8 +1697,10 @@
         responsive: true,
         maintainAspectRatio: false,
         layout: { padding: { bottom: 45, right: 55 } },
+        interaction: { mode: "index", intersect: false },
         plugins: {
-          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } }
+          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } },
+          tooltip: { callbacks: { footer: footerCallback } }
         },
         scales: {
           x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
@@ -1706,8 +1724,10 @@
         responsive: true,
         maintainAspectRatio: false,
         layout: { padding: { bottom: 45, right: 55 } },
+        interaction: { mode: "index", intersect: false },
         plugins: {
-          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } }
+          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } },
+          tooltip: { callbacks: { footer: footerCallback } }
         },
         scales: {
           x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
@@ -1731,8 +1751,10 @@
         responsive: true,
         maintainAspectRatio: false,
         layout: { padding: { bottom: 45, right: 55 } },
+        interaction: { mode: "index", intersect: false },
         plugins: {
-          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } }
+          legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } },
+          tooltip: { callbacks: { footer: footerCallback } }
         },
         scales: {
           x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
@@ -1781,9 +1803,10 @@
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        interaction: { mode: "index", intersect: false },
         plugins: {
           legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } },
-          tooltip: { callbacks: { label: (i) => `${i.dataset.label}: ${i.raw} PAX/tour` } }
+          tooltip: { callbacks: { label: (i) => `${i.dataset.label}: ${i.raw} PAX/tour`, footer: footerCallback } }
         },
         scales: {
           x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
@@ -1800,6 +1823,7 @@
         responsive: true,
         maintainAspectRatio: false,
         layout: { padding: { top: 20, bottom: 30 } },
+        interaction: { mode: "index", intersect: false },
         plugins: {
           legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } },
           tooltip: {
@@ -1807,7 +1831,8 @@
               afterLabel: (item) => {
                 const sec = item.datasetIndex === 0 ? ds25._secondaryData[item.dataIndex] : ds26._secondaryData[item.dataIndex];
                 return sec ? `${item.datasetIndex === 0 ? ds25._secondaryKey || "pax" : (ds26._secondaryKey || "pax") === "pax" ? "PAX" : "Tours"}: ${sec}` : "";
-              }
+              },
+              footer: footerCallback
             }
           }
         },
@@ -1832,9 +1857,10 @@
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        interaction: { mode: "index", intersect: false },
         plugins: {
           legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } },
-          tooltip: { callbacks: { label: (i) => `${i.dataset.label}: ${i.raw} PAX/tour` } }
+          tooltip: { callbacks: { label: (i) => `${i.dataset.label}: ${i.raw} PAX/tour`, footer: footerCallback } }
         },
         scales: {
           x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },

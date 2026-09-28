@@ -979,3 +979,35 @@ test.describe('Sticky filter bars', () => {
         }
     }
 });
+
+test.describe('Comparison takeaway sentence', () => {
+    const numbersMatchCards = async page => {
+        const text = await page.locator('#takeaway-cmp').innerText();
+        const plain = text.replace(/,/g, '');
+        const val = async id => (await page.locator(`#${id}`).innerText()).trim().replace(/,/g, '');
+        for (const id of ['kv-free25-cmp', 'kv-free26-cmp', 'kv-paid25-cmp', 'kv-paid26-cmp']) {
+            expect(plain, id).toContain(await val(id));
+        }
+        return text;
+    };
+
+    test('sits above the filter bar and quotes the KPI card numbers', async ({ page }) => {
+        await load(page);
+        await page.waitForFunction(() => document.getElementById('kv-free26-cmp')?.textContent.trim() !== '—');
+        const above = await page.evaluate(() => {
+            const s = document.getElementById('takeaway-cmp'), f = document.querySelector('#page-cmp .filter-bar');
+            return s.getBoundingClientRect().bottom <= f.getBoundingClientRect().top;
+        });
+        expect(above).toBe(true);
+        expect(await numbersMatchCards(page)).toMatch(/^Free pax are .+; paid tours are .+\.$/);
+    });
+
+    test('follows the city filter', async ({ page }) => {
+        await load(page);
+        await page.waitForFunction(() => document.getElementById('kv-free26-cmp')?.textContent.trim() !== '—');
+        const before = await page.locator('#takeaway-cmp').innerText();
+        await page.click('#page-cmp .city-filter-pill[data-city="Zadar"]');
+        await page.waitForFunction(b => document.getElementById('takeaway-cmp').innerText !== b, before);
+        await numbersMatchCards(page);
+    });
+});

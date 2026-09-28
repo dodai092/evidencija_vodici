@@ -4,6 +4,7 @@ import {
     toggleSection, registerPage,
 } from '../../shared.js';
 import { t, titleAttr } from '../../i18n.js';
+import { comparisonTakeaway } from './takeaway.js';
 import {
     createFreePaxCityChart, createPaidCityChart,
     createMonthlyFreePaxChart, createMonthlyPaidChart,
@@ -105,6 +106,8 @@ export const PageCmp = {
             this._el(absId).innerHTML = `<span class="${cls}">${fmt(Math.abs(diff))}</span>`;
             this._el(pctId).innerHTML = `<span class="${cls}">${pct}</span>`;
         };
+
+        this._el('takeaway').textContent = comparisonTakeaway({ fp25, fp26, pt25, pt26 });
 
         setDelta('kd-free-abs', 'kd-free-pct', fp25, fp26, fmtN);
         setDelta('kd-paid-abs', 'kd-paid-pct', pt25, pt26, v => v);
@@ -806,6 +809,7 @@ export const PageCmp = {
 
     _buildKpisAndFilters() {
         return `        <div class="main">
+            <p class="takeaway" id="takeaway-cmp"></p>
             <div class="filter-bar">
                 <div class="city-pill-group">
                     ${['all', ...CITIES].map(c => {

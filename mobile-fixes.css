@@ -1,0 +1,26 @@
+/* Pre-existing phone-layout bugs, not from the Jura restyle theme.
+   Kept separate from jura-theme.css, which stays phone-untouched. */
+@media (max-width: 768px) {
+  /* Bottom tab bar: flex items default to a content-based min-width,
+     so long labels (e.g. "Comparison 25/26") never actually shrink to
+     fit and push the last tabs off screen. Let them shrink and wrap. */
+  .nav-tab {
+    min-width: 0;
+    white-space: normal;
+    font-size: 9px;
+    letter-spacing: 0;
+    line-height: 1.3;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+
+  /* Grid items also default to a content-based min-width, so a chart
+     card containing a wide, horizontally-scrollable table (min-width:
+     760px) blows out its grid track instead of scrolling internally.
+     Same default breaks a KPI card whose delta text is wider than its
+     track. */
+  .charts-row > *,
+  .kpi-grid > * {
+    min-width: 0;
+  }
+}

@@ -697,6 +697,25 @@ test.describe('Jura theme: chrome', () => {
         expect(await styleOf(page, '.nav-tabs', 'position')).toBe('fixed');
         expect(await cssVar(page, '--pad')).toBe('16px');
     });
+
+    test('all 5 bottom tabs stay within the 390px viewport', async ({ page }) => {
+        await page.setViewportSize({ width: 390, height: 800 });
+        await load(page);
+        const rights = await page.$$eval('.nav-tab', els => els.slice(0, 5).map(el => el.getBoundingClientRect().right));
+        for (const right of rights) {
+            expect(right).toBeLessThanOrEqual(390);
+        }
+    });
+
+    test('no horizontal page overflow at 390px on Tours 2025/2026 and Comparison', async ({ page }) => {
+        await page.setViewportSize({ width: 390, height: 800 });
+        await load(page);
+        for (const tab of ['#tab-25', '#tab-26', '#tab-cmp']) {
+            await page.click(tab);
+            const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
+            expect(scrollWidth, tab).toBeLessThanOrEqual(390);
+        }
+    });
 });
 
 test.describe('Jura theme: cards', () => {

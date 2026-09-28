@@ -8,7 +8,7 @@ Internal dashboard tracking guide production statistics for FreeSpirit travel ag
 
 | Tab | Content |
 |-----|---------|
-| **Tours 2025** | Full-year 2025 production — free tours, paid tours, pax, monthly breakdown |
+| **Tours 2025** | Full-year 2025 production: free tours, paid tours, pax, monthly breakdown |
 | **Tours 2026** | YTD 2026 production, updated monthly |
 | **Comparison 25/26** | 2025 vs. 2026 for the same date range. Opens with a one-line takeaway (pax change split into tour count and average group size). Hovering a chart shows both years and the delta |
 | **Guides** | Per-guide cards or table with search, sort, movers banner and a detail modal |
@@ -69,7 +69,7 @@ python3 scripts/extract_guides.py --year 2025 --sheet Evidencija > data-2025.js
 ## File structure
 
 ```
-index.html                  Shell — 5 page containers + management sub-nav
+index.html                  Shell: 5 page containers + management sub-nav
 guides.css                  Base styles (CSS variables, dark mode, components)
 mobile-fixes.css            Phone layout fixes, sticky filter bar, takeaway style
 jura-theme.css              Jura look and feel, loaded last
@@ -94,7 +94,7 @@ dist/
 scripts/
   extract_guides.py         Reads Excel, outputs data-2025.js / data-2026.js
 tests/
-  *.test.js                 JS unit tests (Vitest) — filtering, dates, guide table, charts, takeaway
+  *.test.js                 JS unit tests (Vitest): filtering, dates, guide table, charts, takeaway
   smoke.spec.js             Browser tests (Playwright)
   test_extract_guides.py    Python tests — extractor helpers + integration
 .github/
@@ -105,7 +105,7 @@ tests/
 
 - **JS**: ES modules bundled with [esbuild](https://esbuild.github.io/). No framework.
 - **Charts**: [Chart.js 4.4.1](https://www.chartjs.org/) from CDN.
-- **Fonts**: [Google Fonts](https://fonts.google.com/) — IBM Plex Sans.
+- **Fonts**: [Google Fonts](https://fonts.google.com/): IBM Plex Sans.
 - **Data**: Python + openpyxl extracts from local Excel; outputs static JS files.
 - **Tests**: [Vitest](https://vitest.dev/) for JS, [Playwright](https://playwright.dev/) for the browser, [pytest](https://pytest.org/) for Python.
 - **CI**: GitHub Actions.

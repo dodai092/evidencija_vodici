@@ -7,6 +7,7 @@ import {
     getRangeLabel,
     filteredStats,
     setGlobalDate,
+    latestDataDate,
 } from '../src/shared.js';
 
 // ---------------------------------------------------------------------------
@@ -172,5 +173,38 @@ describe('filteredStats', () => {
         delete stats.byMonth['1'];
         const result = filteredStats(stats, [1]);
         expect(result).toEqual({ freeTours: 0, freePax: 0, paidTours: 0, paidPax: 0 });
+    });
+});
+
+// ---------------------------------------------------------------------------
+// latestDataDate
+// ---------------------------------------------------------------------------
+describe('latestDataDate', () => {
+    const guideWithDays = (days) => ({
+        stats: { all: { byDay: Object.fromEntries(days.map(d => [d, {}])) } },
+    });
+
+    it('returns the latest m-d across all guides and languages, in the today year', () => {
+        const guides = [guideWithDays(['1-3', '3-15']), guideWithDays(['2-20'])];
+        const today = new Date('2026-09-28');
+        expect(latestDataDate(guides, today)).toBe('2026-03-15');
+    });
+
+    it('caps at today when the latest data day would be in the future', () => {
+        const guides = [guideWithDays(['12-25'])];
+        const today = new Date('2026-06-01');
+        expect(latestDataDate(guides, today)).toBe('2026-06-01');
+    });
+
+    it('falls back to today when no guide has byDay data', () => {
+        const guides = [{ stats: { all: { byDay: {} } } }];
+        const today = new Date('2026-06-01');
+        expect(latestDataDate(guides, today)).toBe('2026-06-01');
+    });
+
+    it('checks every language, not just "all"', () => {
+        const guides = [{ stats: { all: { byDay: { '1-1': {} } }, esp: { byDay: { '4-9': {} } } } }];
+        const today = new Date('2026-09-28');
+        expect(latestDataDate(guides, today)).toBe('2026-04-09');
     });
 });

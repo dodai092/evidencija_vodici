@@ -38,8 +38,29 @@ export function registerPage(name, page) {
     }
 }
 
+// Latest "m-d" byDay entry across all guides/languages, capped at today.
+// Defaulting to real today would filter past the last day the data actually
+// covers, showing a misleadingly low partial-month tail.
+export function latestDataDate(guideStats, today) {
+    let maxM = 0, maxD = 0;
+    for (const g of guideStats) {
+        for (const lang of Object.values(g.stats || {})) {
+            for (const key of Object.keys(lang.byDay || {})) {
+                const [m, d] = key.split('-').map(Number);
+                if (m > maxM || (m === maxM && d > maxD)) { maxM = m; maxD = d; }
+            }
+        }
+    }
+    const cap = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const candidate = maxM === 0 ? cap : new Date(cap.getFullYear(), maxM - 1, maxD);
+    const result = candidate > cap ? cap : candidate;
+    return `${result.getFullYear()}-${String(result.getMonth()+1).padStart(2,'0')}-${String(result.getDate()).padStart(2,'0')}`;
+}
+
 const _today = new Date();
-export let GLOBAL_DATE = `${_today.getFullYear()}-${String(_today.getMonth()+1).padStart(2,'0')}-${String(_today.getDate()).padStart(2,'0')}`;
+export let GLOBAL_DATE = typeof guideStats26 !== 'undefined'
+    ? latestDataDate(guideStats26, _today)
+    : `${_today.getFullYear()}-${String(_today.getMonth()+1).padStart(2,'0')}-${String(_today.getDate()).padStart(2,'0')}`;
 export let GLOBAL_LANGUAGE = 'en';
 
 export function setGlobalDate(v)     { GLOBAL_DATE = v; }

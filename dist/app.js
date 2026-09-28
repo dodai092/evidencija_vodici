@@ -35,8 +35,26 @@
       PAGES[name] = page;
     }
   }
+  function latestDataDate(guideStats, today) {
+    let maxM = 0, maxD = 0;
+    for (const g of guideStats) {
+      for (const lang of Object.values(g.stats || {})) {
+        for (const key of Object.keys(lang.byDay || {})) {
+          const [m, d] = key.split("-").map(Number);
+          if (m > maxM || m === maxM && d > maxD) {
+            maxM = m;
+            maxD = d;
+          }
+        }
+      }
+    }
+    const cap = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const candidate = maxM === 0 ? cap : new Date(cap.getFullYear(), maxM - 1, maxD);
+    const result = candidate > cap ? cap : candidate;
+    return `${result.getFullYear()}-${String(result.getMonth() + 1).padStart(2, "0")}-${String(result.getDate()).padStart(2, "0")}`;
+  }
   var _today = /* @__PURE__ */ new Date();
-  var GLOBAL_DATE = `${_today.getFullYear()}-${String(_today.getMonth() + 1).padStart(2, "0")}-${String(_today.getDate()).padStart(2, "0")}`;
+  var GLOBAL_DATE = typeof guideStats26 !== "undefined" ? latestDataDate(guideStats26, _today) : `${_today.getFullYear()}-${String(_today.getMonth() + 1).padStart(2, "0")}-${String(_today.getDate()).padStart(2, "0")}`;
   var GLOBAL_LANGUAGE = "en";
   function getGlobalDate() {
     return GLOBAL_DATE;

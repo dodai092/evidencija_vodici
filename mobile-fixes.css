@@ -23,4 +23,14 @@
   .kpi-grid > * {
     min-width: 0;
   }
+
+  /* Comparison's headline numbers (.kpi-delta-abs/.kpi-delta-pct) have
+     no mobile override in guides.css, unlike Tours 25/26's .kpi-2y-val,
+     so they stay at desktop size (36px/26px) and overflow their card. */
+  .kpi-delta-abs {
+    font-size: 26px;
+  }
+  .kpi-delta-pct {
+    font-size: 18px;
+  }
 }

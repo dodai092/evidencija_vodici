@@ -113,6 +113,14 @@ test.describe('Page 26 — Guides 2026', () => {
         await page.dispatchEvent('#cutoff-picker', 'change');
         await expect(page.locator('#page-26')).toBeVisible();
     });
+
+    test('date picker defaults to the latest data day, not a stale hardcoded date', async ({ page }) => {
+        await load(page);
+        const value = await page.locator('#cutoff-picker').inputValue();
+        expect(value).not.toBe('2026-05-06');
+        expect(value).not.toBe('');
+        expect(new Date(value).getTime()).toBeLessThanOrEqual(Date.now());
+    });
 });
 
 // ── Comparison tab ────────────────────────────────────────────────────────────
@@ -705,6 +713,16 @@ test.describe('Jura theme: chrome', () => {
         for (const right of rights) {
             expect(right).toBeLessThanOrEqual(390);
         }
+    });
+
+    test('Comparison KPI headline numbers shrink on mobile like Tours 25/26 do', async ({ page }) => {
+        await page.setViewportSize({ width: 390, height: 800 });
+        await load(page);
+        expect(await styleOf(page, '#kd-free-abs-cmp', 'fontSize')).toBe('26px');
+        expect(await styleOf(page, '#kd-free-pct-cmp', 'fontSize')).toBe('18px');
+        const cardRight = await page.locator('#kd-free-abs-cmp').evaluate(el => el.closest('.kpi').getBoundingClientRect().right);
+        const pctRight = await page.locator('#kd-free-pct-cmp').evaluate(el => el.getBoundingClientRect().right);
+        expect(pctRight).toBeLessThanOrEqual(cardRight);
     });
 
     test('no horizontal page overflow at 390px on Tours 2025/2026 and Comparison', async ({ page }) => {

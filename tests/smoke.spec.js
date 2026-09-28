@@ -608,7 +608,7 @@ test.describe('Jura theme: foundation', () => {
         expect(await cssVar(page, '--radius')).toBe('4px');
         expect([await cssVar(page, '--zagreb'), await cssVar(page, '--dubrovnik'), await cssVar(page, '--split'), await cssVar(page, '--zadar')])
             .toEqual(['#2a78d6', '#eb6834', '#1baf7a', '#eda100']);
-        expect([await cssVar(page, '--y25'), await cssVar(page, '--y26')]).toEqual(['#4a3aa7', '#1a1a1a']);
+        expect([await cssVar(page, '--y25'), await cssVar(page, '--y26')]).toEqual(['#5b95de', '#2a78d6']);
     });
 
     test('dark tokens: Jura dark surface and text', async ({ page }) => {
@@ -617,7 +617,7 @@ test.describe('Jura theme: foundation', () => {
         expect(await styleOf(page, 'body', 'backgroundColor')).toBe('rgb(18, 18, 18)');
         expect(await styleOf(page, 'body', 'color')).toBe('rgb(240, 240, 240)');
         expect(await styleOf(page, '.nav', 'backgroundColor')).toBe('rgb(18, 18, 18)');
-        expect([await cssVar(page, '--y25'), await cssVar(page, '--y26')]).toEqual(['#7b6df0', '#f0f0f0']);
+        expect([await cssVar(page, '--y25'), await cssVar(page, '--y26')]).toEqual(['#3780d8', '#5aa0f0']);
     });
 
     test('nav height equals --nav-h so sticky offsets line up', async ({ page }) => {
@@ -863,7 +863,7 @@ test.describe('Jura theme: charts', () => {
             window.PageCmp.renderAll();
         });
         await page.waitForFunction(
-            () => Chart.getChart('monthlyChart-cmp')?.data.datasets[1].borderColor === '#f0f0f0',
+            () => Chart.getChart('monthlyChart-cmp')?.data.datasets[1].borderColor === '#5aa0f0',
             null, { timeout: 5000 });
     });
 

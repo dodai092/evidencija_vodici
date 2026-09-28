@@ -29,8 +29,8 @@
   --split-pill: #15875e;
   --zadar-pill: #916300;
 
-  --y25: #4a3aa7;
-  --y26: #1a1a1a;
+  --y25: #5b95de;
+  --y26: #2a78d6;
 }
 
 body.dark-mode {
@@ -49,9 +49,9 @@ body.dark-mode {
   --split-pill: #1baf7a;
   --zadar-pill: #eda100;
 
-  /* lifted from Jura's #4a3aa7, which is about 2:1 on #121212 */
-  --y25: #7b6df0;
-  --y26: #f0f0f0;
+  /* Zagreb blue, lifted for the dark surface; 2025 is the dimmer step */
+  --y25: #3780d8;
+  --y26: #5aa0f0;
 }
 
 @media (min-width: 769px) {

@@ -1,10 +1,10 @@
 export function getCityColor(city) {
     if (!city || city === 'Unknown') return '#999999';
-    return getComputedStyle(document.documentElement).getPropertyValue('--' + city.toLowerCase()).trim() || '#999999';
+    return getComputedStyle(document.body).getPropertyValue('--' + city.toLowerCase()).trim() || '#999999';
 }
 
 export function getChartColors() {
-    const s = getComputedStyle(document.documentElement);
+    const s = getComputedStyle(document.body);
     const tok = n => s.getPropertyValue(n).trim();
     return { text: tok('--text'), text3: tok('--text3'), border: tok('--border'), y25: tok('--y25'), y26: tok('--y26') };
 }
@@ -28,6 +28,7 @@ export const PAGES = {
     Page25: null,
     Page26: null,
     PageCmp: null,
+    PageGuides: null,
     PageMgmt: null,
 };
 
@@ -83,13 +84,14 @@ export function updateDateAsOf(val) {
             PAGES.PageCmp.mergedGuides = PAGES.PageCmp.buildMerged();
             PAGES.PageCmp.renderAll();
         }
+        if (PAGES.PageGuides && PAGES.PageGuides._initialized) PAGES.PageGuides.renderAll();
         if (PAGES.PageMgmt?._initialized) PAGES.PageMgmt.renderAll();
     });
 }
 
-export function filteredStats(st, months) {
-    const cutoffMonth = getCutoffMonth();
-    const cutoffDay   = parseInt(GLOBAL_DATE.split('-')[2]);
+export function filteredStats(st, months, cutoff) {
+    const cutoffMonth = cutoff ? cutoff.month : getCutoffMonth();
+    const cutoffDay   = cutoff ? cutoff.day   : parseInt(GLOBAL_DATE.split('-')[2]);
     const activeMonths = (months && months.length > 0)
         ? months
         : Array.from({length: cutoffMonth}, (_, i) => i + 1);
@@ -152,7 +154,7 @@ export function showPage(id, tab) {
 
     const titles = {
         'page-25': 'Guides 2025', 'page-26': 'Guides 2026',
-        'page-cmp': 'Comparison 25/26', 'page-mgmt': 'Management',
+        'page-cmp': 'Comparison 25/26', 'page-gd': 'Guides', 'page-mgmt': 'Management',
     };
     document.title = `${titles[id] || 'Guide Production'} · FreeSpirit`;
 
@@ -160,6 +162,10 @@ export function showPage(id, tab) {
     if (id === 'page-26'  && PAGES.Page26 && !PAGES.Page26._initialized)  PAGES.Page26.init();
     if (id === 'page-cmp' && PAGES.PageCmp && !PAGES.PageCmp._initialized)  PAGES.PageCmp.init();
     else if (id === 'page-cmp' && PAGES.PageCmp) setTimeout(() => PAGES.PageCmp.updateCharts(), 50);
+    if (id === 'page-gd' && PAGES.PageGuides) {
+        if (!PAGES.PageGuides._initialized) PAGES.PageGuides.init();
+        else PAGES.PageGuides.renderAll();
+    }
     if (id === 'page-mgmt' && PAGES.PageMgmt) {
         if (!PAGES.PageMgmt._initialized) PAGES.PageMgmt.init();
         else PAGES.PageMgmt.renderAll();

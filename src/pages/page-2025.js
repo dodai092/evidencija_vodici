@@ -1,4 +1,4 @@
-import { getCityColor, getChartColors as _chartColors, CITY_CLS, CITIES, MONTH_NAMES_HR, filteredStats, safeName, fmtN, getCutoffMonth, getGlobalDate, getRangeLabel, registerPage } from '../shared.js';
+import { getCityColor, getChartColors as _chartColors, CITY_CLS, CITIES, MONTH_NAMES_HR, filteredStats, fmtN, getCutoffMonth, getGlobalDate, getRangeLabel, registerPage } from '../shared.js';
 import { t, titleAttr } from '../i18n.js';
 
 export const Page25 = {
@@ -7,7 +7,6 @@ export const Page25 = {
     activeMonths: [],
     activePrivateType: 'all',
     activeSharedType: 'all',
-    searchTerm: '',
     PRIVATE_TYPES: ['war PR', 'food PR', 'best', 'old', 'big'],
     SHARED_TYPES: ['war', 'food', 'best'],
     chartInstance: null,
@@ -18,7 +17,6 @@ export const Page25 = {
     _initialized: false,
 
     _el(id) { return document.getElementById(id + '-25'); },
-    _scope(sel) { return document.querySelectorAll('#page-25 ' + sel); },
 
     getChartColors() {
         const c = _chartColors();
@@ -32,105 +30,7 @@ export const Page25 = {
         if (activeBtn) activeBtn.classList.add('active');
     },
 
-    renderCard(g) {
-        const st = g.stats[this.activeLang];
-        const fs = filteredStats(st, this.activeMonths);
-        const sid = 'p25_' + safeName(g.name);
-        const col = getCityColor(g.city) || '#999';
-        const init = g.name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
-        const isExternal = g.city === 'Unknown';
-
-        const typeEntries = Object.entries(st.byType).sort((a, b) => b[1].tours - a[1].tours);
-        const maxT = typeEntries.length > 0 ? typeEntries[0][1].tours : 1;
-        const typeBarsHtml = typeEntries.length > 0
-            ? '<div class="gc-types">' +
-              typeEntries.map(([type, d]) =>
-                  `<div class="type-bar-row">` +
-                  `<span class="type-lbl">${type}</span>` +
-                  `<div class="type-track"><div class="type-fill" style="width:${(d.tours/maxT*100).toFixed(0)}%;background:${col}"></div></div>` +
-                  `<span class="type-val">${d.tours}t &middot; ${d.pax}p</span>` +
-                  `</div>`
-              ).join('') + '</div>'
-            : '';
-
-        const months = Object.keys(st.byMonth).map(Number).sort((a, b) => a - b);
-        const monthRowsHtml = months.map(m => {
-            const md = st.byMonth[m];
-            return `<tr>` +
-                `<td>${md.name}</td>` +
-                `<td class="num free-col">${md.free.tours || 0}</td>` +
-                `<td class="num">${md.free.pax || 0}</td>` +
-                `<td class="num paid-col">${md.paid.tours || 0}</td>` +
-                `<td class="num">${md.paid.pax || 0}</td>` +
-                `</tr>`;
-        }).join('');
-
-        const cityDisplay = isExternal ? t('labels.external') : g.city;
-
-        return `<div class="guide-card" data-city="${g.city}" data-name="${g.name}">` +
-            `<div class="gc-stripe" style="background:${col}"></div>` +
-            `<div class="gc-body">` +
-            `<div class="gc-header">` +
-            `<div class="avatar" style="background:${col}18;color:${col};border:1px solid ${col}40">${init}</div>` +
-            `<span class="gc-name">${g.name}</span>` +
-            (isExternal ? `<span class="badge-ext">${t('labels.external')}</span>` : `<span class="city-pill" style="background:${col}18;color:${col}">${cityDisplay}</span>`) +
-            `</div>` +
-            `<div class="gc-stats">` +
-            `<div class="gc-half">` +
-            `<div class="gc-stat-label">${t('labels.freeTours')}</div>` +
-            `<div class="gc-stat-num" style="color:var(--green)">${fs.freeTours}</div>` +
-            `<div class="gc-stat-sub">${fs.freePax} pax</div>` +
-            `</div>` +
-            `<div class="gc-divider"></div>` +
-            `<div class="gc-half" style="text-align:right">` +
-            `<div class="gc-stat-label">${t('labels.paidTours')}</div>` +
-            `<div class="gc-stat-num" style="color:${col}">${fs.paidTours}</div>` +
-            `<div class="gc-stat-sub">${fs.paidPax} pax</div>` +
-            `</div>` +
-            `</div>` +
-            `</div>` +
-            `${typeBarsHtml}` +
-            `<button type="button" class="monthly-toggle" aria-expanded="false" onclick="Page25.toggleMonthly('${sid}')">` +
-            `<span class="mt-arrow" id="mta-${sid}">&#9660;</span> ${t('labels.monthly')}` +
-            `</button>` +
-            `<div class="monthly-table" id="mt-${sid}">` +
-            `<table>` +
-            `<thead><tr>` +
-            `<th>${t('table.month')}</th>` +
-            `<th class="num" style="color:var(--green)">${t('table.free')} t</th>` +
-            `<th class="num">${t('table.free')} p</th>` +
-            `<th class="num" style="color:var(--teal)">${t('table.paid')} t</th>` +
-            `<th class="num">${t('table.paid')} p</th>` +
-            `</tr></thead>` +
-            `<tbody>${monthRowsHtml}</tbody>` +
-            `<tfoot><tr>` +
-            `<td>${t('labels.total')}</td>` +
-            `<td class="num free-col">${fs.freeTours}</td>` +
-            `<td class="num">${fs.freePax}</td>` +
-            `<td class="num paid-col">${fs.paidTours}</td>` +
-            `<td class="num">${fs.paidPax}</td>` +
-            `</tr></tfoot>` +
-            `</table>` +
-            `</div>` +
-            `</div>`;
-    },
-
     renderAll() {
-        const container = this._el('guide-sections');
-        let html = '';
-        CITIES.forEach(city => {
-            if (this.activeCity !== 'all' && this.activeCity !== city) return;
-            const cityGuides = guideStats25.filter(g => g.city === city);
-            if (cityGuides.length === 0) return;
-            const cls = CITY_CLS[city] || '';
-            html += `<section class="city-section" data-city="${city}">`;
-            html += `<div class="section-title ${cls}">${city}</div>`;
-            html += `<div class="guide-grid">`;
-            html += cityGuides.map(g => this.renderCard(g)).join('');
-            html += `</div></section>`;
-        });
-        container.innerHTML = html;
-        this.applySearchFilter();
         this.updateKPIs();
         this.updateChart();
         this.renderCityBars();
@@ -249,7 +149,7 @@ export const Page25 = {
                 const ctx = chart.ctx;
                 const meta = chart.getDatasetMeta(0);
                 ctx.save();
-                ctx.font = "500 9px 'Montserrat',sans-serif";
+                ctx.font = "500 9px 'IBM Plex Sans',sans-serif";
                 ctx.textAlign = 'center';
                 ctx.fillStyle = colors.text3;
                 const paxData = chart.data.datasets[0]._paxData || [];
@@ -378,7 +278,7 @@ export const Page25 = {
             options: {
                 responsive: true, maintainAspectRatio: false,
                 plugins: {
-                    legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 12 } },
+                    legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 12 } },
                     tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} ${t('table.pax')}/tour` } }
                 },
                 scales: {
@@ -416,27 +316,6 @@ export const Page25 = {
     },
     filterLang(lang) { this.activeLang = lang; this.renderAll(); },
     filterMonth(m)   { this.activeMonths = m === 'all' ? [] : [parseInt(m)]; this.renderAll(); },
-
-    applySearchFilter() {
-        const term = (this.searchTerm || '').toLowerCase();
-        this._scope('.guide-card').forEach(card => {
-            const name = (card.dataset.name || '').toLowerCase();
-            card.style.display = !term || name.includes(term) ? '' : 'none';
-        });
-    },
-    filterGuideSearch(term) {
-        this.searchTerm = term;
-        this.applySearchFilter();
-    },
-
-    toggleMonthly(sid) {
-        const table = document.getElementById('mt-' + sid);
-        const arrow = document.getElementById('mta-' + sid);
-        if (!table) return;
-        const open = table.classList.toggle('open');
-        if (arrow) arrow.classList.toggle('open');
-        table.previousElementSibling?.setAttribute('aria-expanded', String(open));
-    },
 
     _buildHeader() {
         return `<div class="header">
@@ -579,20 +458,6 @@ export const Page25 = {
             </div>`;
     },
 
-    _buildGuides() {
-        return `<button type="button" class="section-divider" aria-expanded="true" onclick="toggleSection('guides-body-25')">
-                <span>${t('labels.guides')}</span>
-                <span class="section-chevron">▾</span>
-            </button>
-            <div id="guides-body-25" class="section-body">
-                <input type="text" id="guide-search-25" class="guide-search-input"
-                       placeholder="${t('labels.searchGuide')}"
-                       oninput="Page25.filterGuideSearch(this.value)">
-                <div id="guide-sections-25"></div>
-            </div>
-        </div>`;
-    },
-
     _destroyCharts() {
         [this.chartInstance, this.cityChartInstance, this.paidCityChartInstance,
          this.privatePaidChartInstance, this.sharedPaidChartInstance].forEach(chart => {
@@ -612,7 +477,7 @@ export const Page25 = {
             this._buildFilters() +
             this._buildFreeTours() +
             this._buildPaidTours() +
-            this._buildGuides();
+            '</div>';
 
         const d = new Date(getGlobalDate());
         const fmt = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });

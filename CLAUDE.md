@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-Static HTML dashboard tracking guide production statistics for FreeSpirit travel agency. Four tabs: full-year 2025, YTD 2026, a 2025-vs-2026 comparison, and a Management financial dashboard. Deployed to GitHub Pages. Built with esbuild (ES modules → IIFE bundle). Chart.js 4.4.1 from CDN only.
+Static HTML dashboard tracking guide production statistics for FreeSpirit travel agency. Five tabs: full-year 2025, YTD 2026, a 2025-vs-2026 comparison, Guides, and a Management financial dashboard. Deployed to GitHub Pages. Built with esbuild (ES modules → IIFE bundle). Chart.js 4.4.1 from CDN only.
 
 ## Development
 
@@ -65,9 +65,10 @@ The script filters rows by the `Year` column when present, so this works correct
 
 | File | Role |
 |---|---|
-| `index.html` | Shell with 4 empty `.page` containers + management sub-nav HTML inside `#page-mgmt`. **Never edited for data updates.** |
+| `index.html` | Shell with 5 empty `.page` containers + management sub-nav HTML inside `#page-mgmt`. **Never edited for data updates.** |
 | `../shared/fs-core.css` | Shared foundation — loads first. Variables, dark mode, nav, kpi, card, bar/owner/agency CSS. |
 | `guides.css` | Evidencija-specific styles — `--radius: 8px`, filter bar, date picker, management dashboard, guide card styles, language toggle, sticky KPI bar, city/year/delta color vars. |
+| `jura-theme.css` | Jura look and feel. Loaded last (after `guides.css`), redefines tokens and restyles components by overriding existing selectors. Remove its `<link>` in `index.html` to switch it off. Desktop-only rules live in `@media (min-width: 769px)`, the phone layout is untouched. |
 | `src/main.js` | Entry point — boots theme/language, exposes all `window.*` globals, registers pages |
 | `src/shared.js` | Constants, `PAGES` registry, `filteredStats()`, `showPage()`, `updateDateAsOf()`, keyboard shortcuts |
 | `src/i18n.js` | `TRANSLATIONS`, `t()`, `tOpposite()`, `titleAttr()` |
@@ -75,6 +76,8 @@ The script filters rows by the `Year` column when present, so this works correct
 | `src/pages/page-2025.js` | `Page25` — renders TY2025 tab |
 | `src/pages/page-2026.js` | `Page26` — renders TY2026 tab |
 | `src/pages/page-cmp/index.js` | `PageCmp` — renders comparison tab + Chart.js instances |
+| `src/pages/page-guides.js` | `PageGuides` renders the Guides tab (cards or table, sort, search, movers banner, detail modal). DOM ids use the `-gd` suffix. The modal is mounted on `<body>`, not inside the page, because `.page.active` keeps an animation transform that would break `position: fixed`. |
+| `src/guide-table.js` | Pure per-guide row math: merge, deltas, TOTAL, search, ranking, movers flags, monthly trend. Unit tested in `tests/guide-table.test.js`. |
 | `src/pages/management/index.js` | `PageMgmt` + all management functions — P&L, Guides, Channels, Ops, Cities tabs |
 | `data-2025.js` | Generated from Evidencija_25 — exports `guideStats25`, `kpiTotals25` (includes `mgmt` financial fields) |
 | `data-2026.js` | Generated from Evidencija — exports `guideStats26`, `kpiTotals26` (includes `mgmt` financial fields) |
@@ -157,13 +160,17 @@ const cityStats26 = {
 - For the partial current month: sums individual `byDay` entries up to `cutoffDay`.
 - Falls back to full-month `byMonth` if `byDay` is absent (older 2025 data).
 
+`filteredStats(st, months, cutoff?)` takes an optional `{ month, day }` that overrides the global as-of date. `guideMonthlyDetail` uses it to show 2025 as a full year next to 2026 through the as-of date.
+
+The per-guide list lives only on the Guides tab. Tours 2025, Tours 2026 and Comparison no longer render guide cards. Keyboard shortcuts: `1` Tours 2025, `2` Tours 2026, `3` Comparison, `4` Guides, `5` Management.
+
 ### The comparison date range
 
 The comparison tab (`page-cmp/index.js`) computes its range label and month dropdown automatically from `getCutoffMonth()` (or the active month filter) on every render — the `Jan–Jun` text in `index.html`'s `.ytd-range-label` spans is only a pre-JS placeholder. No source edit or rebuild is needed as new months land; a data-only update is sufficient. (This used to require a manual edit; fixed in `61e73ba` — don't reintroduce a hardcoded range.)
 
 ### Theme system
 
-CSS variables and `body.dark-mode` overrides are defined in `../shared/fs-core.css`. Evidencija-specific color vars (`--radius`, city colors, delta colors, etc.) stay in `guides.css`. `toggleTheme()` in `src/theme.js` persists to `localStorage` and updates all initialized page charts including management. The SVG sun/moon theme button uses `.theme-toggle-icon` class — styled by `fs-core.css`.
+CSS variables and `body.dark-mode` overrides are defined in `../shared/fs-core.css`. Evidencija-specific color vars (`--radius`, city colors, delta colors, etc.) stay in `guides.css`. `toggleTheme()` in `src/theme.js` persists to `localStorage` and updates all initialized page charts including management. Light and dark tokens for the Jura theme live in jura-theme.css (it loads after guides.css and fs-core.css, so it wins). Do not edit fs-core.css for evidencija styling, it is shared with the monday and recap reports. Chart fonts are set in JS as 'IBM Plex Sans' (search src for the name if it ever changes). The SVG sun/moon theme button uses `.theme-toggle-icon` class — styled by `fs-core.css`.
 
 ### Guide ordering
 

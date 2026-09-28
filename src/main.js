@@ -14,6 +14,7 @@ import {
 import { Page25 } from './pages/page-2025.js';
 import { Page26 } from './pages/page-2026.js';
 import { PageCmp } from './pages/page-cmp/index.js';
+import { PageGuides } from './pages/page-guides.js';
 import {
     mgmtShowTab, mgmtFilterCityPl, mgmtSort,
     mgmtUpdateCharts, updateManagementTabs,
@@ -28,6 +29,7 @@ initLanguage();
 PAGES.Page25   = Page25;
 PAGES.Page26   = Page26;
 PAGES.PageCmp  = PageCmp;
+PAGES.PageGuides = PageGuides;
 PAGES.PageMgmt = PageMgmt;
 
 // Page modules generate HTML strings with inline onclick/onchange attributes
@@ -35,11 +37,13 @@ PAGES.PageMgmt = PageMgmt;
 window.Page25        = Page25;
 window.Page26        = Page26;
 window.PageCmp       = PageCmp;
+window.PageGuides    = PageGuides;
 window.toggleSection = toggleSection;
 
 // ── Register callbacks (theme.js -> main.js to avoid circular dependency) ────
 
 registerThemeChangeCallback(() => {
+    PAGES.PageGuides.closeGuideDetail();
     mgmtUpdateCharts();
 });
 
@@ -85,6 +89,7 @@ const PAGE_MAP = {
     'tab-25':   'page-25',
     'tab-26':   'page-26',
     'tab-cmp':  'page-cmp',
+    'tab-gd':   'page-gd',
     'tab-mgmt': 'page-mgmt',
 };
 
@@ -156,7 +161,8 @@ function initKeyboardShortcuts() {
         '1': () => { const el = document.getElementById('tab-25');   if (el) showPage('page-25', el); },
         '2': () => { const el = document.getElementById('tab-26');   if (el) showPage('page-26', el); },
         '3': () => { const el = document.getElementById('tab-cmp');  if (el) showPage('page-cmp', el); },
-        '4': () => { const el = document.getElementById('tab-mgmt'); if (el) showPage('page-mgmt', el); },
+        '4': () => { const el = document.getElementById('tab-gd');   if (el) showPage('page-gd', el); },
+        '5': () => { const el = document.getElementById('tab-mgmt'); if (el) showPage('page-mgmt', el); },
         't': () => toggleTheme(),
         'd': () => document.getElementById('cutoff-picker')?.focus(),
         '?': () => toggleShortcutOverlay(),

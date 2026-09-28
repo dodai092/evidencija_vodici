@@ -243,7 +243,7 @@ export function renderInsightCallouts(k, k25, elId = 'insight-strip') {
 export function axisDefaults() {
     const s = getComputedStyle(document.body);
     return {
-        ticks: { color: s.getPropertyValue('--text2').trim(), font: { family: 'Montserrat', size: 11 } },
+        ticks: { color: s.getPropertyValue('--text2').trim(), font: { family: 'IBM Plex Sans', size: 11 } },
         grid:  { color: s.getPropertyValue('--border').trim() },
     };
 }

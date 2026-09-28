@@ -5,7 +5,7 @@ import { getCityColor, CITIES } from '../../shared.js';
 function axisDefaults() {
     const s = getComputedStyle(document.body);
     return {
-        ticks: { color: s.getPropertyValue('--text2').trim(), font: { family: 'Montserrat', size: 11 } },
+        ticks: { color: s.getPropertyValue('--text2').trim(), font: { family: 'IBM Plex Sans', size: 11 } },
         grid:  { color: s.getPropertyValue('--border').trim() },
     };
 }
@@ -46,7 +46,7 @@ export function createFreePaxCityChart(ctx, cityLabels, cityData25, cityData26, 
             responsive: true, maintainAspectRatio: false,
             layout: { padding: { bottom: 45, right: 55 } },
             plugins: {
-                legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+                legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } }
             },
             scales: {
                 x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
@@ -71,7 +71,7 @@ export function createPaidCityChart(ctx, cityLabels, paidCityData25, paidCityDat
             responsive: true, maintainAspectRatio: false,
             layout: { padding: { bottom: 45, right: 55 } },
             plugins: {
-                legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+                legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } }
             },
             scales: {
                 x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
@@ -96,7 +96,7 @@ export function createMonthlyFreePaxChart(ctx, months, cumMonthData25, cumMonthD
             responsive: true, maintainAspectRatio: false,
             layout: { padding: { bottom: 45, right: 55 } },
             plugins: {
-                legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+                legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } }
             },
             scales: {
                 x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
@@ -121,7 +121,7 @@ export function createMonthlyPaidChart(ctx, months, cumPaidMonthData25, cumPaidM
             responsive: true, maintainAspectRatio: false,
             layout: { padding: { bottom: 45, right: 55 } },
             plugins: {
-                legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } }
+                legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } }
             },
             scales: {
                 x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
@@ -143,7 +143,7 @@ export function createCityMonthlyChart(ctx, months, datasets, colors) {
                     display: true,
                     labels: {
                         color: colors.text,
-                        font: { size: 10, family: "'Montserrat',sans-serif" },
+                        font: { size: 10, family: "'IBM Plex Sans',sans-serif" },
                         boxWidth: 12, padding: 12,
                         filter: item => !item.text.includes('2025')
                     }
@@ -170,7 +170,7 @@ export function createAvgFreePaxChart(ctx, months, avgFree25, avgFree26, colors,
         options: {
             responsive: true, maintainAspectRatio: false,
             plugins: {
-                legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } },
+                legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } },
                 tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} PAX/tour` } }
             },
             scales: {
@@ -189,7 +189,7 @@ export function createPaidTypeChart(ctx, months, ds25, ds26, colors, secondaryLa
             responsive: true, maintainAspectRatio: false,
             layout: { padding: { top: 20, bottom: 30 } },
             plugins: {
-                legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } },
+                legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } },
                 tooltip: {
                     callbacks: {
                         afterLabel: (item) => {
@@ -223,7 +223,7 @@ export function createWarAvgChart(ctx, months, getTypeAvg25, getTypeAvg26, color
         options: {
             responsive: true, maintainAspectRatio: false,
             plugins: {
-                legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'Montserrat',sans-serif" }, boxWidth: 12, padding: 16 } },
+                legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } },
                 tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} PAX/tour` } }
             },
             scales: {
@@ -250,5 +250,28 @@ export function updateChartColors(chartInstances) {
         if (c.options.plugins?.tooltip) Object.assign(c.options.plugins.tooltip, tt);
         if (c.options.plugins?.legend?.labels) c.options.plugins.legend.labels.color = ax.ticks.color;
         c.update();
+    });
+}
+
+export function createGuideTrendChart(ctx, months, pax25, pax26, colors) {
+    return new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [
+                { label: '2025', data: pax25, borderColor: colors.y25, backgroundColor: colors.y25 + '33', borderWidth: 2, tension: 0.3, pointRadius: 3 },
+                { label: '2026', data: pax26, borderColor: colors.y26, backgroundColor: colors.y26 + '33', borderWidth: 2, tension: 0.3, pointRadius: 3, spanGaps: false }
+            ]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } }
+            },
+            scales: {
+                x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
+                y: { beginAtZero: true, ticks: { color: colors.text3 }, grid: { color: colors.border } }
+            }
+        }
     });
 }

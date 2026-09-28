@@ -9,7 +9,11 @@
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="shared/fs-core.css">
     <link rel="stylesheet" href="guides.css">
-    <style>html.dark-mode body { background-color: #111111; color: #eeeeee; }</style>
+    <style>html.dark-mode body { background-color: #121212; color: #f0f0f0; }</style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="jura-theme.css">
     <script>(function(){if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark-mode');})();</script>
 </head>
 
@@ -24,6 +28,7 @@
                 <div id="tab-25" class="nav-tab y25" role="tab" aria-selected="false" tabindex="-1" data-i18n="nav.guides2025">Tours 2025</div>
                 <div id="tab-26" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" data-i18n="nav.guides2026">Tours 2026</div>
                 <div id="tab-cmp" class="nav-tab cmp active" role="tab" aria-selected="true" tabindex="0" data-i18n="nav.comparison">Comparison 25/26</div>
+                <div id="tab-gd" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" data-i18n="labels.guides">Guides</div>
                 <div id="tab-mgmt" class="nav-tab" role="tab" aria-selected="false" tabindex="-1">Management</div>
             </div>
         </div>
@@ -61,6 +66,9 @@
 
     <!-- ── TAB: USPOREDBA 2025 VS 2026 ───────────────────────── -->
     <div id="page-cmp" class="page active"></div>
+
+    <!-- ── TAB: GUIDES ────────────────────────────────────────── -->
+    <div id="page-gd" class="page"></div>
 
     <!-- ── TAB: MANAGEMENT ───────────────────────────────── -->
     <div id="page-mgmt" class="page">
@@ -370,7 +378,8 @@
             <tr><td>1</td><td>Guides 2025</td></tr>
             <tr><td>2</td><td>Guides 2026</td></tr>
             <tr><td>3</td><td>Comparison</td></tr>
-            <tr><td>4</td><td>Management</td></tr>
+            <tr><td>4</td><td>Guides</td></tr>
+            <tr><td>5</td><td>Management</td></tr>
             <tr><td>t</td><td>Toggle theme</td></tr>
             <tr><td>d</td><td>Focus date picker</td></tr>
             <tr><td>?</td><td>Show/hide this</td></tr>

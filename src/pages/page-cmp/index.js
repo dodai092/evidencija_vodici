@@ -1,7 +1,7 @@
 import {
     CITIES, getCityColor, getChartColors as _chartColors, CITY_CLS,
     fmtN, filteredStats, getCutoffMonth, getGlobalDate, getRangeLabel,
-    toggleSection, registerPage, safeName,
+    toggleSection, registerPage,
 } from '../../shared.js';
 import { t, titleAttr } from '../../i18n.js';
 import {
@@ -37,7 +37,6 @@ export const PageCmp = {
     _initialized: false,
 
     _el(id) { return document.getElementById(id + '-cmp'); },
-    _scope(sel) { return document.querySelectorAll('#page-cmp ' + sel); },
 
     fmtDelta(v25, v26) {
         if (v25 === 0 && v26 === 0) return '<span class="dash">—</span>';
@@ -48,15 +47,6 @@ export const PageCmp = {
         const cls = d > 0 ? 'pos' : d < 0 ? 'neg' : 'neu';
         const sign = d > 0 ? '+' : '';
         return `<span class="delta ${cls}">${sym}${Math.abs(d)} (${sign}${p}%)</span>`;
-    },
-
-    pctChange(v25, v26) {
-        if (v25 === 0 && v26 === 0) return '—';
-        if (v25 === 0) return '+∞%';
-        const p = ((v26 - v25) / v25 * 100).toFixed(0);
-        const cls = v26 > v25 ? 'pos' : v26 < v25 ? 'neg' : 'neu';
-        const sign = v26 >= v25 ? '+' : '';
-        return `<span class="kpi-pct ${cls}">${sign}${p}%</span>`;
     },
 
     buildMerged() {
@@ -86,52 +76,7 @@ export const PageCmp = {
         return result;
     },
 
-    renderCard(m) {
-        const st25 = m.g25 ? m.g25.stats[this.activeLang] : null;
-        const st26 = m.g26 ? m.g26.stats[this.activeLang] : null;
-        const ytd25 = st25 ? filteredStats(st25, this.activeMonths) : null;
-        const ytd26 = st26 ? filteredStats(st26, this.activeMonths) : null;
-        const col = getCityColor(m.city);
-        const init = m.name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
-        const inactive = !m.g26;
-
-        return `<div class="guide-card ${inactive ? 'inactive' : ''}" data-city="${m.city}" data-name="${safeName(m.name)}">` +
-            `<div class="gc-stripe" style="background:${col}"></div>` +
-            `<div class="gc-body">` +
-            `<div class="gc-header">` +
-            `<div class="avatar" style="background:${col}18;color:${col};border:1px solid ${col}40">${init}</div>` +
-            `<span class="gc-name">${m.name}</span>` +
-            `<span class="city-pill" style="background:${col}18;color:${col}">${m.city}</span>` +
-            `</div>` +
-            `<table class="gc-cmp-table"><tbody>` +
-            `<tr><td class="label">${t('labels.freeT')}</td><td class="v25">${ytd25 ? ytd25.freeTours : '—'}</td>` +
-            `<td class="v26">${ytd26 ? ytd26.freeTours : '—'}</td>` +
-            `<td class="delta">${ytd25 && ytd26 ? this.fmtDelta(ytd25.freeTours, ytd26.freeTours) : '—'}</td></tr>` +
-            `<tr><td class="label">${t('labels.freeP')}</td><td class="v25">${ytd25 ? ytd25.freePax : '—'}</td>` +
-            `<td class="v26">${ytd26 ? ytd26.freePax : '—'}</td>` +
-            `<td class="delta">${ytd25 && ytd26 ? this.fmtDelta(ytd25.freePax, ytd26.freePax) : '—'}</td></tr>` +
-            `<tr><td class="label">${t('labels.paidT')}</td><td class="v25">${ytd25 ? ytd25.paidTours : '—'}</td>` +
-            `<td class="v26">${ytd26 ? ytd26.paidTours : '—'}</td>` +
-            `<td class="delta">${ytd25 && ytd26 ? this.fmtDelta(ytd25.paidTours, ytd26.paidTours) : '—'}</td></tr>` +
-            `<tr><td class="label">${t('labels.paidP')}</td><td class="v25">${ytd25 ? ytd25.paidPax : '—'}</td>` +
-            `<td class="v26">${ytd26 ? ytd26.paidPax : '—'}</td>` +
-            `<td class="delta">${ytd25 && ytd26 ? this.fmtDelta(ytd25.paidPax, ytd26.paidPax) : '—'}</td></tr>` +
-            `</tbody></table>` +
-            `</div></div>`;
-    },
-
     renderAll() {
-        let html = '';
-        const fc = this.mergedGuides.filter(m => CITIES.includes(m.city) && (this.activeCity === 'all' || m.city === this.activeCity));
-        CITIES.forEach(city => {
-            const cg = fc.filter(m => m.city === city);
-            if (!cg.length) return;
-            html += `<section class="city-section" data-city="${city}">` +
-                `<div class="section-title ${CITY_CLS[city] || ''}">${city}</div>` +
-                `<div class="guide-grid">${cg.map(m => this.renderCard(m)).join('')}</div>` +
-                `</section>`;
-        });
-        this._el('guide-sections').innerHTML = html;
         this.updateKPIs();
         this.renderMonthlyTable();
         setTimeout(() => this.updateCharts(), 100);
@@ -222,12 +167,12 @@ export const PageCmp = {
                     const y = xAxis.bottom + 12;
 
                     ctx.fillStyle = chartColors.text3;
-                    ctx.font = "500 10px 'Montserrat',sans-serif";
+                    ctx.font = "500 10px 'IBM Plex Sans',sans-serif";
                     ctx.textAlign = 'center';
                     ctx.fillText(`${fmtN(v25)} / ${fmtN(v26)}`, x, y);
 
                     ctx.fillStyle = color;
-                    ctx.font = "bold 10px 'Montserrat',sans-serif";
+                    ctx.font = "bold 10px 'IBM Plex Sans',sans-serif";
                     ctx.fillText(`${arrow} ${fmtN(Math.abs(d))} (${sign}${pct}%)`, x, y + 13);
                 });
                 ctx.restore();
@@ -310,7 +255,7 @@ export const PageCmp = {
                 const color = d > 0 ? '#1D9E75' : d < 0 ? '#D4545A' : '#999';
                 ctx.save();
                 ctx.fillStyle = color;
-                ctx.font = "bold 11px 'Montserrat',sans-serif";
+                ctx.font = "bold 11px 'IBM Plex Sans',sans-serif";
                 ctx.textAlign = 'right';
                 ctx.fillText(`${arrow} ${fmtN(Math.abs(d))} (${sign}${pct}%)`, right - 8, top + 18);
                 ctx.restore();
@@ -337,12 +282,12 @@ export const PageCmp = {
                     const y = xAxis.bottom + 12;
 
                     ctx.fillStyle = chartColors.text3;
-                    ctx.font = "500 10px 'Montserrat',sans-serif";
+                    ctx.font = "500 10px 'IBM Plex Sans',sans-serif";
                     ctx.textAlign = 'center';
                     ctx.fillText(`${fmtN(v25)} / ${fmtN(v26)}`, x, y);
 
                     ctx.fillStyle = color;
-                    ctx.font = "bold 10px 'Montserrat',sans-serif";
+                    ctx.font = "bold 10px 'IBM Plex Sans',sans-serif";
                     ctx.fillText(`${arrow} ${fmtN(Math.abs(d))} (${sign}${pct}%)`, x, y + 13);
                 });
                 ctx.restore();
@@ -758,7 +703,7 @@ export const PageCmp = {
                 const meta0 = chart.getDatasetMeta(0);
                 const meta1 = chart.getDatasetMeta(1);
                 ctx.save();
-                ctx.font = "500 9px 'Montserrat',sans-serif";
+                ctx.font = "500 9px 'IBM Plex Sans',sans-serif";
                 ctx.textAlign = 'center';
                 const secData25 = chart.data.datasets[0]._secondaryData || [];
                 const secData26 = chart.data.datasets[1]._secondaryData || [];
@@ -1095,17 +1040,6 @@ export const PageCmp = {
 `;
     },
 
-    _buildGuides() {
-        return `            <div class="section-divider" onclick="toggleSection('guides-body-cmp')">
-                <span>${t('sections.guides')}</span>
-                <span class="section-chevron">▾</span>
-            </div>
-            <div id="guides-body-cmp" class="section-body">
-                <div id="guide-sections-cmp"></div>
-            </div>
-        </div>`;
-    },
-
     _destroyCharts() {
         [this.cityChartInstance, this.paidCityChartInstance, this.monthlyChartInstance, this.paidChartInstance,
          this.cityMonthlyChartInstance, this.privatePaidChartInstance, this.sharedPaidChartInstance,
@@ -1130,7 +1064,7 @@ export const PageCmp = {
             this._buildKpisAndFilters() +
             this._buildFreeTours() +
             this._buildPaidTours() +
-            this._buildGuides();
+            '</div>';
 
         const now = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
         const datePov = this._el('date-pov');

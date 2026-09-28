@@ -9,6 +9,13 @@
   color: var(--text);
 }
 
+/* Monthly table: the first metric group's header was a dark band with
+   white text. Use a light tint, like the city headers in jura-theme.css. */
+.mpax-metric-head.mpax-metric-primary {
+  color: var(--text);
+  background: color-mix(in srgb, var(--text) 12%, var(--white));
+}
+
 /* Filter bars (Tours 2025/2026, Comparison, Guides) stay pinned under the
    sticky top nav. Applies at every width, so it sits outside the phone
    media query; jura-theme.css and guides.css are not touched. */

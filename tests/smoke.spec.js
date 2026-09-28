@@ -1011,3 +1011,25 @@ test.describe('Comparison takeaway sentence', () => {
         await numbersMatchCards(page);
     });
 });
+
+test.describe('Monthly table metric header', () => {
+    for (const [width, height] of [[1400, 900], [390, 844]]) {
+        test(`primary metric header is a light tint, not a dark band, at ${width}px`, async ({ page }) => {
+            await page.setViewportSize({ width, height });
+            await load(page);
+            await page.waitForSelector('#page-cmp .mpax-metric-primary', { state: 'attached' });
+            const read = () => page.evaluate(() => {
+                const c = getComputedStyle(document.querySelector('#page-cmp .mpax-metric-primary'));
+                return { bg: c.backgroundColor, fg: c.color };
+            });
+            await setDark(page, false);
+            const light = await read();
+            expect(parseCssColor(light.bg).every(v => v >= 200), `light bg ${light.bg}`).toBe(true);
+            expect(contrastRatio(parseCssColor(light.fg), parseCssColor(light.bg))).toBeGreaterThanOrEqual(4.5);
+            await setDark(page, true);
+            const dark = await read();
+            expect(parseCssColor(dark.bg).every(v => v <= 90), `dark bg ${dark.bg}`).toBe(true);
+            expect(contrastRatio(parseCssColor(dark.fg), parseCssColor(dark.bg))).toBeGreaterThanOrEqual(4.5);
+        });
+    }
+});

@@ -68,3 +68,15 @@
     font-size: 18px;
   }
 }
+
+/* Visible captions for the language and month dropdowns in the filter bar. */
+.filter-field {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.filter-label {
+  font-size: 11px;
+  color: var(--text3);
+}

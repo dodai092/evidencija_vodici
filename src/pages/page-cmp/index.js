@@ -821,16 +821,22 @@ export const PageCmp = {
                     }).join('')}
                 </div>
                 <div class="filter-dropdowns">
-                    <select class="filter-select" id="lang-filter-cmp" onchange="PageCmp.filterLang(this.value)">
-                        <option value="all">${t('labels.all')}</option>
-                        <option value="eng">🇬🇧 ENG</option>
-                        <option value="esp">🇪🇸 ESP</option>
-                        <option value="fra">🇫🇷 FRA</option>
-                    </select>
-                    <select class="filter-select" id="month-filter-cmp" onchange="PageCmp.filterMonth(this.value)">
-                        <option value="all">${t('labels.all')}</option>
-                        ${Array.from({length: getCutoffMonth()}, (_, i) => i + 1).map(m => `<option value="${m}">${m}</option>`).join('')}
-                    </select>
+                    <div class="filter-field">
+                        <label class="filter-label" for="lang-filter-cmp">${t('labels.language')}</label>
+                        <select class="filter-select" id="lang-filter-cmp" onchange="PageCmp.filterLang(this.value)">
+                            <option value="all">${t('labels.all')}</option>
+                            <option value="eng">🇬🇧 ENG</option>
+                            <option value="esp">🇪🇸 ESP</option>
+                            <option value="fra">🇫🇷 FRA</option>
+                        </select>
+                    </div>
+                    <div class="filter-field">
+                        <label class="filter-label" for="month-filter-cmp">${t('labels.mo')}</label>
+                        <select class="filter-select" id="month-filter-cmp" onchange="PageCmp.filterMonth(this.value)">
+                            <option value="all">${t('labels.all')}</option>
+                            ${Array.from({length: getCutoffMonth()}, (_, i) => i + 1).map(m => `<option value="${m}">${m}</option>`).join('')}
+                        </select>
+                    </div>
                 </div>
             </div>
 

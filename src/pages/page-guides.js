@@ -296,13 +296,19 @@ export const PageGuides = {
             <div class="filter-bar">
                 <div class="city-pill-group">${cityPills}</div>
                 <div class="filter-dropdowns">
-                    <select class="filter-select" id="lang-filter-gd" onchange="PageGuides.filterLang(this.value)">
-                        <option value="all">${t('labels.all')}</option>
-                        <option value="eng">🇬🇧 ENG</option>
-                        <option value="esp">🇪🇸 ESP</option>
-                        <option value="fra">🇫🇷 FRA</option>
-                    </select>
-                    <select class="filter-select" id="month-filter-gd" onchange="PageGuides.filterMonth(this.value)"></select>
+                    <div class="filter-field">
+                        <label class="filter-label" for="lang-filter-gd">${t('labels.language')}</label>
+                        <select class="filter-select" id="lang-filter-gd" onchange="PageGuides.filterLang(this.value)">
+                            <option value="all">${t('labels.all')}</option>
+                            <option value="eng">🇬🇧 ENG</option>
+                            <option value="esp">🇪🇸 ESP</option>
+                            <option value="fra">🇫🇷 FRA</option>
+                        </select>
+                    </div>
+                    <div class="filter-field">
+                        <label class="filter-label" for="month-filter-gd">${t('labels.mo')}</label>
+                        <select class="filter-select" id="month-filter-gd" onchange="PageGuides.filterMonth(this.value)"></select>
+                    </div>
                 </div>
             </div>
             <div class="guide-tools">

@@ -927,16 +927,22 @@
             <div class="filter-bar">
                 <div class="city-pill-group">${cityPills}</div>
                 <div class="filter-dropdowns">
-                    <select class="filter-select" id="lang-filter-25" onchange="Page25.filterLang(this.value)">
-                        <option value="all">${t("labels.all")}</option>
-                        <option value="eng">\u{1F1EC}\u{1F1E7} ENG</option>
-                        <option value="esp">\u{1F1EA}\u{1F1F8} ESP</option>
-                        <option value="fra">\u{1F1EB}\u{1F1F7} FRA</option>
-                    </select>
-                    <select class="filter-select" id="month-filter-25" onchange="Page25.filterMonth(this.value)">
-                        <option value="all">${t("labels.all")}</option>
-                        ${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((n, i) => `<option value="${i + 1}">${n}</option>`).join("")}
-                    </select>
+                    <div class="filter-field">
+                        <label class="filter-label" for="lang-filter-25">${t("labels.language")}</label>
+                        <select class="filter-select" id="lang-filter-25" onchange="Page25.filterLang(this.value)">
+                            <option value="all">${t("labels.all")}</option>
+                            <option value="eng">\u{1F1EC}\u{1F1E7} ENG</option>
+                            <option value="esp">\u{1F1EA}\u{1F1F8} ESP</option>
+                            <option value="fra">\u{1F1EB}\u{1F1F7} FRA</option>
+                        </select>
+                    </div>
+                    <div class="filter-field">
+                        <label class="filter-label" for="month-filter-25">${t("labels.mo")}</label>
+                        <select class="filter-select" id="month-filter-25" onchange="Page25.filterMonth(this.value)">
+                            <option value="all">${t("labels.all")}</option>
+                            ${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((n, i) => `<option value="${i + 1}">${n}</option>`).join("")}
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -1475,16 +1481,22 @@
             <div class="filter-bar">
                 <div class="city-pill-group">${cityPills}</div>
                 <div class="filter-dropdowns">
-                    <select class="filter-select" id="lang-filter-26" onchange="Page26.filterLang(this.value)">
-                        <option value="all">${t("labels.all")}</option>
-                        <option value="eng">\u{1F1EC}\u{1F1E7} ENG</option>
-                        <option value="esp">\u{1F1EA}\u{1F1F8} ESP</option>
-                        <option value="fra">\u{1F1EB}\u{1F1F7} FRA</option>
-                    </select>
-                    <select class="filter-select" id="month-filter-26" onchange="Page26.filterMonth(this.value)">
-                        <option value="all">${t("labels.all")}</option>
-                        ${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].slice(0, getCutoffMonth()).map((n, i) => `<option value="${i + 1}">${n}</option>`).join("")}
-                    </select>
+                    <div class="filter-field">
+                        <label class="filter-label" for="lang-filter-26">${t("labels.language")}</label>
+                        <select class="filter-select" id="lang-filter-26" onchange="Page26.filterLang(this.value)">
+                            <option value="all">${t("labels.all")}</option>
+                            <option value="eng">\u{1F1EC}\u{1F1E7} ENG</option>
+                            <option value="esp">\u{1F1EA}\u{1F1F8} ESP</option>
+                            <option value="fra">\u{1F1EB}\u{1F1F7} FRA</option>
+                        </select>
+                    </div>
+                    <div class="filter-field">
+                        <label class="filter-label" for="month-filter-26">${t("labels.mo")}</label>
+                        <select class="filter-select" id="month-filter-26" onchange="Page26.filterMonth(this.value)">
+                            <option value="all">${t("labels.all")}</option>
+                            ${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].slice(0, getCutoffMonth()).map((n, i) => `<option value="${i + 1}">${n}</option>`).join("")}
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -2712,16 +2724,22 @@
       }).join("")}
                 </div>
                 <div class="filter-dropdowns">
-                    <select class="filter-select" id="lang-filter-cmp" onchange="PageCmp.filterLang(this.value)">
-                        <option value="all">${t("labels.all")}</option>
-                        <option value="eng">\u{1F1EC}\u{1F1E7} ENG</option>
-                        <option value="esp">\u{1F1EA}\u{1F1F8} ESP</option>
-                        <option value="fra">\u{1F1EB}\u{1F1F7} FRA</option>
-                    </select>
-                    <select class="filter-select" id="month-filter-cmp" onchange="PageCmp.filterMonth(this.value)">
-                        <option value="all">${t("labels.all")}</option>
-                        ${Array.from({ length: getCutoffMonth() }, (_, i) => i + 1).map((m) => `<option value="${m}">${m}</option>`).join("")}
-                    </select>
+                    <div class="filter-field">
+                        <label class="filter-label" for="lang-filter-cmp">${t("labels.language")}</label>
+                        <select class="filter-select" id="lang-filter-cmp" onchange="PageCmp.filterLang(this.value)">
+                            <option value="all">${t("labels.all")}</option>
+                            <option value="eng">\u{1F1EC}\u{1F1E7} ENG</option>
+                            <option value="esp">\u{1F1EA}\u{1F1F8} ESP</option>
+                            <option value="fra">\u{1F1EB}\u{1F1F7} FRA</option>
+                        </select>
+                    </div>
+                    <div class="filter-field">
+                        <label class="filter-label" for="month-filter-cmp">${t("labels.mo")}</label>
+                        <select class="filter-select" id="month-filter-cmp" onchange="PageCmp.filterMonth(this.value)">
+                            <option value="all">${t("labels.all")}</option>
+                            ${Array.from({ length: getCutoffMonth() }, (_, i) => i + 1).map((m) => `<option value="${m}">${m}</option>`).join("")}
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -3345,13 +3363,19 @@
             <div class="filter-bar">
                 <div class="city-pill-group">${cityPills}</div>
                 <div class="filter-dropdowns">
-                    <select class="filter-select" id="lang-filter-gd" onchange="PageGuides.filterLang(this.value)">
-                        <option value="all">${t("labels.all")}</option>
-                        <option value="eng">\u{1F1EC}\u{1F1E7} ENG</option>
-                        <option value="esp">\u{1F1EA}\u{1F1F8} ESP</option>
-                        <option value="fra">\u{1F1EB}\u{1F1F7} FRA</option>
-                    </select>
-                    <select class="filter-select" id="month-filter-gd" onchange="PageGuides.filterMonth(this.value)"></select>
+                    <div class="filter-field">
+                        <label class="filter-label" for="lang-filter-gd">${t("labels.language")}</label>
+                        <select class="filter-select" id="lang-filter-gd" onchange="PageGuides.filterLang(this.value)">
+                            <option value="all">${t("labels.all")}</option>
+                            <option value="eng">\u{1F1EC}\u{1F1E7} ENG</option>
+                            <option value="esp">\u{1F1EA}\u{1F1F8} ESP</option>
+                            <option value="fra">\u{1F1EB}\u{1F1F7} FRA</option>
+                        </select>
+                    </div>
+                    <div class="filter-field">
+                        <label class="filter-label" for="month-filter-gd">${t("labels.mo")}</label>
+                        <select class="filter-select" id="month-filter-gd" onchange="PageGuides.filterMonth(this.value)"></select>
+                    </div>
                 </div>
             </div>
             <div class="guide-tools">

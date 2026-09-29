@@ -393,16 +393,22 @@ export const Page26 = {
             <div class="filter-bar">
                 <div class="city-pill-group">${cityPills}</div>
                 <div class="filter-dropdowns">
-                    <select class="filter-select" id="lang-filter-26" onchange="Page26.filterLang(this.value)">
-                        <option value="all">${t('labels.all')}</option>
-                        <option value="eng">🇬🇧 ENG</option>
-                        <option value="esp">🇪🇸 ESP</option>
-                        <option value="fra">🇫🇷 FRA</option>
-                    </select>
-                    <select class="filter-select" id="month-filter-26" onchange="Page26.filterMonth(this.value)">
-                        <option value="all">${t('labels.all')}</option>
-                        ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].slice(0, getCutoffMonth()).map((n,i)=>`<option value="${i+1}">${n}</option>`).join('')}
-                    </select>
+                    <div class="filter-field">
+                        <label class="filter-label" for="lang-filter-26">${t('labels.language')}</label>
+                        <select class="filter-select" id="lang-filter-26" onchange="Page26.filterLang(this.value)">
+                            <option value="all">${t('labels.all')}</option>
+                            <option value="eng">🇬🇧 ENG</option>
+                            <option value="esp">🇪🇸 ESP</option>
+                            <option value="fra">🇫🇷 FRA</option>
+                        </select>
+                    </div>
+                    <div class="filter-field">
+                        <label class="filter-label" for="month-filter-26">${t('labels.mo')}</label>
+                        <select class="filter-select" id="month-filter-26" onchange="Page26.filterMonth(this.value)">
+                            <option value="all">${t('labels.all')}</option>
+                            ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].slice(0, getCutoffMonth()).map((n,i)=>`<option value="${i+1}">${n}</option>`).join('')}
+                        </select>
+                    </div>
                 </div>
             </div>
 

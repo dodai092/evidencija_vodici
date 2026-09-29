@@ -1040,3 +1040,23 @@ test('Comparison paid-tours sticky row is labelled Paid Tours', async ({ page })
     const label = await page.locator('#tour-type-sticky-cmp .type-filter-label').textContent();
     expect(label.trim()).toBe('Paid Tours');
 });
+
+test.describe('Filter dropdown labels', () => {
+    const tabs = [
+        ['#tab-cmp', 'cmp'],
+        ['#tab-25', '25'],
+        ['#tab-26', '26'],
+        ['#tab-gd', 'gd'],
+    ];
+    for (const [tab, id] of tabs) {
+        test(`language and month dropdowns have visible labels on ${id}`, async ({ page }) => {
+            await load(page);
+            await page.click(tab);
+            await page.waitForSelector(`#lang-filter-${id}`, { state: 'visible' });
+            await expect(page.locator(`label[for="lang-filter-${id}"]`)).toBeVisible();
+            await expect(page.locator(`label[for="lang-filter-${id}"]`)).toHaveText('Language');
+            await expect(page.locator(`label[for="month-filter-${id}"]`)).toBeVisible();
+            await expect(page.locator(`label[for="month-filter-${id}"]`)).toHaveText('Month');
+        });
+    }
+});

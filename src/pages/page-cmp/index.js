@@ -1078,11 +1078,17 @@ export const PageCmp = {
     },
 
     _positionTourTypeSticky() {
-        const nav = document.querySelector('.nav');
-        const divider = document.getElementById('paid-section-body')?.previousElementSibling;
+        const filterBar = document.querySelector('#page-cmp .filter-bar');
         const bar = document.getElementById('tour-type-sticky-cmp');
-        if (nav && divider && bar) {
-            bar.style.top = (nav.offsetHeight + divider.offsetHeight) + 'px';
+        if (filterBar && bar) {
+            bar.style.top = (parseFloat(getComputedStyle(filterBar).top) + filterBar.offsetHeight) + 'px';
+            // The filter bar can change height after first paint (fonts, wrapping), so re-measure on resize.
+            if (this._observedFilterBar !== filterBar) {
+                this._filterBarObserver?.disconnect();
+                this._filterBarObserver = new ResizeObserver(() => this._positionTourTypeSticky());
+                this._filterBarObserver.observe(filterBar);
+                this._observedFilterBar = filterBar;
+            }
         }
     },
 

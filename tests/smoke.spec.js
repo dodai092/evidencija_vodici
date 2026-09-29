@@ -1063,3 +1063,33 @@ test.describe('Language pills and month caption', () => {
         });
     }
 });
+
+test.describe('Section headers are not sticky', () => {
+    for (const [tab, id] of [['#tab-cmp', 'cmp'], ['#tab-25', '25'], ['#tab-26', '26']]) {
+        test(`Free and Paid headers scroll away on ${id}`, async ({ page }) => {
+            await load(page);
+            await page.click(tab);
+            const headers = page.locator(`#page-${id} .section-divider`);
+            await expect(headers.first()).toBeVisible();
+            for (const h of await headers.all()) {
+                expect(await h.evaluate(el => getComputedStyle(el).position)).toBe('static');
+            }
+        });
+    }
+
+    for (const [name, size] of [['desktop', { width: 1280, height: 800 }], ['phone', { width: 390, height: 844 }]]) {
+        test(`paid type row sticks directly under the filter bar on ${name}`, async ({ page }) => {
+            await page.setViewportSize(size);
+            await load(page);
+            await page.waitForSelector('#tour-type-sticky-cmp', { state: 'attached' });
+            await page.locator('#paid-section-body .card, #paid-section-body .chart-card').first().scrollIntoViewIfNeeded();
+            await page.evaluate(() => window.scrollBy(0, 300));
+            const gap = await page.evaluate(() => {
+                const bar = document.getElementById('tour-type-sticky-cmp').getBoundingClientRect();
+                const fb = document.querySelector('#page-cmp .filter-bar').getBoundingClientRect();
+                return bar.top - fb.bottom;
+            });
+            expect(Math.abs(gap)).toBeLessThanOrEqual(1);
+        });
+    }
+});

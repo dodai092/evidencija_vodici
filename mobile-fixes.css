@@ -85,3 +85,8 @@
 .filter-dropdowns {
   margin-left: 0;
 }
+
+/* Free/Paid section headers scroll away. The filter bar and the paid type row stay sticky. */
+.section-divider {
+  position: static;
+}

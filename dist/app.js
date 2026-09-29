@@ -898,6 +898,7 @@
     },
     filterLang(lang) {
       this.activeLang = lang;
+      document.querySelectorAll("#page-25 .lang-pill").forEach((p) => p.classList.toggle("active", p.dataset.lang === lang));
       this.renderAll();
     },
     filterMonth(m) {
@@ -927,14 +928,8 @@
             <div class="filter-bar">
                 <div class="city-pill-group">${cityPills}</div>
                 <div class="filter-dropdowns">
-                    <div class="filter-field">
-                        <label class="filter-label" for="lang-filter-25">${t("labels.language")}</label>
-                        <select class="filter-select" id="lang-filter-25" onchange="Page25.filterLang(this.value)">
-                            <option value="all">${t("labels.all")}</option>
-                            <option value="eng">\u{1F1EC}\u{1F1E7} ENG</option>
-                            <option value="esp">\u{1F1EA}\u{1F1F8} ESP</option>
-                            <option value="fra">\u{1F1EB}\u{1F1F7} FRA</option>
-                        </select>
+                    <div class="city-pill-group lang-pill-group" id="lang-filter-25" role="group" aria-label="${t("labels.language")}">
+                        ${[["all", t("labels.all")], ["eng", "ENG"], ["esp", "ESP"], ["fra", "FRA"]].map(([v, label]) => `<button class="city-filter-pill lang-pill${this.activeLang === v ? " active" : ""}" data-lang="${v}" onclick="Page25.filterLang('${v}')">${label}</button>`).join("")}
                     </div>
                     <div class="filter-field">
                         <label class="filter-label" for="month-filter-25">${t("labels.mo")}</label>
@@ -1451,6 +1446,7 @@
     },
     filterLang(lang) {
       this.activeLang = lang;
+      document.querySelectorAll("#page-26 .lang-pill").forEach((p) => p.classList.toggle("active", p.dataset.lang === lang));
       this.renderAll();
     },
     filterMonth(m) {
@@ -1481,14 +1477,8 @@
             <div class="filter-bar">
                 <div class="city-pill-group">${cityPills}</div>
                 <div class="filter-dropdowns">
-                    <div class="filter-field">
-                        <label class="filter-label" for="lang-filter-26">${t("labels.language")}</label>
-                        <select class="filter-select" id="lang-filter-26" onchange="Page26.filterLang(this.value)">
-                            <option value="all">${t("labels.all")}</option>
-                            <option value="eng">\u{1F1EC}\u{1F1E7} ENG</option>
-                            <option value="esp">\u{1F1EA}\u{1F1F8} ESP</option>
-                            <option value="fra">\u{1F1EB}\u{1F1F7} FRA</option>
-                        </select>
+                    <div class="city-pill-group lang-pill-group" id="lang-filter-26" role="group" aria-label="${t("labels.language")}">
+                        ${[["all", t("labels.all")], ["eng", "ENG"], ["esp", "ESP"], ["fra", "FRA"]].map(([v, label]) => `<button class="city-filter-pill lang-pill${this.activeLang === v ? " active" : ""}" data-lang="${v}" onclick="Page26.filterLang('${v}')">${label}</button>`).join("")}
                     </div>
                     <div class="filter-field">
                         <label class="filter-label" for="month-filter-26">${t("labels.mo")}</label>
@@ -2690,6 +2680,7 @@
     },
     filterLang(lang) {
       this.activeLang = lang;
+      document.querySelectorAll("#page-cmp .lang-pill").forEach((p) => p.classList.toggle("active", p.dataset.lang === lang));
       this.mergedGuides = this.buildMerged();
       this.renderAll();
     },
@@ -2724,14 +2715,8 @@
       }).join("")}
                 </div>
                 <div class="filter-dropdowns">
-                    <div class="filter-field">
-                        <label class="filter-label" for="lang-filter-cmp">${t("labels.language")}</label>
-                        <select class="filter-select" id="lang-filter-cmp" onchange="PageCmp.filterLang(this.value)">
-                            <option value="all">${t("labels.all")}</option>
-                            <option value="eng">\u{1F1EC}\u{1F1E7} ENG</option>
-                            <option value="esp">\u{1F1EA}\u{1F1F8} ESP</option>
-                            <option value="fra">\u{1F1EB}\u{1F1F7} FRA</option>
-                        </select>
+                    <div class="city-pill-group lang-pill-group" id="lang-filter-cmp" role="group" aria-label="${t("labels.language")}">
+                        ${[["all", t("labels.all")], ["eng", "ENG"], ["esp", "ESP"], ["fra", "FRA"]].map(([v, label]) => `<button class="city-filter-pill lang-pill${this.activeLang === v ? " active" : ""}" data-lang="${v}" onclick="PageCmp.filterLang('${v}')">${label}</button>`).join("")}
                     </div>
                     <div class="filter-field">
                         <label class="filter-label" for="month-filter-cmp">${t("labels.mo")}</label>
@@ -3230,6 +3215,7 @@
     },
     filterLang(lang) {
       this.activeLang = lang;
+      document.querySelectorAll("#page-gd .lang-pill").forEach((p) => p.classList.toggle("active", p.dataset.lang === lang));
       this.renderAll();
     },
     filterMonth(m) {
@@ -3363,14 +3349,8 @@
             <div class="filter-bar">
                 <div class="city-pill-group">${cityPills}</div>
                 <div class="filter-dropdowns">
-                    <div class="filter-field">
-                        <label class="filter-label" for="lang-filter-gd">${t("labels.language")}</label>
-                        <select class="filter-select" id="lang-filter-gd" onchange="PageGuides.filterLang(this.value)">
-                            <option value="all">${t("labels.all")}</option>
-                            <option value="eng">\u{1F1EC}\u{1F1E7} ENG</option>
-                            <option value="esp">\u{1F1EA}\u{1F1F8} ESP</option>
-                            <option value="fra">\u{1F1EB}\u{1F1F7} FRA</option>
-                        </select>
+                    <div class="city-pill-group lang-pill-group" id="lang-filter-gd" role="group" aria-label="${t("labels.language")}">
+                        ${[["all", t("labels.all")], ["eng", "ENG"], ["esp", "ESP"], ["fra", "FRA"]].map(([v, label]) => `<button class="city-filter-pill lang-pill${this.activeLang === v ? " active" : ""}" data-lang="${v}" onclick="PageGuides.filterLang('${v}')">${label}</button>`).join("")}
                     </div>
                     <div class="filter-field">
                         <label class="filter-label" for="month-filter-gd">${t("labels.mo")}</label>

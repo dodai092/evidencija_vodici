@@ -70,7 +70,7 @@ test.describe('Page 25 — Guides 2025', () => {
     test('language filter re-renders charts', async ({ page }) => {
         await load(page);
         await openPage25(page);
-        await page.selectOption('#lang-filter-25', 'eng');
+        await page.click('#lang-filter-25 .lang-pill[data-lang=\"eng\"]');
         await hasChart(page, 'cityChart-25');
     });
 
@@ -361,7 +361,7 @@ test.describe('Guides tab', () => {
 
     test('language and month filters re-render without error', async ({ page }) => {
         await openGuideTab(page);
-        await page.selectOption('#lang-filter-gd', 'eng');
+        await page.click('#lang-filter-gd .lang-pill[data-lang=\"eng\"]');
         await expect(page.locator('#guide-sections-gd .guide-card').first()).toBeVisible();
         await page.selectOption('#month-filter-gd', '1');
         await page.selectOption('#month-filter-gd', 'all');
@@ -479,7 +479,7 @@ test.describe('Guides tab', () => {
 
     test('modal still opens after a filter change re-renders the cards', async ({ page }) => {
         await openGuideTab(page);
-        await page.selectOption('#lang-filter-gd', 'eng');
+        await page.click('#lang-filter-gd .lang-pill[data-lang=\"eng\"]');
         await page.locator('#guide-sections-gd .guide-card').first().click();
         await expect(page.locator('#guide-detail-modal-gd')).toBeVisible();
     });
@@ -681,7 +681,7 @@ test.describe('Jura theme: chrome', () => {
         await page.waitForSelector('#page-gd .city-filter-pill');
         expect(await styleOf(page, '#page-gd .city-filter-pill', 'borderRadius')).toBe('4px');
         expect(await styleOf(page, '#page-gd .pill', 'borderRadius')).toBe('4px');
-        expect(await styleOf(page, '#lang-filter-gd', 'borderRadius')).toBe('4px');
+        expect(await styleOf(page, '#lang-filter-gd .lang-pill', 'borderRadius')).toBe('4px');
         expect(await styleOf(page, '#page-gd .city-filter-pill', 'fontFamily')).toContain('IBM Plex Sans');
         expect(await styleOf(page, '#page-gd .pill', 'fontFamily')).toContain('IBM Plex Sans');
     });
@@ -1041,7 +1041,7 @@ test('Comparison paid-tours sticky row is labelled Paid Tours', async ({ page })
     expect(label.trim()).toBe('Paid Tours');
 });
 
-test.describe('Filter dropdown labels', () => {
+test.describe('Language pills and month caption', () => {
     const tabs = [
         ['#tab-cmp', 'cmp'],
         ['#tab-25', '25'],
@@ -1049,13 +1049,16 @@ test.describe('Filter dropdown labels', () => {
         ['#tab-gd', 'gd'],
     ];
     for (const [tab, id] of tabs) {
-        test(`language and month dropdowns have visible labels on ${id}`, async ({ page }) => {
+        test(`language is a pill group and month keeps a caption on ${id}`, async ({ page }) => {
             await load(page);
             await page.click(tab);
-            await page.waitForSelector(`#lang-filter-${id}`, { state: 'visible' });
-            await expect(page.locator(`label[for="lang-filter-${id}"]`)).toBeVisible();
-            await expect(page.locator(`label[for="lang-filter-${id}"]`)).toHaveText('Language');
-            await expect(page.locator(`label[for="month-filter-${id}"]`)).toBeVisible();
+            const group = page.locator(`#lang-filter-${id}`);
+            await expect(group).toBeVisible();
+            await expect(group).toHaveAttribute('aria-label', 'Language');
+            await expect(group.locator('.lang-pill')).toHaveText(['All', 'ENG', 'ESP', 'FRA']);
+            await expect(group.locator('.lang-pill.active')).toHaveText('All');
+            await group.locator('[data-lang="eng"]').click();
+            await expect(group.locator('.lang-pill.active')).toHaveText('ENG');
             await expect(page.locator(`label[for="month-filter-${id}"]`)).toHaveText('Month');
         });
     }

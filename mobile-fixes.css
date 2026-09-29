@@ -80,3 +80,8 @@
   font-size: 11px;
   color: var(--text3);
 }
+
+/* Language pill group sits beside the city pills; the month dropdown follows it. */
+.filter-dropdowns {
+  margin-left: 0;
+}

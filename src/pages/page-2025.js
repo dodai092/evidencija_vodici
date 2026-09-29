@@ -314,7 +314,11 @@ export const Page25 = {
             p.classList.toggle('active', p.dataset.city === city));
         this.renderAll();
     },
-    filterLang(lang) { this.activeLang = lang; this.renderAll(); },
+    filterLang(lang) {
+        this.activeLang = lang;
+        document.querySelectorAll('#page-25 .lang-pill').forEach(p => p.classList.toggle('active', p.dataset.lang === lang));
+        this.renderAll();
+    },
     filterMonth(m)   { this.activeMonths = m === 'all' ? [] : [parseInt(m)]; this.renderAll(); },
 
     _buildHeader() {
@@ -342,14 +346,9 @@ export const Page25 = {
             <div class="filter-bar">
                 <div class="city-pill-group">${cityPills}</div>
                 <div class="filter-dropdowns">
-                    <div class="filter-field">
-                        <label class="filter-label" for="lang-filter-25">${t('labels.language')}</label>
-                        <select class="filter-select" id="lang-filter-25" onchange="Page25.filterLang(this.value)">
-                            <option value="all">${t('labels.all')}</option>
-                            <option value="eng">🇬🇧 ENG</option>
-                            <option value="esp">🇪🇸 ESP</option>
-                            <option value="fra">🇫🇷 FRA</option>
-                        </select>
+                    <div class="city-pill-group lang-pill-group" id="lang-filter-25" role="group" aria-label="${t('labels.language')}">
+                        ${[['all', t('labels.all')], ['eng', 'ENG'], ['esp', 'ESP'], ['fra', 'FRA']].map(([v, label]) =>
+                            `<button class="city-filter-pill lang-pill${this.activeLang === v ? ' active' : ''}" data-lang="${v}" onclick="Page25.filterLang('${v}')">${label}</button>`).join('')}
                     </div>
                     <div class="filter-field">
                         <label class="filter-label" for="month-filter-25">${t('labels.mo')}</label>

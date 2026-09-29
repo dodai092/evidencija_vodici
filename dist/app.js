@@ -1692,6 +1692,27 @@
     ctx.restore();
   }
 
+  // src/pages/page-cmp/bar-labels.js
+  var LINE = 11;
+  var MAX_RAISES = 2;
+  function placeBarLabels(labels, measure) {
+    const placed = [];
+    const out = new Array(labels.length).fill(null);
+    const order = labels.map((l, i) => i).sort((a, b) => labels[a].x - labels[b].x);
+    const collides = (a, b) => Math.abs(a.x - b.x) < (measure(a.text) + measure(b.text)) / 2 && Math.abs(a.y - b.y) < LINE - 1;
+    for (const i of order) {
+      for (let r = 0; r <= MAX_RAISES; r++) {
+        const cand = { ...labels[i], y: labels[i].y - r * LINE };
+        if (!placed.some((p) => collides(p, cand))) {
+          placed.push(cand);
+          out[i] = cand;
+          break;
+        }
+      }
+    }
+    return out;
+  }
+
   // src/pages/page-cmp/charts.js
   function axisDefaults() {
     const s = getComputedStyle(document.body);
@@ -2609,15 +2630,18 @@
           ctx.textAlign = "center";
           const secData25 = chart.data.datasets[0]._secondaryData || [];
           const secData26 = chart.data.datasets[1]._secondaryData || [];
+          const labels = [];
           [meta0.data, meta1.data].forEach((bars, di) => {
             const secArr = di === 0 ? secData25 : secData26;
             bars.forEach((bar, i) => {
               const val = secArr[i] || 0;
               if (val === 0) return;
-              const label = secondaryKey === "pax" ? `${val}p` : `${val}t`;
-              ctx.fillStyle = self.getChartColors().text3;
-              ctx.fillText(label, bar.x, bar.y - 4);
+              labels.push({ x: bar.x, y: bar.y - 4, text: secondaryKey === "pax" ? `${val}p` : `${val}t` });
             });
+          });
+          ctx.fillStyle = self.getChartColors().text3;
+          placeBarLabels(labels, (s) => ctx.measureText(s).width).forEach((l) => {
+            if (l) ctx.fillText(l.text, l.x, l.y);
           });
           ctx.restore();
         }

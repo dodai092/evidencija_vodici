@@ -6,6 +6,7 @@ import {
 import { t, titleAttr } from '../../i18n.js';
 import { comparisonTakeaway } from './takeaway.js';
 import { drawDeltaLabels } from './delta-labels.js';
+import { placeBarLabels } from './bar-labels.js';
 import {
     createFreePaxCityChart, createPaidCityChart,
     createMonthlyFreePaxChart, createMonthlyPaidChart,
@@ -648,15 +649,18 @@ export const PageCmp = {
                 ctx.textAlign = 'center';
                 const secData25 = chart.data.datasets[0]._secondaryData || [];
                 const secData26 = chart.data.datasets[1]._secondaryData || [];
+                const labels = [];
                 [meta0.data, meta1.data].forEach((bars, di) => {
                     const secArr = di === 0 ? secData25 : secData26;
                     bars.forEach((bar, i) => {
                         const val = secArr[i] || 0;
                         if (val === 0) return;
-                        const label = secondaryKey === 'pax' ? `${val}p` : `${val}t`;
-                        ctx.fillStyle = self.getChartColors().text3;
-                        ctx.fillText(label, bar.x, bar.y - 4);
+                        labels.push({ x: bar.x, y: bar.y - 4, text: secondaryKey === 'pax' ? `${val}p` : `${val}t` });
                     });
+                });
+                ctx.fillStyle = self.getChartColors().text3;
+                placeBarLabels(labels, s => ctx.measureText(s).width).forEach(l => {
+                    if (l) ctx.fillText(l.text, l.x, l.y);
                 });
                 ctx.restore();
             }

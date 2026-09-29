@@ -641,6 +641,8 @@ export const PageCmp = {
         const secondaryLabelPlugin = (secondaryKey) => ({
             id: 'secondaryLabel',
             afterDraw(chart) {
+                // Too many bars for value labels on a phone; the table under the chart has the values.
+                if (window.matchMedia('(max-width: 768px)').matches) return;
                 const ctx = chart.ctx;
                 const meta0 = chart.getDatasetMeta(0);
                 const meta1 = chart.getDatasetMeta(1);

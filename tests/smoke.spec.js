@@ -1106,3 +1106,28 @@ test.describe('Comparison paid type cards follow the main city filter', () => {
         });
     }
 });
+
+test.describe('Paid type chart value labels', () => {
+    async function drawnValueLabels(page, size) {
+        await page.setViewportSize(size);
+        await page.addInitScript(() => {
+            window.__valueLabels = [];
+            const orig = CanvasRenderingContext2D.prototype.fillText;
+            CanvasRenderingContext2D.prototype.fillText = function (text, ...rest) {
+                if (/^\d+[pt]$/.test(String(text))) window.__valueLabels.push(text);
+                return orig.call(this, text, ...rest);
+            };
+        });
+        await load(page);
+        await page.waitForTimeout(800);
+        return page.evaluate(() => window.__valueLabels.length);
+    }
+
+    test('are drawn on desktop', async ({ page }) => {
+        expect(await drawnValueLabels(page, { width: 1280, height: 800 })).toBeGreaterThan(0);
+    });
+
+    test('are hidden on phone, where the table below carries the values', async ({ page }) => {
+        expect(await drawnValueLabels(page, { width: 390, height: 844 })).toBe(0);
+    });
+});

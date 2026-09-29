@@ -2622,6 +2622,7 @@
       const secondaryLabelPlugin = (secondaryKey) => ({
         id: "secondaryLabel",
         afterDraw(chart) {
+          if (window.matchMedia("(max-width: 768px)").matches) return;
           const ctx = chart.ctx;
           const meta0 = chart.getDatasetMeta(0);
           const meta1 = chart.getDatasetMeta(1);

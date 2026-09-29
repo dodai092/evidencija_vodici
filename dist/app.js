@@ -1942,9 +1942,7 @@
     avgFreePaxCmpChartInstance: null,
     activeAvgType: "all",
     ALL_PAID_TYPES: ["war", "food", "best", "war PR", "food PR", "old", "big", "food kuoni"],
-    activePrivateCity: "all",
     activePrivateType: "all",
-    activeSharedCity: "all",
     activeSharedType: "all",
     PRIVATE_TYPES: ["war PR", "food PR", "best", "old", "big", "food kuoni"],
     SHARED_TYPES: ["war", "food", "best"],
@@ -2456,16 +2454,6 @@
       const el = document.getElementById("monthly-pax-table-cmp");
       if (el) el.innerHTML = html;
     },
-    filterPrivateCity(city, btn) {
-      this.activePrivateCity = city;
-      this._setActivePill("private-city-pills-cmp", btn);
-      this.updatePaidTypeCharts();
-    },
-    filterSharedCity(city, btn) {
-      this.activeSharedCity = city;
-      this._setActivePill("shared-city-pills-cmp", btn);
-      this.updatePaidTypeCharts();
-    },
     filterTourType(type, btn) {
       this.activePrivateType = type === "all" || this.PRIVATE_TYPES.includes(type) ? type : "all";
       this.activeSharedType = type === "all" || this.SHARED_TYPES.includes(type) ? type : "all";
@@ -2657,10 +2645,10 @@
           console.error("Type chart error:", e);
         }
       };
-      buildTypeChart("privatePaidChart-cmp", "privatePaidChartInstance", this.activePrivateCity, this.activePrivateType, this.PRIVATE_TYPES, "tours");
-      this.renderPaidTypeTable("private-type-table-cmp", this.activePrivateCity, this.activePrivateType, this.PRIVATE_TYPES, "tours");
-      buildTypeChart("sharedPaidChart-cmp", "sharedPaidChartInstance", this.activeSharedCity, this.activeSharedType, this.SHARED_TYPES, "tours");
-      this.renderPaidTypeTable("shared-type-table-cmp", this.activeSharedCity, this.activeSharedType, this.SHARED_TYPES, "pax");
+      buildTypeChart("privatePaidChart-cmp", "privatePaidChartInstance", this.activeCity, this.activePrivateType, this.PRIVATE_TYPES, "tours");
+      this.renderPaidTypeTable("private-type-table-cmp", this.activeCity, this.activePrivateType, this.PRIVATE_TYPES, "tours");
+      buildTypeChart("sharedPaidChart-cmp", "sharedPaidChartInstance", this.activeCity, this.activeSharedType, this.SHARED_TYPES, "tours");
+      this.renderPaidTypeTable("shared-type-table-cmp", this.activeCity, this.activeSharedType, this.SHARED_TYPES, "pax");
       const typesToShow = this.activeAvgType === "all" ? this.ALL_PAID_TYPES : [this.activeAvgType];
       const getTypeAvg = (year, types) => this._getTypeMonthData(this.activeCity, types, "pax", year).map((d) => d.secondary > 0 ? +(d.primary / d.secondary).toFixed(1) : null);
       try {
@@ -2884,18 +2872,6 @@
                 <div class="charts-row">
                     <div class="chart-card type-chart-card">
                         <div class="chart-card-title"${titleAttr("charts.privatePaidTours")}>${t("charts.privatePaidTours")} \u2014 <span class="ytd-range-label">Jan\u2013Jun</span> 2025 vs. 2026</div>
-                        <div class="type-chart-filters">
-                            <div class="type-filter-row">
-                                <span class="type-filter-label">${t("labels.city")}</span>
-                                <div id="private-city-pills-cmp" class="pill-group">
-                                    <button class="pill active" onclick="PageCmp.filterPrivateCity('all',this)">${t("labels.all")}</button>
-                                    <button class="pill" onclick="PageCmp.filterPrivateCity('Zagreb',this)">Zagreb</button>
-                                    <button class="pill" onclick="PageCmp.filterPrivateCity('Dubrovnik',this)">Dubrovnik</button>
-                                    <button class="pill" onclick="PageCmp.filterPrivateCity('Split',this)">Split</button>
-                                    <button class="pill" onclick="PageCmp.filterPrivateCity('Zadar',this)">Zadar</button>
-                                </div>
-                            </div>
-                        </div>
                         <div class="chart-container">
                             <canvas id="privatePaidChart-cmp"></canvas>
                         </div>
@@ -2913,18 +2889,6 @@
                 <div class="charts-row">
                     <div class="chart-card type-chart-card">
                         <div class="chart-card-title"${titleAttr("charts.sharedPaidTours")}>${t("charts.sharedPaidTours")} \u2014 <span class="ytd-range-label">Jan\u2013Jun</span> 2025 vs. 2026</div>
-                        <div class="type-chart-filters">
-                            <div class="type-filter-row">
-                                <span class="type-filter-label">${t("labels.city")}</span>
-                                <div id="shared-city-pills-cmp" class="pill-group">
-                                    <button class="pill active" onclick="PageCmp.filterSharedCity('all',this)">${t("labels.all")}</button>
-                                    <button class="pill" onclick="PageCmp.filterSharedCity('Zagreb',this)">Zagreb</button>
-                                    <button class="pill" onclick="PageCmp.filterSharedCity('Dubrovnik',this)">Dubrovnik</button>
-                                    <button class="pill" onclick="PageCmp.filterSharedCity('Split',this)">Split</button>
-                                    <button class="pill" onclick="PageCmp.filterSharedCity('Zadar',this)">Zadar</button>
-                                </div>
-                            </div>
-                        </div>
                         <div class="chart-container">
                             <canvas id="sharedPaidChart-cmp"></canvas>
                         </div>

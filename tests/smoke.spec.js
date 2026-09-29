@@ -1093,3 +1093,16 @@ test.describe('Section headers are not sticky', () => {
         });
     }
 });
+
+test.describe('Comparison paid type cards follow the main city filter', () => {
+    for (const [tableId, pillsId] of [['private-type-table-cmp', 'private-city-pills-cmp'], ['shared-type-table-cmp', 'shared-city-pills-cmp']]) {
+        test(`${tableId} changes with the main city and has no own city pills`, async ({ page }) => {
+            await load(page);
+            await page.waitForSelector(`#${tableId} table`, { state: 'attached' });
+            await expect(page.locator(`#${pillsId}`)).toHaveCount(0);
+            const all = await page.locator(`#${tableId}`).innerText();
+            await page.click('#page-cmp .filter-bar .city-filter-pill[data-city="Zagreb"]');
+            await expect.poll(() => page.locator(`#${tableId}`).innerText()).not.toBe(all);
+        });
+    }
+});

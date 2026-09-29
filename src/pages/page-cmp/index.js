@@ -5,6 +5,7 @@ import {
 } from '../../shared.js';
 import { t, titleAttr } from '../../i18n.js';
 import { comparisonTakeaway } from './takeaway.js';
+import { drawDeltaLabels } from './delta-labels.js';
 import {
     createFreePaxCityChart, createPaidCityChart,
     createMonthlyFreePaxChart, createMonthlyPaidChart,
@@ -151,32 +152,7 @@ export const PageCmp = {
         const cityDeltaPlugin = {
             id: 'cityDelta',
             afterDraw(chart) {
-                const ctx = chart.ctx;
-                const xAxis = chart.scales.x;
-                const ds0 = chart.data.datasets[0].data;
-                const ds1 = chart.data.datasets[1].data;
-                const chartColors = self.getChartColors();
-                ctx.save();
-                chart.data.labels.forEach((_, i) => {
-                    const v25 = ds0[i] || 0, v26 = ds1[i] || 0;
-                    const d = v26 - v25;
-                    const pct = v25 > 0 ? ((d/v25)*100).toFixed(0) : (v26 > 0 ? '∞' : '0');
-                    const sign = d > 0 ? '+' : '';
-                    const arrow = d > 0 ? '▲' : d < 0 ? '▼' : '=';
-                    const color = d > 0 ? '#1D9E75' : d < 0 ? '#D4545A' : '#999';
-                    const x = xAxis.getPixelForValue(i);
-                    const y = xAxis.bottom + 12;
-
-                    ctx.fillStyle = chartColors.text3;
-                    ctx.font = "500 10px 'IBM Plex Sans',sans-serif";
-                    ctx.textAlign = 'center';
-                    ctx.fillText(`${fmtN(v25)} / ${fmtN(v26)}`, x, y);
-
-                    ctx.fillStyle = color;
-                    ctx.font = "bold 10px 'IBM Plex Sans',sans-serif";
-                    ctx.fillText(`${arrow} ${fmtN(Math.abs(d))} (${sign}${pct}%)`, x, y + 13);
-                });
-                ctx.restore();
+                drawDeltaLabels(chart, self.getChartColors().text3, fmtN);
             }
         };
 
@@ -266,32 +242,7 @@ export const PageCmp = {
         const monthDeltaPlugin = {
             id: 'monthDelta',
             afterDraw(chart) {
-                const ctx = chart.ctx;
-                const xAxis = chart.scales.x;
-                const ds0 = chart.data.datasets[0].data;
-                const ds1 = chart.data.datasets[1].data;
-                const chartColors = self.getChartColors();
-                ctx.save();
-                chart.data.labels.forEach((_, i) => {
-                    const v25 = ds0[i] || 0, v26 = ds1[i] || 0;
-                    const d = v26 - v25;
-                    const pct = v25 > 0 ? ((d/v25)*100).toFixed(0) : (v26 > 0 ? '∞' : '0');
-                    const sign = d > 0 ? '+' : '';
-                    const arrow = d > 0 ? '▲' : d < 0 ? '▼' : '=';
-                    const color = d > 0 ? '#1D9E75' : d < 0 ? '#D4545A' : '#999';
-                    const x = xAxis.getPixelForValue(i);
-                    const y = xAxis.bottom + 12;
-
-                    ctx.fillStyle = chartColors.text3;
-                    ctx.font = "500 10px 'IBM Plex Sans',sans-serif";
-                    ctx.textAlign = 'center';
-                    ctx.fillText(`${fmtN(v25)} / ${fmtN(v26)}`, x, y);
-
-                    ctx.fillStyle = color;
-                    ctx.font = "bold 10px 'IBM Plex Sans',sans-serif";
-                    ctx.fillText(`${arrow} ${fmtN(Math.abs(d))} (${sign}${pct}%)`, x, y + 13);
-                });
-                ctx.restore();
+                drawDeltaLabels(chart, self.getChartColors().text3, fmtN);
             }
         };
 

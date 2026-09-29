@@ -1640,6 +1640,58 @@
     return `Free pax are ${change(fp25, fp26)} on 2025 (${fmtN(fp26)} vs ${fmtN(fp25)}): tours are ${change(ft25, ft26)}, average group size is ${change(avg25, avg26)} (${avg26.toFixed(1)} vs ${avg25.toFixed(1)}).`;
   }
 
+  // src/pages/page-cmp/delta-labels.js
+  function delta({ v25, v26 }, fmt2) {
+    const d = v26 - v25;
+    const pct = v25 > 0 ? (d / v25 * 100).toFixed(0) : v26 > 0 ? "\u221E" : "0";
+    return {
+      d,
+      pct,
+      sign: d > 0 ? "+" : "",
+      arrow: d > 0 ? "\u25B2" : d < 0 ? "\u25BC" : "=",
+      color: d > 0 ? "#1D9E75" : d < 0 ? "#D4545A" : "#999"
+    };
+  }
+  function planDeltaLabels(items, slotWidth, measure, fmt2) {
+    const full = items.map((it) => {
+      const { d, pct, sign, arrow, color } = delta(it, fmt2);
+      return { line1: `${fmt2(it.v25)} / ${fmt2(it.v26)}`, line2: `${arrow} ${fmt2(Math.abs(d))} (${sign}${pct}%)`, color };
+    });
+    const widest = (ls) => Math.max(0, ...ls.flatMap((l) => [l.line1, l.line2]).filter(Boolean).map(measure));
+    if (widest(full) <= slotWidth) return { step: 1, labels: full };
+    const compact = items.map((it) => {
+      const { pct, arrow, color } = delta(it, fmt2);
+      return { line1: null, line2: `${arrow}${pct === "\u221E" ? "\u221E" : Math.abs(pct) + "%"}`, color };
+    });
+    const w = widest(compact);
+    return { step: w <= slotWidth ? 1 : Math.ceil(w / slotWidth), labels: compact };
+  }
+  function drawDeltaLabels(chart, textColor, fmt2) {
+    const { ctx, scales: { x: xAxis } } = chart;
+    const [ds0, ds1] = [chart.data.datasets[0].data, chart.data.datasets[1].data];
+    const items = chart.data.labels.map((_, i) => ({ v25: ds0[i] || 0, v26: ds1[i] || 0 }));
+    const n = items.length;
+    const slot = n > 1 ? Math.abs(xAxis.getPixelForValue(1) - xAxis.getPixelForValue(0)) : xAxis.width;
+    ctx.save();
+    ctx.font = "bold 10px 'IBM Plex Sans',sans-serif";
+    const { step, labels } = planDeltaLabels(items, slot - 4, (s) => ctx.measureText(s).width, fmt2);
+    ctx.textAlign = "center";
+    labels.forEach((l, i) => {
+      if (i % step) return;
+      const x = xAxis.getPixelForValue(i);
+      const y = xAxis.bottom + 12;
+      if (l.line1) {
+        ctx.fillStyle = textColor;
+        ctx.font = "500 10px 'IBM Plex Sans',sans-serif";
+        ctx.fillText(l.line1, x, y);
+      }
+      ctx.fillStyle = l.color;
+      ctx.font = "bold 10px 'IBM Plex Sans',sans-serif";
+      ctx.fillText(l.line2, x, l.line1 ? y + 13 : y);
+    });
+    ctx.restore();
+  }
+
   // src/pages/page-cmp/charts.js
   function axisDefaults() {
     const s = getComputedStyle(document.body);
@@ -1664,10 +1716,10 @@
     const v25 = items.find((i) => /2025/.test(i.label))?.value;
     const v26 = items.find((i) => /2026/.test(i.label))?.value;
     if (v25 == null || v26 == null) return "";
-    const delta = v26 - v25;
-    const sign = delta >= 0 ? "+" : "";
-    const pct = v25 !== 0 ? ` (${sign}${Math.round(delta / v25 * 100)}%)` : "";
-    return `2026 vs 2025: ${sign}${delta.toLocaleString("en-GB")}${pct}`;
+    const delta2 = v26 - v25;
+    const sign = delta2 >= 0 ? "+" : "";
+    const pct = v25 !== 0 ? ` (${sign}${Math.round(delta2 / v25 * 100)}%)` : "";
+    return `2026 vs 2025: ${sign}${delta2.toLocaleString("en-GB")}${pct}`;
   }
   function footerCallback(tooltipItems) {
     return yearDeltaFooter(tooltipItems.map((ti) => ({ label: ti.dataset.label, value: ti.raw })));
@@ -2063,30 +2115,7 @@
       const cityDeltaPlugin = {
         id: "cityDelta",
         afterDraw(chart) {
-          const ctx = chart.ctx;
-          const xAxis = chart.scales.x;
-          const ds0 = chart.data.datasets[0].data;
-          const ds1 = chart.data.datasets[1].data;
-          const chartColors = self.getChartColors();
-          ctx.save();
-          chart.data.labels.forEach((_, i) => {
-            const v25 = ds0[i] || 0, v26 = ds1[i] || 0;
-            const d = v26 - v25;
-            const pct = v25 > 0 ? (d / v25 * 100).toFixed(0) : v26 > 0 ? "\u221E" : "0";
-            const sign = d > 0 ? "+" : "";
-            const arrow = d > 0 ? "\u25B2" : d < 0 ? "\u25BC" : "=";
-            const color = d > 0 ? "#1D9E75" : d < 0 ? "#D4545A" : "#999";
-            const x = xAxis.getPixelForValue(i);
-            const y = xAxis.bottom + 12;
-            ctx.fillStyle = chartColors.text3;
-            ctx.font = "500 10px 'IBM Plex Sans',sans-serif";
-            ctx.textAlign = "center";
-            ctx.fillText(`${fmtN(v25)} / ${fmtN(v26)}`, x, y);
-            ctx.fillStyle = color;
-            ctx.font = "bold 10px 'IBM Plex Sans',sans-serif";
-            ctx.fillText(`${arrow} ${fmtN(Math.abs(d))} (${sign}${pct}%)`, x, y + 13);
-          });
-          ctx.restore();
+          drawDeltaLabels(chart, self.getChartColors().text3, fmtN);
         }
       };
       try {
@@ -2184,30 +2213,7 @@
       const monthDeltaPlugin = {
         id: "monthDelta",
         afterDraw(chart) {
-          const ctx = chart.ctx;
-          const xAxis = chart.scales.x;
-          const ds0 = chart.data.datasets[0].data;
-          const ds1 = chart.data.datasets[1].data;
-          const chartColors = self.getChartColors();
-          ctx.save();
-          chart.data.labels.forEach((_, i) => {
-            const v25 = ds0[i] || 0, v26 = ds1[i] || 0;
-            const d = v26 - v25;
-            const pct = v25 > 0 ? (d / v25 * 100).toFixed(0) : v26 > 0 ? "\u221E" : "0";
-            const sign = d > 0 ? "+" : "";
-            const arrow = d > 0 ? "\u25B2" : d < 0 ? "\u25BC" : "=";
-            const color = d > 0 ? "#1D9E75" : d < 0 ? "#D4545A" : "#999";
-            const x = xAxis.getPixelForValue(i);
-            const y = xAxis.bottom + 12;
-            ctx.fillStyle = chartColors.text3;
-            ctx.font = "500 10px 'IBM Plex Sans',sans-serif";
-            ctx.textAlign = "center";
-            ctx.fillText(`${fmtN(v25)} / ${fmtN(v26)}`, x, y);
-            ctx.fillStyle = color;
-            ctx.font = "bold 10px 'IBM Plex Sans',sans-serif";
-            ctx.fillText(`${arrow} ${fmtN(Math.abs(d))} (${sign}${pct}%)`, x, y + 13);
-          });
-          ctx.restore();
+          drawDeltaLabels(chart, self.getChartColors().text3, fmtN);
         }
       };
       try {
@@ -2975,9 +2981,9 @@
     return [...map.values()];
   }
   function deltaRow(v25, v26) {
-    const delta = v26 - v25;
-    const pct = v25 <= 0 ? null : Math.round(delta / v25 * 1e3) / 10;
-    return { v25, v26, delta, pct };
+    const delta2 = v26 - v25;
+    const pct = v25 <= 0 ? null : Math.round(delta2 / v25 * 1e3) / 10;
+    return { v25, v26, delta: delta2, pct };
   }
   function pctLabel(d, newText = "new") {
     if (d.pct === null) return d.v26 > 0 ? newText : "\u2014";
@@ -3773,12 +3779,12 @@
     const gmPct = w26.revenue > 0 ? (w26.grossMargin / w26.revenue * 100).toFixed(1) : "\u2014";
     const revDelta = w25 ? w26.revenue - w25.revenue : null;
     const gmDelta = w25 ? w26.grossMargin - w25.grossMargin : null;
-    function chip(label, val, delta, isCurrency) {
+    function chip(label, val, delta2, isCurrency) {
       let dHtml = "";
-      if (delta !== null) {
-        const sign = delta >= 0 ? "+" : "\u2212";
-        const dFmt = isCurrency ? `\u20AC${fmt(Math.abs(delta))}` : fmt(Math.abs(delta));
-        dHtml = ` <span class="${delta >= 0 ? "delta-pos" : "delta-neg"}">${sign}${dFmt} vs '25</span>`;
+      if (delta2 !== null) {
+        const sign = delta2 >= 0 ? "+" : "\u2212";
+        const dFmt = isCurrency ? `\u20AC${fmt(Math.abs(delta2))}` : fmt(Math.abs(delta2));
+        dHtml = ` <span class="${delta2 >= 0 ? "delta-pos" : "delta-neg"}">${sign}${dFmt} vs '25</span>`;
       }
       return `<div class="week-chip"><span class="week-chip-label">${label}</span><span class="week-chip-val">${val}</span>${dHtml}</div>`;
     }

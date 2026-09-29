@@ -7,3 +7,5 @@
 - 2026-09-28 17:52: [Jura restyle finished: Task 6, Opus final review fixed (phone leaks, dark flash guard), theme-toggle chart fix, Nikolina name alias in extractor, before/after screenshots; all uncommitted, 76 Playwright green](2026-09-28-175257-122b.md)
 - 2026-09-28 23:08 — [Commit split, phone-overflow fixes, default as-of date, KPI mobile font fix, hover-tooltip footers on comparison charts](2026-09-28-230814-fb14.md)
 - 2026-09-29 01:11 — [Sticky filter bars, takeaway sentence, blue year colours, README, all pushed; data-2025 analysis: no real diff](2026-09-29-011159-fdc8.md)
+- 2026-09-29 16:23 — [Comparison filter cleanup: language pills, unsticky headers, paid type cards follow main city, chart labels fit on phone, jura favicon, all pushed](2026-09-29-162311-4d61.md)
+- 2026-09-29 16:28 — [Data update attempted, blocked: Drive connector auth error, nothing regenerated](2026-09-29-162856-2ea2.md)

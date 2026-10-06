@@ -301,7 +301,7 @@ export const PageGuides = {
                 <div class="city-pill-group">${cityPills}</div>
                 <div class="filter-dropdowns">
                     <div class="city-pill-group lang-pill-group" id="lang-filter-gd" role="group" aria-label="${t('labels.language')}">
-                        ${[['all', t('labels.all')], ['eng', 'ENG'], ['esp', 'ESP'], ['fra', 'FRA']].map(([v, label]) =>
+                        ${[['all', t('labels.all')], ['eng', 'ENG'], ['esp', 'ESP'], ['oth', 'OTH']].map(([v, label]) =>
                             `<button class="city-filter-pill lang-pill${this.activeLang === v ? ' active' : ''}" data-lang="${v}" onclick="PageGuides.filterLang('${v}')">${label}</button>`).join('')}
                     </div>
                     <div class="filter-field">

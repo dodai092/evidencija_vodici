@@ -2010,3 +2010,29 @@ body.dark-mode .tt-gm-low  { background: color-mix(in srgb, var(--delta-neg) 18%
     color: var(--text2); background: none; border: none; cursor: pointer;
 }
 .mpax-table .gd-group-head { background: var(--smoke); color: var(--text2); }
+
+[hidden] { display: none !important; }
+/* Free/Paid switch on Comparison and Tours 25/26: pinned under the nav, filter bar pins below it (--view-tabs-h set in PageCmp) */
+.view-tabs {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 91;
+  gap: 8px;
+  flex-wrap: nowrap;
+  margin: 0 calc(-1 * var(--pad)) 0;
+  padding: 12px var(--pad) 8px;
+  background: var(--nav-bg);
+}
+.view-tabs .view-tab {
+  padding: 10px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: var(--radius-sm, 6px);
+  line-height: 1.4;
+}
+#page-cmp .filter-bar, #page-25 .filter-bar, #page-26 .filter-bar { top: calc(var(--nav-h) + var(--view-tabs-h, 0px)); }
+@media (max-width: 768px) {
+  .view-tabs { top: 33px; }
+  .view-tabs .view-tab { flex: 1; padding: 9px 12px; font-size: 14px; }
+  #page-cmp .filter-bar, #page-25 .filter-bar, #page-26 .filter-bar { top: calc(33px + var(--view-tabs-h, 0px)); }
+}

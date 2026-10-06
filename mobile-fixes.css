@@ -1,14 +1,6 @@
 /* Pre-existing phone-layout bugs, not from the Jura restyle theme.
    Kept separate from jura-theme.css, which stays phone-untouched. */
 
-/* Comparison opening takeaway sentence, above the filter bar. */
-.takeaway {
-  margin: 0 0 16px;
-  font-size: 15px;
-  line-height: 1.5;
-  color: var(--text);
-}
-
 /* Monthly table: the first metric group's header was a dark band with
    white text. Use a light tint, like the city headers in jura-theme.css. */
 .mpax-metric-head.mpax-metric-primary {
@@ -89,4 +81,63 @@
 /* Free/Paid section headers scroll away. The filter bar and the paid type row stay sticky. */
 .section-divider {
   position: static;
+}
+
+/* Tours 25/26 and Comparison: chart cards kept the 20px 24px desktop padding
+   on phones, so with the page gutter a chart got ~308px of a 390px screen.
+   Tighten the card and give the plot more height. */
+@media (max-width: 768px) {
+  #page-cmp .chart-card,
+  #page-25 .chart-card,
+  #page-26 .chart-card {
+    padding: 14px 8px 12px;
+  }
+  #page-cmp .chart-card-title,
+  #page-25 .chart-card-title,
+  #page-26 .chart-card-title {
+    padding: 0 6px;
+  }
+  #page-cmp .chart-container,
+  #page-25 .chart-container,
+  #page-26 .chart-container {
+    height: 240px;
+  }
+  /* The Tours 25/26 tables have 4 to 6 columns; the 760px desktop min-width
+     made them scroll sideways with wide empty gaps. Comparison keeps it, its
+     tables have 13 columns. */
+  #page-25 .mpax-table,
+  #page-26 .mpax-table {
+    min-width: 0;
+  }
+  #page-cmp .mpax-table th,
+  #page-cmp .mpax-table td,
+  #page-25 .mpax-table th,
+  #page-25 .mpax-table td,
+  #page-26 .mpax-table th,
+  #page-26 .mpax-table td {
+    padding: 6px 6px;
+  }
+  /* Comparison tables have 13 columns and scroll sideways: keep the Month
+     column pinned so the row labels stay visible. */
+  #page-cmp .mpax-table th.mpax-month-head,
+  #page-cmp .mpax-table td.mpax-month {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+  }
+  #page-cmp .mpax-table td.mpax-month { background: var(--card-bg, var(--white)); }
+  #page-cmp .mpax-table th.mpax-month-head { background: var(--smoke); }
+
+  /* Management: same card padding fix, and the OTA source table was wider
+     than the screen with no scroll wrapper, so the whole page scrolled. */
+  #page-mgmt .chart-card {
+    padding: 14px 8px 12px;
+  }
+  #page-mgmt .chart-card-title {
+    padding: 0 6px;
+  }
+  #waterfall-summary,
+  #ota-source-table {
+    overflow-x: auto;
+  }
 }

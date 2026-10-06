@@ -139,6 +139,37 @@
       return acc;
     }, { freeTours: 0, freePax: 0, paidTours: 0, paidPax: 0 });
   }
+  function paidAt(st, key, isDay, types) {
+    if (!types) {
+      const b = (isDay ? st?.byDay : st?.byMonth)?.[key];
+      return { tours: b?.paid?.tours || 0, pax: b?.paid?.pax || 0 };
+    }
+    const bt = (isDay ? st?.byDayType : st?.byMonthType)?.[key];
+    let tours = 0, pax = 0;
+    types.forEach((tp) => {
+      tours += bt?.[tp]?.tours || 0;
+      pax += bt?.[tp]?.pax || 0;
+    });
+    return { tours, pax };
+  }
+  function paidFiltered(st, months, types) {
+    const cutoffMonth = getCutoffMonth();
+    const cutoffDay = parseInt(GLOBAL_DATE.split("-")[2]);
+    const active = months.length > 0 ? months : Array.from({ length: cutoffMonth }, (_, i) => i + 1);
+    const acc = { tours: 0, pax: 0 };
+    const add = (b) => {
+      acc.tours += b.tours;
+      acc.pax += b.pax;
+    };
+    active.forEach((m) => {
+      if (m < cutoffMonth) add(paidAt(st, String(m), false, types));
+      else if (m === cutoffMonth) {
+        if (st?.byDay) for (let d = 1; d <= cutoffDay; d++) add(paidAt(st, `${m}-${d}`, true, types));
+        else add(paidAt(st, String(m), false, types));
+      }
+    });
+    return acc;
+  }
   function toggleSection(id) {
     const body = document.getElementById(id);
     if (!body) return;
@@ -225,6 +256,11 @@
         freeToursPaxCountYtd: "Free Tours \u2013 PAX Count YTD",
         avgPaxPerFreeTour: "Avg PAX / Free Tour",
         paidToursCountYtd: "Paid Tours \u2013 Count YTD",
+        kpiPaxCountYtd: "PAX Count YTD",
+        kpiAvgPaxPerTour: "Avg PAX / per Tour",
+        kpiTotalTours: "Total Tours",
+        privateTours: "Private",
+        sharedTours: "Shared",
         freeT: "Free t",
         freeP: "Free p",
         paidT: "Paid t",
@@ -249,28 +285,28 @@
         modalNote: "2025 full year vs 2026 through"
       },
       charts: {
-        freePaxByCity: "Free PAX by City",
-        paidToursByCity: "Paid Tours by City",
-        cumulativeFreePax: "Cumulative Free PAX Trend",
-        cumulativePaidTours: "Cumulative Paid Tours Trend",
-        avgFreePaxCmp: "Avg PAX per Free Tour",
-        cityMonthlyCumulative: "Free PAX by City \u2014 Cumulative",
-        privatePaidTours: "Private Paid Tours by Type",
-        sharedPaidTours: "Shared Paid Tours by Type",
-        avgPaxByType: "Avg PAX per Paid Tour Type",
-        freePaxByMonthAndCity: "Free PAX by Month and City",
-        freePaxByCity25: "Free PAX by City \u2014 2025",
-        avgPaxPerTourMonth25: "Avg PAX per Free Tour \u2014 by month 2025",
-        paidToursByCity25: "Paid Tours by City \u2014 2025",
-        privatePaidTours25: "Paid Tours (Private) by Type \u2014 2025",
-        sharedPaidTours25: "Paid Tours (Shared) by Type \u2014 2025",
-        freePaxByCity26: "Free PAX by City \u2014 2026",
-        avgPaxPerTourMonth26: "Avg PAX per Free Tour \u2014 by month 2026",
-        paidToursByCity26: "Paid Tours by City \u2014 2026",
-        privatePaidTours26: "Paid Tours (Private) by Type \u2014 2026",
-        sharedPaidTours26: "Paid Tours (Shared) by Type \u2014 2026",
-        freePaxByMonthAndCity25: "Free PAX by Month and City \u2014 2025",
-        freePaxByMonthAndCity26: "Free PAX by Month and City \u2014 2026"
+        freePaxByCity: "PAX by City",
+        paidToursByCity: "Tours by City",
+        cumulativeFreePax: "Cumulative PAX Trend",
+        cumulativePaidTours: "Cumulative Tours Trend",
+        avgFreePaxCmp: "Avg PAX per Tour",
+        cityMonthlyCumulative: "PAX by City \u2014 Cumulative",
+        privatePaidTours: "Private Tours by Type",
+        sharedPaidTours: "Shared Tours by Type",
+        avgPaxByType: "Avg PAX per Tour Type",
+        freePaxByMonthAndCity: "PAX by Month and City",
+        freePaxByCity25: "PAX by City \u2014 2025",
+        avgPaxPerTourMonth25: "Avg PAX per Tour \u2014 by month 2025",
+        paidToursByCity25: "Tours by City \u2014 2025",
+        privatePaidTours25: "Private Tours by Type \u2014 2025",
+        sharedPaidTours25: "Shared Tours by Type \u2014 2025",
+        freePaxByCity26: "PAX by City \u2014 2026",
+        avgPaxPerTourMonth26: "Avg PAX per Tour \u2014 by month 2026",
+        paidToursByCity26: "Tours by City \u2014 2026",
+        privatePaidTours26: "Private Tours by Type \u2014 2026",
+        sharedPaidTours26: "Shared Tours by Type \u2014 2026",
+        freePaxByMonthAndCity25: "PAX by Month and City \u2014 2025",
+        freePaxByMonthAndCity26: "PAX by Month and City \u2014 2026"
       },
       table: {
         month: "Month",
@@ -331,7 +367,7 @@
         otaRevenue: "OTA Revenue",
         english: "English",
         spanish: "Spanish",
-        french: "French",
+        other: "Other",
         smallGroupProblem: "Small Group Problem Summary",
         prevalence: "Prevalence",
         marginLoss: "Margin loss",
@@ -388,6 +424,11 @@
         freeToursPaxCountYtd: "Besplatne ture \u2013 Broj PAX-a YTD",
         avgPaxPerFreeTour: "Prosje\u010Dan PAX / Besplatna tura",
         paidToursCountYtd: "Pla\u0107ene ture \u2013 Broj YTD",
+        kpiPaxCountYtd: "Broj PAX-a YTD",
+        kpiAvgPaxPerTour: "Prosje\u010Dan PAX / po turi",
+        kpiTotalTours: "Ukupno tura",
+        privateTours: "Privatne",
+        sharedTours: "Zajedni\u010Dke",
         freeT: "Bespl. t",
         freeP: "Bespl. p",
         paidT: "Pla\u0107. t",
@@ -412,28 +453,28 @@
         modalNote: "2025 cijela godina naspram 2026 do"
       },
       charts: {
-        freePaxByCity: "Besplatni PAX po gradu",
-        paidToursByCity: "Pla\u0107ene ture po gradu",
-        cumulativeFreePax: "Trend kumulativnog besplatnog PAX-a",
-        cumulativePaidTours: "Trend kumulativnih pla\u0107enih tura",
-        avgFreePaxCmp: "Prosje\u010Dan PAX po besplatnoj turi",
-        cityMonthlyCumulative: "Besplatni PAX po gradu \u2014 kumulativno",
-        privatePaidTours: "Privatne pla\u0107ene ture po vrsti",
-        sharedPaidTours: "Zajedni\u010Dke pla\u0107ene ture po vrsti",
+        freePaxByCity: "PAX po gradu",
+        paidToursByCity: "Ture po gradu",
+        cumulativeFreePax: "Trend kumulativnog PAX-a",
+        cumulativePaidTours: "Trend kumulativnih tura",
+        avgFreePaxCmp: "Prosje\u010Dan PAX po turi",
+        cityMonthlyCumulative: "PAX po gradu \u2014 kumulativno",
+        privatePaidTours: "Privatne ture po vrsti",
+        sharedPaidTours: "Zajedni\u010Dke ture po vrsti",
         avgPaxByType: "Prosje\u010Dan PAX po vrsti pla\u0107ene ture",
-        freePaxByMonthAndCity: "Besplatni PAX po mjesecu i gradu",
-        freePaxByCity25: "Besplatni PAX po gradu \u2014 2025",
-        avgPaxPerTourMonth25: "Prosje\u010Dan PAX po besplatnoj turi \u2014 po mjesecu 2025",
-        paidToursByCity25: "Pla\u0107ene ture po gradu \u2014 2025",
-        privatePaidTours25: "Pla\u0107ene ture (Privatne) po vrsti \u2014 2025",
-        sharedPaidTours25: "Pla\u0107ene ture (Zajedni\u010Dke) po vrsti \u2014 2025",
-        freePaxByCity26: "Besplatni PAX po gradu \u2014 2026",
-        avgPaxPerTourMonth26: "Prosje\u010Dan PAX po besplatnoj turi \u2014 po mjesecu 2026",
-        paidToursByCity26: "Pla\u0107ene ture po gradu \u2014 2026",
-        privatePaidTours26: "Pla\u0107ene ture (Privatne) po vrsti \u2014 2026",
-        sharedPaidTours26: "Pla\u0107ene ture (Zajedni\u010Dke) po vrsti \u2014 2026",
-        freePaxByMonthAndCity25: "Besplatni PAX po mjesecu i gradu \u2014 2025",
-        freePaxByMonthAndCity26: "Besplatni PAX po mjesecu i gradu \u2014 2026"
+        freePaxByMonthAndCity: "PAX po mjesecu i gradu",
+        freePaxByCity25: "PAX po gradu \u2014 2025",
+        avgPaxPerTourMonth25: "Prosje\u010Dan PAX po turi \u2014 po mjesecu 2025",
+        paidToursByCity25: "Ture po gradu \u2014 2025",
+        privatePaidTours25: "Privatne ture po vrsti \u2014 2025",
+        sharedPaidTours25: "Zajedni\u010Dke ture po vrsti \u2014 2025",
+        freePaxByCity26: "PAX po gradu \u2014 2026",
+        avgPaxPerTourMonth26: "Prosje\u010Dan PAX po turi \u2014 po mjesecu 2026",
+        paidToursByCity26: "Ture po gradu \u2014 2026",
+        privatePaidTours26: "Privatne ture po vrsti \u2014 2026",
+        sharedPaidTours26: "Zajedni\u010Dke ture po vrsti \u2014 2026",
+        freePaxByMonthAndCity25: "PAX po mjesecu i gradu \u2014 2025",
+        freePaxByMonthAndCity26: "PAX po mjesecu i gradu \u2014 2026"
       },
       table: {
         month: "Mj.",
@@ -494,7 +535,7 @@
         otaRevenue: "OTA dohodak",
         english: "Engleski",
         spanish: "\u0160panjolski",
-        french: "Francuski",
+        other: "Ostali",
         smallGroupProblem: "Sa\u017Eetak problema male grupe",
         prevalence: "Prevalencija",
         marginLoss: "Gubitak mar\u017Ee",
@@ -593,11 +634,13 @@
   var Page25 = {
     activeCity: "all",
     activeLang: "all",
+    activeTab: "free",
+    activeKind: "all",
     activeMonths: [],
     activePrivateType: "all",
     activeSharedType: "all",
-    PRIVATE_TYPES: ["war PR", "food PR", "best", "old", "big"],
-    SHARED_TYPES: ["war", "food", "best"],
+    PRIVATE_TYPES: ["war PR", "food PR", "best", "old", "big", "food kuoni"],
+    SHARED_TYPES: ["war", "food"],
     chartInstance: null,
     cityChartInstance: null,
     paidCityChartInstance: null,
@@ -633,7 +676,7 @@
         const st = cityStats25[c]?.[lang];
         const fs = st ? filteredStats(st, this.activeMonths) : { freePax: 0, paidTours: 0 };
         freePaxByCity[c] = fs.freePax;
-        paidToursByCity[c] = fs.paidTours;
+        paidToursByCity[c] = st ? paidFiltered(st, this.activeMonths, this.kindTypes()).tours : 0;
       });
       const makeBar = (canvasId, instanceKey, dataArr, yLabel, tooltipLabel) => {
         try {
@@ -774,7 +817,7 @@
               },
               scales: {
                 x: { ticks: { color: colors.text3, font: { size: 11 } }, grid: { color: colors.border } },
-                y: { title: { display: true, text: t("sections.freeTours"), color: colors.text3, font: { size: 10 } }, ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
+                y: { title: { display: true, text: t("table.tours"), color: colors.text3, font: { size: 10 } }, ticks: { color: colors.text3 }, grid: { color: colors.border }, beginAtZero: true }
               }
             },
             plugins: [paxLabelPlugin()]
@@ -798,7 +841,7 @@
                 <table class="mpax-table">
                     <thead><tr>
                         <th class="mpax-month-head">${t("table.month")}</th>
-                        <th class="mpax-metric-head">${t("sections.freeTours")}</th>
+                        <th class="mpax-metric-head">${t("table.tours")}</th>
                         <th class="mpax-metric-head">${t("table.pax")}</th>
                         <th class="mpax-metric-head">${t("labels.avgPaxPerTour")}</th>
                     </tr></thead>
@@ -875,21 +918,24 @@
     },
     updateKPIs() {
       const citiesToSum = this.activeCity === "all" ? CITIES : [this.activeCity];
-      const k = this.activeLang;
-      let freeTours = 0, paidTours = 0, freePax = 0, paidPax = 0;
+      const paid = this.activeTab === "paid";
+      let pax = 0, tours = 0;
       citiesToSum.forEach((city) => {
-        const st = cityStats25[city]?.[k];
+        const st = cityStats25[city]?.[this.activeLang];
         if (!st) return;
-        const fs = filteredStats(st, this.activeMonths);
-        freeTours += fs.freeTours;
-        paidTours += fs.paidTours;
-        freePax += fs.freePax;
-        paidPax += fs.paidPax;
+        if (paid) {
+          const ps = paidFiltered(st, this.activeMonths, this.kindTypes());
+          pax += ps.pax;
+          tours += ps.tours;
+        } else {
+          const fs = filteredStats(st, this.activeMonths);
+          pax += fs.freePax;
+          tours += fs.freeTours;
+        }
       });
-      this._el("kv-free-tours").textContent = fmtN(freeTours);
-      this._el("kv-free").textContent = fmtN(freePax);
-      this._el("kv-avg-pax").textContent = freeTours > 0 ? (freePax / freeTours).toFixed(1) : "\u2014";
-      this._el("kv-paid").textContent = paidTours;
+      this._el("kv-pax").textContent = fmtN(pax);
+      this._el("kv-avg-pax").textContent = tours > 0 ? (pax / tours).toFixed(1) : "\u2014";
+      this._el("kv-tours").textContent = fmtN(tours);
     },
     filterCity(city) {
       this.activeCity = city;
@@ -901,6 +947,39 @@
       document.querySelectorAll("#page-25 .lang-pill").forEach((p) => p.classList.toggle("active", p.dataset.lang === lang));
       this.renderAll();
     },
+    kindTypes() {
+      return this.activeKind === "private" ? this.PRIVATE_TYPES : this.activeKind === "shared" ? this.SHARED_TYPES : null;
+    },
+    filterTab(tab) {
+      this.activeTab = tab;
+      document.querySelectorAll("#page-25 .view-tab").forEach((b) => b.classList.toggle("active", b.dataset.tab === tab));
+      document.getElementById("free-section-body-25").hidden = tab !== "free";
+      document.getElementById("paid-section-body-25").hidden = tab !== "paid";
+      document.getElementById("kind-filter-25").hidden = tab !== "paid";
+      document.querySelector('#page-25 .lang-pill[data-lang="oth"]').hidden = tab === "free";
+      if (tab === "free" && this.activeLang === "oth") {
+        this.activeLang = "all";
+        document.querySelectorAll("#page-25 .lang-pill").forEach((p) => p.classList.toggle("active", p.dataset.lang === "all"));
+      }
+      this._positionTabs();
+      this.renderAll();
+    },
+    filterKind(kind) {
+      this.activeKind = kind;
+      document.querySelectorAll("#page-25 .kind-pill").forEach((p) => p.classList.toggle("active", p.dataset.kind === kind));
+      this._syncKindUi();
+      this.renderAll();
+    },
+    // Private/Shared hides the by-type card of the other kind
+    _syncKindUi() {
+      document.getElementById("private-card-25").hidden = this.activeKind === "shared";
+      document.getElementById("shared-card-25").hidden = this.activeKind === "private";
+    },
+    // the filter bar pins under the Free/Paid tabs, so it needs their height
+    _positionTabs() {
+      const tabs = document.getElementById("view-tabs-25");
+      if (tabs) document.getElementById("page-25").style.setProperty("--view-tabs-h", tabs.offsetHeight + "px");
+    },
     filterMonth(m) {
       this.activeMonths = m === "all" ? [] : [parseInt(m)];
       this.renderAll();
@@ -909,7 +988,7 @@
       return `<div class="header">
             <div class="header-left">
                 <h1>Tours <span class="accent">2025</span></h1>
-                <p>Tour production by guide &middot; Free vs. Paid &middot; <span class="ytd-range-label">${getRangeLabel()}</span></p>
+                <p><span class="ytd-range-label">${getRangeLabel()}</span></p>
             </div>
             <div class="header-right">
                 <div id="date-pov-25" class="mb-6"></div>
@@ -925,11 +1004,15 @@
         return `<button class="city-filter-pill${active}" data-city="${c}"${style} onclick="Page25.filterCity('${c}')">${label}</button>`;
       }).join("");
       return `<div class="main">
+            <div class="city-pill-group view-tabs" id="view-tabs-25" role="tablist">
+                <button class="city-filter-pill view-tab${this.activeTab === "free" ? " active" : ""}" data-tab="free" role="tab" onclick="Page25.filterTab('free')">${t("labels.freeTours")}</button>
+                <button class="city-filter-pill view-tab${this.activeTab === "paid" ? " active" : ""}" data-tab="paid" role="tab" onclick="Page25.filterTab('paid')">${t("labels.paidTours")}</button>
+            </div>
             <div class="filter-bar">
                 <div class="city-pill-group">${cityPills}</div>
                 <div class="filter-dropdowns">
                     <div class="city-pill-group lang-pill-group" id="lang-filter-25" role="group" aria-label="${t("labels.language")}">
-                        ${[["all", t("labels.all")], ["eng", "ENG"], ["esp", "ESP"], ["fra", "FRA"]].map(([v, label]) => `<button class="city-filter-pill lang-pill${this.activeLang === v ? " active" : ""}" data-lang="${v}" onclick="Page25.filterLang('${v}')">${label}</button>`).join("")}
+                        ${[["all", t("labels.all")], ["eng", "Eng"], ["esp", "Esp"], ["oth", "Oth"]].map(([v, label]) => `<button class="city-filter-pill lang-pill${this.activeLang === v ? " active" : ""}" data-lang="${v}"${v === "oth" && this.activeTab === "free" ? " hidden" : ""} onclick="Page25.filterLang('${v}')">${label}</button>`).join("")}
                     </div>
                     <div class="filter-field">
                         <label class="filter-label" for="month-filter-25">${t("labels.mo")}</label>
@@ -938,42 +1021,38 @@
                             ${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((n, i) => `<option value="${i + 1}">${n}</option>`).join("")}
                         </select>
                     </div>
+                    <div class="city-pill-group kind-pill-group" id="kind-filter-25" role="group"${this.activeTab === "paid" ? "" : " hidden"}>
+                        ${[["all", t("labels.all")], ["private", t("labels.privateTours")], ["shared", t("labels.sharedTours")]].map(([v, label]) => `<button class="city-filter-pill kind-pill${this.activeKind === v ? " active" : ""}" data-kind="${v}" onclick="Page25.filterKind('${v}')">${label}</button>`).join("")}
+                    </div>
                 </div>
             </div>
 
-            <div class="kpi-grid kpi-grid-4">
+            <div class="kpi-grid kpi-grid-3">
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t("labels.freeToursPaxCount")}</div>
+                    <div class="kpi-label">${t("labels.kpiPaxCountYtd")}</div>
                     <div class="kpi-2y">
-                        <div><div class="kpi-2y-label">2025</div><div class="kpi-2y-val" id="kv-free-25">\u2014</div></div>
+                        <div><div class="kpi-2y-label">2025</div><div class="kpi-2y-val" id="kv-pax-25">\u2014</div></div>
                     </div>
                 </div>
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t("labels.avgPaxPerFreeTour")}</div>
+                    <div class="kpi-label">${t("labels.kpiAvgPaxPerTour")}</div>
                     <div class="kpi-2y">
                         <div><div class="kpi-2y-label">2025</div><div class="kpi-2y-val" id="kv-avg-pax-25">\u2014</div></div>
                     </div>
                 </div>
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t("labels.totalFreeTours")}</div>
+                    <div class="kpi-label">${t("labels.kpiTotalTours")}</div>
                     <div class="kpi-2y">
-                        <div><div class="kpi-2y-label">2025</div><div class="kpi-2y-val" id="kv-free-tours-25">\u2014</div></div>
-                    </div>
-                </div>
-                <div class="kpi hl-blue">
-                    <div class="kpi-label">${t("labels.paidToursCount")}</div>
-                    <div class="kpi-2y">
-                        <div><div class="kpi-2y-label">2025</div><div class="kpi-2y-val" id="kv-paid-25">\u2014</div></div>
+                        <div><div class="kpi-2y-label">2025</div><div class="kpi-2y-val" id="kv-tours-25">\u2014</div></div>
                     </div>
                 </div>
             </div>`;
     },
     _buildFreeTours() {
-      return `<button type="button" class="section-divider" aria-expanded="true" onclick="toggleSection('free-section-body-25')">
-                <span>${t("sections.freeTours")}</span>
-                <span class="section-chevron">\u25BE</span>
-            </button>
-            <div id="free-section-body-25" class="section-body">
+      return `<div id="free-section-body-25" class="section-body"${this.activeTab === "free" ? "" : " hidden"}>
+                <div class="charts-row">
+                    <div id="monthly-pax-table-25"></div>
+                </div>
                 <div class="charts-row">
                     <div class="chart-card">
                         <div class="chart-card-title"${titleAttr("charts.freePaxByCity25")}>${t("charts.freePaxByCity25")}</div>
@@ -984,17 +1063,10 @@
                         <div class="chart-container"><canvas id="avgFreePaxChart-25"></canvas></div>
                     </div>
                 </div>
-                <div class="charts-row">
-                    <div id="monthly-pax-table-25"></div>
-                </div>
             </div>`;
     },
     _buildPaidTours() {
-      return `<button type="button" class="section-divider" aria-expanded="true" onclick="toggleSection('paid-section-body-25')">
-                <span>${t("sections.paidTours")}</span>
-                <span class="section-chevron">\u25BE</span>
-            </button>
-            <div id="paid-section-body-25" class="section-body">
+      return `<div id="paid-section-body-25" class="section-body"${this.activeTab === "paid" ? "" : " hidden"}>
                 <div class="charts-row">
                     <div class="chart-card">
                         <div class="chart-card-title"${titleAttr("charts.paidToursByCity25")}>${t("charts.paidToursByCity25")}</div>
@@ -1002,7 +1074,7 @@
                     </div>
                 </div>
                 <div class="charts-row">
-                    <div class="chart-card type-chart-card">
+                    <div class="chart-card type-chart-card" id="private-card-25">
                         <div class="chart-card-title"${titleAttr("charts.privatePaidTours25")}>${t("charts.privatePaidTours25")}</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
@@ -1014,6 +1086,7 @@
                                     <button class="pill" onclick="Page25.filterPrivateType('best',this)">best</button>
                                     <button class="pill" onclick="Page25.filterPrivateType('old',this)">old</button>
                                     <button class="pill" onclick="Page25.filterPrivateType('big',this)">big</button>
+                                    <button class="pill" onclick="Page25.filterPrivateType('food kuoni',this)">food kuoni</button>
                                 </div>
                             </div>
                         </div>
@@ -1022,7 +1095,7 @@
                     </div>
                 </div>
                 <div class="charts-row">
-                    <div class="chart-card type-chart-card">
+                    <div class="chart-card type-chart-card" id="shared-card-25">
                         <div class="chart-card-title"${titleAttr("charts.sharedPaidTours25")}>${t("charts.sharedPaidTours25")}</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
@@ -1031,7 +1104,6 @@
                                     <button class="pill active" onclick="Page25.filterSharedType('all',this)">${t("labels.all")}</button>
                                     <button class="pill" onclick="Page25.filterSharedType('war',this)">war</button>
                                     <button class="pill" onclick="Page25.filterSharedType('food',this)">food</button>
-                                    <button class="pill" onclick="Page25.filterSharedType('best',this)">best</button>
                                 </div>
                             </div>
                         </div>
@@ -1072,6 +1144,9 @@
       if (this._initialized) return;
       this._initialized = true;
       this.rebuildStructure();
+      this._syncKindUi();
+      this._positionTabs();
+      window.addEventListener("resize", () => this._positionTabs());
       this.renderAll();
     }
   };
@@ -1081,11 +1156,13 @@
   var Page26 = {
     activeCity: "all",
     activeLang: "all",
+    activeTab: "free",
+    activeKind: "all",
     activeMonths: [],
     activePrivateType: "all",
     activeSharedType: "all",
-    PRIVATE_TYPES: ["war PR", "food PR", "best", "old", "big"],
-    SHARED_TYPES: ["war", "food", "best"],
+    PRIVATE_TYPES: ["war PR", "food PR", "best", "old", "big", "food kuoni"],
+    SHARED_TYPES: ["war", "food"],
     chartInstance: null,
     cityChartInstance: null,
     paidCityChartInstance: null,
@@ -1121,7 +1198,7 @@
         const st = cityStats26[c]?.[lang];
         const fs = st ? filteredStats(st, this.activeMonths) : { freePax: 0, paidTours: 0 };
         freePaxByCity[c] = fs.freePax;
-        paidToursByCity[c] = fs.paidTours;
+        paidToursByCity[c] = st ? paidFiltered(st, this.activeMonths, this.kindTypes()).tours : 0;
       });
       const makeBar = (canvasId, instanceKey, dataArr, yLabel, tooltipLabel) => {
         try {
@@ -1423,21 +1500,24 @@
     },
     updateKPIs() {
       const citiesToSum = this.activeCity === "all" ? CITIES : [this.activeCity];
-      const k = this.activeLang;
-      let freeTours = 0, paidTours = 0, freePax = 0, paidPax = 0;
+      const paid = this.activeTab === "paid";
+      let pax = 0, tours = 0;
       citiesToSum.forEach((city) => {
-        const st = cityStats26[city]?.[k];
+        const st = cityStats26[city]?.[this.activeLang];
         if (!st) return;
-        const fs = filteredStats(st, this.activeMonths);
-        freeTours += fs.freeTours;
-        paidTours += fs.paidTours;
-        freePax += fs.freePax;
-        paidPax += fs.paidPax;
+        if (paid) {
+          const ps = paidFiltered(st, this.activeMonths, this.kindTypes());
+          pax += ps.pax;
+          tours += ps.tours;
+        } else {
+          const fs = filteredStats(st, this.activeMonths);
+          pax += fs.freePax;
+          tours += fs.freeTours;
+        }
       });
-      this._el("kv-free-tours").textContent = freeTours;
-      this._el("kv-free").textContent = fmtN(freePax);
-      this._el("kv-avg-pax").textContent = freeTours > 0 ? (freePax / freeTours).toFixed(1) : "\u2014";
-      this._el("kv-paid").textContent = paidTours;
+      this._el("kv-pax").textContent = fmtN(pax);
+      this._el("kv-avg-pax").textContent = tours > 0 ? (pax / tours).toFixed(1) : "\u2014";
+      this._el("kv-tours").textContent = fmtN(tours);
     },
     filterCity(city) {
       this.activeCity = city;
@@ -1449,6 +1529,39 @@
       document.querySelectorAll("#page-26 .lang-pill").forEach((p) => p.classList.toggle("active", p.dataset.lang === lang));
       this.renderAll();
     },
+    kindTypes() {
+      return this.activeKind === "private" ? this.PRIVATE_TYPES : this.activeKind === "shared" ? this.SHARED_TYPES : null;
+    },
+    filterTab(tab) {
+      this.activeTab = tab;
+      document.querySelectorAll("#page-26 .view-tab").forEach((b) => b.classList.toggle("active", b.dataset.tab === tab));
+      document.getElementById("free-section-body-26").hidden = tab !== "free";
+      document.getElementById("paid-section-body-26").hidden = tab !== "paid";
+      document.getElementById("kind-filter-26").hidden = tab !== "paid";
+      document.querySelector('#page-26 .lang-pill[data-lang="oth"]').hidden = tab === "free";
+      if (tab === "free" && this.activeLang === "oth") {
+        this.activeLang = "all";
+        document.querySelectorAll("#page-26 .lang-pill").forEach((p) => p.classList.toggle("active", p.dataset.lang === "all"));
+      }
+      this._positionTabs();
+      this.renderAll();
+    },
+    filterKind(kind) {
+      this.activeKind = kind;
+      document.querySelectorAll("#page-26 .kind-pill").forEach((p) => p.classList.toggle("active", p.dataset.kind === kind));
+      this._syncKindUi();
+      this.renderAll();
+    },
+    // Private/Shared hides the by-type card of the other kind
+    _syncKindUi() {
+      document.getElementById("private-card-26").hidden = this.activeKind === "shared";
+      document.getElementById("shared-card-26").hidden = this.activeKind === "private";
+    },
+    // the filter bar pins under the Free/Paid tabs, so it needs their height
+    _positionTabs() {
+      const tabs = document.getElementById("view-tabs-26");
+      if (tabs) document.getElementById("page-26").style.setProperty("--view-tabs-h", tabs.offsetHeight + "px");
+    },
     filterMonth(m) {
       this.activeMonths = m === "all" ? [] : [parseInt(m)];
       this.renderAll();
@@ -1457,7 +1570,7 @@
       return `<div class="header">
             <div class="header-left">
                 <h1>${t("table.tours")} <span class="accent">2026</span></h1>
-                <p>Tour production by guide &middot; ${t("labels.freeTours")} vs. ${t("labels.paidTours")} &middot; <span class="ytd-range-label">${getRangeLabel()}</span></p>
+                <p><span class="ytd-range-label">${getRangeLabel()}</span></p>
             </div>
             <div class="header-right">
                 <div id="date-pov-26" class="mb-6"></div>
@@ -1474,11 +1587,15 @@
         return `<button class="city-filter-pill${active}" data-city="${c}"${style} onclick="Page26.filterCity('${c}')">${label}</button>`;
       }).join("");
       return `<div class="main">
+            <div class="city-pill-group view-tabs" id="view-tabs-26" role="tablist">
+                <button class="city-filter-pill view-tab${this.activeTab === "free" ? " active" : ""}" data-tab="free" role="tab" onclick="Page26.filterTab('free')">${t("labels.freeTours")}</button>
+                <button class="city-filter-pill view-tab${this.activeTab === "paid" ? " active" : ""}" data-tab="paid" role="tab" onclick="Page26.filterTab('paid')">${t("labels.paidTours")}</button>
+            </div>
             <div class="filter-bar">
                 <div class="city-pill-group">${cityPills}</div>
                 <div class="filter-dropdowns">
                     <div class="city-pill-group lang-pill-group" id="lang-filter-26" role="group" aria-label="${t("labels.language")}">
-                        ${[["all", t("labels.all")], ["eng", "ENG"], ["esp", "ESP"], ["fra", "FRA"]].map(([v, label]) => `<button class="city-filter-pill lang-pill${this.activeLang === v ? " active" : ""}" data-lang="${v}" onclick="Page26.filterLang('${v}')">${label}</button>`).join("")}
+                        ${[["all", t("labels.all")], ["eng", "Eng"], ["esp", "Esp"], ["oth", "Oth"]].map(([v, label]) => `<button class="city-filter-pill lang-pill${this.activeLang === v ? " active" : ""}" data-lang="${v}"${v === "oth" && this.activeTab === "free" ? " hidden" : ""} onclick="Page26.filterLang('${v}')">${label}</button>`).join("")}
                     </div>
                     <div class="filter-field">
                         <label class="filter-label" for="month-filter-26">${t("labels.mo")}</label>
@@ -1487,42 +1604,38 @@
                             ${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].slice(0, getCutoffMonth()).map((n, i) => `<option value="${i + 1}">${n}</option>`).join("")}
                         </select>
                     </div>
+                    <div class="city-pill-group kind-pill-group" id="kind-filter-26" role="group"${this.activeTab === "paid" ? "" : " hidden"}>
+                        ${[["all", t("labels.all")], ["private", t("labels.privateTours")], ["shared", t("labels.sharedTours")]].map(([v, label]) => `<button class="city-filter-pill kind-pill${this.activeKind === v ? " active" : ""}" data-kind="${v}" onclick="Page26.filterKind('${v}')">${label}</button>`).join("")}
+                    </div>
                 </div>
             </div>
 
-            <div class="kpi-grid kpi-grid-4">
+            <div class="kpi-grid kpi-grid-3">
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t("labels.freeToursPaxCount")} YTD</div>
+                    <div class="kpi-label">${t("labels.kpiPaxCountYtd")}</div>
                     <div class="kpi-2y">
-                        <div><div class="kpi-2y-label">2026</div><div class="kpi-2y-val" id="kv-free-26">\u2014</div></div>
+                        <div><div class="kpi-2y-label">2026</div><div class="kpi-2y-val" id="kv-pax-26">\u2014</div></div>
                     </div>
                 </div>
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t("labels.avgPaxPerFreeTour")}</div>
+                    <div class="kpi-label">${t("labels.kpiAvgPaxPerTour")}</div>
                     <div class="kpi-2y">
                         <div><div class="kpi-2y-label">2026</div><div class="kpi-2y-val" id="kv-avg-pax-26">\u2014</div></div>
                     </div>
                 </div>
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t("labels.totalFreeTours")}</div>
+                    <div class="kpi-label">${t("labels.kpiTotalTours")}</div>
                     <div class="kpi-2y">
-                        <div><div class="kpi-2y-label">2026</div><div class="kpi-2y-val" id="kv-free-tours-26">\u2014</div></div>
-                    </div>
-                </div>
-                <div class="kpi hl-blue">
-                    <div class="kpi-label">${t("labels.paidToursCount")} YTD</div>
-                    <div class="kpi-2y">
-                        <div><div class="kpi-2y-label">2026</div><div class="kpi-2y-val" id="kv-paid-26">\u2014</div></div>
+                        <div><div class="kpi-2y-label">2026</div><div class="kpi-2y-val" id="kv-tours-26">\u2014</div></div>
                     </div>
                 </div>
             </div>`;
     },
     _buildFreeTours() {
-      return `<button type="button" class="section-divider" aria-expanded="true" onclick="toggleSection('free-section-body-26')">
-                <span>${t("sections.freeTours")}</span>
-                <span class="section-chevron">\u25BE</span>
-            </button>
-            <div id="free-section-body-26" class="section-body">
+      return `<div id="free-section-body-26" class="section-body"${this.activeTab === "free" ? "" : " hidden"}>
+                <div class="charts-row">
+                    <div id="monthly-pax-table-26"></div>
+                </div>
                 <div class="charts-row">
                     <div class="chart-card">
                         <div class="chart-card-title"${titleAttr("charts.freePaxByCity26")}>${t("charts.freePaxByCity26")}</div>
@@ -1533,17 +1646,10 @@
                         <div class="chart-container"><canvas id="avgFreePaxChart-26"></canvas></div>
                     </div>
                 </div>
-                <div class="charts-row">
-                    <div id="monthly-pax-table-26"></div>
-                </div>
             </div>`;
     },
     _buildPaidTours() {
-      return `<button type="button" class="section-divider" aria-expanded="true" onclick="toggleSection('paid-section-body-26')">
-                <span>${t("sections.paidTours")}</span>
-                <span class="section-chevron">\u25BE</span>
-            </button>
-            <div id="paid-section-body-26" class="section-body">
+      return `<div id="paid-section-body-26" class="section-body"${this.activeTab === "paid" ? "" : " hidden"}>
                 <div class="charts-row">
                     <div class="chart-card">
                         <div class="chart-card-title"${titleAttr("charts.paidToursByCity26")}>${t("charts.paidToursByCity26")}</div>
@@ -1551,7 +1657,7 @@
                     </div>
                 </div>
                 <div class="charts-row">
-                    <div class="chart-card type-chart-card">
+                    <div class="chart-card type-chart-card" id="private-card-26">
                         <div class="chart-card-title"${titleAttr("charts.privatePaidTours26")}>${t("charts.privatePaidTours26")}</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
@@ -1563,6 +1669,7 @@
                                     <button class="pill" onclick="Page26.filterPrivateType('best',this)">best</button>
                                     <button class="pill" onclick="Page26.filterPrivateType('old',this)">old</button>
                                     <button class="pill" onclick="Page26.filterPrivateType('big',this)">big</button>
+                                    <button class="pill" onclick="Page26.filterPrivateType('food kuoni',this)">food kuoni</button>
                                 </div>
                             </div>
                         </div>
@@ -1571,7 +1678,7 @@
                     </div>
                 </div>
                 <div class="charts-row">
-                    <div class="chart-card type-chart-card">
+                    <div class="chart-card type-chart-card" id="shared-card-26">
                         <div class="chart-card-title"${titleAttr("charts.sharedPaidTours26")}>${t("charts.sharedPaidTours26")}</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
@@ -1580,7 +1687,6 @@
                                     <button class="pill active" onclick="Page26.filterSharedType('all',this)">${t("labels.all")}</button>
                                     <button class="pill" onclick="Page26.filterSharedType('war',this)">war</button>
                                     <button class="pill" onclick="Page26.filterSharedType('food',this)">food</button>
-                                    <button class="pill" onclick="Page26.filterSharedType('best',this)">best</button>
                                 </div>
                             </div>
                         </div>
@@ -1621,24 +1727,13 @@
       if (this._initialized) return;
       this._initialized = true;
       this.rebuildStructure();
+      this._syncKindUi();
+      this._positionTabs();
+      window.addEventListener("resize", () => this._positionTabs());
       this.renderAll();
     }
   };
   registerPage("Page26", Page26);
-
-  // src/pages/page-cmp/takeaway.js
-  function change(v25, v26) {
-    const pct = Math.round(Math.abs(v26 - v25) / v25 * 100);
-    if (pct === 0) return "flat";
-    return `${pct}% ${v26 > v25 ? "up" : "down"}`;
-  }
-  function comparisonTakeaway({ fp25, fp26, ft25, ft26 }) {
-    if (fp25 === 0 || ft25 === 0 || ft26 === 0) {
-      return `Free pax are ${fmtN(fp26)} vs ${fmtN(fp25)} in 2025.`;
-    }
-    const avg25 = fp25 / ft25, avg26 = fp26 / ft26;
-    return `Free pax are ${change(fp25, fp26)} on 2025 (${fmtN(fp26)} vs ${fmtN(fp25)}): tours are ${change(ft25, ft26)}, average group size is ${change(avg25, avg26)} (${avg26.toFixed(1)} vs ${avg25.toFixed(1)}).`;
-  }
 
   // src/pages/page-cmp/delta-labels.js
   function delta({ v25, v26 }, fmt2) {
@@ -2002,6 +2097,8 @@
   var PageCmp = {
     activeCity: "all",
     activeLang: "all",
+    activeTab: "free",
+    activeKind: "all",
     activeMonths: [],
     mergedGuides: [],
     cityChartInstance: null,
@@ -2018,7 +2115,7 @@
     activePrivateType: "all",
     activeSharedType: "all",
     PRIVATE_TYPES: ["war PR", "food PR", "best", "old", "big", "food kuoni"],
-    SHARED_TYPES: ["war", "food", "best"],
+    SHARED_TYPES: ["war", "food"],
     _initialized: false,
     _el(id) {
       return document.getElementById(id + "-cmp");
@@ -2064,23 +2161,35 @@
       this.renderMonthlyTable();
       setTimeout(() => this.updateCharts(), 100);
     },
+    kindTypes() {
+      return this.activeKind === "private" ? this.PRIVATE_TYPES : this.activeKind === "shared" ? this.SHARED_TYPES : null;
+    },
+    // types the paid KPIs and city/trend charts cover: one selected type, else the Private/Shared set, else all paid
+    paidTypeFilter() {
+      return this.activeAvgType !== "all" ? [this.activeAvgType] : this.kindTypes();
+    },
+    _paidAt(st, key, isDay) {
+      return paidAt(st, key, isDay, this.paidTypeFilter());
+    },
+    _paidFiltered(st, months) {
+      return paidFiltered(st, months, this.paidTypeFilter());
+    },
     updateKPIs() {
       const citiesToSum = this.activeCity === "all" ? CITIES : [this.activeCity];
-      let pt25 = 0, pt26 = 0, fp25 = 0, fp26 = 0, ft25 = 0, ft26 = 0;
+      const paid = this.activeTab === "paid";
+      let p25 = 0, p26 = 0, t25 = 0, t26 = 0;
       citiesToSum.forEach((city) => {
         const st25 = cityStats25[city]?.[this.activeLang];
         const st26 = cityStats26[city]?.[this.activeLang];
         if (st25) {
-          const s25 = filteredStats(st25, this.activeMonths);
-          fp25 += s25.freePax;
-          pt25 += s25.paidTours;
-          ft25 += s25.freeTours;
+          const s = paid ? this._paidFiltered(st25, this.activeMonths) : filteredStats(st25, this.activeMonths);
+          p25 += paid ? s.pax : s.freePax;
+          t25 += paid ? s.tours : s.freeTours;
         }
         if (st26) {
-          const s26 = filteredStats(st26, this.activeMonths);
-          fp26 += s26.freePax;
-          pt26 += s26.paidTours;
-          ft26 += s26.freeTours;
+          const s = paid ? this._paidFiltered(st26, this.activeMonths) : filteredStats(st26, this.activeMonths);
+          p26 += paid ? s.pax : s.freePax;
+          t26 += paid ? s.tours : s.freeTours;
         }
       });
       const setDelta = (absId, pctId, v25, v26, fmt2) => {
@@ -2090,21 +2199,16 @@
         this._el(absId).innerHTML = `<span class="${cls}">${fmt2(Math.abs(diff))}</span>`;
         this._el(pctId).innerHTML = `<span class="${cls}">${pct}</span>`;
       };
-      this._el("takeaway").textContent = comparisonTakeaway({ fp25, fp26, ft25, ft26 });
-      setDelta("kd-free-abs", "kd-free-pct", fp25, fp26, fmtN);
-      setDelta("kd-paid-abs", "kd-paid-pct", pt25, pt26, (v) => v);
-      setDelta("kd-free-tours-abs", "kd-free-tours-pct", ft25, ft26, fmtN);
-      this._el("kv-free25").textContent = fmtN(fp25);
-      this._el("kv-free26").textContent = fmtN(fp26);
-      this._el("kv-paid25").textContent = pt25;
-      this._el("kv-paid26").textContent = pt26;
-      this._el("kv-free-tours25").textContent = fmtN(ft25);
-      this._el("kv-free-tours26").textContent = fmtN(ft26);
-      const avg25 = ft25 > 0 ? (fp25 / ft25).toFixed(1) : "\u2014";
-      const avg26 = ft26 > 0 ? (fp26 / ft26).toFixed(1) : "\u2014";
-      this._el("kv-avg-pax25").textContent = avg25;
-      this._el("kv-avg-pax26").textContent = avg26;
-      setDelta("kd-avg-pax-abs", "kd-avg-pax-pct", ft25 > 0 ? fp25 / ft25 : 0, ft26 > 0 ? fp26 / ft26 : 0, (v) => v.toFixed(1));
+      setDelta("kd-pax-abs", "kd-pax-pct", p25, p26, fmtN);
+      setDelta("kd-tours-abs", "kd-tours-pct", t25, t26, fmtN);
+      this._el("kv-pax25").textContent = fmtN(p25);
+      this._el("kv-pax26").textContent = fmtN(p26);
+      this._el("kv-tours25").textContent = fmtN(t25);
+      this._el("kv-tours26").textContent = fmtN(t26);
+      const a25 = t25 > 0 ? p25 / t25 : 0, a26 = t26 > 0 ? p26 / t26 : 0;
+      this._el("kv-avg-pax25").textContent = t25 > 0 ? a25.toFixed(1) : "\u2014";
+      this._el("kv-avg-pax26").textContent = t26 > 0 ? a26.toFixed(1) : "\u2014";
+      setDelta("kd-avg-pax-abs", "kd-avg-pax-pct", a25, a26, (v) => v.toFixed(1));
     },
     getChartColors() {
       return getChartColors();
@@ -2126,11 +2230,11 @@
         const s26 = st26 ? filteredStats(st26, this.activeMonths) : null;
         if (s25) {
           cityData25[city] = s25.freePax;
-          paidCityData25[city] = s25.paidTours;
+          paidCityData25[city] = this._paidFiltered(st25, this.activeMonths).tours;
         }
         if (s26) {
           cityData26[city] = s26.freePax;
-          paidCityData26[city] = s26.paidTours;
+          paidCityData26[city] = this._paidFiltered(st26, this.activeMonths).tours;
         }
       });
       const cityDeltaPlugin = {
@@ -2168,30 +2272,22 @@
         if (i < cutoffMonth) {
           fc.forEach((m) => {
             const mo25 = m.g25?.stats[this.activeLang]?.byMonth?.[String(i)];
-            if (mo25) {
-              fd25 += mo25.free.pax || 0;
-              pd25 += mo25.paid.tours || 0;
-            }
+            if (mo25) fd25 += mo25.free.pax || 0;
+            pd25 += this._paidAt(m.g25?.stats[this.activeLang], String(i), false).tours;
             const mo26 = m.g26?.stats[this.activeLang]?.byMonth?.[String(i)];
-            if (mo26) {
-              fd26 += mo26.free.pax || 0;
-              pd26 += mo26.paid.tours || 0;
-            }
+            if (mo26) fd26 += mo26.free.pax || 0;
+            pd26 += this._paidAt(m.g26?.stats[this.activeLang], String(i), false).tours;
           });
         } else if (i === cutoffMonth) {
           for (let d = 1; d <= cutoffDay; d++) {
             const key = `${i}-${d}`;
             fc.forEach((m) => {
               const bd25 = m.g25?.stats[this.activeLang]?.byDay?.[key];
-              if (bd25) {
-                fd25 += bd25.free.pax || 0;
-                pd25 += bd25.paid.tours || 0;
-              }
+              if (bd25) fd25 += bd25.free.pax || 0;
+              pd25 += this._paidAt(m.g25?.stats[this.activeLang], key, true).tours;
               const bd26 = m.g26?.stats[this.activeLang]?.byDay?.[key];
-              if (bd26) {
-                fd26 += bd26.free.pax || 0;
-                pd26 += bd26.paid.tours || 0;
-              }
+              if (bd26) fd26 += bd26.free.pax || 0;
+              pd26 += this._paidAt(m.g26?.stats[this.activeLang], key, true).tours;
             });
           }
         }
@@ -2486,7 +2582,8 @@
       this.activeSharedType = type === "all" || this.SHARED_TYPES.includes(type) ? type : "all";
       this.activeAvgType = type;
       this._setActivePill("unified-type-pills-cmp", btn);
-      this.updatePaidTypeCharts();
+      this._syncKindUi();
+      this.renderAll();
     },
     _setActivePill(groupId, activeBtn) {
       const group = document.getElementById(groupId);
@@ -2680,7 +2777,7 @@
       this.renderPaidTypeTable("private-type-table-cmp", this.activeCity, this.activePrivateType, this.PRIVATE_TYPES, "tours");
       buildTypeChart("sharedPaidChart-cmp", "sharedPaidChartInstance", this.activeCity, this.activeSharedType, this.SHARED_TYPES, "tours");
       this.renderPaidTypeTable("shared-type-table-cmp", this.activeCity, this.activeSharedType, this.SHARED_TYPES, "pax");
-      const typesToShow = this.activeAvgType === "all" ? this.ALL_PAID_TYPES : [this.activeAvgType];
+      const typesToShow = this.activeAvgType === "all" ? this.kindTypes() || this.ALL_PAID_TYPES : [this.activeAvgType];
       const getTypeAvg = (year, types) => this._getTypeMonthData(this.activeCity, types, "pax", year).map((d) => d.secondary > 0 ? +(d.primary / d.secondary).toFixed(1) : null);
       try {
         if (this.warAvgChartInstance) this.warAvgChartInstance.destroy();
@@ -2703,6 +2800,43 @@
       this.mergedGuides = this.buildMerged();
       this.renderAll();
     },
+    filterTab(tab) {
+      this.activeTab = tab;
+      document.querySelectorAll("#page-cmp .view-tab").forEach((b) => b.classList.toggle("active", b.dataset.tab === tab));
+      document.getElementById("free-section-body").hidden = tab !== "free";
+      document.getElementById("paid-section-body").hidden = tab !== "paid";
+      document.getElementById("kind-filter-cmp").hidden = tab !== "paid";
+      document.querySelector('#page-cmp .lang-pill[data-lang="oth"]').hidden = tab === "free";
+      if (tab === "free" && this.activeLang === "oth") {
+        this.activeLang = "all";
+        document.querySelectorAll("#page-cmp .lang-pill").forEach((p) => p.classList.toggle("active", p.dataset.lang === "all"));
+        this.mergedGuides = this.buildMerged();
+      }
+      this._positionTourTypeSticky();
+      this.renderAll();
+    },
+    filterKind(kind) {
+      this.activeKind = kind;
+      document.querySelectorAll("#page-cmp .kind-pill").forEach((p) => p.classList.toggle("active", p.dataset.kind === kind));
+      const types = this.kindTypes();
+      if (types && this.activeAvgType !== "all" && !types.includes(this.activeAvgType)) {
+        this.activeAvgType = this.activePrivateType = this.activeSharedType = "all";
+      }
+      this._syncKindUi();
+      this.renderAll();
+    },
+    // Private/Shared narrows the tour-type pills and hides the by-type chart of the other kind
+    _syncKindUi() {
+      const types = this.kindTypes();
+      document.querySelectorAll("#unified-type-pills-cmp .pill").forEach((p) => {
+        const v = p.dataset.value;
+        p.hidden = !!types && v !== "all" && !types.includes(v);
+        p.classList.toggle("active", v === this.activeAvgType);
+      });
+      const one = this.activeAvgType !== "all" ? this.activeAvgType : null;
+      document.getElementById("private-type-card-cmp").hidden = this.activeKind === "shared" || !!one && !this.PRIVATE_TYPES.includes(one);
+      document.getElementById("shared-type-card-cmp").hidden = this.activeKind === "private" || !!one && !this.SHARED_TYPES.includes(one);
+    },
     filterMonth(m) {
       this.activeMonths = m === "all" ? [] : [parseInt(m)];
       this.mergedGuides = this.buildMerged();
@@ -2712,7 +2846,7 @@
       return `        <div class="header">
             <div class="header-left">
                 <h1>${t("sections.guideComparison")}</h1>
-                <p><span class="ytd-range-label">Jan\u2013Jun</span> 2025 vs. 2026 &middot; ${t("sections.productionByGuide")}</p>
+                <p><span class="ytd-range-label">Jan\u2013Jun</span> 2025 vs. 2026</p>
             </div>
             <div class="header-right">
                 <div id="date-pov-cmp" class="mb-6"></div>
@@ -2722,7 +2856,10 @@
     },
     _buildKpisAndFilters() {
       return `        <div class="main">
-            <p class="takeaway" id="takeaway-cmp"></p>
+            <div class="city-pill-group view-tabs" id="view-tabs-cmp" role="tablist">
+                <button class="city-filter-pill view-tab${this.activeTab === "free" ? " active" : ""}" data-tab="free" role="tab" onclick="PageCmp.filterTab('free')">${t("labels.freeTours")}</button>
+                <button class="city-filter-pill view-tab${this.activeTab === "paid" ? " active" : ""}" data-tab="paid" role="tab" onclick="PageCmp.filterTab('paid')">${t("labels.paidTours")}</button>
+            </div>
             <div class="filter-bar">
                 <div class="city-pill-group">
                     ${["all", ...CITIES].map((c) => {
@@ -2735,7 +2872,7 @@
                 </div>
                 <div class="filter-dropdowns">
                     <div class="city-pill-group lang-pill-group" id="lang-filter-cmp" role="group" aria-label="${t("labels.language")}">
-                        ${[["all", t("labels.all")], ["eng", "ENG"], ["esp", "ESP"], ["fra", "FRA"]].map(([v, label]) => `<button class="city-filter-pill lang-pill${this.activeLang === v ? " active" : ""}" data-lang="${v}" onclick="PageCmp.filterLang('${v}')">${label}</button>`).join("")}
+                        ${[["all", t("labels.all")], ["eng", "Eng"], ["esp", "Esp"], ["oth", "Oth"]].map(([v, label]) => `<button class="city-filter-pill lang-pill${this.activeLang === v ? " active" : ""}" data-lang="${v}"${v === "oth" && this.activeTab === "free" ? " hidden" : ""} onclick="PageCmp.filterLang('${v}')">${label}</button>`).join("")}
                     </div>
                     <div class="filter-field">
                         <label class="filter-label" for="month-filter-cmp">${t("labels.mo")}</label>
@@ -2744,29 +2881,32 @@
                             ${Array.from({ length: getCutoffMonth() }, (_, i) => i + 1).map((m) => `<option value="${m}">${m}</option>`).join("")}
                         </select>
                     </div>
+                    <div class="city-pill-group kind-pill-group" id="kind-filter-cmp" role="group"${this.activeTab === "paid" ? "" : " hidden"}>
+                        ${[["all", t("labels.all")], ["private", t("labels.privateTours")], ["shared", t("labels.sharedTours")]].map(([v, label]) => `<button class="city-filter-pill kind-pill${this.activeKind === v ? " active" : ""}" data-kind="${v}" onclick="PageCmp.filterKind('${v}')">${label}</button>`).join("")}
+                    </div>
                 </div>
             </div>
 
-            <div class="kpi-grid kpi-grid-4">
+            <div class="kpi-grid kpi-grid-3">
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t("labels.freeToursPaxCountYtd")}</div>
+                    <div class="kpi-label">${t("labels.kpiPaxCountYtd")}</div>
                     <div class="kpi-delta">
-                        <span class="kpi-delta-abs" id="kd-free-abs-cmp">\u2014</span>
-                        <span class="kpi-delta-pct" id="kd-free-pct-cmp">\u2014</span>
+                        <span class="kpi-delta-abs" id="kd-pax-abs-cmp">\u2014</span>
+                        <span class="kpi-delta-pct" id="kd-pax-pct-cmp">\u2014</span>
                     </div>
                     <div class="kpi-2y">
                         <div>
                             <div class="kpi-2y-label">2025</div>
-                            <div class="kpi-2y-val" id="kv-free25-cmp">\u2014</div>
+                            <div class="kpi-2y-val" id="kv-pax25-cmp">\u2014</div>
                         </div>
                         <div>
                             <div class="kpi-2y-label">2026</div>
-                            <div class="kpi-2y-val" id="kv-free26-cmp">\u2014</div>
+                            <div class="kpi-2y-val" id="kv-pax26-cmp">\u2014</div>
                         </div>
                     </div>
                 </div>
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t("labels.avgPaxPerFreeTour")}</div>
+                    <div class="kpi-label">${t("labels.kpiAvgPaxPerTour")}</div>
                     <div class="kpi-delta">
                         <span class="kpi-delta-abs" id="kd-avg-pax-abs-cmp">\u2014</span>
                         <span class="kpi-delta-pct" id="kd-avg-pax-pct-cmp">\u2014</span>
@@ -2783,50 +2923,31 @@
                     </div>
                 </div>
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t("labels.totalFreeTours")}</div>
+                    <div class="kpi-label">${t("labels.kpiTotalTours")}</div>
                     <div class="kpi-delta">
-                        <span class="kpi-delta-abs" id="kd-free-tours-abs-cmp">\u2014</span>
-                        <span class="kpi-delta-pct" id="kd-free-tours-pct-cmp">\u2014</span>
+                        <span class="kpi-delta-abs" id="kd-tours-abs-cmp">\u2014</span>
+                        <span class="kpi-delta-pct" id="kd-tours-pct-cmp">\u2014</span>
                     </div>
                     <div class="kpi-2y">
                         <div>
                             <div class="kpi-2y-label">2025</div>
-                            <div class="kpi-2y-val" id="kv-free-tours25-cmp">\u2014</div>
+                            <div class="kpi-2y-val" id="kv-tours25-cmp">\u2014</div>
                         </div>
                         <div>
                             <div class="kpi-2y-label">2026</div>
-                            <div class="kpi-2y-val" id="kv-free-tours26-cmp">\u2014</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="kpi hl-blue">
-                    <div class="kpi-label">${t("labels.paidToursCountYtd")}</div>
-                    <div class="kpi-delta">
-                        <span class="kpi-delta-abs" id="kd-paid-abs-cmp">\u2014</span>
-                        <span class="kpi-delta-pct" id="kd-paid-pct-cmp">\u2014</span>
-                    </div>
-                    <div class="kpi-2y">
-                        <div>
-                            <div class="kpi-2y-label">2025</div>
-                            <div class="kpi-2y-val" id="kv-paid25-cmp">\u2014</div>
-                        </div>
-                        <div>
-                            <div class="kpi-2y-label">2026</div>
-                            <div class="kpi-2y-val" id="kv-paid26-cmp">\u2014</div>
+                            <div class="kpi-2y-val" id="kv-tours26-cmp">\u2014</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            `;
+`;
     },
     _buildFreeTours() {
-      return `            <!-- \u2500\u2500 FREE TOURS SECTION \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 -->
-            <div class="section-divider" onclick="toggleSection('free-section-body')">
-                <span>${t("sections.freeTours")}</span>
-                <span class="section-chevron">\u25BE</span>
-            </div>
-            <div id="free-section-body" class="section-body">
+      return `            <div id="free-section-body" class="section-body"${this.activeTab === "free" ? "" : " hidden"}>
+                <div class="charts-row">
+                    <div id="monthly-pax-table-cmp"></div>
+                </div>
                 <div class="charts-row">
                     <div class="chart-card">
                         <div class="chart-card-title"${titleAttr("charts.freePaxByCity")}>${t("charts.freePaxByCity")}</div>
@@ -2834,22 +2955,6 @@
                             <canvas id="cityChart-cmp"></canvas>
                         </div>
                     </div>
-                    <div class="chart-card">
-                        <div class="chart-card-title"${titleAttr("charts.avgFreePaxCmp")}>${t("charts.avgFreePaxCmp")} \u2014 <span class="ytd-range-label">Jan\u2013Jun</span> 2025 vs. 2026</div>
-                        <div class="chart-container">
-                            <canvas id="avgFreePaxCmpChart-cmp"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="charts-row">
-                    <div class="chart-card">
-                        <div class="chart-card-title"${titleAttr("charts.cumulativeFreePax")}>${t("charts.cumulativeFreePax")} (<span class="ytd-range-label">Jan\u2013Jun</span>)</div>
-                        <div class="chart-container">
-                            <canvas id="monthlyChart-cmp"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="charts-row">
                     <div class="chart-card">
                         <div class="chart-card-title"${titleAttr("charts.cityMonthlyCumulative")}>${t("charts.cityMonthlyCumulative")} (<span class="ytd-range-label">Jan\u2013Jun</span>)</div>
                         <div id="city-monthly-badges-cmp" class="city-monthly-badges"></div>
@@ -2859,19 +2964,25 @@
                     </div>
                 </div>
                 <div class="charts-row">
-                    <div id="monthly-pax-table-cmp"></div>
+                    <div class="chart-card">
+                        <div class="chart-card-title"${titleAttr("charts.avgFreePaxCmp")}>${t("charts.avgFreePaxCmp")} \u2014 <span class="ytd-range-label">Jan\u2013Jun</span> 2025 vs. 2026</div>
+                        <div class="chart-container">
+                            <canvas id="avgFreePaxCmpChart-cmp"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-card-title"${titleAttr("charts.cumulativeFreePax")}>${t("charts.cumulativeFreePax")} (<span class="ytd-range-label">Jan\u2013Jun</span>)</div>
+                        <div class="chart-container">
+                            <canvas id="monthlyChart-cmp"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
 
 `;
     },
     _buildPaidTours() {
-      return `            <!-- \u2500\u2500 PAID TOURS SECTION \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 -->
-            <div class="section-divider" onclick="toggleSection('paid-section-body')">
-                <span>${t("sections.paidTours")}</span>
-                <span class="section-chevron">\u25BE</span>
-            </div>
-            <div id="paid-section-body" class="section-body">
+      return `            <div id="paid-section-body" class="section-body"${this.activeTab === "paid" ? "" : " hidden"}>
                 <div class="type-filter-row sticky-type-filter" id="tour-type-sticky-cmp">
                     <span class="type-filter-label">${t("sections.paidTours")}</span>
                     <div id="unified-type-pills-cmp" class="pill-group">
@@ -2901,7 +3012,7 @@
                     </div>
                 </div>
                 <div class="charts-row">
-                    <div class="chart-card type-chart-card">
+                    <div class="chart-card type-chart-card" id="private-type-card-cmp">
                         <div class="chart-card-title"${titleAttr("charts.privatePaidTours")}>${t("charts.privatePaidTours")} \u2014 <span class="ytd-range-label">Jan\u2013Jun</span> 2025 vs. 2026</div>
                         <div class="chart-container">
                             <canvas id="privatePaidChart-cmp"></canvas>
@@ -2918,7 +3029,7 @@
                     </div>
                 </div>
                 <div class="charts-row">
-                    <div class="chart-card type-chart-card">
+                    <div class="chart-card type-chart-card" id="shared-type-card-cmp">
                         <div class="chart-card-title"${titleAttr("charts.sharedPaidTours")}>${t("charts.sharedPaidTours")} \u2014 <span class="ytd-range-label">Jan\u2013Jun</span> 2025 vs. 2026</div>
                         <div class="chart-container">
                             <canvas id="sharedPaidChart-cmp"></canvas>
@@ -2965,6 +3076,8 @@
       if (datePov) datePov.textContent = now;
     },
     _positionTourTypeSticky() {
+      const tabs = document.getElementById("view-tabs-cmp");
+      if (tabs) document.getElementById("page-cmp").style.setProperty("--view-tabs-h", tabs.offsetHeight + "px");
       const filterBar = document.querySelector("#page-cmp .filter-bar");
       const bar = document.getElementById("tour-type-sticky-cmp");
       if (filterBar && bar) {
@@ -2982,6 +3095,7 @@
       this._initialized = true;
       this.rebuildStructure();
       this.mergedGuides = this.buildMerged();
+      this._syncKindUi();
       this.renderAll();
       this._positionTourTypeSticky();
       window.addEventListener("resize", () => this._positionTourTypeSticky());
@@ -3350,7 +3464,7 @@
                 <div class="city-pill-group">${cityPills}</div>
                 <div class="filter-dropdowns">
                     <div class="city-pill-group lang-pill-group" id="lang-filter-gd" role="group" aria-label="${t("labels.language")}">
-                        ${[["all", t("labels.all")], ["eng", "ENG"], ["esp", "ESP"], ["fra", "FRA"]].map(([v, label]) => `<button class="city-filter-pill lang-pill${this.activeLang === v ? " active" : ""}" data-lang="${v}" onclick="PageGuides.filterLang('${v}')">${label}</button>`).join("")}
+                        ${[["all", t("labels.all")], ["eng", "ENG"], ["esp", "ESP"], ["oth", "OTH"]].map(([v, label]) => `<button class="city-filter-pill lang-pill${this.activeLang === v ? " active" : ""}" data-lang="${v}" onclick="PageGuides.filterLang('${v}')">${label}</button>`).join("")}
                     </div>
                     <div class="filter-field">
                         <label class="filter-label" for="month-filter-gd">${t("labels.mo")}</label>
@@ -4685,18 +4799,18 @@ GM%: ${gmpct}%`;
     const langLabels = CITIES;
     const engData = [];
     const espData = [];
-    const fraData = [];
+    const othData = [];
     CITIES.forEach((city) => {
       const langs = langByCity[city];
-      const total = (langs.eng.tours || 0) + (langs.esp.tours || 0) + (langs.fra.tours || 0);
+      const total = (langs.eng.tours || 0) + (langs.esp.tours || 0) + (langs.oth.tours || 0);
       engData.push(total > 0 ? langs.eng.tours / total * 100 : 0);
       espData.push(total > 0 ? langs.esp.tours / total * 100 : 0);
-      fraData.push(total > 0 ? langs.fra.tours / total * 100 : 0);
+      othData.push(total > 0 ? langs.oth.tours / total * 100 : 0);
     });
     makeBarChart("lang-mix-chart", langLabels, [
       { label: t("management.english"), data: engData, backgroundColor: "#6B92B9", borderRadius: 4, borderSkipped: false },
       { label: t("management.spanish"), data: espData, backgroundColor: "#D18C6D", borderRadius: 4, borderSkipped: false },
-      { label: t("management.french"), data: fraData, backgroundColor: "#8FA8BC", borderRadius: 4, borderSkipped: false }
+      { label: t("management.other"), data: othData, backgroundColor: "#8FA8BC", borderRadius: 4, borderSkipped: false }
     ], {
       horizontal: true,
       showLegend: true,
@@ -4705,7 +4819,7 @@ GM%: ${gmpct}%`;
         afterLabel: (ctx) => {
           const city = langLabels[ctx.dataIndex];
           const langs = langByCity[city];
-          const langKey = ["eng", "esp", "fra"][ctx.datasetIndex];
+          const langKey = ["eng", "esp", "oth"][ctx.datasetIndex];
           return `${langs[langKey].tours} tours \xB7 ${langs[langKey].pax} pax`;
         }
       }
@@ -4741,10 +4855,10 @@ GM%: ${gmpct}%`;
   function buildLangByCity() {
     const result = {};
     CITIES.forEach((city) => {
-      result[city] = { eng: { tours: 0, pax: 0 }, esp: { tours: 0, pax: 0 }, fra: { tours: 0, pax: 0 } };
+      result[city] = { eng: { tours: 0, pax: 0 }, esp: { tours: 0, pax: 0 }, oth: { tours: 0, pax: 0 } };
     });
     CITIES.forEach((city) => {
-      ["eng", "esp", "fra"].forEach((lang) => {
+      ["eng", "esp", "oth"].forEach((lang) => {
         const cityLangStats = cityStats26[city]?.[lang];
         if (cityLangStats) {
           const filtered = filterStatsByDate(cityLangStats, getGlobalDate());

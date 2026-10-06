@@ -1,14 +1,16 @@
-import { getCityColor, getChartColors as _chartColors, CITY_CLS, CITIES, MONTH_NAMES_HR, filteredStats, fmtN, getCutoffMonth, getGlobalDate, getRangeLabel, registerPage } from '../shared.js';
+import { getCityColor, getChartColors as _chartColors, CITY_CLS, CITIES, MONTH_NAMES_HR, filteredStats, paidFiltered, fmtN, getCutoffMonth, getGlobalDate, getRangeLabel, registerPage } from '../shared.js';
 import { t, titleAttr } from '../i18n.js';
 
 export const Page26 = {
     activeCity: 'all',
     activeLang: 'all',
+    activeTab: 'free',
+    activeKind: 'all',
     activeMonths: [],
     activePrivateType: 'all',
     activeSharedType: 'all',
-    PRIVATE_TYPES: ['war PR', 'food PR', 'best', 'old', 'big'],
-    SHARED_TYPES: ['war', 'food', 'best'],
+    PRIVATE_TYPES: ['war PR', 'food PR', 'best', 'old', 'big', 'food kuoni'],
+    SHARED_TYPES: ['war', 'food'],
     chartInstance: null,
     cityChartInstance: null,
     paidCityChartInstance: null,
@@ -48,7 +50,7 @@ export const Page26 = {
             const st = cityStats26[c]?.[lang];
             const fs = st ? filteredStats(st, this.activeMonths) : { freePax: 0, paidTours: 0 };
             freePaxByCity[c] = fs.freePax;
-            paidToursByCity[c] = fs.paidTours;
+            paidToursByCity[c] = st ? paidFiltered(st, this.activeMonths, this.kindTypes()).tours : 0;
         });
 
         const makeBar = (canvasId, instanceKey, dataArr, yLabel, tooltipLabel) => {
@@ -341,21 +343,22 @@ export const Page26 = {
 
     updateKPIs() {
         const citiesToSum = this.activeCity === 'all' ? CITIES : [this.activeCity];
-        const k = this.activeLang;
-        let freeTours = 0, paidTours = 0, freePax = 0, paidPax = 0;
+        const paid = this.activeTab === 'paid';
+        let pax = 0, tours = 0;
         citiesToSum.forEach(city => {
-            const st = cityStats26[city]?.[k];
+            const st = cityStats26[city]?.[this.activeLang];
             if (!st) return;
-            const fs = filteredStats(st, this.activeMonths);
-            freeTours += fs.freeTours;
-            paidTours += fs.paidTours;
-            freePax   += fs.freePax;
-            paidPax   += fs.paidPax;
+            if (paid) {
+                const ps = paidFiltered(st, this.activeMonths, this.kindTypes());
+                pax += ps.pax; tours += ps.tours;
+            } else {
+                const fs = filteredStats(st, this.activeMonths);
+                pax += fs.freePax; tours += fs.freeTours;
+            }
         });
-        this._el('kv-free-tours').textContent = freeTours;
-        this._el('kv-free').textContent       = fmtN(freePax);
-        this._el('kv-avg-pax').textContent    = freeTours > 0 ? (freePax / freeTours).toFixed(1) : '—';
-        this._el('kv-paid').textContent       = paidTours;
+        this._el('kv-pax').textContent     = fmtN(pax);
+        this._el('kv-avg-pax').textContent = tours > 0 ? (pax / tours).toFixed(1) : '—';
+        this._el('kv-tours').textContent   = fmtN(tours);
     },
 
     filterCity(city) {
@@ -369,13 +372,53 @@ export const Page26 = {
         document.querySelectorAll('#page-26 .lang-pill').forEach(p => p.classList.toggle('active', p.dataset.lang === lang));
         this.renderAll();
     },
+    kindTypes() {
+        return this.activeKind === 'private' ? this.PRIVATE_TYPES
+             : this.activeKind === 'shared'  ? this.SHARED_TYPES : null;
+    },
+
+    filterTab(tab) {
+        this.activeTab = tab;
+        document.querySelectorAll('#page-26 .view-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+        document.getElementById('free-section-body-26').hidden = tab !== 'free';
+        document.getElementById('paid-section-body-26').hidden = tab !== 'paid';
+        document.getElementById('kind-filter-26').hidden = tab !== 'paid';
+        // every free tour is English or Spanish, so Oth only exists on Paid
+        document.querySelector('#page-26 .lang-pill[data-lang="oth"]').hidden = tab === 'free';
+        if (tab === 'free' && this.activeLang === 'oth') {
+            this.activeLang = 'all';
+            document.querySelectorAll('#page-26 .lang-pill').forEach(p => p.classList.toggle('active', p.dataset.lang === 'all'));
+        }
+        this._positionTabs();
+        this.renderAll();
+    },
+
+    filterKind(kind) {
+        this.activeKind = kind;
+        document.querySelectorAll('#page-26 .kind-pill').forEach(p => p.classList.toggle('active', p.dataset.kind === kind));
+        this._syncKindUi();
+        this.renderAll();
+    },
+
+    // Private/Shared hides the by-type card of the other kind
+    _syncKindUi() {
+        document.getElementById('private-card-26').hidden = this.activeKind === 'shared';
+        document.getElementById('shared-card-26').hidden = this.activeKind === 'private';
+    },
+
+    // the filter bar pins under the Free/Paid tabs, so it needs their height
+    _positionTabs() {
+        const tabs = document.getElementById('view-tabs-26');
+        if (tabs) document.getElementById('page-26').style.setProperty('--view-tabs-h', tabs.offsetHeight + 'px');
+    },
+
     filterMonth(m)   { this.activeMonths = m === 'all' ? [] : [parseInt(m)]; this.renderAll(); },
 
     _buildHeader() {
         return `<div class="header">
             <div class="header-left">
                 <h1>${t('table.tours')} <span class="accent">2026</span></h1>
-                <p>Tour production by guide &middot; ${t('labels.freeTours')} vs. ${t('labels.paidTours')} &middot; <span class="ytd-range-label">${getRangeLabel()}</span></p>
+                <p><span class="ytd-range-label">${getRangeLabel()}</span></p>
             </div>
             <div class="header-right">
                 <div id="date-pov-26" class="mb-6"></div>
@@ -394,12 +437,16 @@ export const Page26 = {
         }).join('');
 
         return `<div class="main">
+            <div class="city-pill-group view-tabs" id="view-tabs-26" role="tablist">
+                <button class="city-filter-pill view-tab${this.activeTab === 'free' ? ' active' : ''}" data-tab="free" role="tab" onclick="Page26.filterTab('free')">${t('labels.freeTours')}</button>
+                <button class="city-filter-pill view-tab${this.activeTab === 'paid' ? ' active' : ''}" data-tab="paid" role="tab" onclick="Page26.filterTab('paid')">${t('labels.paidTours')}</button>
+            </div>
             <div class="filter-bar">
                 <div class="city-pill-group">${cityPills}</div>
                 <div class="filter-dropdowns">
                     <div class="city-pill-group lang-pill-group" id="lang-filter-26" role="group" aria-label="${t('labels.language')}">
-                        ${[['all', t('labels.all')], ['eng', 'ENG'], ['esp', 'ESP'], ['fra', 'FRA']].map(([v, label]) =>
-                            `<button class="city-filter-pill lang-pill${this.activeLang === v ? ' active' : ''}" data-lang="${v}" onclick="Page26.filterLang('${v}')">${label}</button>`).join('')}
+                        ${[['all', t('labels.all')], ['eng', 'Eng'], ['esp', 'Esp'], ['oth', 'Oth']].map(([v, label]) =>
+                            `<button class="city-filter-pill lang-pill${this.activeLang === v ? ' active' : ''}" data-lang="${v}"${v === 'oth' && this.activeTab === 'free' ? ' hidden' : ''} onclick="Page26.filterLang('${v}')">${label}</button>`).join('')}
                     </div>
                     <div class="filter-field">
                         <label class="filter-label" for="month-filter-26">${t('labels.mo')}</label>
@@ -408,43 +455,40 @@ export const Page26 = {
                             ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].slice(0, getCutoffMonth()).map((n,i)=>`<option value="${i+1}">${n}</option>`).join('')}
                         </select>
                     </div>
+                    <div class="city-pill-group kind-pill-group" id="kind-filter-26" role="group"${this.activeTab === 'paid' ? '' : ' hidden'}>
+                        ${[['all', t('labels.all')], ['private', t('labels.privateTours')], ['shared', t('labels.sharedTours')]].map(([v, label]) =>
+                            `<button class="city-filter-pill kind-pill${this.activeKind === v ? ' active' : ''}" data-kind="${v}" onclick="Page26.filterKind('${v}')">${label}</button>`).join('')}
+                    </div>
                 </div>
             </div>
 
-            <div class="kpi-grid kpi-grid-4">
+            <div class="kpi-grid kpi-grid-3">
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t('labels.freeToursPaxCount')} YTD</div>
+                    <div class="kpi-label">${t('labels.kpiPaxCountYtd')}</div>
                     <div class="kpi-2y">
-                        <div><div class="kpi-2y-label">2026</div><div class="kpi-2y-val" id="kv-free-26">—</div></div>
+                        <div><div class="kpi-2y-label">2026</div><div class="kpi-2y-val" id="kv-pax-26">—</div></div>
                     </div>
                 </div>
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t('labels.avgPaxPerFreeTour')}</div>
+                    <div class="kpi-label">${t('labels.kpiAvgPaxPerTour')}</div>
                     <div class="kpi-2y">
                         <div><div class="kpi-2y-label">2026</div><div class="kpi-2y-val" id="kv-avg-pax-26">—</div></div>
                     </div>
                 </div>
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t('labels.totalFreeTours')}</div>
+                    <div class="kpi-label">${t('labels.kpiTotalTours')}</div>
                     <div class="kpi-2y">
-                        <div><div class="kpi-2y-label">2026</div><div class="kpi-2y-val" id="kv-free-tours-26">—</div></div>
-                    </div>
-                </div>
-                <div class="kpi hl-blue">
-                    <div class="kpi-label">${t('labels.paidToursCount')} YTD</div>
-                    <div class="kpi-2y">
-                        <div><div class="kpi-2y-label">2026</div><div class="kpi-2y-val" id="kv-paid-26">—</div></div>
+                        <div><div class="kpi-2y-label">2026</div><div class="kpi-2y-val" id="kv-tours-26">—</div></div>
                     </div>
                 </div>
             </div>`;
     },
 
     _buildFreeTours() {
-        return `<button type="button" class="section-divider" aria-expanded="true" onclick="toggleSection('free-section-body-26')">
-                <span>${t('sections.freeTours')}</span>
-                <span class="section-chevron">▾</span>
-            </button>
-            <div id="free-section-body-26" class="section-body">
+        return `<div id="free-section-body-26" class="section-body"${this.activeTab === 'free' ? '' : ' hidden'}>
+                <div class="charts-row">
+                    <div id="monthly-pax-table-26"></div>
+                </div>
                 <div class="charts-row">
                     <div class="chart-card">
                         <div class="chart-card-title"${titleAttr('charts.freePaxByCity26')}>${t('charts.freePaxByCity26')}</div>
@@ -455,18 +499,11 @@ export const Page26 = {
                         <div class="chart-container"><canvas id="avgFreePaxChart-26"></canvas></div>
                     </div>
                 </div>
-                <div class="charts-row">
-                    <div id="monthly-pax-table-26"></div>
-                </div>
             </div>`;
     },
 
     _buildPaidTours() {
-        return `<button type="button" class="section-divider" aria-expanded="true" onclick="toggleSection('paid-section-body-26')">
-                <span>${t('sections.paidTours')}</span>
-                <span class="section-chevron">▾</span>
-            </button>
-            <div id="paid-section-body-26" class="section-body">
+        return `<div id="paid-section-body-26" class="section-body"${this.activeTab === 'paid' ? '' : ' hidden'}>
                 <div class="charts-row">
                     <div class="chart-card">
                         <div class="chart-card-title"${titleAttr('charts.paidToursByCity26')}>${t('charts.paidToursByCity26')}</div>
@@ -474,7 +511,7 @@ export const Page26 = {
                     </div>
                 </div>
                 <div class="charts-row">
-                    <div class="chart-card type-chart-card">
+                    <div class="chart-card type-chart-card" id="private-card-26">
                         <div class="chart-card-title"${titleAttr('charts.privatePaidTours26')}>${t('charts.privatePaidTours26')}</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
@@ -486,6 +523,7 @@ export const Page26 = {
                                     <button class="pill" onclick="Page26.filterPrivateType('best',this)">best</button>
                                     <button class="pill" onclick="Page26.filterPrivateType('old',this)">old</button>
                                     <button class="pill" onclick="Page26.filterPrivateType('big',this)">big</button>
+                                    <button class="pill" onclick="Page26.filterPrivateType('food kuoni',this)">food kuoni</button>
                                 </div>
                             </div>
                         </div>
@@ -494,7 +532,7 @@ export const Page26 = {
                     </div>
                 </div>
                 <div class="charts-row">
-                    <div class="chart-card type-chart-card">
+                    <div class="chart-card type-chart-card" id="shared-card-26">
                         <div class="chart-card-title"${titleAttr('charts.sharedPaidTours26')}>${t('charts.sharedPaidTours26')}</div>
                         <div class="type-chart-filters">
                             <div class="type-filter-row">
@@ -503,7 +541,6 @@ export const Page26 = {
                                     <button class="pill active" onclick="Page26.filterSharedType('all',this)">${t('labels.all')}</button>
                                     <button class="pill" onclick="Page26.filterSharedType('war',this)">war</button>
                                     <button class="pill" onclick="Page26.filterSharedType('food',this)">food</button>
-                                    <button class="pill" onclick="Page26.filterSharedType('best',this)">best</button>
                                 </div>
                             </div>
                         </div>
@@ -545,6 +582,9 @@ export const Page26 = {
         if (this._initialized) return;
         this._initialized = true;
         this.rebuildStructure();
+        this._syncKindUi();
+        this._positionTabs();
+        window.addEventListener('resize', () => this._positionTabs());
         this.renderAll();
     }
 };

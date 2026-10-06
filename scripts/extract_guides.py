@@ -47,7 +47,7 @@ elif SHEET is None:
     SHEET = 'Evidencija'
 
 CITY_MAP = {'zg': 'Zagreb', 'du': 'Dubrovnik', 'st': 'Split', 'zd': 'Zadar'}
-LANG_MAP = {'eng': 'eng', 'esp': 'esp', 'fra': 'fra'}
+LANG_MAP = {'eng': 'eng', 'esp': 'esp', 'oth': 'oth'}
 MONTH_NAMES = {1:'Sij',2:'Velj',3:'Ožu',4:'Tra',5:'Svi',6:'Lip',7:'Srp',8:'Kol',9:'Ruj',10:'Lis',11:'Stu',12:'Pro'}
 
 # Same guide under two names in the sheet: the 2025 rows use her maiden name, 2026 the married name.
@@ -385,11 +385,11 @@ def main():
     HAS_MGMT = all(c is not None for c in (C_CHANNEL, C_CHARGED, C_VCOST, C_GM))
 
     # raw[vendor][lang] = stats ; mgmt_raw[vendor] = mgmt
-    raw      = defaultdict(lambda: {lang: empty_stats() for lang in ('eng', 'esp', 'fra')})
+    raw      = defaultdict(lambda: {lang: empty_stats() for lang in ('eng', 'esp', 'oth')})
     mgmt_raw = defaultdict(empty_mgmt)
     # raw_city[city][lang] = stats — keyed by each row's own City column (not the guide's home city),
     # so city totals stay correct regardless of which guide covered the tour.
-    raw_city = defaultdict(lambda: {lang: empty_stats() for lang in ('eng', 'esp', 'fra')})
+    raw_city = defaultdict(lambda: {lang: empty_stats() for lang in ('eng', 'esp', 'oth')})
 
     for row in data_rows:
         vendor = NAME_ALIASES.get(_val(row[C_VENDOR]), _val(row[C_VENDOR]))
@@ -409,8 +409,8 @@ def main():
         month = _int(row[C_MONTH])
         pax   = _int(row[C_PAX]) or 0
 
-        if lang not in ('eng', 'esp', 'fra'):
-            lang = 'eng'
+        if lang not in ('eng', 'esp'):
+            lang = 'oth'
         if month is None:
             continue
 
@@ -481,7 +481,7 @@ def main():
             seen.add(name)
             all_s = empty_stats()
             lang_stats = {}
-            for lang in ('eng', 'esp', 'fra'):
+            for lang in ('eng', 'esp', 'oth'):
                 ls = raw[name][lang]
                 merge_stats(all_s, ls)
                 lang_stats[lang] = to_plain(ls)
@@ -496,7 +496,7 @@ def main():
             continue
         all_s = empty_stats()
         lang_stats = {}
-        for lang in ('eng', 'esp', 'fra'):
+        for lang in ('eng', 'esp', 'oth'):
             ls = raw[name][lang]
             merge_stats(all_s, ls)
             lang_stats[lang] = to_plain(ls)
@@ -511,7 +511,7 @@ def main():
     for city, langs in raw_city.items():
         all_s = empty_stats()
         lang_stats = {}
-        for lang in ('eng', 'esp', 'fra'):
+        for lang in ('eng', 'esp', 'oth'):
             ls = langs[lang]
             merge_stats(all_s, ls)
             lang_stats[lang] = to_plain(ls)

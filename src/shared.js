@@ -149,6 +149,35 @@ export function filteredStats(st, months, cutoff) {
     }, { freeTours: 0, freePax: 0, paidTours: 0, paidPax: 0 });
 }
 
+// Paid tours/pax in one month or day bucket. `types` (array of tour types) narrows it; null means all paid.
+export function paidAt(st, key, isDay, types) {
+    if (!types) {
+        const b = (isDay ? st?.byDay : st?.byMonth)?.[key];
+        return { tours: b?.paid?.tours || 0, pax: b?.paid?.pax || 0 };
+    }
+    const bt = (isDay ? st?.byDayType : st?.byMonthType)?.[key];
+    let tours = 0, pax = 0;
+    types.forEach(tp => { tours += bt?.[tp]?.tours || 0; pax += bt?.[tp]?.pax || 0; });
+    return { tours, pax };
+}
+
+// Paid equivalent of filteredStats: same month/cutoff-day walk, optionally narrowed to `types`.
+export function paidFiltered(st, months, types) {
+    const cutoffMonth = getCutoffMonth();
+    const cutoffDay = parseInt(GLOBAL_DATE.split('-')[2]);
+    const active = months.length > 0 ? months : Array.from({length: cutoffMonth}, (_, i) => i + 1);
+    const acc = { tours: 0, pax: 0 };
+    const add = b => { acc.tours += b.tours; acc.pax += b.pax; };
+    active.forEach(m => {
+        if (m < cutoffMonth) add(paidAt(st, String(m), false, types));
+        else if (m === cutoffMonth) {
+            if (st?.byDay) for (let d = 1; d <= cutoffDay; d++) add(paidAt(st, `${m}-${d}`, true, types));
+            else add(paidAt(st, String(m), false, types));
+        }
+    });
+    return acc;
+}
+
 export function toggleSection(id) {
     const body = document.getElementById(id);
     if (!body) return;

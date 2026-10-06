@@ -1561,8 +1561,8 @@ const guideStats26 = [
           "pax": 1602
         },
         "paid": {
-          "tours": 116,
-          "pax": 890
+          "tours": 112,
+          "pax": 873
         },
         "byType": {
           "war": {
@@ -1582,16 +1582,16 @@ const guideStats26 = [
             "pax": 51
           },
           "old": {
-            "tours": 9,
-            "pax": 37
+            "tours": 6,
+            "pax": 29
           },
           "war PR": {
             "tours": 2,
             "pax": 33
           },
           "big": {
-            "tours": 5,
-            "pax": 61
+            "tours": 4,
+            "pax": 52
           }
         },
         "byMonth": {
@@ -1657,8 +1657,8 @@ const guideStats26 = [
               "pax": 132
             },
             "paid": {
-              "tours": 18,
-              "pax": 134
+              "tours": 17,
+              "pax": 132
             }
           },
           "7": {
@@ -1668,8 +1668,8 @@ const guideStats26 = [
               "pax": 161
             },
             "paid": {
-              "tours": 20,
-              "pax": 142
+              "tours": 18,
+              "pax": 131
             }
           },
           "8": {
@@ -1690,8 +1690,8 @@ const guideStats26 = [
               "pax": 285
             },
             "paid": {
-              "tours": 20,
-              "pax": 199
+              "tours": 19,
+              "pax": 195
             }
           }
         },
@@ -2522,8 +2522,8 @@ const guideStats26 = [
               "pax": 0
             },
             "paid": {
-              "tours": 2,
-              "pax": 7
+              "tours": 1,
+              "pax": 5
             }
           },
           "6-26": {
@@ -2642,8 +2642,8 @@ const guideStats26 = [
               "pax": 23
             },
             "paid": {
-              "tours": 2,
-              "pax": 11
+              "tours": 1,
+              "pax": 2
             }
           },
           "7-20": {
@@ -2744,16 +2744,6 @@ const guideStats26 = [
             "paid": {
               "tours": 1,
               "pax": 7
-            }
-          },
-          "7-31": {
-            "free": {
-              "tours": 0,
-              "pax": 0
-            },
-            "paid": {
-              "tours": 1,
-              "pax": 2
             }
           },
           "8-3": {
@@ -3062,8 +3052,8 @@ const guideStats26 = [
               "pax": 0
             },
             "paid": {
-              "tours": 2,
-              "pax": 23
+              "tours": 1,
+              "pax": 19
             }
           },
           "9-25": {
@@ -3212,10 +3202,6 @@ const guideStats26 = [
             "best": {
               "tours": 6,
               "pax": 41
-            },
-            "old": {
-              "tours": 1,
-              "pax": 2
             }
           },
           "7": {
@@ -3232,12 +3218,8 @@ const guideStats26 = [
               "pax": 61
             },
             "old": {
-              "tours": 2,
-              "pax": 4
-            },
-            "big": {
               "tours": 1,
-              "pax": 9
+              "pax": 2
             }
           },
           "8": {
@@ -3260,8 +3242,8 @@ const guideStats26 = [
           },
           "9": {
             "old": {
-              "tours": 2,
-              "pax": 8
+              "tours": 1,
+              "pax": 4
             },
             "food PR": {
               "tours": 2,
@@ -3629,10 +3611,6 @@ const guideStats26 = [
             }
           },
           "6-25": {
-            "old": {
-              "tours": 1,
-              "pax": 2
-            },
             "war": {
               "tours": 1,
               "pax": 5
@@ -3709,10 +3687,6 @@ const guideStats26 = [
             }
           },
           "7-18": {
-            "big": {
-              "tours": 1,
-              "pax": 9
-            },
             "war": {
               "tours": 1,
               "pax": 2
@@ -3758,12 +3732,6 @@ const guideStats26 = [
             "war": {
               "tours": 1,
               "pax": 7
-            }
-          },
-          "7-31": {
-            "old": {
-              "tours": 1,
-              "pax": 2
             }
           },
           "8-4": {
@@ -3907,10 +3875,6 @@ const guideStats26 = [
             }
           },
           "9-24": {
-            "old": {
-              "tours": 1,
-              "pax": 4
-            },
             "war": {
               "tours": 1,
               "pax": 19
@@ -3961,20 +3925,152 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
         },
         "paid": {
-          "tours": 0,
-          "pax": 0
+          "tours": 4,
+          "pax": 17
         },
-        "byType": {},
-        "byMonth": {},
-        "byDay": {},
-        "byMonthType": {},
-        "byDayType": {}
+        "byType": {
+          "old": {
+            "tours": 3,
+            "pax": 8
+          },
+          "big": {
+            "tours": 1,
+            "pax": 9
+          }
+        },
+        "byMonth": {
+          "6": {
+            "name": "Lip",
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "7": {
+            "name": "Srp",
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 2,
+              "pax": 11
+            }
+          },
+          "9": {
+            "name": "Ruj",
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
+        },
+        "byDay": {
+          "6-25": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "7-18": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 9
+            }
+          },
+          "7-31": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "9-24": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
+        },
+        "byMonthType": {
+          "6": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "7": {
+            "big": {
+              "tours": 1,
+              "pax": 9
+            },
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "9": {
+            "old": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
+        },
+        "byDayType": {
+          "6-25": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "7-18": {
+            "big": {
+              "tours": 1,
+              "pax": 9
+            }
+          },
+          "7-31": {
+            "old": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "9-24": {
+            "old": {
+              "tours": 1,
+              "pax": 4
+            }
+          }
+        }
       },
       "all": {
         "free": {
@@ -5167,16 +5263,6 @@ const guideStats26 = [
               "pax": 7
             }
           },
-          "7-31": {
-            "free": {
-              "tours": 0,
-              "pax": 0
-            },
-            "paid": {
-              "tours": 1,
-              "pax": 2
-            }
-          },
           "8-3": {
             "free": {
               "tours": 1,
@@ -5535,6 +5621,16 @@ const guideStats26 = [
             "paid": {
               "tours": 0,
               "pax": 0
+            }
+          },
+          "7-31": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 2
             }
           }
         },
@@ -6050,13 +6146,13 @@ const guideStats26 = [
             }
           },
           "6-25": {
-            "old": {
-              "tours": 1,
-              "pax": 2
-            },
             "war": {
               "tours": 1,
               "pax": 5
+            },
+            "old": {
+              "tours": 1,
+              "pax": 2
             }
           },
           "6-26": {
@@ -6130,13 +6226,13 @@ const guideStats26 = [
             }
           },
           "7-18": {
-            "big": {
-              "tours": 1,
-              "pax": 9
-            },
             "war": {
               "tours": 1,
               "pax": 2
+            },
+            "big": {
+              "tours": 1,
+              "pax": 9
             }
           },
           "7-20": {
@@ -6179,12 +6275,6 @@ const guideStats26 = [
             "war": {
               "tours": 1,
               "pax": 7
-            }
-          },
-          "7-31": {
-            "old": {
-              "tours": 1,
-              "pax": 2
             }
           },
           "8-4": {
@@ -6328,13 +6418,13 @@ const guideStats26 = [
             }
           },
           "9-24": {
-            "old": {
-              "tours": 1,
-              "pax": 4
-            },
             "war": {
               "tours": 1,
               "pax": 19
+            },
+            "old": {
+              "tours": 1,
+              "pax": 4
             }
           },
           "9-25": {
@@ -6363,6 +6453,12 @@ const guideStats26 = [
             "war": {
               "tours": 1,
               "pax": 16
+            }
+          },
+          "7-31": {
+            "old": {
+              "tours": 1,
+              "pax": 2
             }
           }
         }
@@ -8695,7 +8791,7 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -11699,7 +11795,7 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -13803,8 +13899,8 @@ const guideStats26 = [
           "pax": 1405
         },
         "paid": {
-          "tours": 86,
-          "pax": 632
+          "tours": 85,
+          "pax": 615
         },
         "byType": {
           "war": {
@@ -13824,8 +13920,8 @@ const guideStats26 = [
             "pax": 14
           },
           "old": {
-            "tours": 7,
-            "pax": 65
+            "tours": 6,
+            "pax": 48
           },
           "war PR": {
             "tours": 1,
@@ -13928,8 +14024,8 @@ const guideStats26 = [
               "pax": 204
             },
             "paid": {
-              "tours": 15,
-              "pax": 128
+              "tours": 14,
+              "pax": 111
             }
           }
         },
@@ -15010,8 +15106,8 @@ const guideStats26 = [
               "pax": 0
             },
             "paid": {
-              "tours": 2,
-              "pax": 19
+              "tours": 1,
+              "pax": 2
             }
           },
           "9-9": {
@@ -15256,8 +15352,8 @@ const guideStats26 = [
           },
           "9": {
             "old": {
-              "tours": 3,
-              "pax": 23
+              "tours": 2,
+              "pax": 6
             },
             "war": {
               "tours": 6,
@@ -15703,10 +15799,6 @@ const guideStats26 = [
             }
           },
           "9-7": {
-            "old": {
-              "tours": 1,
-              "pax": 17
-            },
             "food PR": {
               "tours": 1,
               "pax": 2
@@ -15793,20 +15885,62 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
         },
         "paid": {
-          "tours": 0,
-          "pax": 0
+          "tours": 1,
+          "pax": 17
         },
-        "byType": {},
-        "byMonth": {},
-        "byDay": {},
-        "byMonthType": {},
-        "byDayType": {}
+        "byType": {
+          "old": {
+            "tours": 1,
+            "pax": 17
+          }
+        },
+        "byMonth": {
+          "9": {
+            "name": "Ruj",
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 17
+            }
+          }
+        },
+        "byDay": {
+          "9-7": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 17
+            }
+          }
+        },
+        "byMonthType": {
+          "9": {
+            "old": {
+              "tours": 1,
+              "pax": 17
+            }
+          }
+        },
+        "byDayType": {
+          "9-7": {
+            "old": {
+              "tours": 1,
+              "pax": 17
+            }
+          }
+        }
       },
       "all": {
         "free": {
@@ -17714,13 +17848,13 @@ const guideStats26 = [
             }
           },
           "9-7": {
-            "old": {
-              "tours": 1,
-              "pax": 17
-            },
             "food PR": {
               "tours": 1,
               "pax": 2
+            },
+            "old": {
+              "tours": 1,
+              "pax": 17
             }
           },
           "9-10": {
@@ -21799,7 +21933,7 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -28150,7 +28284,7 @@ const guideStats26 = [
           }
         }
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -33517,7 +33651,7 @@ const guideStats26 = [
           }
         }
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -39226,7 +39360,7 @@ const guideStats26 = [
           }
         }
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -44436,7 +44570,7 @@ const guideStats26 = [
           }
         }
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -48079,7 +48213,7 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -51852,7 +51986,7 @@ const guideStats26 = [
           }
         }
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -55663,7 +55797,7 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -58110,7 +58244,7 @@ const guideStats26 = [
           }
         }
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -59352,8 +59486,8 @@ const guideStats26 = [
           "pax": 0
         },
         "paid": {
-          "tours": 3,
-          "pax": 37
+          "tours": 2,
+          "pax": 35
         },
         "byType": {
           "old": {
@@ -59363,10 +59497,6 @@ const guideStats26 = [
           "best": {
             "tours": 1,
             "pax": 7
-          },
-          "big": {
-            "tours": 1,
-            "pax": 2
           }
         },
         "byMonth": {
@@ -59379,17 +59509,6 @@ const guideStats26 = [
             "paid": {
               "tours": 2,
               "pax": 35
-            }
-          },
-          "8": {
-            "name": "Kol",
-            "free": {
-              "tours": 0,
-              "pax": 0
-            },
-            "paid": {
-              "tours": 1,
-              "pax": 2
             }
           }
         },
@@ -59413,16 +59532,6 @@ const guideStats26 = [
               "tours": 1,
               "pax": 7
             }
-          },
-          "8-12": {
-            "free": {
-              "tours": 0,
-              "pax": 0
-            },
-            "paid": {
-              "tours": 1,
-              "pax": 2
-            }
           }
         },
         "byMonthType": {
@@ -59434,12 +59543,6 @@ const guideStats26 = [
             "best": {
               "tours": 1,
               "pax": 7
-            }
-          },
-          "8": {
-            "big": {
-              "tours": 1,
-              "pax": 2
             }
           }
         },
@@ -59454,12 +59557,6 @@ const guideStats26 = [
             "best": {
               "tours": 1,
               "pax": 7
-            }
-          },
-          "8-12": {
-            "big": {
-              "tours": 1,
-              "pax": 2
             }
           }
         }
@@ -59591,20 +59688,62 @@ const guideStats26 = [
           }
         }
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
         },
         "paid": {
-          "tours": 0,
-          "pax": 0
+          "tours": 1,
+          "pax": 2
         },
-        "byType": {},
-        "byMonth": {},
-        "byDay": {},
-        "byMonthType": {},
-        "byDayType": {}
+        "byType": {
+          "big": {
+            "tours": 1,
+            "pax": 2
+          }
+        },
+        "byMonth": {
+          "8": {
+            "name": "Kol",
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
+        },
+        "byDay": {
+          "8-12": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
+        },
+        "byMonthType": {
+          "8": {
+            "big": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
+        },
+        "byDayType": {
+          "8-12": {
+            "big": {
+              "tours": 1,
+              "pax": 2
+            }
+          }
+        }
       },
       "all": {
         "free": {
@@ -59696,16 +59835,6 @@ const guideStats26 = [
               "pax": 7
             }
           },
-          "8-12": {
-            "free": {
-              "tours": 0,
-              "pax": 0
-            },
-            "paid": {
-              "tours": 1,
-              "pax": 2
-            }
-          },
           "7-20": {
             "free": {
               "tours": 0,
@@ -59735,6 +59864,16 @@ const guideStats26 = [
               "tours": 1,
               "pax": 2
             }
+          },
+          "8-12": {
+            "free": {
+              "tours": 0,
+              "pax": 0
+            },
+            "paid": {
+              "tours": 1,
+              "pax": 2
+            }
           }
         },
         "byMonthType": {
@@ -59748,16 +59887,16 @@ const guideStats26 = [
               "pax": 7
             }
           },
-          "8": {
-            "big": {
-              "tours": 2,
-              "pax": 18
-            }
-          },
           "7": {
             "best": {
               "tours": 1,
               "pax": 4
+            }
+          },
+          "8": {
+            "big": {
+              "tours": 2,
+              "pax": 18
             }
           },
           "9": {
@@ -59780,12 +59919,6 @@ const guideStats26 = [
               "pax": 7
             }
           },
-          "8-12": {
-            "big": {
-              "tours": 1,
-              "pax": 2
-            }
-          },
           "7-20": {
             "best": {
               "tours": 1,
@@ -59799,6 +59932,12 @@ const guideStats26 = [
             }
           },
           "9-18": {
+            "big": {
+              "tours": 1,
+              "pax": 2
+            }
+          },
+          "8-12": {
             "big": {
               "tours": 1,
               "pax": 2
@@ -60520,7 +60659,7 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -61472,7 +61611,7 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -63186,7 +63325,7 @@ const guideStats26 = [
           }
         }
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -66274,7 +66413,7 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -70268,7 +70407,7 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -74375,7 +74514,7 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -78235,7 +78374,7 @@ const guideStats26 = [
           }
         }
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -81972,7 +82111,7 @@ const guideStats26 = [
           }
         }
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -84894,7 +85033,7 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -87670,7 +87809,7 @@ const guideStats26 = [
           }
         }
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -91551,7 +91690,7 @@ const guideStats26 = [
           }
         }
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -94454,7 +94593,7 @@ const guideStats26 = [
           }
         }
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -96590,7 +96729,7 @@ const guideStats26 = [
           }
         }
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -99050,7 +99189,7 @@ const guideStats26 = [
           }
         }
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -102740,7 +102879,7 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -106208,7 +106347,7 @@ const guideStats26 = [
           }
         }
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -109393,7 +109532,7 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -112548,7 +112687,7 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -115787,7 +115926,7 @@ const guideStats26 = [
           }
         }
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -118913,7 +119052,7 @@ const guideStats26 = [
           }
         }
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -120532,7 +120671,7 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -122316,7 +122455,7 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -126976,7 +127115,7 @@ const guideStats26 = [
           }
         }
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -131050,7 +131189,7 @@ const guideStats26 = [
           }
         }
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -134340,7 +134479,7 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -137063,7 +137202,7 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -138744,7 +138883,7 @@ const guideStats26 = [
         "byMonthType": {},
         "byDayType": {}
       },
-      "fra": {
+      "oth": {
         "free": {
           "tours": 0,
           "pax": 0
@@ -139269,8 +139408,8 @@ const cityStats26 = {
         "pax": 8342
       },
       "paid": {
-        "tours": 587,
-        "pax": 4709
+        "tours": 581,
+        "pax": 4673
       },
       "byType": {
         "war": {
@@ -139286,8 +139425,8 @@ const cityStats26 = {
           "pax": 1309
         },
         "old": {
-          "tours": 61,
-          "pax": 442
+          "tours": 57,
+          "pax": 417
         },
         "food PR": {
           "tours": 28,
@@ -139298,8 +139437,8 @@ const cityStats26 = {
           "pax": 203
         },
         "big": {
-          "tours": 13,
-          "pax": 131
+          "tours": 11,
+          "pax": 120
         }
       },
       "byMonth": {
@@ -139365,8 +139504,8 @@ const cityStats26 = {
             "pax": 1353
           },
           "paid": {
-            "tours": 85,
-            "pax": 678
+            "tours": 84,
+            "pax": 676
           }
         },
         "7": {
@@ -139376,8 +139515,8 @@ const cityStats26 = {
             "pax": 1197
           },
           "paid": {
-            "tours": 80,
-            "pax": 652
+            "tours": 78,
+            "pax": 641
           }
         },
         "8": {
@@ -139387,8 +139526,8 @@ const cityStats26 = {
             "pax": 1412
           },
           "paid": {
-            "tours": 77,
-            "pax": 649
+            "tours": 76,
+            "pax": 647
           }
         },
         "9": {
@@ -139398,8 +139537,8 @@ const cityStats26 = {
             "pax": 1486
           },
           "paid": {
-            "tours": 128,
-            "pax": 1201
+            "tours": 126,
+            "pax": 1180
           }
         },
         "10": {
@@ -141091,8 +141230,8 @@ const cityStats26 = {
             "pax": 13
           },
           "paid": {
-            "tours": 4,
-            "pax": 19
+            "tours": 3,
+            "pax": 17
           }
         },
         "6-26": {
@@ -141321,8 +141460,8 @@ const cityStats26 = {
             "pax": 44
           },
           "paid": {
-            "tours": 5,
-            "pax": 36
+            "tours": 4,
+            "pax": 27
           }
         },
         "7-19": {
@@ -141451,8 +141590,8 @@ const cityStats26 = {
             "pax": 31
           },
           "paid": {
-            "tours": 4,
-            "pax": 32
+            "tours": 3,
+            "pax": 30
           }
         },
         "8-1": {
@@ -141571,8 +141710,8 @@ const cityStats26 = {
             "pax": 60
           },
           "paid": {
-            "tours": 4,
-            "pax": 23
+            "tours": 3,
+            "pax": 21
           }
         },
         "8-13": {
@@ -141831,8 +141970,8 @@ const cityStats26 = {
             "pax": 36
           },
           "paid": {
-            "tours": 9,
-            "pax": 85
+            "tours": 8,
+            "pax": 68
           }
         },
         "9-8": {
@@ -142001,8 +142140,8 @@ const cityStats26 = {
             "pax": 58
           },
           "paid": {
-            "tours": 5,
-            "pax": 42
+            "tours": 4,
+            "pax": 38
           }
         },
         "9-25": {
@@ -142193,8 +142332,8 @@ const cityStats26 = {
         },
         "6": {
           "old": {
-            "tours": 6,
-            "pax": 24
+            "tours": 5,
+            "pax": 22
           },
           "food": {
             "tours": 15,
@@ -142231,12 +142370,8 @@ const cityStats26 = {
             "pax": 237
           },
           "old": {
-            "tours": 6,
-            "pax": 23
-          },
-          "big": {
-            "tours": 1,
-            "pax": 9
+            "tours": 5,
+            "pax": 21
           }
         },
         "8": {
@@ -142256,10 +142391,6 @@ const cityStats26 = {
             "tours": 11,
             "pax": 38
           },
-          "big": {
-            "tours": 1,
-            "pax": 2
-          },
           "food PR": {
             "tours": 1,
             "pax": 2
@@ -142275,8 +142406,8 @@ const cityStats26 = {
             "pax": 481
           },
           "old": {
-            "tours": 25,
-            "pax": 160
+            "tours": 23,
+            "pax": 139
           },
           "food PR": {
             "tours": 6,
@@ -143652,10 +143783,6 @@ const cityStats26 = {
           }
         },
         "6-25": {
-          "old": {
-            "tours": 1,
-            "pax": 2
-          },
           "food": {
             "tours": 1,
             "pax": 3
@@ -143930,10 +144057,6 @@ const cityStats26 = {
           }
         },
         "7-18": {
-          "big": {
-            "tours": 1,
-            "pax": 9
-          },
           "war": {
             "tours": 2,
             "pax": 12
@@ -144069,8 +144192,8 @@ const cityStats26 = {
         },
         "7-31": {
           "old": {
-            "tours": 2,
-            "pax": 4
+            "tours": 1,
+            "pax": 2
           },
           "best": {
             "tours": 1,
@@ -144204,10 +144327,6 @@ const cityStats26 = {
           }
         },
         "8-12": {
-          "big": {
-            "tours": 1,
-            "pax": 2
-          },
           "best": {
             "tours": 1,
             "pax": 11
@@ -144545,8 +144664,8 @@ const cityStats26 = {
         },
         "9-7": {
           "old": {
-            "tours": 4,
-            "pax": 52
+            "tours": 3,
+            "pax": 35
           },
           "food": {
             "tours": 1,
@@ -144819,8 +144938,8 @@ const cityStats26 = {
         },
         "9-24": {
           "old": {
-            "tours": 3,
-            "pax": 8
+            "tours": 2,
+            "pax": 4
           },
           "best": {
             "tours": 1,
@@ -149213,23 +149332,23 @@ const cityStats26 = {
         }
       }
     },
-    "fra": {
+    "oth": {
       "free": {
         "tours": 0,
         "pax": 0
       },
       "paid": {
-        "tours": 2,
-        "pax": 5
+        "tours": 8,
+        "pax": 41
       },
       "byType": {
         "big": {
-          "tours": 1,
-          "pax": 3
+          "tours": 3,
+          "pax": 14
         },
         "old": {
-          "tours": 1,
-          "pax": 2
+          "tours": 5,
+          "pax": 27
         }
       },
       "byMonth": {
@@ -149244,8 +149363,8 @@ const cityStats26 = {
             "pax": 3
           }
         },
-        "8": {
-          "name": "Kol",
+        "6": {
+          "name": "Lip",
           "free": {
             "tours": 0,
             "pax": 0
@@ -149253,6 +149372,39 @@ const cityStats26 = {
           "paid": {
             "tours": 1,
             "pax": 2
+          }
+        },
+        "7": {
+          "name": "Srp",
+          "free": {
+            "tours": 0,
+            "pax": 0
+          },
+          "paid": {
+            "tours": 2,
+            "pax": 11
+          }
+        },
+        "8": {
+          "name": "Kol",
+          "free": {
+            "tours": 0,
+            "pax": 0
+          },
+          "paid": {
+            "tours": 2,
+            "pax": 4
+          }
+        },
+        "9": {
+          "name": "Ruj",
+          "free": {
+            "tours": 0,
+            "pax": 0
+          },
+          "paid": {
+            "tours": 2,
+            "pax": 21
           }
         }
       },
@@ -149267,6 +149419,46 @@ const cityStats26 = {
             "pax": 3
           }
         },
+        "6-25": {
+          "free": {
+            "tours": 0,
+            "pax": 0
+          },
+          "paid": {
+            "tours": 1,
+            "pax": 2
+          }
+        },
+        "7-18": {
+          "free": {
+            "tours": 0,
+            "pax": 0
+          },
+          "paid": {
+            "tours": 1,
+            "pax": 9
+          }
+        },
+        "7-31": {
+          "free": {
+            "tours": 0,
+            "pax": 0
+          },
+          "paid": {
+            "tours": 1,
+            "pax": 2
+          }
+        },
+        "8-12": {
+          "free": {
+            "tours": 0,
+            "pax": 0
+          },
+          "paid": {
+            "tours": 1,
+            "pax": 2
+          }
+        },
         "8-19": {
           "free": {
             "tours": 0,
@@ -149275,6 +149467,26 @@ const cityStats26 = {
           "paid": {
             "tours": 1,
             "pax": 2
+          }
+        },
+        "9-7": {
+          "free": {
+            "tours": 0,
+            "pax": 0
+          },
+          "paid": {
+            "tours": 1,
+            "pax": 17
+          }
+        },
+        "9-24": {
+          "free": {
+            "tours": 0,
+            "pax": 0
+          },
+          "paid": {
+            "tours": 1,
+            "pax": 4
           }
         }
       },
@@ -149285,10 +149497,36 @@ const cityStats26 = {
             "pax": 3
           }
         },
-        "8": {
+        "6": {
           "old": {
             "tours": 1,
             "pax": 2
+          }
+        },
+        "7": {
+          "big": {
+            "tours": 1,
+            "pax": 9
+          },
+          "old": {
+            "tours": 1,
+            "pax": 2
+          }
+        },
+        "8": {
+          "big": {
+            "tours": 1,
+            "pax": 2
+          },
+          "old": {
+            "tours": 1,
+            "pax": 2
+          }
+        },
+        "9": {
+          "old": {
+            "tours": 2,
+            "pax": 21
           }
         }
       },
@@ -149299,10 +149537,46 @@ const cityStats26 = {
             "pax": 3
           }
         },
+        "6-25": {
+          "old": {
+            "tours": 1,
+            "pax": 2
+          }
+        },
+        "7-18": {
+          "big": {
+            "tours": 1,
+            "pax": 9
+          }
+        },
+        "7-31": {
+          "old": {
+            "tours": 1,
+            "pax": 2
+          }
+        },
+        "8-12": {
+          "big": {
+            "tours": 1,
+            "pax": 2
+          }
+        },
         "8-19": {
           "old": {
             "tours": 1,
             "pax": 2
+          }
+        },
+        "9-7": {
+          "old": {
+            "tours": 1,
+            "pax": 17
+          }
+        },
+        "9-24": {
+          "old": {
+            "tours": 1,
+            "pax": 4
           }
         }
       }
@@ -152348,13 +152622,13 @@ const cityStats26 = {
             "tours": 12,
             "pax": 40
           },
-          "big": {
-            "tours": 4,
-            "pax": 23
-          },
           "food PR": {
             "tours": 1,
             "pax": 2
+          },
+          "big": {
+            "tours": 4,
+            "pax": 23
           }
         },
         "9": {
@@ -153892,10 +154166,6 @@ const cityStats26 = {
           }
         },
         "6-25": {
-          "old": {
-            "tours": 1,
-            "pax": 2
-          },
           "food": {
             "tours": 1,
             "pax": 3
@@ -153907,6 +154177,10 @@ const cityStats26 = {
           "war": {
             "tours": 1,
             "pax": 5
+          },
+          "old": {
+            "tours": 1,
+            "pax": 2
           }
         },
         "6-26": {
@@ -154194,10 +154468,6 @@ const cityStats26 = {
           }
         },
         "7-18": {
-          "big": {
-            "tours": 2,
-            "pax": 11
-          },
           "war": {
             "tours": 2,
             "pax": 12
@@ -154209,6 +154479,10 @@ const cityStats26 = {
           "best": {
             "tours": 1,
             "pax": 12
+          },
+          "big": {
+            "tours": 2,
+            "pax": 11
           }
         },
         "7-19": {
@@ -154508,10 +154782,6 @@ const cityStats26 = {
           }
         },
         "8-12": {
-          "big": {
-            "tours": 1,
-            "pax": 2
-          },
           "best": {
             "tours": 2,
             "pax": 20
@@ -154523,6 +154793,10 @@ const cityStats26 = {
           "war": {
             "tours": 2,
             "pax": 25
+          },
+          "big": {
+            "tours": 1,
+            "pax": 2
           }
         },
         "8-13": {
@@ -159716,7 +159990,7 @@ const cityStats26 = {
         }
       }
     },
-    "fra": {
+    "oth": {
       "free": {
         "tours": 0,
         "pax": 0
@@ -167391,7 +167665,7 @@ const cityStats26 = {
         }
       }
     },
-    "fra": {
+    "oth": {
       "free": {
         "tours": 0,
         "pax": 0
@@ -174573,7 +174847,7 @@ const cityStats26 = {
         }
       }
     },
-    "fra": {
+    "oth": {
       "free": {
         "tours": 0,
         "pax": 0

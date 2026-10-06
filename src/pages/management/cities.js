@@ -114,20 +114,20 @@ export function renderCitiesTab() {
     const langLabels = CITIES;
     const engData = [];
     const espData = [];
-    const fraData = [];
+    const othData = [];
 
     CITIES.forEach(city => {
         const langs = langByCity[city];
-        const total = (langs.eng.tours || 0) + (langs.esp.tours || 0) + (langs.fra.tours || 0);
+        const total = (langs.eng.tours || 0) + (langs.esp.tours || 0) + (langs.oth.tours || 0);
         engData.push(total > 0 ? (langs.eng.tours / total * 100) : 0);
         espData.push(total > 0 ? (langs.esp.tours / total * 100) : 0);
-        fraData.push(total > 0 ? (langs.fra.tours / total * 100) : 0);
+        othData.push(total > 0 ? (langs.oth.tours / total * 100) : 0);
     });
 
     makeBarChart('lang-mix-chart', langLabels, [
         { label: t('management.english'), data: engData, backgroundColor: '#6B92B9', borderRadius: 4, borderSkipped: false },
         { label: t('management.spanish'), data: espData, backgroundColor: '#D18C6D', borderRadius: 4, borderSkipped: false },
-        { label: t('management.french'), data: fraData, backgroundColor: '#8FA8BC', borderRadius: 4, borderSkipped: false },
+        { label: t('management.other'), data: othData, backgroundColor: '#8FA8BC', borderRadius: 4, borderSkipped: false },
     ], {
         horizontal: true,
         showLegend: true,
@@ -136,7 +136,7 @@ export function renderCitiesTab() {
             afterLabel: ctx => {
                 const city = langLabels[ctx.dataIndex];
                 const langs = langByCity[city];
-                const langKey = ['eng', 'esp', 'fra'][ctx.datasetIndex];
+                const langKey = ['eng', 'esp', 'oth'][ctx.datasetIndex];
                 return `${langs[langKey].tours} tours · ${langs[langKey].pax} pax`;
             }
         }
@@ -179,11 +179,11 @@ function buildSourceByCity() {
 function buildLangByCity() {
     const result = {};
     CITIES.forEach(city => {
-        result[city] = { eng: { tours: 0, pax: 0 }, esp: { tours: 0, pax: 0 }, fra: { tours: 0, pax: 0 } };
+        result[city] = { eng: { tours: 0, pax: 0 }, esp: { tours: 0, pax: 0 }, oth: { tours: 0, pax: 0 } };
     });
 
     CITIES.forEach(city => {
-        ['eng', 'esp', 'fra'].forEach(lang => {
+        ['eng', 'esp', 'oth'].forEach(lang => {
             const cityLangStats = cityStats26[city]?.[lang];
             if (cityLangStats) {
                 const filtered = filterStatsByDate(cityLangStats, getGlobalDate());

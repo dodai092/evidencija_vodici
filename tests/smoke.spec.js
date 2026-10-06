@@ -62,9 +62,9 @@ test.describe('Page 25 — Guides 2025', () => {
     test('city filter changes the KPIs', async ({ page }) => {
         await load(page);
         await openPage25(page);
-        const allTours = await page.locator('#kv-free-tours-25').textContent();
+        const allTours = await page.locator('#kv-tours-25').textContent();
         await page.click('#page-25 .city-filter-pill[data-city="Zagreb"]');
-        await expect(page.locator('#kv-free-tours-25')).not.toHaveText(allTours);
+        await expect(page.locator('#kv-tours-25')).not.toHaveText(allTours);
     });
 
     test('language filter re-renders charts', async ({ page }) => {
@@ -100,9 +100,9 @@ test.describe('Page 26 — Guides 2026', () => {
         await load(page);
         await page.click('#tab-26');
         await page.waitForFunction(() => (document.getElementById('page-26')?.children.length ?? 0) > 0);
-        const allTours = await page.locator('#kv-free-tours-26').textContent();
+        const allTours = await page.locator('#kv-tours-26').textContent();
         await page.click('#page-26 .city-filter-pill[data-city="Zagreb"]');
-        await expect(page.locator('#kv-free-tours-26')).not.toHaveText(allTours);
+        await expect(page.locator('#kv-tours-26')).not.toHaveText(allTours);
     });
 
     test('date picker triggers re-render', async ({ page }) => {
@@ -133,6 +133,8 @@ test.describe('Comparison tab', () => {
 
         await hasChart(page, 'cityChart-cmp');
         await hasChart(page, 'monthlyChart-cmp');
+        await page.click('#page-cmp [data-tab="paid"]');
+        await page.waitForTimeout(400);
         await hasChart(page, 'paidCityChart-cmp');
     });
 
@@ -718,10 +720,10 @@ test.describe('Jura theme: chrome', () => {
     test('Comparison KPI headline numbers shrink on mobile like Tours 25/26 do', async ({ page }) => {
         await page.setViewportSize({ width: 390, height: 800 });
         await load(page);
-        expect(await styleOf(page, '#kd-free-abs-cmp', 'fontSize')).toBe('26px');
-        expect(await styleOf(page, '#kd-free-pct-cmp', 'fontSize')).toBe('18px');
-        const cardRight = await page.locator('#kd-free-abs-cmp').evaluate(el => el.closest('.kpi').getBoundingClientRect().right);
-        const pctRight = await page.locator('#kd-free-pct-cmp').evaluate(el => el.getBoundingClientRect().right);
+        expect(await styleOf(page, '#kd-pax-abs-cmp', 'fontSize')).toBe('26px');
+        expect(await styleOf(page, '#kd-pax-pct-cmp', 'fontSize')).toBe('18px');
+        const cardRight = await page.locator('#kd-pax-abs-cmp').evaluate(el => el.closest('.kpi').getBoundingClientRect().right);
+        const pctRight = await page.locator('#kd-pax-pct-cmp').evaluate(el => el.getBoundingClientRect().right);
         expect(pctRight).toBeLessThanOrEqual(cardRight);
     });
 
@@ -970,46 +972,20 @@ test.describe('Sticky filter bars', () => {
                 await page.waitForFunction(id => document.querySelector(`#${id} .filter-bar`), pageId);
                 await page.evaluate(() => Promise.all(document.getAnimations().filter(a => a.effect.getComputedTiming().iterations !== Infinity).map(a => a.finished)));
                 await page.evaluate(() => window.scrollTo(0, 1500));
+                // On Comparison and Tours 25/26 the Free/Paid tabs are pinned under the nav and the filter bar pins under them.
                 const { barTop, navBottom } = await page.evaluate(id => ({
                     barTop: document.querySelector(`#${id} .filter-bar`).getBoundingClientRect().top,
-                    navBottom: document.querySelector('.nav').getBoundingClientRect().bottom,
+                    navBottom: (id === 'page-gd' ? document.querySelector('.nav') : document.getElementById('view-tabs-' + id.slice(5))).getBoundingClientRect().bottom,
                 }), pageId);
                 expect(Math.abs(barTop - navBottom)).toBeLessThanOrEqual(1);
+                if (pageId !== 'page-gd') {
+                    const tabsTop = await page.evaluate(id => document.getElementById('view-tabs-' + id.slice(5)).getBoundingClientRect().top, pageId);
+                    const nav = await page.evaluate(() => document.querySelector('.nav').getBoundingClientRect().bottom);
+                    expect(Math.abs(tabsTop - nav)).toBeLessThanOrEqual(1);
+                }
             });
         }
     }
-});
-
-test.describe('Comparison takeaway sentence', () => {
-    const numbersMatchCards = async page => {
-        const text = await page.locator('#takeaway-cmp').innerText();
-        const plain = text.replace(/,/g, '');
-        const val = async id => (await page.locator(`#${id}`).innerText()).trim().replace(/,/g, '');
-        for (const id of ['kv-free25-cmp', 'kv-free26-cmp', 'kv-avg-pax25-cmp', 'kv-avg-pax26-cmp']) {
-            expect(plain, id).toContain(await val(id));
-        }
-        return text;
-    };
-
-    test('sits above the filter bar and quotes the KPI card numbers', async ({ page }) => {
-        await load(page);
-        await page.waitForFunction(() => document.getElementById('kv-free26-cmp')?.textContent.trim() !== '—');
-        const above = await page.evaluate(() => {
-            const s = document.getElementById('takeaway-cmp'), f = document.querySelector('#page-cmp .filter-bar');
-            return s.getBoundingClientRect().bottom <= f.getBoundingClientRect().top;
-        });
-        expect(above).toBe(true);
-        expect(await numbersMatchCards(page)).toMatch(/^Free pax are .+: tours are .+, average group size is .+\.$/);
-    });
-
-    test('follows the city filter', async ({ page }) => {
-        await load(page);
-        await page.waitForFunction(() => document.getElementById('kv-free26-cmp')?.textContent.trim() !== '—');
-        const before = await page.locator('#takeaway-cmp').innerText();
-        await page.click('#page-cmp .city-filter-pill[data-city="Zadar"]');
-        await page.waitForFunction(b => document.getElementById('takeaway-cmp').innerText !== b, before);
-        await numbersMatchCards(page);
-    });
 });
 
 test.describe('Monthly table metric header', () => {
@@ -1055,35 +1031,25 @@ test.describe('Language pills and month caption', () => {
             const group = page.locator(`#lang-filter-${id}`);
             await expect(group).toBeVisible();
             await expect(group).toHaveAttribute('aria-label', 'Language');
-            await expect(group.locator('.lang-pill')).toHaveText(['All', 'ENG', 'ESP', 'FRA']);
+            const labels = id === 'gd' ? ['All', 'ENG', 'ESP', 'OTH'] : ['All', 'Eng', 'Esp', 'Oth'];
+            await expect(group.locator('.lang-pill')).toHaveText(labels);
             await expect(group.locator('.lang-pill.active')).toHaveText('All');
             await group.locator('[data-lang="eng"]').click();
-            await expect(group.locator('.lang-pill.active')).toHaveText('ENG');
+            await expect(group.locator('.lang-pill.active')).toHaveText(labels[1]);
             await expect(page.locator(`label[for="month-filter-${id}"]`)).toHaveText('Month');
         });
     }
 });
 
-test.describe('Section headers are not sticky', () => {
-    for (const [tab, id] of [['#tab-cmp', 'cmp'], ['#tab-25', '25'], ['#tab-26', '26']]) {
-        test(`Free and Paid headers scroll away on ${id}`, async ({ page }) => {
-            await load(page);
-            await page.click(tab);
-            const headers = page.locator(`#page-${id} .section-divider`);
-            await expect(headers.first()).toBeVisible();
-            for (const h of await headers.all()) {
-                expect(await h.evaluate(el => getComputedStyle(el).position)).toBe('static');
-            }
-        });
-    }
-
+test.describe('Paid type row', () => {
     for (const [name, size] of [['desktop', { width: 1280, height: 800 }], ['phone', { width: 390, height: 844 }]]) {
         test(`paid type row sticks directly under the filter bar on ${name}`, async ({ page }) => {
             await page.setViewportSize(size);
             await load(page);
-            await page.waitForSelector('#tour-type-sticky-cmp', { state: 'attached' });
+            await page.click('#page-cmp [data-tab="paid"]');
+            await page.waitForSelector('#tour-type-sticky-cmp', { state: 'visible' });
             await page.locator('#paid-section-body .card, #paid-section-body .chart-card').first().scrollIntoViewIfNeeded();
-            await page.evaluate(() => window.scrollBy(0, 300));
+            await page.evaluate(() => window.scrollBy(0, 900));
             const gap = await page.evaluate(() => {
                 const bar = document.getElementById('tour-type-sticky-cmp').getBoundingClientRect();
                 const fb = document.querySelector('#page-cmp .filter-bar').getBoundingClientRect();
@@ -1119,6 +1085,7 @@ test.describe('Paid type chart value labels', () => {
             };
         });
         await load(page);
+        await page.click('#page-cmp [data-tab="paid"]');
         await page.waitForTimeout(800);
         return page.evaluate(() => window.__valueLabels.length);
     }
@@ -1130,4 +1097,75 @@ test.describe('Paid type chart value labels', () => {
     test('are hidden on phone, where the table below carries the values', async ({ page }) => {
         expect(await drawnValueLabels(page, { width: 390, height: 844 })).toBe(0);
     });
+});
+
+test.describe('Comparison Free/Paid tabs and Private/Shared filter', () => {
+    test('defaults to Free, Private/Shared pills only show on Paid', async ({ page }) => {
+        await load(page);
+        await expect(page.locator('#page-cmp .view-tab.active')).toHaveText('Free Tours');
+        await expect(page.locator('#free-section-body')).toBeVisible();
+        await expect(page.locator('#paid-section-body')).toBeHidden();
+        await expect(page.locator('#kind-filter-cmp')).toBeHidden();
+        await expect(page.locator('#page-cmp .kpi-label')).toHaveText(['PAX Count YTD', 'Avg PAX / per Tour', 'Total Tours'].map(s => new RegExp(`^${s}$`, 'i')));
+        await page.click('#page-cmp [data-tab="paid"]');
+        await expect(page.locator('#paid-section-body')).toBeVisible();
+        await expect(page.locator('#free-section-body')).toBeHidden();
+        await expect(page.locator('#kind-filter-cmp .kind-pill')).toHaveText(['All', 'Private', 'Shared']);
+    });
+
+    test('Oth language pill only shows on Paid and resets when going back to Free', async ({ page }) => {
+        await load(page);
+        const oth = page.locator('#lang-filter-cmp [data-lang="oth"]');
+        await expect(oth).toBeHidden();
+        await page.click('#page-cmp [data-tab="paid"]');
+        await expect(oth).toBeVisible();
+        await oth.click();
+        await expect(page.locator('#lang-filter-cmp .lang-pill.active')).toHaveText('Oth');
+        await page.click('#page-cmp [data-tab="free"]');
+        await expect(oth).toBeHidden();
+        await expect(page.locator('#lang-filter-cmp .lang-pill.active')).toHaveText('All');
+    });
+
+    test('Shared hides the private chart and the private-only type pills', async ({ page }) => {
+        await load(page);
+        await page.click('#page-cmp [data-tab="paid"]');
+        await page.click('#kind-filter-cmp [data-kind="shared"]');
+        await expect(page.locator('#private-type-card-cmp')).toBeHidden();
+        await expect(page.locator('#shared-type-card-cmp')).toBeVisible();
+        await expect(page.locator('#unified-type-pills-cmp .pill:visible')).toHaveText(['All', 'war', 'food']);
+    });
+
+    test('picking one type shows only the chart that type belongs to', async ({ page }) => {
+        await load(page);
+        await page.click('#page-cmp [data-tab="paid"]');
+        await page.click('#unified-type-pills-cmp [data-value="war"]');
+        await expect(page.locator('#private-type-card-cmp')).toBeHidden();
+        await expect(page.locator('#shared-type-card-cmp')).toBeVisible();
+        await page.click('#unified-type-pills-cmp [data-value="best"]');
+        await expect(page.locator('#private-type-card-cmp')).toBeVisible();
+        await expect(page.locator('#shared-type-card-cmp')).toBeHidden();
+    });
+});
+
+test.describe('Tours 25/26 Free/Paid tabs and Private/Shared filter', () => {
+    for (const [tab, id] of [['#tab-25', '25'], ['#tab-26', '26']]) {
+        test(`Free is the default, Paid shows Private/Shared and the paid KPIs on ${id}`, async ({ page }) => {
+            await load(page);
+            await page.click(tab);
+            await expect(page.locator(`#page-${id} .view-tab.active`)).toHaveText('Free Tours');
+            await expect(page.locator(`#free-section-body-${id}`)).toBeVisible();
+            await expect(page.locator(`#paid-section-body-${id}`)).toBeHidden();
+            await expect(page.locator(`#kind-filter-${id}`)).toBeHidden();
+            await expect(page.locator(`#lang-filter-${id} [data-lang="oth"]`)).toBeHidden();
+            await expect(page.locator(`#page-${id} .kpi-label`)).toHaveText([/^PAX Count YTD$/i, /^Avg PAX \/ per Tour$/i, /^Total Tours$/i]);
+            const freeTours = await page.locator(`#kv-tours-${id}`).textContent();
+            await page.click(`#page-${id} [data-tab="paid"]`);
+            await expect(page.locator(`#paid-section-body-${id}`)).toBeVisible();
+            await expect(page.locator(`#kind-filter-${id} .kind-pill`)).toHaveText(['All', 'Private', 'Shared']);
+            await expect(page.locator(`#kv-tours-${id}`)).not.toHaveText(freeTours);
+            await page.click(`#kind-filter-${id} [data-kind="shared"]`);
+            await expect(page.locator(`#private-card-${id}`)).toBeHidden();
+            await expect(page.locator(`#shared-card-${id}`)).toBeVisible();
+        });
+    }
 });

@@ -245,16 +245,7 @@ body.dark-mode .card:hover {
 }
 .gc-badge-new { color: var(--delta-pos); border-color: var(--delta-pos); }
 
-/* ── MOVERS BANNER + MODAL ── */
-.guide-flag-line {
-  padding: 8px 12px;
-  border-radius: var(--radius);
-  background: var(--smoke);
-  margin-bottom: 6px;
-}
-.guide-flag-line:last-child { margin-bottom: 0; }
-.guide-flag-line.neg { color: var(--delta-neg); }
-.guide-flag-line.pos { color: var(--delta-pos); }
+/* ── MODAL ── */
 .guide-detail-modal {
   background: var(--white);
   border: 1px solid var(--border);

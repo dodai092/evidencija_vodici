@@ -76,8 +76,8 @@ The script filters rows by the `Year` column when present, so this works correct
 | `src/pages/page-2025.js` | `Page25` — renders TY2025 tab |
 | `src/pages/page-2026.js` | `Page26` — renders TY2026 tab |
 | `src/pages/page-cmp/index.js` | `PageCmp` — renders comparison tab + Chart.js instances |
-| `src/pages/page-guides.js` | `PageGuides` renders the Guides tab (cards or table, sort, search, movers banner, detail modal). DOM ids use the `-gd` suffix. The modal is mounted on `<body>`, not inside the page, because `.page.active` keeps an animation transform that would break `position: fixed`. |
-| `src/guide-table.js` | Pure per-guide row math: merge, deltas, TOTAL, search, ranking, movers flags, monthly trend. Unit tested in `tests/guide-table.test.js`. |
+| `src/pages/page-guides.js` | `PageGuides` renders the Guides tab (cards or table, sort, search, detail modal). DOM ids use the `-gd` suffix. The modal is mounted on `<body>`, not inside the page, because `.page.active` keeps an animation transform that would break `position: fixed`. |
+| `src/guide-table.js` | Pure per-guide row math: merge, deltas, TOTAL, search, ranking, monthly trend. Unit tested in `tests/guide-table.test.js`. |
 | `src/pages/management/index.js` | `PageMgmt` + all management functions — P&L, Guides, Channels, Ops, Cities tabs |
 | `data-2025.js` | Generated from Evidencija_25 — exports `guideStats25`, `kpiTotals25` (includes `mgmt` financial fields) |
 | `data-2026.js` | Generated from Evidencija — exports `guideStats26`, `kpiTotals26` (includes `mgmt` financial fields) |

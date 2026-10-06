@@ -6,7 +6,7 @@ import {
 import { t } from '../i18n.js';
 import {
     mergeGuides, buildGuideRows, sumRows, filterByName, rankGuides,
-    flagDeclines, flagGainers, pctLabel, TABLE_METRICS,
+    pctLabel, TABLE_METRICS,
     guideMonthlyTrend, guideMonthlyDetail, guideTypeMix,
 } from '../guide-table.js';
 import { createGuideTrendChart } from './page-cmp/charts.js';
@@ -57,7 +57,6 @@ export const PageGuides = {
 
     cardHtml(r, m, extra = {}) {
         const col = getCityColor(r.city);
-        const init = r.name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
         const rank = extra.rank ? `<span class="gc-rank">#${extra.rank}</span>` : '';
         const badges =
             (r.isNew ? `<span class="gc-badge gc-badge-new">${t('labels.badgeNew')}</span>` : '') +
@@ -73,31 +72,15 @@ export const PageGuides = {
             `<div class="gc-body">` +
             `<div class="gc-header">` +
             `${rank}` +
-            `<div class="avatar" style="background:${col}18;color:${col};border:1px solid ${col}40">${init}</div>` +
             `<span class="gc-name">${r.name}</span>` +
             `${badges}` +
-            `<span class="city-pill" style="background:${col}18;color:${col}">${r.city}</span>` +
             `</div>` +
             `<table class="gc-cmp-table"><tbody>` +
             line('labels.freeT', r.freeTours) +
             line('labels.freeP', r.freePax) +
             line('labels.paidT', r.paidTours) +
-            line('labels.paidP', r.paidPax) +
-            line('labels.totalT', r.totalTours) +
             `</tbody></table>` +
             `</div></div>`;
-    },
-
-    flagsHtml(rows) {
-        const list = (items) => items.slice(0, 5).map(r => `${r.name} (${pctLabel(r.totalPax, t('labels.badgeNew'))})`).join(', ')
-            + (items.length > 5 ? ` +${items.length - 5}` : '');
-        const down = flagDeclines(rows);
-        const up = flagGainers(rows);
-        if (!down.length && !up.length) return '';
-        return `<div class="guide-flags">` +
-            (down.length ? `<div class="guide-flag-line neg">▼ ${t('labels.flagDown')} (${down.length}): ${list(down)}</div>` : '') +
-            (up.length ? `<div class="guide-flag-line pos">▲ ${t('labels.flagUp')} (${up.length}): ${list(up)}</div>` : '') +
-            `</div>`;
     },
 
     renderAll() {
@@ -107,10 +90,8 @@ export const PageGuides = {
         const byName = new Map(merged.map(m => [m.name, m]));
         const rows = buildGuideRows(merged, this.activeLang, this.activeMonths);
         const shown = rankGuides(filterByName(rows, this.guideQuery), this.activeSort);
-        const ranked = this.activeSort === 'gain' || this.activeSort === 'drop';
+        const ranked = this.activeSort === 'freePax' || this.activeSort === 'paid';
         const cardFor = (r, i) => this.cardHtml(r, byName.get(r.name), { rank: ranked ? i + 1 : null });
-
-        this._el('guide-flags').innerHTML = this.flagsHtml(rows);
 
         let html;
         if (!shown.length) {
@@ -259,7 +240,7 @@ export const PageGuides = {
     },
 
     guideTableHtml(shown, totalRow) {
-        const heads = { freeTours: 'labels.freeTours', freePax: 'labels.freePax', paidTours: 'labels.paidTours', paidPax: 'labels.paidPax', totalTours: 'labels.totalTours' };
+        const heads = { freeTours: 'labels.freeTours', freePax: 'labels.freePax', paidTours: 'labels.paidTours' };
         const groupHeads = TABLE_METRICS.map(k => `<th colspan="4" class="mpax-city-head gd-group-head">${t(heads[k])}</th>`).join('');
         const subHeads = TABLE_METRICS.map(() =>
             `<th class="mpax-sub-head">'25</th><th class="mpax-sub-head">'26</th><th class="mpax-sub-head">±</th><th class="mpax-sub-head">±%</th>`).join('');
@@ -312,7 +293,7 @@ export const PageGuides = {
             </div>
             <div class="guide-tools">
                 <div id="guide-sort-pills-gd" class="pill-group">
-                    ${pill('default', 'labels.sortDefault')}${pill('name', 'labels.sortName')}${pill('gain', 'labels.sortGain')}${pill('drop', 'labels.sortDrop')}
+                    ${pill('default', 'labels.sortDefault')}${pill('name', 'labels.sortName')}${pill('freePax', 'labels.sortFreePax')}${pill('paid', 'labels.sortPaid')}
                 </div>
                 <input type="text" id="guide-search-gd" class="guide-search" placeholder="${t('labels.searchGuide')}" oninput="PageGuides.setGuideQuery(this.value)">
                 <div class="pill-group" id="guide-view-pills-gd">
@@ -320,7 +301,6 @@ export const PageGuides = {
                     <button class="pill${this.guideView === 'table' ? ' active' : ''}" id="guide-view-table-gd" onclick="PageGuides.setGuideView('table')">${t('labels.viewTable')}</button>
                 </div>
             </div>
-            <div id="guide-flags-gd"></div>
             <div id="guide-sections-gd"></div>
         </div>`;
     },

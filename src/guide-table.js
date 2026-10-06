@@ -3,7 +3,7 @@ import { filteredStats, CITIES } from './shared.js';
 const ZERO = { freeTours: 0, freePax: 0, paidTours: 0, paidPax: 0 };
 const ALL_METRICS = ['freeTours', 'freePax', 'paidTours', 'paidPax', 'totalTours', 'totalPax'];
 
-export const TABLE_METRICS = ['freeTours', 'freePax', 'paidTours', 'paidPax', 'totalTours'];
+export const TABLE_METRICS = ['freeTours', 'freePax', 'paidTours'];
 
 export function mergeGuides(list25, list26) {
     const map = new Map();
@@ -77,25 +77,9 @@ const cityIndex = (c) => { const i = CITIES.indexOf(c); return i < 0 ? CITIES.le
 
 export function rankGuides(rows, sort) {
     if (sort === 'name') return [...rows].sort((a, b) => a.name.localeCompare(b.name));
-    if (sort === 'gain') return [...rows].sort((a, b) => b.totalPax.delta - a.totalPax.delta);
-    if (sort === 'drop') return [...rows].sort((a, b) => a.totalPax.delta - b.totalPax.delta);
-    return [...rows].sort((a, b) =>
-        cityIndex(a.city) - cityIndex(b.city)
-        || b.freeTours.v26 - a.freeTours.v26
-        || b.freeTours.v25 - a.freeTours.v25
-        || a.name.localeCompare(b.name));
-}
-
-export function flagDeclines(rows, threshold = -30) {
-    return rows
-        .filter(r => r.totalPax.v25 > 0 && r.totalPax.v26 > 0 && r.totalPax.pct <= threshold)
-        .sort((a, b) => a.totalPax.delta - b.totalPax.delta);
-}
-
-export function flagGainers(rows, threshold = 30) {
-    return rows
-        .filter(r => r.totalPax.v25 > 0 && r.totalPax.v26 > 0 && r.totalPax.pct >= threshold)
-        .sort((a, b) => b.totalPax.delta - a.totalPax.delta);
+    if (sort === 'freePax') return [...rows].sort((a, b) => b.freePax.v26 - a.freePax.v26 || a.name.localeCompare(b.name));
+    if (sort === 'paid') return [...rows].sort((a, b) => b.paidTours.v26 - a.paidTours.v26 || a.name.localeCompare(b.name));
+    return [...rows].sort((a, b) => cityIndex(a.city) - cityIndex(b.city) || a.name.localeCompare(b.name));
 }
 
 // 2025 is a full year. 2026 stops at the as-of date, so later months are null (chart gap).

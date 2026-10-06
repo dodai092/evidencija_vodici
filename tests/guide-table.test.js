@@ -2,7 +2,7 @@ import { describe, it, expect, beforeAll } from 'vitest';
 import { setGlobalDate, filteredStats } from '../src/shared.js';
 import {
     mergeGuides, deltaRow, pctLabel, buildGuideRows, sumRows, filterByName, rankGuides,
-    flagDeclines, flagGainers, guideMonthlyTrend, guideMonthlyDetail, guideTypeMix, TABLE_METRICS,
+    guideMonthlyTrend, guideMonthlyDetail, guideTypeMix, TABLE_METRICS,
 } from '../src/guide-table.js';
 
 const mo = (ft, fp, pt, pp) => ({ free: { tours: ft, pax: fp }, paid: { tours: pt, pax: pp } });
@@ -95,7 +95,7 @@ describe('sumRows', () => {
     });
 });
 
-describe('search, rank and flags', () => {
+describe('search and rank', () => {
     const rows = buildGuideRows(merged, 'all', []);
     it('filterByName is trimmed, case-insensitive, and safe with regex characters', () => {
         expect(filterByName(rows, '  AN ').map(r => r.name)).toEqual(['Ana']);
@@ -104,30 +104,19 @@ describe('search, rank and flags', () => {
     });
     it('rankGuides orders without mutating input', () => {
         const copy = [...rows];
-        expect(rankGuides(rows, 'gain').map(r => r.name)).toEqual(['Boris', 'Cvita', 'Dario', 'Ana']);
-        expect(rankGuides(rows, 'drop').map(r => r.name)).toEqual(['Ana', 'Dario', 'Cvita', 'Boris']);
+        expect(rankGuides(rows, 'freePax').map(r => r.name)).toEqual(['Boris', 'Ana', 'Cvita', 'Dario']);
+        expect(rankGuides(rows, 'paid').map(r => r.name)).toEqual(['Boris', 'Ana', 'Cvita', 'Dario']);
         expect(rankGuides(rows, 'name').map(r => r.name)).toEqual(['Ana', 'Boris', 'Cvita', 'Dario']);
         // default: CITIES order Zagreb, Dubrovnik, Split, Zadar
         expect(rankGuides(rows, 'default').map(r => r.name)).toEqual(['Ana', 'Dario', 'Boris', 'Cvita']);
         expect(rows).toEqual(copy);
     });
-    it('flags only guides present in both years past the threshold', () => {
-        expect(flagDeclines(rows).map(r => r.name)).toEqual(['Ana']);
-        expect(flagGainers(rows).map(r => r.name)).toEqual(['Boris']);
-    });
-});
-
-describe('flag ordering', () => {
-    // Small: 10 -> 1 pax (-90%, -9). Big: 200 -> 100 pax (-50%, -100). Gain mirrors it.
-    const two = buildGuideRows([
-        { name: 'Small', city: 'Zagreb', g25: guide('Small', 'Zagreb', { 1: mo(1, 10, 0, 0) }), g26: guide('Small', 'Zagreb', { 1: mo(1, 1, 0, 0) }) },
-        { name: 'Big', city: 'Zagreb', g25: guide('Big', 'Zagreb', { 1: mo(1, 200, 0, 0) }), g26: guide('Big', 'Zagreb', { 1: mo(1, 100, 0, 0) }) },
-        { name: 'SmallUp', city: 'Zagreb', g25: guide('SmallUp', 'Zagreb', { 1: mo(1, 10, 0, 0) }), g26: guide('SmallUp', 'Zagreb', { 1: mo(1, 40, 0, 0) }) },
-        { name: 'BigUp', city: 'Zagreb', g25: guide('BigUp', 'Zagreb', { 1: mo(1, 100, 0, 0) }), g26: guide('BigUp', 'Zagreb', { 1: mo(1, 200, 0, 0) }) },
-    ], 'all', []);
-    it('orders declines and gains by absolute pax change, not percent', () => {
-        expect(flagDeclines(two).map(r => r.name)).toEqual(['Big', 'Small']);
-        expect(flagGainers(two).map(r => r.name)).toEqual(['BigUp', 'SmallUp']);
+    it('default sorts A-Z inside a city regardless of volume', () => {
+        const zg = buildGuideRows([
+            { name: 'Zoran', city: 'Zagreb', g25: null, g26: guide('Zoran', 'Zagreb', { 1: mo(9, 90, 0, 0) }) },
+            { name: 'Ana', city: 'Zagreb', g25: null, g26: guide('Ana', 'Zagreb', { 1: mo(1, 1, 0, 0) }) },
+        ], 'all', []);
+        expect(rankGuides(zg, 'default').map(r => r.name)).toEqual(['Ana', 'Zoran']);
     });
 });
 

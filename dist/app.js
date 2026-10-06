@@ -264,19 +264,15 @@
         freeT: "Free t",
         freeP: "Free p",
         paidT: "Paid t",
-        paidP: "Paid p",
         dataThrough: "data through",
         moreDetail: "More detail",
         totalTours: "Total Tours",
-        totalT: "Total t",
         sortDefault: "By city",
         sortName: "Name",
-        sortGain: "PAX \u2191",
-        sortDrop: "PAX \u2193",
+        sortFreePax: "Free PAX",
+        sortPaid: "Paid",
         badgeNew: "New",
         badgeInactive: "Inactive in 2026",
-        flagDown: "Down over 30%",
-        flagUp: "Up over 30%",
         noGuidesFound: "No guides found",
         viewCards: "Cards",
         viewTable: "Table",
@@ -432,19 +428,15 @@
         freeT: "Bespl. t",
         freeP: "Bespl. p",
         paidT: "Pla\u0107. t",
-        paidP: "Pla\u0107. p",
         dataThrough: "podaci kroz",
         moreDetail: "Vi\u0161e detalja",
         totalTours: "Ukupno tura",
-        totalT: "Ukupno t",
         sortDefault: "Po gradu",
         sortName: "Ime",
-        sortGain: "PAX \u2191",
-        sortDrop: "PAX \u2193",
+        sortFreePax: "Free PAX",
+        sortPaid: "Paid",
         badgeNew: "Novo",
         badgeInactive: "Neaktivan u 2026.",
-        flagDown: "Pad ve\u0107i od 30%",
-        flagUp: "Rast ve\u0107i od 30%",
         noGuidesFound: "Nema prona\u0111enih vodi\u010Da",
         viewCards: "Kartice",
         viewTable: "Tablica",
@@ -3106,7 +3098,7 @@
   // src/guide-table.js
   var ZERO = { freeTours: 0, freePax: 0, paidTours: 0, paidPax: 0 };
   var ALL_METRICS = ["freeTours", "freePax", "paidTours", "paidPax", "totalTours", "totalPax"];
-  var TABLE_METRICS = ["freeTours", "freePax", "paidTours", "paidPax", "totalTours"];
+  var TABLE_METRICS = ["freeTours", "freePax", "paidTours"];
   function mergeGuides(list25, list26) {
     const map = /* @__PURE__ */ new Map();
     list25.forEach((g) => map.set(g.name, { name: g.name, city: g.city, g25: g, g26: null }));
@@ -3174,15 +3166,9 @@
   };
   function rankGuides(rows, sort) {
     if (sort === "name") return [...rows].sort((a, b) => a.name.localeCompare(b.name));
-    if (sort === "gain") return [...rows].sort((a, b) => b.totalPax.delta - a.totalPax.delta);
-    if (sort === "drop") return [...rows].sort((a, b) => a.totalPax.delta - b.totalPax.delta);
-    return [...rows].sort((a, b) => cityIndex(a.city) - cityIndex(b.city) || b.freeTours.v26 - a.freeTours.v26 || b.freeTours.v25 - a.freeTours.v25 || a.name.localeCompare(b.name));
-  }
-  function flagDeclines(rows, threshold = -30) {
-    return rows.filter((r) => r.totalPax.v25 > 0 && r.totalPax.v26 > 0 && r.totalPax.pct <= threshold).sort((a, b) => a.totalPax.delta - b.totalPax.delta);
-  }
-  function flagGainers(rows, threshold = 30) {
-    return rows.filter((r) => r.totalPax.v25 > 0 && r.totalPax.v26 > 0 && r.totalPax.pct >= threshold).sort((a, b) => b.totalPax.delta - a.totalPax.delta);
+    if (sort === "freePax") return [...rows].sort((a, b) => b.freePax.v26 - a.freePax.v26 || a.name.localeCompare(b.name));
+    if (sort === "paid") return [...rows].sort((a, b) => b.paidTours.v26 - a.paidTours.v26 || a.name.localeCompare(b.name));
+    return [...rows].sort((a, b) => cityIndex(a.city) - cityIndex(b.city) || a.name.localeCompare(b.name));
   }
   function guideMonthlyDetail(g25, g26, lang, cutoffMonth, cutoffDay) {
     const st25 = g25 && g25.stats[lang];
@@ -3283,18 +3269,10 @@
     },
     cardHtml(r, m, extra = {}) {
       const col = getCityColor(r.city);
-      const init = r.name.split(" ").map((w) => w[0]).join("").substring(0, 2).toUpperCase();
       const rank = extra.rank ? `<span class="gc-rank">#${extra.rank}</span>` : "";
       const badges = (r.isNew ? `<span class="gc-badge gc-badge-new">${t("labels.badgeNew")}</span>` : "") + (r.stopped ? `<span class="gc-badge">${t("labels.badgeInactive")}</span>` : "");
       const line = (labelKey, d) => `<tr><td class="label">${t(labelKey)}</td><td class="v25">${m.g25 ? fmtN(d.v25) : "\u2014"}</td><td class="v26">${m.g26 ? fmtN(d.v26) : "\u2014"}</td><td class="delta">${m.g25 && m.g26 ? this._deltaBadge(d) : "\u2014"}</td></tr>`;
-      return `<div class="guide-card ${m.g26 ? "" : "inactive"}" role="button" tabindex="0" aria-label="${r.name}" data-city="${r.city}" data-name="${safeName(r.name)}"><div class="gc-stripe" style="background:${col}"></div><div class="gc-body"><div class="gc-header">${rank}<div class="avatar" style="background:${col}18;color:${col};border:1px solid ${col}40">${init}</div><span class="gc-name">${r.name}</span>${badges}<span class="city-pill" style="background:${col}18;color:${col}">${r.city}</span></div><table class="gc-cmp-table"><tbody>` + line("labels.freeT", r.freeTours) + line("labels.freeP", r.freePax) + line("labels.paidT", r.paidTours) + line("labels.paidP", r.paidPax) + line("labels.totalT", r.totalTours) + `</tbody></table></div></div>`;
-    },
-    flagsHtml(rows) {
-      const list = (items) => items.slice(0, 5).map((r) => `${r.name} (${pctLabel(r.totalPax, t("labels.badgeNew"))})`).join(", ") + (items.length > 5 ? ` +${items.length - 5}` : "");
-      const down = flagDeclines(rows);
-      const up = flagGainers(rows);
-      if (!down.length && !up.length) return "";
-      return `<div class="guide-flags">` + (down.length ? `<div class="guide-flag-line neg">\u25BC ${t("labels.flagDown")} (${down.length}): ${list(down)}</div>` : "") + (up.length ? `<div class="guide-flag-line pos">\u25B2 ${t("labels.flagUp")} (${up.length}): ${list(up)}</div>` : "") + `</div>`;
+      return `<div class="guide-card ${m.g26 ? "" : "inactive"}" role="button" tabindex="0" aria-label="${r.name}" data-city="${r.city}" data-name="${safeName(r.name)}"><div class="gc-stripe" style="background:${col}"></div><div class="gc-body"><div class="gc-header">${rank}<span class="gc-name">${r.name}</span>${badges}</div><table class="gc-cmp-table"><tbody>` + line("labels.freeT", r.freeTours) + line("labels.freeP", r.freePax) + line("labels.paidT", r.paidTours) + `</tbody></table></div></div>`;
     },
     renderAll() {
       this._syncMonthOptions();
@@ -3302,9 +3280,8 @@
       const byName = new Map(merged.map((m) => [m.name, m]));
       const rows = buildGuideRows(merged, this.activeLang, this.activeMonths);
       const shown = rankGuides(filterByName(rows, this.guideQuery), this.activeSort);
-      const ranked = this.activeSort === "gain" || this.activeSort === "drop";
+      const ranked = this.activeSort === "freePax" || this.activeSort === "paid";
       const cardFor = (r, i) => this.cardHtml(r, byName.get(r.name), { rank: ranked ? i + 1 : null });
-      this._el("guide-flags").innerHTML = this.flagsHtml(rows);
       let html;
       if (!shown.length) {
         html = `<div class="guide-empty">${t("labels.noGuidesFound")}</div>`;
@@ -3431,7 +3408,7 @@
       return `<td>${fmtN(d.v25)}</td><td>${fmtN(d.v26)}</td><td><span class="${cls}">${sign}${fmtN(d.delta)}</span></td><td><span class="${cls}">${pctLabel(d, t("labels.badgeNew"))}</span></td>`;
     },
     guideTableHtml(shown, totalRow) {
-      const heads = { freeTours: "labels.freeTours", freePax: "labels.freePax", paidTours: "labels.paidTours", paidPax: "labels.paidPax", totalTours: "labels.totalTours" };
+      const heads = { freeTours: "labels.freeTours", freePax: "labels.freePax", paidTours: "labels.paidTours" };
       const groupHeads = TABLE_METRICS.map((k) => `<th colspan="4" class="mpax-city-head gd-group-head">${t(heads[k])}</th>`).join("");
       const subHeads = TABLE_METRICS.map(() => `<th class="mpax-sub-head">'25</th><th class="mpax-sub-head">'26</th><th class="mpax-sub-head">\xB1</th><th class="mpax-sub-head">\xB1%</th>`).join("");
       const body = shown.map((r) => `<tr><td class="mpax-month">${r.name} <span class="gd-city">${r.city}</span></td>${TABLE_METRICS.map((k) => this._deltaCells(r[k])).join("")}</tr>`).join("");
@@ -3474,7 +3451,7 @@
             </div>
             <div class="guide-tools">
                 <div id="guide-sort-pills-gd" class="pill-group">
-                    ${pill("default", "labels.sortDefault")}${pill("name", "labels.sortName")}${pill("gain", "labels.sortGain")}${pill("drop", "labels.sortDrop")}
+                    ${pill("default", "labels.sortDefault")}${pill("name", "labels.sortName")}${pill("freePax", "labels.sortFreePax")}${pill("paid", "labels.sortPaid")}
                 </div>
                 <input type="text" id="guide-search-gd" class="guide-search" placeholder="${t("labels.searchGuide")}" oninput="PageGuides.setGuideQuery(this.value)">
                 <div class="pill-group" id="guide-view-pills-gd">
@@ -3482,7 +3459,6 @@
                     <button class="pill${this.guideView === "table" ? " active" : ""}" id="guide-view-table-gd" onclick="PageGuides.setGuideView('table')">${t("labels.viewTable")}</button>
                 </div>
             </div>
-            <div id="guide-flags-gd"></div>
             <div id="guide-sections-gd"></div>
         </div>`;
     },

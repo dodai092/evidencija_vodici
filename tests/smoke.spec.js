@@ -348,9 +348,9 @@ async function openGuideTab(page) {
 }
 
 test.describe('Guides tab', () => {
-    test('renders cards with a Total T row', async ({ page }) => {
+    test('renders cards with Free T, Free P and Paid T rows', async ({ page }) => {
         await openGuideTab(page);
-        await expect(page.locator('#guide-sections-gd .guide-card').first().locator('.gc-cmp-table tr')).toHaveCount(5);
+        await expect(page.locator('#guide-sections-gd .guide-card').first().locator('.gc-cmp-table tr')).toHaveCount(3);
     });
 
     test('city filter shows only cards from the selected city', async ({ page }) => {
@@ -384,9 +384,9 @@ test.describe('Guides tab', () => {
         await expect(page.locator('#guide-sections-gd .guide-empty')).toBeVisible();
     });
 
-    test('sort chips rank cards by pax change', async ({ page }) => {
+    test('sort chips rank cards by free pax and paid tours', async ({ page }) => {
         await openGuideTab(page);
-        await page.click('#guide-sort-pills-gd .pill[data-value="gain"]');
+        await page.click('#guide-sort-pills-gd .pill[data-value="freePax"]');
         await expect(page.locator('#guide-sections-gd .guide-card .gc-rank').first()).toHaveText('#1');
         await page.click('#guide-sort-pills-gd .pill[data-value="default"]');
         await expect(page.locator('#guide-sections-gd .gc-rank')).toHaveCount(0);
@@ -763,7 +763,6 @@ test.describe('Jura theme: cards', () => {
         expect(await styleOf(page, `${card} .gc-stripe`, 'display')).toBe('none');
         expect(await styleOf(page, card, 'borderRadius')).toBe('4px');
         expect(await styleOf(page, card, 'backgroundColor')).not.toBe(await styleOf(page, 'body', 'backgroundColor'));
-        expect(await styleOf(page, `${card} .avatar`, 'borderRadius')).toBe('4px');
     });
 
     test('guide card name and text stay readable on the tint in both themes', async ({ page }) => {
@@ -777,14 +776,6 @@ test.describe('Jura theme: cards', () => {
             const bg = parseCssColor(await styleOf(page, card, 'backgroundColor'));
             expect(contrastRatio(fg, bg), dark ? 'dark' : 'light').toBeGreaterThanOrEqual(4.5);
         }
-    });
-
-    test('movers banner lines are boxed and use the delta colors', async ({ page }) => {
-        await load(page);
-        await page.click('#tab-gd');
-        await page.waitForSelector('#guide-flags-gd .guide-flag-line.neg');
-        expect(await styleOf(page, '#guide-flags-gd .guide-flag-line', 'backgroundColor')).not.toBe('rgba(0, 0, 0, 0)');
-        expect(await styleOf(page, '#guide-flags-gd .guide-flag-line.neg', 'color')).toBe('rgb(212, 84, 90)');
     });
 
     test('detail modal is flat with 4px corners and a hairline border', async ({ page }) => {

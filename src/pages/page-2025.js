@@ -413,9 +413,9 @@ export const Page25 = {
 
             <div class="kpi-grid kpi-grid-3">
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t('labels.kpiPaxCountYtd')}</div>
+                    <div class="kpi-label">${t('labels.kpiTotalTours')}</div>
                     <div class="kpi-2y">
-                        <div><div class="kpi-2y-label">2025</div><div class="kpi-2y-val" id="kv-pax-25">—</div></div>
+                        <div><div class="kpi-2y-label">2025</div><div class="kpi-2y-val" id="kv-tours-25">—</div></div>
                     </div>
                 </div>
                 <div class="kpi hl-green">
@@ -425,9 +425,9 @@ export const Page25 = {
                     </div>
                 </div>
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t('labels.kpiTotalTours')}</div>
+                    <div class="kpi-label">${t('labels.kpiPaxCountYtd')}</div>
                     <div class="kpi-2y">
-                        <div><div class="kpi-2y-label">2025</div><div class="kpi-2y-val" id="kv-tours-25">—</div></div>
+                        <div><div class="kpi-2y-label">2025</div><div class="kpi-2y-val" id="kv-pax-25">—</div></div>
                     </div>
                 </div>
             </div>`;

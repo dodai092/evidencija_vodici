@@ -703,7 +703,7 @@ export const PageCmp = {
                 borderRadius: 4,
             };
 
-            const yLabel = primaryKey === 'tours' ? 'Tours' : 'PAX';
+            const yLabel = primaryKey === 'tours' ? 'Tours' : 'Pax';
 
             try {
                 if (this[instanceKey]) this[instanceKey].destroy();
@@ -845,19 +845,19 @@ export const PageCmp = {
 
             <div class="kpi-grid kpi-grid-3">
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t('labels.kpiPaxCountYtd')}</div>
+                    <div class="kpi-label">${t('labels.kpiTotalTours')}</div>
                     <div class="kpi-delta">
-                        <span class="kpi-delta-abs" id="kd-pax-abs-cmp">—</span>
-                        <span class="kpi-delta-pct" id="kd-pax-pct-cmp">—</span>
+                        <span class="kpi-delta-abs" id="kd-tours-abs-cmp">—</span>
+                        <span class="kpi-delta-pct" id="kd-tours-pct-cmp">—</span>
                     </div>
                     <div class="kpi-2y">
                         <div>
                             <div class="kpi-2y-label">2025</div>
-                            <div class="kpi-2y-val" id="kv-pax25-cmp">—</div>
+                            <div class="kpi-2y-val" id="kv-tours25-cmp">—</div>
                         </div>
                         <div>
                             <div class="kpi-2y-label">2026</div>
-                            <div class="kpi-2y-val" id="kv-pax26-cmp">—</div>
+                            <div class="kpi-2y-val" id="kv-tours26-cmp">—</div>
                         </div>
                     </div>
                 </div>
@@ -879,19 +879,19 @@ export const PageCmp = {
                     </div>
                 </div>
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t('labels.kpiTotalTours')}</div>
+                    <div class="kpi-label">${t('labels.kpiPaxCountYtd')}</div>
                     <div class="kpi-delta">
-                        <span class="kpi-delta-abs" id="kd-tours-abs-cmp">—</span>
-                        <span class="kpi-delta-pct" id="kd-tours-pct-cmp">—</span>
+                        <span class="kpi-delta-abs" id="kd-pax-abs-cmp">—</span>
+                        <span class="kpi-delta-pct" id="kd-pax-pct-cmp">—</span>
                     </div>
                     <div class="kpi-2y">
                         <div>
                             <div class="kpi-2y-label">2025</div>
-                            <div class="kpi-2y-val" id="kv-tours25-cmp">—</div>
+                            <div class="kpi-2y-val" id="kv-pax25-cmp">—</div>
                         </div>
                         <div>
                             <div class="kpi-2y-label">2026</div>
-                            <div class="kpi-2y-val" id="kv-tours26-cmp">—</div>
+                            <div class="kpi-2y-val" id="kv-pax26-cmp">—</div>
                         </div>
                     </div>
                 </div>
@@ -908,6 +908,7 @@ export const PageCmp = {
                 <div class="charts-row">
                     <div class="chart-card">
                         <div class="chart-card-title"${titleAttr('charts.freePaxByCity')}>${t('charts.freePaxByCity')}</div>
+                        <div class="city-monthly-badges" aria-hidden="true" style="visibility:hidden"><span class="city-monthly-badge">&nbsp;</span></div>
                         <div class="chart-container">
                             <canvas id="cityChart-cmp"></canvas>
                         </div>

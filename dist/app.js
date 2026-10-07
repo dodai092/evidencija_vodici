@@ -226,11 +226,11 @@
       labels: {
         freeTours: "Free Tours",
         paidTours: "Paid Tours",
-        freePax: "Free PAX",
-        paidPax: "Paid PAX",
+        freePax: "Free pax",
+        paidPax: "Paid pax",
         monthly: "Monthly",
         external: "External",
-        avgPaxPerTour: "Avg PAX per Tour",
+        avgPaxPerTour: "Avg pax per Tour",
         searchGuide: "Search guide\u2026",
         city: "City",
         language: "Language",
@@ -245,19 +245,19 @@
         totalFreeTours: "Total Free Tours",
         in2025: "in 2025",
         in2026: "in 2026",
-        freeToursPaxCount: "Free Tours \u2013 PAX Count",
-        avgPaxFreeTour: "Avg PAX / Free Tour",
+        freeToursPaxCount: "Free Tours \u2013 pax Count",
+        avgPaxFreeTour: "Avg pax / Free Tour",
         paidToursCount: "Paid Tours \u2013 Count",
         paxPerTour: "pax per tour",
         byMonth: "by Month",
         travelYear2026: "Travel Year 2026",
         ytd: "YTD",
         partial: "Partial month",
-        freeToursPaxCountYtd: "Free Tours \u2013 PAX Count YTD",
-        avgPaxPerFreeTour: "Avg PAX / Free Tour",
+        freeToursPaxCountYtd: "Free Tours \u2013 pax Count YTD",
+        avgPaxPerFreeTour: "Avg pax / Free Tour",
         paidToursCountYtd: "Paid Tours \u2013 Count YTD",
-        kpiPaxCountYtd: "PAX Count YTD",
-        kpiAvgPaxPerTour: "Avg PAX / per Tour",
+        kpiPaxCountYtd: "Pax Count YTD",
+        kpiAvgPaxPerTour: "Avg pax / per Tour",
         kpiTotalTours: "Total Tours",
         privateTours: "Private",
         sharedTours: "Shared",
@@ -269,7 +269,7 @@
         totalTours: "Total Tours",
         sortDefault: "By city",
         sortName: "Name",
-        sortFreePax: "Free PAX",
+        sortFreePax: "Free pax",
         sortPaid: "Paid",
         badgeNew: "New",
         badgeInactive: "Inactive in 2026",
@@ -281,34 +281,34 @@
         modalNote: "2025 full year vs 2026 through"
       },
       charts: {
-        freePaxByCity: "PAX by City",
+        freePaxByCity: "Pax by City",
         paidToursByCity: "Tours by City",
-        cumulativeFreePax: "Cumulative PAX Trend",
+        cumulativeFreePax: "Cumulative pax Trend",
         cumulativePaidTours: "Cumulative Tours Trend",
-        avgFreePaxCmp: "Avg PAX per Tour",
-        cityMonthlyCumulative: "PAX by City \u2014 Cumulative",
+        avgFreePaxCmp: "Avg pax per Tour",
+        cityMonthlyCumulative: "Pax by City \u2014 Cumulative",
         privatePaidTours: "Private Tours by Type",
         sharedPaidTours: "Shared Tours by Type",
-        avgPaxByType: "Avg PAX per Tour Type",
-        freePaxByMonthAndCity: "PAX by Month and City",
-        freePaxByCity25: "PAX by City \u2014 2025",
-        avgPaxPerTourMonth25: "Avg PAX per Tour \u2014 by month 2025",
+        avgPaxByType: "Avg pax per Tour Type",
+        freePaxByMonthAndCity: "Pax by Month and City",
+        freePaxByCity25: "Pax by City \u2014 2025",
+        avgPaxPerTourMonth25: "Avg pax per Tour \u2014 by month 2025",
         paidToursByCity25: "Tours by City \u2014 2025",
         privatePaidTours25: "Private Tours by Type \u2014 2025",
         sharedPaidTours25: "Shared Tours by Type \u2014 2025",
-        freePaxByCity26: "PAX by City \u2014 2026",
-        avgPaxPerTourMonth26: "Avg PAX per Tour \u2014 by month 2026",
+        freePaxByCity26: "Pax by City \u2014 2026",
+        avgPaxPerTourMonth26: "Avg pax per Tour \u2014 by month 2026",
         paidToursByCity26: "Tours by City \u2014 2026",
         privatePaidTours26: "Private Tours by Type \u2014 2026",
         sharedPaidTours26: "Shared Tours by Type \u2014 2026",
-        freePaxByMonthAndCity25: "PAX by Month and City \u2014 2025",
-        freePaxByMonthAndCity26: "PAX by Month and City \u2014 2026"
+        freePaxByMonthAndCity25: "Pax by Month and City \u2014 2025",
+        freePaxByMonthAndCity26: "Pax by Month and City \u2014 2026"
       },
       table: {
         month: "Month",
         free: "Free",
         paid: "Paid",
-        pax: "PAX",
+        pax: "Pax",
         tours: "Tours"
       },
       sections: {
@@ -345,12 +345,12 @@
         grossMargin: "Gross Margin",
         plBreakdown: "P&L Breakdown",
         plItem: "P&L Item",
-        paxBand: "PAX Band",
-        guidePaxBand: "Guide PAX Band",
+        paxBand: "Pax Band",
+        guidePaxBand: "Guide pax Band",
         tours: "Tours",
         sources: "Sources",
         tourTypes: "Tour Types",
-        pax: "PAX",
+        pax: "Pax",
         dayOfWeek: "Day of Week",
         season: "Season",
         paymentMethods: "Payment Methods",
@@ -390,11 +390,11 @@
       labels: {
         freeTours: "Besplatne ture",
         paidTours: "Pla\u0107ene ture",
-        freePax: "Besplatni PAX",
-        paidPax: "Pla\u0107eni PAX",
+        freePax: "Besplatni pax",
+        paidPax: "Pla\u0107eni pax",
         monthly: "Mjese\u010Dno",
         external: "Vanjski",
-        avgPaxPerTour: "Prosje\u010Dan PAX po turi",
+        avgPaxPerTour: "Prosje\u010Dan pax po turi",
         searchGuide: "Pretra\u017Ei vodi\u010Da\u2026",
         city: "Grad",
         language: "Jezik",
@@ -409,19 +409,19 @@
         totalFreeTours: "Ukupno besplatnih tura",
         in2025: "u 2025.",
         in2026: "u 2026.",
-        freeToursPaxCount: "Besplatne ture \u2013 Broj PAX-a",
-        avgPaxFreeTour: "Prosje\u010Dan PAX / Besplatna tura",
+        freeToursPaxCount: "Besplatne ture \u2013 Broj pax-a",
+        avgPaxFreeTour: "Prosje\u010Dan pax / Besplatna tura",
         paidToursCount: "Pla\u0107ene ture \u2013 Broj",
         paxPerTour: "pax po turi",
         byMonth: "po mjesecu",
         travelYear2026: "Putna godina 2026",
         ytd: "YTD",
         partial: "Dijelom mjesec",
-        freeToursPaxCountYtd: "Besplatne ture \u2013 Broj PAX-a YTD",
-        avgPaxPerFreeTour: "Prosje\u010Dan PAX / Besplatna tura",
+        freeToursPaxCountYtd: "Besplatne ture \u2013 Broj pax-a YTD",
+        avgPaxPerFreeTour: "Prosje\u010Dan pax / Besplatna tura",
         paidToursCountYtd: "Pla\u0107ene ture \u2013 Broj YTD",
-        kpiPaxCountYtd: "Broj PAX-a YTD",
-        kpiAvgPaxPerTour: "Prosje\u010Dan PAX / po turi",
+        kpiPaxCountYtd: "Broj pax-a YTD",
+        kpiAvgPaxPerTour: "Prosje\u010Dan pax / po turi",
         kpiTotalTours: "Ukupno tura",
         privateTours: "Privatne",
         sharedTours: "Zajedni\u010Dke",
@@ -433,7 +433,7 @@
         totalTours: "Ukupno tura",
         sortDefault: "Po gradu",
         sortName: "Ime",
-        sortFreePax: "Free PAX",
+        sortFreePax: "Free pax",
         sortPaid: "Paid",
         badgeNew: "Novo",
         badgeInactive: "Neaktivan u 2026.",
@@ -445,34 +445,34 @@
         modalNote: "2025 cijela godina naspram 2026 do"
       },
       charts: {
-        freePaxByCity: "PAX po gradu",
+        freePaxByCity: "Pax po gradu",
         paidToursByCity: "Ture po gradu",
-        cumulativeFreePax: "Trend kumulativnog PAX-a",
+        cumulativeFreePax: "Trend kumulativnog pax-a",
         cumulativePaidTours: "Trend kumulativnih tura",
-        avgFreePaxCmp: "Prosje\u010Dan PAX po turi",
-        cityMonthlyCumulative: "PAX po gradu \u2014 kumulativno",
+        avgFreePaxCmp: "Prosje\u010Dan pax po turi",
+        cityMonthlyCumulative: "Pax po gradu \u2014 kumulativno",
         privatePaidTours: "Privatne ture po vrsti",
         sharedPaidTours: "Zajedni\u010Dke ture po vrsti",
-        avgPaxByType: "Prosje\u010Dan PAX po vrsti pla\u0107ene ture",
-        freePaxByMonthAndCity: "PAX po mjesecu i gradu",
-        freePaxByCity25: "PAX po gradu \u2014 2025",
-        avgPaxPerTourMonth25: "Prosje\u010Dan PAX po turi \u2014 po mjesecu 2025",
+        avgPaxByType: "Prosje\u010Dan pax po vrsti pla\u0107ene ture",
+        freePaxByMonthAndCity: "Pax po mjesecu i gradu",
+        freePaxByCity25: "Pax po gradu \u2014 2025",
+        avgPaxPerTourMonth25: "Prosje\u010Dan pax po turi \u2014 po mjesecu 2025",
         paidToursByCity25: "Ture po gradu \u2014 2025",
         privatePaidTours25: "Privatne ture po vrsti \u2014 2025",
         sharedPaidTours25: "Zajedni\u010Dke ture po vrsti \u2014 2025",
-        freePaxByCity26: "PAX po gradu \u2014 2026",
-        avgPaxPerTourMonth26: "Prosje\u010Dan PAX po turi \u2014 po mjesecu 2026",
+        freePaxByCity26: "Pax po gradu \u2014 2026",
+        avgPaxPerTourMonth26: "Prosje\u010Dan pax po turi \u2014 po mjesecu 2026",
         paidToursByCity26: "Ture po gradu \u2014 2026",
         privatePaidTours26: "Privatne ture po vrsti \u2014 2026",
         sharedPaidTours26: "Zajedni\u010Dke ture po vrsti \u2014 2026",
-        freePaxByMonthAndCity25: "PAX po mjesecu i gradu \u2014 2025",
-        freePaxByMonthAndCity26: "PAX po mjesecu i gradu \u2014 2026"
+        freePaxByMonthAndCity25: "Pax po mjesecu i gradu \u2014 2025",
+        freePaxByMonthAndCity26: "Pax po mjesecu i gradu \u2014 2026"
       },
       table: {
         month: "Mj.",
         free: "Bespl.",
         paid: "Pla\u0107ene",
-        pax: "PAX",
+        pax: "Pax",
         tours: "Ture"
       },
       sections: {
@@ -509,12 +509,12 @@
         grossMargin: "Bruto mar\u017Ea",
         plBreakdown: "Analiza Dobit i Gubitka",
         plItem: "Stavka Dobit i Gubitka",
-        paxBand: "PAX Band",
-        guidePaxBand: "Vodi\u010D PAX Band",
+        paxBand: "Pax Band",
+        guidePaxBand: "Vodi\u010D pax Band",
         tours: "Ture",
         sources: "Izvori",
         tourTypes: "Vrste tura",
-        pax: "PAX",
+        pax: "Pax",
         dayOfWeek: "Dan u tjednu",
         season: "Sezona",
         paymentMethods: "Na\u010Dini pla\u0107anja",
@@ -1021,9 +1021,9 @@
 
             <div class="kpi-grid kpi-grid-3">
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t("labels.kpiPaxCountYtd")}</div>
+                    <div class="kpi-label">${t("labels.kpiTotalTours")}</div>
                     <div class="kpi-2y">
-                        <div><div class="kpi-2y-label">2025</div><div class="kpi-2y-val" id="kv-pax-25">\u2014</div></div>
+                        <div><div class="kpi-2y-label">2025</div><div class="kpi-2y-val" id="kv-tours-25">\u2014</div></div>
                     </div>
                 </div>
                 <div class="kpi hl-green">
@@ -1033,9 +1033,9 @@
                     </div>
                 </div>
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t("labels.kpiTotalTours")}</div>
+                    <div class="kpi-label">${t("labels.kpiPaxCountYtd")}</div>
                     <div class="kpi-2y">
-                        <div><div class="kpi-2y-label">2025</div><div class="kpi-2y-val" id="kv-tours-25">\u2014</div></div>
+                        <div><div class="kpi-2y-label">2025</div><div class="kpi-2y-val" id="kv-pax-25">\u2014</div></div>
                     </div>
                 </div>
             </div>`;
@@ -1604,9 +1604,9 @@
 
             <div class="kpi-grid kpi-grid-3">
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t("labels.kpiPaxCountYtd")}</div>
+                    <div class="kpi-label">${t("labels.kpiTotalTours")}</div>
                     <div class="kpi-2y">
-                        <div><div class="kpi-2y-label">2026</div><div class="kpi-2y-val" id="kv-pax-26">\u2014</div></div>
+                        <div><div class="kpi-2y-label">2026</div><div class="kpi-2y-val" id="kv-tours-26">\u2014</div></div>
                     </div>
                 </div>
                 <div class="kpi hl-green">
@@ -1616,9 +1616,9 @@
                     </div>
                 </div>
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t("labels.kpiTotalTours")}</div>
+                    <div class="kpi-label">${t("labels.kpiPaxCountYtd")}</div>
                     <div class="kpi-2y">
-                        <div><div class="kpi-2y-label">2026</div><div class="kpi-2y-val" id="kv-tours-26">\u2014</div></div>
+                        <div><div class="kpi-2y-label">2026</div><div class="kpi-2y-val" id="kv-pax-26">\u2014</div></div>
                     </div>
                 </div>
             </div>`;
@@ -1982,7 +1982,7 @@
         interaction: { mode: "index", intersect: false },
         plugins: {
           legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } },
-          tooltip: { callbacks: { label: (i) => `${i.dataset.label}: ${i.raw} PAX/tour`, footer: footerCallback } }
+          tooltip: { callbacks: { label: (i) => `${i.dataset.label}: ${i.raw} pax/tour`, footer: footerCallback } }
         },
         scales: {
           x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
@@ -2006,7 +2006,7 @@
             callbacks: {
               afterLabel: (item) => {
                 const sec = item.datasetIndex === 0 ? ds25._secondaryData[item.dataIndex] : ds26._secondaryData[item.dataIndex];
-                return sec ? `${item.datasetIndex === 0 ? ds25._secondaryKey || "pax" : (ds26._secondaryKey || "pax") === "pax" ? "PAX" : "Tours"}: ${sec}` : "";
+                return sec ? `${item.datasetIndex === 0 ? ds25._secondaryKey || "pax" : (ds26._secondaryKey || "pax") === "pax" ? "Pax" : "Tours"}: ${sec}` : "";
               },
               footer: footerCallback
             }
@@ -2036,7 +2036,7 @@
         interaction: { mode: "index", intersect: false },
         plugins: {
           legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } },
-          tooltip: { callbacks: { label: (i) => `${i.dataset.label}: ${i.raw} PAX/tour`, footer: footerCallback } }
+          tooltip: { callbacks: { label: (i) => `${i.dataset.label}: ${i.raw} pax/tour`, footer: footerCallback } }
         },
         scales: {
           x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
@@ -2755,7 +2755,7 @@
           backgroundColor: colors.y26,
           borderRadius: 4
         };
-        const yLabel = primaryKey === "tours" ? "Tours" : "PAX";
+        const yLabel = primaryKey === "tours" ? "Tours" : "Pax";
         try {
           if (this[instanceKey]) this[instanceKey].destroy();
           const ctx = document.getElementById(canvasId)?.getContext("2d");
@@ -2881,19 +2881,19 @@
 
             <div class="kpi-grid kpi-grid-3">
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t("labels.kpiPaxCountYtd")}</div>
+                    <div class="kpi-label">${t("labels.kpiTotalTours")}</div>
                     <div class="kpi-delta">
-                        <span class="kpi-delta-abs" id="kd-pax-abs-cmp">\u2014</span>
-                        <span class="kpi-delta-pct" id="kd-pax-pct-cmp">\u2014</span>
+                        <span class="kpi-delta-abs" id="kd-tours-abs-cmp">\u2014</span>
+                        <span class="kpi-delta-pct" id="kd-tours-pct-cmp">\u2014</span>
                     </div>
                     <div class="kpi-2y">
                         <div>
                             <div class="kpi-2y-label">2025</div>
-                            <div class="kpi-2y-val" id="kv-pax25-cmp">\u2014</div>
+                            <div class="kpi-2y-val" id="kv-tours25-cmp">\u2014</div>
                         </div>
                         <div>
                             <div class="kpi-2y-label">2026</div>
-                            <div class="kpi-2y-val" id="kv-pax26-cmp">\u2014</div>
+                            <div class="kpi-2y-val" id="kv-tours26-cmp">\u2014</div>
                         </div>
                     </div>
                 </div>
@@ -2915,19 +2915,19 @@
                     </div>
                 </div>
                 <div class="kpi hl-green">
-                    <div class="kpi-label">${t("labels.kpiTotalTours")}</div>
+                    <div class="kpi-label">${t("labels.kpiPaxCountYtd")}</div>
                     <div class="kpi-delta">
-                        <span class="kpi-delta-abs" id="kd-tours-abs-cmp">\u2014</span>
-                        <span class="kpi-delta-pct" id="kd-tours-pct-cmp">\u2014</span>
+                        <span class="kpi-delta-abs" id="kd-pax-abs-cmp">\u2014</span>
+                        <span class="kpi-delta-pct" id="kd-pax-pct-cmp">\u2014</span>
                     </div>
                     <div class="kpi-2y">
                         <div>
                             <div class="kpi-2y-label">2025</div>
-                            <div class="kpi-2y-val" id="kv-tours25-cmp">\u2014</div>
+                            <div class="kpi-2y-val" id="kv-pax25-cmp">\u2014</div>
                         </div>
                         <div>
                             <div class="kpi-2y-label">2026</div>
-                            <div class="kpi-2y-val" id="kv-tours26-cmp">\u2014</div>
+                            <div class="kpi-2y-val" id="kv-pax26-cmp">\u2014</div>
                         </div>
                     </div>
                 </div>
@@ -2943,6 +2943,7 @@
                 <div class="charts-row">
                     <div class="chart-card">
                         <div class="chart-card-title"${titleAttr("charts.freePaxByCity")}>${t("charts.freePaxByCity")}</div>
+                        <div class="city-monthly-badges" aria-hidden="true" style="visibility:hidden"><span class="city-monthly-badge">&nbsp;</span></div>
                         <div class="chart-container">
                             <canvas id="cityChart-cmp"></canvas>
                         </div>
@@ -4661,12 +4662,12 @@ GM%: ${gmpct}%`;
     const lossFromSmallGroups = smallGroup26.grossMargin < 0 ? Math.abs(smallGroup26.grossMargin) : 0;
     const el = document.getElementById("paxband-action-panel");
     if (el) {
-      const breakevenNote = smallGroup26.grossMargin < 0 && breakevenBand ? `<div><strong>\u26A1 Action:</strong> Enforce a minimum of <strong>${breakevenBand.split("-")[0]} PAX</strong> per booking to guarantee positive margin on every tour</div>` : "";
+      const breakevenNote = smallGroup26.grossMargin < 0 && breakevenBand ? `<div><strong>\u26A1 Action:</strong> Enforce a minimum of <strong>${breakevenBand.split("-")[0]} pax</strong> per booking to guarantee positive margin on every tour</div>` : "";
       el.innerHTML = `
             <div style="font-weight: 600; margin-bottom: 10px; color: var(--text);">${t("management.smallGroupProblem")}</div>
             <div style="color: var(--text2); line-height: 1.6; font-size: 11px;">
-                <div><strong>\u{1F4CA} ${t("management.prevalence")}:</strong> ${smallGroupPct26.toFixed(0)}% of paid tours are 1\u20135 PAX (${smallGroup26.tours} ${t("management.tours")})</div>
-                <div><strong>\u{1F4B0} ${t("management.marginLoss")}:</strong> \u20AC${fmt(lossFromSmallGroups)} net margin loss, 1\u20135 PAX band YTD (band average \u2014 doesn't capture individual below-breakeven tours)</div>
+                <div><strong>\u{1F4CA} ${t("management.prevalence")}:</strong> ${smallGroupPct26.toFixed(0)}% of paid tours are 1\u20135 pax (${smallGroup26.tours} ${t("management.tours")})</div>
+                <div><strong>\u{1F4B0} ${t("management.marginLoss")}:</strong> \u20AC${fmt(lossFromSmallGroups)} net margin loss, 1\u20135 pax band YTD (band average \u2014 doesn't capture individual below-breakeven tours)</div>
                 <div><strong>\u{1F4C8} ${t("management.trend")}:</strong> ${pctChange > 0 ? "+" : ""}${pctChange.toFixed(1)}pp ${t("management.vs2025")} \u2014 getting ${pctChange > 0 ? "worse" : "better"}</div>
                 ${breakevenNote}
             </div>

@@ -188,13 +188,13 @@ export function renderPaxBandActionPanel() {
     const el = document.getElementById('paxband-action-panel');
     if (el) {
         const breakevenNote = (smallGroup26.grossMargin < 0 && breakevenBand)
-            ? `<div><strong>⚡ Action:</strong> Enforce a minimum of <strong>${breakevenBand.split('-')[0]} PAX</strong> per booking to guarantee positive margin on every tour</div>`
+            ? `<div><strong>⚡ Action:</strong> Enforce a minimum of <strong>${breakevenBand.split('-')[0]} pax</strong> per booking to guarantee positive margin on every tour</div>`
             : '';
         el.innerHTML = `
             <div style="font-weight: 600; margin-bottom: 10px; color: var(--text);">${t('management.smallGroupProblem')}</div>
             <div style="color: var(--text2); line-height: 1.6; font-size: 11px;">
-                <div><strong>📊 ${t('management.prevalence')}:</strong> ${smallGroupPct26.toFixed(0)}% of paid tours are 1–5 PAX (${smallGroup26.tours} ${t('management.tours')})</div>
-                <div><strong>💰 ${t('management.marginLoss')}:</strong> €${fmt(lossFromSmallGroups)} net margin loss, 1–5 PAX band YTD (band average — doesn't capture individual below-breakeven tours)</div>
+                <div><strong>📊 ${t('management.prevalence')}:</strong> ${smallGroupPct26.toFixed(0)}% of paid tours are 1–5 pax (${smallGroup26.tours} ${t('management.tours')})</div>
+                <div><strong>💰 ${t('management.marginLoss')}:</strong> €${fmt(lossFromSmallGroups)} net margin loss, 1–5 pax band YTD (band average — doesn't capture individual below-breakeven tours)</div>
                 <div><strong>📈 ${t('management.trend')}:</strong> ${pctChange > 0 ? '+' : ''}${pctChange.toFixed(1)}pp ${t('management.vs2025')} — getting ${pctChange > 0 ? 'worse' : 'better'}</div>
                 ${breakevenNote}
             </div>

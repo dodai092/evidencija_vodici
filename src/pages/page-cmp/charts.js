@@ -198,7 +198,7 @@ export function createAvgFreePaxChart(ctx, months, avgFree25, avgFree26, colors,
             interaction: { mode: 'index', intersect: false },
             plugins: {
                 legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } },
-                tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} PAX/tour`, footer: footerCallback } }
+                tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} pax/tour`, footer: footerCallback } }
             },
             scales: {
                 x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },
@@ -224,7 +224,7 @@ export function createPaidTypeChart(ctx, months, ds25, ds26, colors, secondaryLa
                             const sec = item.datasetIndex === 0
                                 ? ds25._secondaryData[item.dataIndex]
                                 : ds26._secondaryData[item.dataIndex];
-                            return sec ? `${item.datasetIndex === 0 ? (ds25._secondaryKey || 'pax') : (ds26._secondaryKey || 'pax') === 'pax' ? 'PAX' : 'Tours'}: ${sec}` : '';
+                            return sec ? `${item.datasetIndex === 0 ? (ds25._secondaryKey || 'pax') : (ds26._secondaryKey || 'pax') === 'pax' ? 'Pax' : 'Tours'}: ${sec}` : '';
                         },
                         footer: footerCallback
                     }
@@ -254,7 +254,7 @@ export function createWarAvgChart(ctx, months, getTypeAvg25, getTypeAvg26, color
             interaction: { mode: 'index', intersect: false },
             plugins: {
                 legend: { display: true, labels: { color: colors.text, font: { size: 11, family: "'IBM Plex Sans',sans-serif" }, boxWidth: 12, padding: 16 } },
-                tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} PAX/tour`, footer: footerCallback } }
+                tooltip: { callbacks: { label: i => `${i.dataset.label}: ${i.raw} pax/tour`, footer: footerCallback } }
             },
             scales: {
                 x: { ticks: { color: colors.text3 }, grid: { color: colors.border } },

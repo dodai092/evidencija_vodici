@@ -1097,7 +1097,7 @@ test.describe('Comparison Free/Paid tabs and Private/Shared filter', () => {
         await expect(page.locator('#free-section-body')).toBeVisible();
         await expect(page.locator('#paid-section-body')).toBeHidden();
         await expect(page.locator('#kind-filter-cmp')).toBeHidden();
-        await expect(page.locator('#page-cmp .kpi-label')).toHaveText(['PAX Count YTD', 'Avg PAX / per Tour', 'Total Tours'].map(s => new RegExp(`^${s}$`, 'i')));
+        await expect(page.locator('#page-cmp .kpi-label')).toHaveText(['Total Tours', 'Avg pax / per Tour', 'Pax Count YTD'].map(s => new RegExp(`^${s}$`, 'i')));
         await page.click('#page-cmp [data-tab="paid"]');
         await expect(page.locator('#paid-section-body')).toBeVisible();
         await expect(page.locator('#free-section-body')).toBeHidden();
@@ -1148,7 +1148,7 @@ test.describe('Tours 25/26 Free/Paid tabs and Private/Shared filter', () => {
             await expect(page.locator(`#paid-section-body-${id}`)).toBeHidden();
             await expect(page.locator(`#kind-filter-${id}`)).toBeHidden();
             await expect(page.locator(`#lang-filter-${id} [data-lang="oth"]`)).toBeHidden();
-            await expect(page.locator(`#page-${id} .kpi-label`)).toHaveText([/^PAX Count YTD$/i, /^Avg PAX \/ per Tour$/i, /^Total Tours$/i]);
+            await expect(page.locator(`#page-${id} .kpi-label`)).toHaveText([/^Total Tours$/i, /^Avg pax \/ per Tour$/i, /^Pax Count YTD$/i]);
             const freeTours = await page.locator(`#kv-tours-${id}`).textContent();
             await page.click(`#page-${id} [data-tab="paid"]`);
             await expect(page.locator(`#paid-section-body-${id}`)).toBeVisible();

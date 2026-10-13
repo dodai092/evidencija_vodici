@@ -316,7 +316,13 @@ def _int(v):
 
 def _float(v):
     if v is None: return 0.0
-    try: return float(str(v).strip())
+    # CSV exports write money as "€1,234.50" and percents as "15%"; Excel gives plain numbers.
+    t = str(v).strip()
+    pct = t.endswith('%')
+    t = t.replace('€', '').replace(',', '').rstrip('%').strip()
+    try:
+        x = float(t)
+        return x / 100 if pct else x
     except (ValueError, TypeError): return 0.0
 
 def _time_hour(v):

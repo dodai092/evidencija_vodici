@@ -1,6 +1,6 @@
 ---
 name: update-evidencija
-description: Refresh the evidencija guides dashboard (data-2026.js) from the live "1.1 Evidencija prodaje 26" Google Sheet, check the numbers, and publish. Use when asked to update evidencija, refresh the guides dashboard, or sync the latest guide tours.
+description: Portable, data-only refresh of the evidencija guides dashboard (data-2026.js) from the live "1.1 Evidencija prodaje 26" Google Sheet, with a numbers check and publish. Meant for anyone running it from a clone of this repo. Does not draft or send email and does not run smoke tests. Use when asked to sync the latest guide tours into this repo.
 ---
 
 # Update evidencija
@@ -42,14 +42,24 @@ by title, since copies exist:
 1qG6HWuHpTr4iOaoWc3E-ntgvevDPRjbDkTcvruO21vY
 ```
 
-- Call `download_file_content` with that file id and
-  `exportMimeType: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`.
+- Call `download_file_content` with that file id and `exportMimeType: text/csv`.
+  This exports the first tab, `Evidencija`, which is the one the script reads.
 - The result is large and saves to a tool-result file. Decode its base64
-  `content` field and write the bytes to `1.1 Evidencija prodaje 26.xlsx` in
-  this folder. Use a short Python snippet (`json.load` the tool-result file,
-  `base64.b64decode`, write bytes). Don't paste the base64 through the shell.
+  `content` field and write the bytes to `evidencija.csv` in this folder. Use a
+  short Python snippet (`json.load` the tool-result file, `base64.b64decode`,
+  write bytes). Don't paste the base64 through the shell.
+- Check the CSV has about as many rows as the sheet (the header plus every
+  tour). If it looks cut off, use the .xlsx fallback below.
 - If the file id returns an error, or the title is no longer
   "1.1 Evidencija prodaje 26", stop and tell Antun. Don't pick another file.
+
+CSV rounds each money cell to two decimals, so money totals (gross margin, VAT)
+can differ by a few cents from the Excel export. Counts are identical.
+
+Fallback (exact money totals): call `download_file_content` with
+`exportMimeType: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`,
+decode the same way, and save as `1.1 Evidencija prodaje 26.xlsx`. In step 2,
+leave out the `SHEET_URL=...` part of the command.
 
 Back up the current data before anything else:
 
@@ -60,7 +70,7 @@ cp data-2026.js .backup-data-2026-$(date +%Y%m%d%H%M%S).js
 ## 2. Regenerate and compare
 
 ```
-python3 .claude/skills/update-evidencija/scripts/extract_guides.py --year 2026 > data-2026.js.new
+SHEET_URL="file://$PWD/evidencija.csv" python3 .claude/skills/update-evidencija/scripts/extract_guides.py --year 2026 > data-2026.js.new
 python3 .claude/skills/update-evidencija/scripts/compare_update.py data-2026.js data-2026.js.new
 ```
 

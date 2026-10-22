@@ -63,15 +63,6 @@ export function updateLanguageButton() {
 }
 
 export function updateNavigationLabels() {
-    const tabs = {
-        'tab-25':  t('nav.guides2025'),
-        'tab-26':  t('nav.guides2026'),
-        'tab-cmp': t('nav.comparison'),
-    };
-    Object.entries(tabs).forEach(([id, text]) => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = text;
-    });
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const val = t(el.getAttribute('data-i18n'));
         if (val && val !== el.getAttribute('data-i18n')) el.textContent = val;

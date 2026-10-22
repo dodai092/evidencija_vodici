@@ -3,9 +3,7 @@ import { GLOBAL_LANGUAGE } from './shared.js';
 export const TRANSLATIONS = {
   en: {
     nav: {
-      guides2025: 'Tours 2025',
-      guides2026: 'Tours 2026',
-      comparison: 'Comparison 25/26',
+      comparisonShort: 'Comparison',
       management: 'Management',
     },
     labels: {
@@ -50,6 +48,8 @@ export const TRANSLATIONS = {
       freeP: 'Free p',
       paidT: 'Paid t',
       dataThrough: 'data through',
+      compareNote: 'Summary and charts compare 2025 and 2026 through',
+      dataRefreshed: 'data refreshed',
       moreDetail: 'More detail',
       totalTours: 'Total Tours',
       sortDefault: 'By city',
@@ -167,9 +167,7 @@ export const TRANSLATIONS = {
   },
   hr: {
     nav: {
-      guides2025: 'Ture 2025',
-      guides2026: 'Ture 2026',
-      comparison: 'Usporedba 25/26',
+      comparisonShort: 'Usporedba',
       management: 'Upravljanje',
     },
     labels: {
@@ -214,6 +212,8 @@ export const TRANSLATIONS = {
       freeP: 'Bespl. p',
       paidT: 'Plać. t',
       dataThrough: 'podaci kroz',
+      compareNote: 'Sažetak i grafikoni uspoređuju 2025. i 2026. do',
+      dataRefreshed: 'podaci osvježeni',
       moreDetail: 'Više detalja',
       totalTours: 'Ukupno tura',
       sortDefault: 'Po gradu',

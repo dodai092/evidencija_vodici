@@ -14,12 +14,8 @@
   var MONTH_NAMES_HR = { 1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec" };
   var CSS2 = {
     ACTIVE: "active",
-    NAV_Y25: "y25",
-    NAV_Y26: "y26",
-    NAV_CMP: "cmp",
     PAGE: "page",
     MGMT_PAGE: "mgmt-page",
-    NAV_TAB: "nav-tab",
     MGMT_TAB_ACTIVE: "mgmt-tab-active",
     DARK_MODE: "dark-mode"
   };
@@ -55,6 +51,7 @@
   }
   var _today = /* @__PURE__ */ new Date();
   var GLOBAL_DATE = typeof guideStats26 !== "undefined" ? latestDataDate(guideStats26, _today) : `${_today.getFullYear()}-${String(_today.getMonth() + 1).padStart(2, "0")}-${String(_today.getDate()).padStart(2, "0")}`;
+  var REFRESH_DATE = GLOBAL_DATE;
   var GLOBAL_LANGUAGE = "en";
   function getGlobalDate() {
     return GLOBAL_DATE;
@@ -85,9 +82,6 @@
   }
   function updateDateAsOf(val) {
     GLOBAL_DATE = val;
-    const d = new Date(val);
-    const fmt2 = d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-    document.querySelectorAll('[id^="date-pov-"]').forEach((el) => el.textContent = fmt2);
     document.querySelectorAll(".ytd-range-label").forEach((el) => el.textContent = getRangeLabel());
     document.querySelectorAll('select[id^="month-filter-"]').forEach((sel) => sel.value = "all");
     Object.values(PAGES).forEach((page) => {
@@ -178,20 +172,15 @@
     if (chevron) chevron.textContent = collapsed ? "\u25B8" : "\u25BE";
     body.previousElementSibling?.setAttribute("aria-expanded", String(!collapsed));
   }
-  function showPage(id, tab) {
+  function showPage(id) {
     document.querySelectorAll(`.${CSS2.PAGE}`).forEach((p) => p.classList.remove(CSS2.ACTIVE));
-    document.querySelectorAll(`.nav-tabs .${CSS2.NAV_TAB}`).forEach((t2) => {
-      t2.classList.remove(CSS2.ACTIVE, CSS2.NAV_Y25, CSS2.NAV_Y26, CSS2.NAV_CMP);
-      t2.setAttribute("aria-selected", "false");
-      t2.setAttribute("tabindex", "-1");
+    document.querySelectorAll(".side-tab, .bottom-tab").forEach((t2) => {
+      const on = t2.dataset.page === id;
+      t2.classList.toggle(CSS2.ACTIVE, on);
+      if (on) t2.setAttribute("aria-current", "page");
+      else t2.removeAttribute("aria-current");
     });
     document.getElementById(id).classList.add(CSS2.ACTIVE);
-    tab.classList.add(CSS2.ACTIVE);
-    tab.setAttribute("aria-selected", "true");
-    tab.setAttribute("tabindex", "0");
-    if (id === "page-25") tab.classList.add(CSS2.NAV_Y25);
-    if (id === "page-26") tab.classList.add(CSS2.NAV_Y26);
-    if (id === "page-cmp") tab.classList.add(CSS2.NAV_CMP);
     const titles = {
       "page-25": "Guides 2025",
       "page-26": "Guides 2026",
@@ -218,9 +207,7 @@
   var TRANSLATIONS = {
     en: {
       nav: {
-        guides2025: "Tours 2025",
-        guides2026: "Tours 2026",
-        comparison: "Comparison 25/26",
+        comparisonShort: "Comparison",
         management: "Management"
       },
       labels: {
@@ -265,6 +252,8 @@
         freeP: "Free p",
         paidT: "Paid t",
         dataThrough: "data through",
+        compareNote: "Summary and charts compare 2025 and 2026 through",
+        dataRefreshed: "data refreshed",
         moreDetail: "More detail",
         totalTours: "Total Tours",
         sortDefault: "By city",
@@ -382,9 +371,7 @@
     },
     hr: {
       nav: {
-        guides2025: "Ture 2025",
-        guides2026: "Ture 2026",
-        comparison: "Usporedba 25/26",
+        comparisonShort: "Usporedba",
         management: "Upravljanje"
       },
       labels: {
@@ -429,6 +416,8 @@
         freeP: "Bespl. p",
         paidT: "Pla\u0107. t",
         dataThrough: "podaci kroz",
+        compareNote: "Sa\u017Eetak i grafikoni uspore\u0111uju 2025. i 2026. do",
+        dataRefreshed: "podaci osvje\u017Eeni",
         moreDetail: "Vi\u0161e detalja",
         totalTours: "Ukupno tura",
         sortDefault: "Po gradu",
@@ -607,15 +596,6 @@
     }
   }
   function updateNavigationLabels() {
-    const tabs = {
-      "tab-25": t("nav.guides2025"),
-      "tab-26": t("nav.guides2026"),
-      "tab-cmp": t("nav.comparison")
-    };
-    Object.entries(tabs).forEach(([id, text]) => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = text;
-    });
     document.querySelectorAll("[data-i18n]").forEach((el) => {
       const val = t(el.getAttribute("data-i18n"));
       if (val && val !== el.getAttribute("data-i18n")) el.textContent = val;
@@ -977,15 +957,7 @@
       this.renderAll();
     },
     _buildHeader() {
-      return `<div class="header">
-            <div class="header-left">
-                <h1>Tours <span class="accent">2025</span></h1>
-                <p><span class="ytd-range-label">${getRangeLabel()}</span></p>
-            </div>
-            <div class="header-right">
-                <div id="date-pov-25" class="mb-6"></div>
-            </div>
-        </div>`;
+      return "";
     },
     _buildFilters() {
       const cityPills = ["all", ...CITIES].map((c) => {
@@ -1127,10 +1099,6 @@
     rebuildStructure() {
       this._destroyCharts();
       document.getElementById("page-25").innerHTML = this._buildHeader() + this._buildFilters() + this._buildFreeTours() + this._buildPaidTours() + "</div>";
-      const d = new Date(getGlobalDate());
-      const fmt2 = d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-      const datePov = this._el("date-pov");
-      if (datePov) datePov.textContent = fmt2;
     },
     init() {
       if (this._initialized) return;
@@ -1560,12 +1528,7 @@
     },
     _buildHeader() {
       return `<div class="header">
-            <div class="header-left">
-                <h1>${t("table.tours")} <span class="accent">2026</span></h1>
-                <p><span class="ytd-range-label">${getRangeLabel()}</span></p>
-            </div>
             <div class="header-right">
-                <div id="date-pov-26" class="mb-6"></div>
                 <div class="header-badge">${t("labels.travelYear2026")} &middot; ${t("labels.ytd")}</div>
             </div>
         </div>`;
@@ -1710,10 +1673,6 @@
     rebuildStructure() {
       this._destroyCharts();
       document.getElementById("page-26").innerHTML = this._buildHeader() + this._buildFilters() + this._buildFreeTours() + this._buildPaidTours() + "</div>";
-      const d = new Date(getGlobalDate());
-      const fmt2 = d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-      const datePov = this._el("date-pov");
-      if (datePov) datePov.textContent = fmt2;
     },
     init() {
       if (this._initialized) return;
@@ -2259,6 +2218,9 @@
       const paidMonthData25 = [], paidMonthData26 = [];
       const cutoffMonth = getCutoffMonth();
       const cutoffDay = parseInt(getGlobalDate().split("-")[2]);
+      const [, refreshMonth, refreshDay] = REFRESH_DATE.split("-").map(Number);
+      const refreshText = getGlobalDate() > REFRESH_DATE ? ` (${t("labels.dataRefreshed")} ${MONTH_NAMES[refreshMonth]} ${refreshDay})` : "";
+      document.querySelectorAll("#page-cmp .cmp-period-note").forEach((el) => el.textContent = `${t("labels.compareNote")} ${MONTH_NAMES[cutoffMonth]} ${cutoffDay}${refreshText}.`);
       selectedMonths.forEach((i) => {
         let fd25 = 0, fd26 = 0, pd25 = 0, pd26 = 0;
         if (i < cutoffMonth) {
@@ -2836,12 +2798,7 @@
     },
     _buildHeader() {
       return `        <div class="header">
-            <div class="header-left">
-                <h1>${t("sections.guideComparison")}</h1>
-                <p><span class="ytd-range-label">Jan\u2013Jun</span> 2025 vs. 2026</p>
-            </div>
             <div class="header-right">
-                <div id="date-pov-cmp" class="mb-6"></div>
                 <div class="header-badge">${t("sections.comparisonYtd")}</div>
             </div>
         </div>`;
@@ -2878,6 +2835,7 @@
                     </div>
                 </div>
             </div>
+            <p class="page-note cmp-period-note"></p>
 
             <div class="kpi-grid kpi-grid-3">
                 <div class="kpi hl-green">
@@ -3064,9 +3022,6 @@
     rebuildStructure() {
       this._destroyCharts();
       document.getElementById("page-cmp").innerHTML = this._buildHeader() + this._buildKpisAndFilters() + this._buildFreeTours() + this._buildPaidTours() + "</div>";
-      const now = (/* @__PURE__ */ new Date()).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-      const datePov = this._el("date-pov");
-      if (datePov) datePov.textContent = now;
     },
     _positionTourTypeSticky() {
       const tabs = document.getElementById("view-tabs-cmp");
@@ -3390,7 +3345,7 @@
       this.activeSort = "default";
       this.guideView = "cards";
       const wasInitialized = this._initialized;
-      showPage("page-gd", document.getElementById("tab-gd"));
+      showPage("page-gd");
       if (wasInitialized) {
         this.rebuildStructure();
         this.renderAll();
@@ -3418,12 +3373,7 @@
     },
     _buildHeader() {
       return `<div class="header">
-            <div class="header-left">
-                <h1>${t("labels.guides")} <span class="accent">25/26</span></h1>
-                <p><span class="ytd-range-label">${getRangeLabel()}</span> 2025 vs. 2026 &middot; ${t("sections.productionByGuide")}</p>
-            </div>
             <div class="header-right">
-                <div id="date-pov-gd" class="mb-6"></div>
                 <div class="header-badge">${t("sections.comparisonYtd")}</div>
             </div>
         </div>`;
@@ -3490,10 +3440,6 @@
       this._mountModal();
       this._el("lang-filter").value = this.activeLang;
       this._el("guide-search").value = this.guideQuery;
-      const d = new Date(getGlobalDate());
-      const fmt2 = d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-      const datePov = this._el("date-pov");
-      if (datePov) datePov.textContent = fmt2;
     },
     init() {
       if (this._initialized) return;
@@ -3926,9 +3872,9 @@
     }
   }
   function _positionStickyBar() {
-    const nav = document.querySelector(".nav");
+    const navH = getComputedStyle(document.documentElement).getPropertyValue("--nav-h");
     const bar = document.getElementById("sticky-kpi-bar");
-    if (nav && bar) bar.style.top = nav.offsetHeight + "px";
+    if (bar) bar.style.top = navH;
   }
   function renderPlKpis(city) {
     const k = computeFilteredKpis(city);
@@ -4977,6 +4923,26 @@ GM%: ${gmpct}%`;
   registerLanguageChangeCallback(() => {
     updateManagementTabs();
   });
+  function syncSidebarToggle() {
+    const open = document.body.classList.contains("sidebar-open");
+    const toggle = document.getElementById("sidebar-toggle");
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Collapse sidebar" : "Expand sidebar");
+  }
+  function toggleSidebar() {
+    const open = document.body.classList.toggle("sidebar-open");
+    try {
+      localStorage.setItem("sidebar", open ? "open" : "closed");
+    } catch (e) {
+    }
+    syncSidebarToggle();
+  }
+  function renderAsOfText(value) {
+    const text = document.getElementById("as-of-text");
+    if (!text || !value) return;
+    text.textContent = (/* @__PURE__ */ new Date(value + "T00:00:00")).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+    text.closest(".date-field").dataset.tip = "Data through " + text.textContent;
+  }
   var shortcutOverlay = () => document.getElementById("shortcut-overlay");
   var _overlayPreviousFocus = null;
   function toggleShortcutOverlay() {
@@ -5006,26 +4972,19 @@ GM%: ${gmpct}%`;
     e.preventDefault();
     shortcutOverlay()?.querySelector(".overlay-close")?.focus();
   }
-  var PAGE_MAP = {
-    "tab-25": "page-25",
-    "tab-26": "page-26",
-    "tab-cmp": "page-cmp",
-    "tab-gd": "page-gd",
-    "tab-mgmt": "page-mgmt"
-  };
   function initEventListeners() {
-    Object.entries(PAGE_MAP).forEach(([tabId, pageId]) => {
-      const el = document.getElementById(tabId);
-      if (el) el.addEventListener("click", () => showPage(pageId, el));
-    });
+    document.querySelectorAll("[data-page]").forEach((el) => el.addEventListener("click", () => showPage(el.dataset.page)));
     ["pl", "guides", "channels", "ops", "cities"].forEach((id) => {
       const el = document.getElementById("tab-" + id);
       if (el) el.addEventListener("click", () => mgmtShowTab(id, el));
     });
     document.getElementById("theme-toggle")?.addEventListener("click", toggleTheme);
-    document.getElementById("cutoff-picker")?.addEventListener("change", (e) => updateDateAsOf(e.target.value));
-    document.getElementById("cutoff-picker")?.addEventListener("click", (e) => e.target.showPicker?.());
-    document.querySelector(".print-btn")?.addEventListener("click", () => window.print());
+    document.getElementById("sidebar-toggle")?.addEventListener("click", toggleSidebar);
+    document.getElementById("cutoff-picker")?.addEventListener("change", (e) => {
+      updateDateAsOf(e.target.value);
+      renderAsOfText(e.target.value);
+    });
+    document.getElementById("print-btn")?.addEventListener("click", () => window.print());
     document.querySelectorAll(".city-pill").forEach((el) => el.addEventListener("click", () => mgmtFilterCityPl(el.dataset.city)));
     document.querySelectorAll(".sort-hdr").forEach((el) => {
       el.addEventListener("click", () => mgmtSort2(el.dataset.col));
@@ -5037,7 +4996,7 @@ GM%: ${gmpct}%`;
       });
     });
     document.querySelector(".overlay-close")?.addEventListener("click", toggleShortcutOverlay);
-    const mainTabs = Array.from(document.querySelectorAll(".nav-tabs .nav-tab"));
+    const mainTabs = Array.from(document.querySelectorAll(".sidebar-nav .side-tab"));
     mainTabs.forEach((tab, i) => {
       tab.addEventListener("keydown", (e) => {
         let next;
@@ -5070,26 +5029,11 @@ GM%: ${gmpct}%`;
   }
   function initKeyboardShortcuts() {
     const shortcuts = {
-      "1": () => {
-        const el = document.getElementById("tab-25");
-        if (el) showPage("page-25", el);
-      },
-      "2": () => {
-        const el = document.getElementById("tab-26");
-        if (el) showPage("page-26", el);
-      },
-      "3": () => {
-        const el = document.getElementById("tab-cmp");
-        if (el) showPage("page-cmp", el);
-      },
-      "4": () => {
-        const el = document.getElementById("tab-gd");
-        if (el) showPage("page-gd", el);
-      },
-      "5": () => {
-        const el = document.getElementById("tab-mgmt");
-        if (el) showPage("page-mgmt", el);
-      },
+      "1": () => showPage("page-25"),
+      "2": () => showPage("page-26"),
+      "3": () => showPage("page-cmp"),
+      "4": () => showPage("page-gd"),
+      "5": () => showPage("page-mgmt"),
       "t": () => toggleTheme(),
       "d": () => document.getElementById("cutoff-picker")?.focus(),
       "?": () => toggleShortcutOverlay(),
@@ -5118,7 +5062,16 @@ GM%: ${gmpct}%`;
     if (picker) {
       picker.value = getGlobalDate();
       updateDateAsOf(picker.value);
+      renderAsOfText(picker.value);
+      picker.closest(".date-field").addEventListener("click", () => {
+        try {
+          picker.showPicker();
+        } catch (err) {
+          picker.focus();
+        }
+      });
     }
+    syncSidebarToggle();
     PageCmp.init();
     initEventListeners();
     initKeyboardShortcuts();

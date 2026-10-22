@@ -618,15 +618,14 @@ test.describe('Jura theme: foundation', () => {
         await setDark(page, true);
         expect(await styleOf(page, 'body', 'backgroundColor')).toBe('rgb(18, 18, 18)');
         expect(await styleOf(page, 'body', 'color')).toBe('rgb(240, 240, 240)');
-        expect(await styleOf(page, '.nav', 'backgroundColor')).toBe('rgb(18, 18, 18)');
         expect([await cssVar(page, '--y25'), await cssVar(page, '--y26')]).toEqual(['#3780d8', '#5aa0f0']);
     });
 
-    test('nav height equals --nav-h so sticky offsets line up', async ({ page }) => {
+    test('no top strip on desktop, so sticky offsets start at the top edge', async ({ page }) => {
         await page.setViewportSize({ width: 1400, height: 900 });
         await load(page);
-        const navHeight = await page.locator('.nav').evaluate(el => el.getBoundingClientRect().height);
-        expect(navHeight).toBe(parseFloat(await cssVar(page, '--nav-h')));
+        expect(await cssVar(page, '--nav-h')).toBe('0px');
+        expect(await page.locator('.nav').count()).toBe(0);
     });
 
     test('year line colors have 3:1 contrast against the page in both themes', async ({ page }) => {
@@ -644,11 +643,11 @@ test.describe('Jura theme: foundation', () => {
 });
 
 test.describe('Jura theme: chrome', () => {
-    test('active main tab is underlined in the text color, no uppercase', async ({ page }) => {
+    test('active sidebar tab is filled in the text color, no uppercase', async ({ page }) => {
         await page.setViewportSize({ width: 1400, height: 900 });
         await load(page);
         expect(await styleOf(page, '#tab-cmp', 'textTransform')).toBe('none');
-        expect(await styleOf(page, '#tab-cmp', 'borderBottomColor')).toBe(await styleOf(page, 'body', 'color'));
+        expect(await styleOf(page, '#tab-cmp', 'backgroundColor')).toBe(await styleOf(page, 'body', 'color'));
         expect(await styleOf(page, '#tab-cmp', 'fontFamily')).toContain('IBM Plex Sans');
     });
 
@@ -660,20 +659,24 @@ test.describe('Jura theme: chrome', () => {
         expect(await styleOf(page, '#tab-pl', 'borderBottomColor')).toBe(await styleOf(page, 'body', 'color'));
     });
 
-    test('print button is outlined and plain', async ({ page }) => {
+    test('print button sits in the sidebar above the theme toggle, same tile as the tabs', async ({ page }) => {
         await page.setViewportSize({ width: 1400, height: 900 });
         await load(page);
-        expect(await styleOf(page, '.print-btn', 'textTransform')).toBe('none');
-        expect(await styleOf(page, '.print-btn', 'backgroundColor')).toBe('rgba(0, 0, 0, 0)');
+        const printBox = await page.locator('#print-btn').boundingBox();
+        const themeBox = await page.locator('#theme-toggle').boundingBox();
+        const tabBox = await page.locator('#tab-25').boundingBox();
+        expect(printBox.y).toBeLessThan(themeBox.y);
+        expect(printBox.width).toBe(tabBox.width);
+        expect(printBox.height).toBe(tabBox.height);
+        expect(await styleOf(page, '#print-btn', 'backgroundColor')).toBe('rgba(0, 0, 0, 0)');
     });
 
-    test('page header is a compact title row without the badge', async ({ page }) => {
+    test('report pages have no title block, and the badge stays hidden on desktop', async ({ page }) => {
         await page.setViewportSize({ width: 1400, height: 900 });
         await load(page);
         await page.click('#tab-gd');
-        await page.waitForSelector('#page-gd .header h1');
-        expect(await styleOf(page, '#page-gd .header h1', 'fontSize')).toBe('20px');
-        expect(await styleOf(page, '#page-gd .header h1', 'fontFamily')).toContain('IBM Plex Sans');
+        await page.waitForSelector('#page-gd .city-filter-pill');
+        expect(await page.locator('#page-gd .header h1').count()).toBe(0);
         expect(await styleOf(page, '#page-gd .header-badge', 'display')).toBe('none');
     });
 
@@ -704,14 +707,14 @@ test.describe('Jura theme: chrome', () => {
     test('phone layout keeps its bottom tab bar and 16px padding', async ({ page }) => {
         await page.setViewportSize({ width: 390, height: 800 });
         await load(page);
-        expect(await styleOf(page, '.nav-tabs', 'position')).toBe('fixed');
+        expect(await styleOf(page, '.bottom-nav', 'position')).toBe('fixed');
         expect(await cssVar(page, '--pad')).toBe('16px');
     });
 
     test('all 5 bottom tabs stay within the 390px viewport', async ({ page }) => {
         await page.setViewportSize({ width: 390, height: 800 });
         await load(page);
-        const rights = await page.$$eval('.nav-tab', els => els.slice(0, 5).map(el => el.getBoundingClientRect().right));
+        const rights = await page.$$eval('.bottom-tab', els => els.slice(0, 5).map(el => el.getBoundingClientRect().right));
         for (const right of rights) {
             expect(right).toBeLessThanOrEqual(390);
         }
@@ -730,10 +733,10 @@ test.describe('Jura theme: chrome', () => {
     test('no horizontal page overflow at 390px on Tours 2025/2026 and Comparison', async ({ page }) => {
         await page.setViewportSize({ width: 390, height: 800 });
         await load(page);
-        for (const tab of ['#tab-25', '#tab-26', '#tab-cmp']) {
-            await page.click(tab);
+        for (const pageId of ['page-25', 'page-26', 'page-cmp']) {
+            await page.locator(`[data-page="${pageId}"]:visible`).first().click();
             const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
-            expect(scrollWidth, tab).toBeLessThanOrEqual(390);
+            expect(scrollWidth, pageId).toBeLessThanOrEqual(390);
         }
     });
 });
@@ -891,12 +894,12 @@ test.describe('Jura theme: charts', () => {
 });
 
 test.describe('Jura theme: print', () => {
-    test('print hides the nav and keeps cards unbroken', async ({ page }) => {
+    test('print hides the sidebar and keeps cards unbroken', async ({ page }) => {
         await load(page);
         await page.click('#tab-gd');
         await page.waitForSelector('#guide-sections-gd .guide-card');
         await page.emulateMedia({ media: 'print' });
-        expect(await styleOf(page, '.nav', 'display')).toBe('none');
+        expect(await styleOf(page, '.sidebar', 'display')).toBe('none');
         expect(await styleOf(page, '#guide-sections-gd .guide-card', 'breakInside')).toBe('avoid');
     });
 });
@@ -925,10 +928,10 @@ test.describe('Jura theme: review fixes', () => {
     test('phone layout metrics are identical with and without the theme', async ({ page }) => {
         await page.setViewportSize({ width: 390, height: 800 });
         await load(page);
-        await page.click('#tab-cmp');
+        await page.locator('[data-page="page-cmp"]:visible').first().click();
         await page.waitForSelector('#page-cmp .kpi');
         const sels = ['.header', '.header-left h1', '.header-badge', '.main', '#page-cmp .kpi-grid', '#page-cmp .kpi',
-            '#page-cmp .chart-card', '.date-picker-ui', '.print-btn', '.city-filter-pill', '.filter-select', '.theme-toggle-icon'];
+            '#page-cmp .chart-card', '#cutoff-picker', '#print-btn', '.city-filter-pill', '.filter-select', '.theme-toggle-icon'];
         const props = ['paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft', 'gap', 'display', 'alignItems', 'fontSize', 'marginBottom'];
         const measure = () => page.evaluate(([ss, pp]) => Object.fromEntries(ss.map(s => {
             const el = document.querySelector(s); const c = el && getComputedStyle(el);
@@ -959,20 +962,26 @@ test.describe('Sticky filter bars', () => {
             test(`${pageId} filter bar sticks under the nav at ${width}px`, async ({ page }) => {
                 await page.setViewportSize({ width, height });
                 await load(page);
-                await page.click(`#${tab}`);
+                // The sidebar button for the page; on phones that is the bottom tab bar's button instead.
+                await page.locator(`[data-page="${pageId}"]:visible`).first().click();
                 await page.waitForFunction(id => document.querySelector(`#${id} .filter-bar`), pageId);
                 await page.evaluate(() => Promise.all(document.getAnimations().filter(a => a.effect.getComputedTiming().iterations !== Infinity).map(a => a.finished)));
                 await page.evaluate(() => window.scrollTo(0, 1500));
+                // The top chrome is nothing on desktop and the sidebar top bar on phones.
+                const chromeBottom = () => window.innerWidth <= 768 ? document.querySelector('.sidebar').getBoundingClientRect().bottom : 0;
                 // On Comparison and Tours 25/26 the Free/Paid tabs are pinned under the nav and the filter bar pins under them.
-                const { barTop, navBottom } = await page.evaluate(id => ({
-                    barTop: document.querySelector(`#${id} .filter-bar`).getBoundingClientRect().top,
-                    navBottom: (id === 'page-gd' ? document.querySelector('.nav') : document.getElementById('view-tabs-' + id.slice(5))).getBoundingClientRect().bottom,
-                }), pageId);
+                const { barTop, navBottom } = await page.evaluate(id => {
+                    const chrome = window.innerWidth <= 768 ? document.querySelector('.sidebar').getBoundingClientRect().bottom : 0;
+                    return {
+                        barTop: document.querySelector(`#${id} .filter-bar`).getBoundingClientRect().top,
+                        navBottom: id === 'page-gd' ? chrome : document.getElementById('view-tabs-' + id.slice(5)).getBoundingClientRect().bottom,
+                    };
+                }, pageId);
                 expect(Math.abs(barTop - navBottom)).toBeLessThanOrEqual(1);
                 if (pageId !== 'page-gd') {
                     const tabsTop = await page.evaluate(id => document.getElementById('view-tabs-' + id.slice(5)).getBoundingClientRect().top, pageId);
-                    const nav = await page.evaluate(() => document.querySelector('.nav').getBoundingClientRect().bottom);
-                    expect(Math.abs(tabsTop - nav)).toBeLessThanOrEqual(1);
+                    const chrome = await page.evaluate(chromeBottom);
+                    expect(Math.abs(tabsTop - chrome)).toBeLessThanOrEqual(1);
                 }
             });
         }
@@ -1159,4 +1168,59 @@ test.describe('Tours 25/26 Free/Paid tabs and Private/Shared filter', () => {
             await expect(page.locator(`#shared-card-${id}`)).toBeVisible();
         });
     }
+});
+
+test.describe('Sidebar navigation', () => {
+    test('sidebar and phone bottom bar list the same five pages', async ({ page }) => {
+        await load(page);
+        const side = await page.$$eval('.sidebar .side-tab', els => els.map(el => el.dataset.page));
+        const bottom = await page.$$eval('.bottom-nav .bottom-tab', els => els.map(el => el.dataset.page));
+        expect(side).toEqual(['page-25', 'page-26', 'page-cmp', 'page-gd', 'page-mgmt']);
+        expect(bottom).toEqual(side);
+    });
+
+    test('keys 1 to 5 switch pages and mark the sidebar tab active', async ({ page }) => {
+        await page.setViewportSize({ width: 1400, height: 900 });
+        await load(page);
+        const keys = { '1': 'page-25', '2': 'page-26', '4': 'page-gd', '5': 'page-mgmt', '3': 'page-cmp' };
+        for (const [key, pageId] of Object.entries(keys)) {
+            await page.keyboard.press(key);
+            await expect(page.locator(`#${pageId}`)).toHaveClass(/active/);
+            await expect(page.locator(`.side-tab[data-page="${pageId}"]`)).toHaveClass(/active/);
+            await expect(page.locator(`.side-tab[data-page="${pageId}"]`)).toHaveAttribute('aria-current', 'page');
+        }
+    });
+
+    test('the open rail is remembered across reloads', async ({ page }) => {
+        await page.setViewportSize({ width: 1400, height: 900 });
+        await load(page);
+        await expect(page.locator('body')).not.toHaveClass(/sidebar-open/);
+        await page.click('#sidebar-toggle');
+        await expect(page.locator('body')).toHaveClass(/sidebar-open/);
+        await load(page);
+        await expect(page.locator('body')).toHaveClass(/sidebar-open/);
+        await expect(page.locator('#sidebar-toggle')).toHaveAttribute('aria-expanded', 'true');
+        await page.click('#sidebar-toggle');
+        await expect(page.locator('body')).not.toHaveClass(/sidebar-open/);
+    });
+
+    test('date tile shows the as-of date on desktop', async ({ page }) => {
+        await page.setViewportSize({ width: 1400, height: 900 });
+        await load(page);
+        await expect(page.locator('#as-of-text')).toHaveText(/\d{1,2} [A-Z][a-z]{2} \d{4}/);
+    });
+});
+
+test.describe('Comparison period note', () => {
+    test('names the cutoff, and the refresh date only when the as-of date is later', async ({ page }) => {
+        await page.setViewportSize({ width: 1400, height: 900 });
+        await load(page);
+        const note = page.locator('#page-cmp .cmp-period-note');
+        await expect(note).toContainText(/through [A-Z][a-z]{2} \d+\.$/);
+        await expect(note).not.toContainText('data refreshed');
+
+        await page.fill('#cutoff-picker', '2026-10-31');
+        await page.dispatchEvent('#cutoff-picker', 'change');
+        await expect(note).toContainText(/through Oct 31 \(data refreshed [A-Z][a-z]{2} \d+\)\.$/);
+    });
 });

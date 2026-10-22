@@ -22,9 +22,9 @@
 }
 
 @media (max-width: 768px) {
-  /* The phone top nav is 33px tall, not the 60px --nav-h from guides.css. */
+  /* The phone top bar is --nav-h tall (sidebar.css). */
   .filter-bar {
-    top: 33px;
+    top: var(--nav-h);
   }
 
   /* Bottom tab bar: flex items default to a content-based min-width,

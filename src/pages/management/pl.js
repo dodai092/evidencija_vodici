@@ -80,9 +80,10 @@ export function initPl(city) {
 }
 
 function _positionStickyBar() {
-    const nav = document.querySelector('.nav');
+    // --nav-h is the top chrome height: 0 on desktop, the sidebar top bar on phones.
+    const navH = getComputedStyle(document.documentElement).getPropertyValue('--nav-h');
     const bar = document.getElementById('sticky-kpi-bar');
-    if (nav && bar) bar.style.top = nav.offsetHeight + 'px';
+    if (bar) bar.style.top = navH;
 }
 
 export function renderPlKpis(city) {

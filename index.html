@@ -14,26 +14,64 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="mobile-fixes.css">
+    <link rel="stylesheet" href="sidebar.css">
     <link rel="stylesheet" href="jura-theme.css">
     <script>(function(){if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark-mode');})();</script>
 </head>
 
 <body>
+<script>
+    // Restore the remembered sidebar state before the sidebar paints, so it does not animate on load.
+    try { if (localStorage.getItem('sidebar') === 'open') document.body.classList.add('sidebar-open'); } catch (e) {}
+</script>
 
-    <!-- ── SHARED NAV ──────────────────────────────────────────── -->
-    <div class="nav">
-        <div class="flex-row flex-gap-0">
-            <img src="freespirit_logo_crop.jpg"
-                alt="Free Spirit" class="img-nav">
-            <div class="nav-tabs" role="tablist" aria-label="Main navigation">
-                <div id="tab-25" class="nav-tab y25" role="tab" aria-selected="false" tabindex="-1" data-i18n="nav.guides2025">Tours 2025</div>
-                <div id="tab-26" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" data-i18n="nav.guides2026">Tours 2026</div>
-                <div id="tab-cmp" class="nav-tab cmp active" role="tab" aria-selected="true" tabindex="0" data-i18n="nav.comparison">Comparison 25/26</div>
-                <div id="tab-gd" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" data-i18n="labels.guides">Guides</div>
-                <div id="tab-mgmt" class="nav-tab" role="tab" aria-selected="false" tabindex="-1">Management</div>
-            </div>
+    <!-- ── SIDEBAR (desktop rail, phone top bar) ──────────────── -->
+    <aside class="sidebar" aria-label="Report pages">
+        <div class="sidebar-top">
+            <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Expand sidebar" aria-expanded="false" aria-controls="sidebar-nav">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+            <img class="sidebar-logo" src="freespirit_logo_crop.jpg" alt="Free Spirit">
         </div>
-        <div class="nav-actions">
+        <div class="sidebar-asof">
+            <span class="date-field" data-tip="Data through">
+                <span class="date-text" id="as-of-text"></span>
+                <svg class="date-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>
+                <input type="date" id="cutoff-picker" aria-label="Data through">
+            </span>
+        </div>
+        <nav class="sidebar-nav" id="sidebar-nav">
+            <button class="side-tab" id="tab-25" data-page="page-25" data-tip="2025">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/><text x="12" y="18.2" text-anchor="middle" font-size="8.5" font-weight="700" font-family="IBM Plex Sans, sans-serif" fill="currentColor" stroke="none">25</text></svg>
+                <span class="nav-label">2025</span>
+                <span class="nav-key">1</span>
+            </button>
+            <button class="side-tab" id="tab-26" data-page="page-26" data-tip="2026">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/><text x="12" y="18.2" text-anchor="middle" font-size="8.5" font-weight="700" font-family="IBM Plex Sans, sans-serif" fill="currentColor" stroke="none">26</text></svg>
+                <span class="nav-label">2026</span>
+                <span class="nav-key">2</span>
+            </button>
+            <button class="side-tab active" id="tab-cmp" data-page="page-cmp" data-tip="Comparison" aria-current="page">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+                <span class="nav-label" data-i18n="nav.comparisonShort">Comparison</span>
+                <span class="nav-key">3</span>
+            </button>
+            <button class="side-tab" id="tab-gd" data-page="page-gd" data-tip="Guides">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+                <span class="nav-label" data-i18n="labels.guides">Guides</span>
+                <span class="nav-key">4</span>
+            </button>
+            <button class="side-tab" id="tab-mgmt" data-page="page-mgmt" data-tip="Management">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M16 7.5C16 6 14.2 5 12 5S8 6 8 8c0 4 8 2 8 6 0 2-1.8 3-4 3s-4-1-4-2.5"/></svg>
+                <span class="nav-label" data-i18n="nav.management">Management</span>
+                <span class="nav-key">5</span>
+            </button>
+        </nav>
+        <div class="sidebar-foot">
+            <button class="side-tab" id="print-btn" type="button" data-tip="Print / PDF" aria-label="Print / PDF">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+                <span class="nav-label">Print / PDF</span>
+            </button>
             <button class="theme-toggle-icon" id="theme-toggle" aria-label="Toggle dark mode">
                 <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2">
@@ -51,13 +89,19 @@
                     stroke-width="2">
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                 </svg>
+                <span class="nav-label">Dark mode</span>
             </button>
-            <label class="date-picker-label" for="cutoff-picker">Data through:</label>
-            <input type="date" id="cutoff-picker"
-                class="date-picker-ui">
-            <button class="print-btn">&#8595; Print / Save PDF</button>
         </div>
-    </div>
+    </aside>
+
+    <!-- ── PHONE BOTTOM TAB BAR (same pages as the sidebar) ───── -->
+    <nav class="bottom-nav" aria-label="Report pages">
+        <button class="bottom-tab" data-page="page-25">2025</button>
+        <button class="bottom-tab" data-page="page-26">2026</button>
+        <button class="bottom-tab active" data-page="page-cmp" data-i18n="nav.comparisonShort">Comparison</button>
+        <button class="bottom-tab" data-page="page-gd" data-i18n="labels.guides">Guides</button>
+        <button class="bottom-tab" data-page="page-mgmt" data-i18n="nav.management">Management</button>
+    </nav>
 
     <!-- ── TAB: VODIČI 2025 ───────────────────────────────────── -->
     <div id="page-25" class="page"></div>

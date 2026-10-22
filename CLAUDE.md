@@ -69,6 +69,7 @@ The script filters rows by the `Year` column when present, so this works correct
 | `../shared/fs-core.css` | Shared foundation — loads first. Variables, dark mode, nav, kpi, card, bar/owner/agency CSS. |
 | `guides.css` | Evidencija-specific styles — `--radius: 8px`, filter bar, date picker, management dashboard, guide card styles, language toggle, sticky KPI bar, city/year/delta color vars. |
 | `jura-theme.css` | Jura look and feel. Loaded last (after `guides.css`), redefines tokens and restyles components by overriding existing selectors. Remove its `<link>` in `index.html` to switch it off. Desktop-only rules live in `@media (min-width: 769px)`, the phone layout is untouched. |
+| `sidebar.css` | Page navigation, ported from `jura-guide-report/report.css`. Desktop: left rail (`.sidebar`, `.side-tab`) with the as-of date and theme toggle. Phone (max 768px): top bar plus `.bottom-nav` / `.bottom-tab`. Loaded before `jura-theme.css`, which must stay last. |
 | `src/main.js` | Entry point — boots theme/language, exposes all `window.*` globals, registers pages |
 | `src/shared.js` | Constants, `PAGES` registry, `filteredStats()`, `showPage()`, `updateDateAsOf()`, keyboard shortcuts |
 | `src/i18n.js` | `TRANSLATIONS`, `t()`, `tOpposite()`, `titleAttr()` |
@@ -105,7 +106,7 @@ const Page25 = {
 
 The Management tab (`#page-mgmt`) is fully static HTML in `index.html` — the 5 mgmt sub-pages (`mgmt-pl`, `mgmt-guides`, `mgmt-channels`, `mgmt-ops`, `mgmt-cities`) and the `.mgmt-subnav` are pre-rendered. `mgmtShowTab(id, el)` in `src/pages/management/index.js` handles sub-tab switching with lazy init per sub-tab.
 
-The `.mgmt-subnav` is `position: sticky; top: 56px` (just below the main nav). `#sticky-kpi-bar` is `position: fixed` and JS-positioned to `nav.offsetHeight` on mount.
+The `.mgmt-subnav` is `position: sticky; top: var(--nav-h)` (just below the top chrome). `#sticky-kpi-bar` is `position: fixed` and JS-positioned to `--nav-h` on mount. `--nav-h` is the `.nav` strip height on desktop and the sidebar top bar (56px) on phones, where `.nav` is hidden.
 
 ### Data shape
 
@@ -153,7 +154,7 @@ const cityStats26 = {
 
 ### Filtering and date cutoff
 
-`GLOBAL_DATE` in `shared.js` is the as-of date, defaulting to today's date. The date picker in the nav calls `updateDateAsOf()` which re-renders all initialized pages including management.
+`GLOBAL_DATE` in `shared.js` is the as-of date, defaulting to today's date. The date tile in the sidebar (`#cutoff-picker`) calls `updateDateAsOf()` which re-renders all initialized pages including management.
 
 `filteredStats(stats, months)` in `shared.js` is the central filtering function:
 - For complete months (< cutoff month): sums `byMonth` aggregates.

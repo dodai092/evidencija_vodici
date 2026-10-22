@@ -1,7 +1,7 @@
 import {
     CITIES, getCityColor, getChartColors as _chartColors, CITY_CLS,
     fmtN, filteredStats, getCutoffMonth, getGlobalDate, getRangeLabel,
-    toggleSection, registerPage, paidAt, paidFiltered,
+    toggleSection, registerPage, paidAt, paidFiltered, REFRESH_DATE,
 } from '../../shared.js';
 import { t, titleAttr } from '../../i18n.js';
 import { drawDeltaLabels } from './delta-labels.js';
@@ -190,6 +190,10 @@ export const PageCmp = {
 
         const cutoffMonth = getCutoffMonth();
         const cutoffDay   = parseInt(getGlobalDate().split('-')[2]);
+        // Newer days than the refresh date are not in the data, so say when the data was last regenerated.
+        const [, refreshMonth, refreshDay] = REFRESH_DATE.split('-').map(Number);
+        const refreshText = getGlobalDate() > REFRESH_DATE ? ` (${t('labels.dataRefreshed')} ${MONTH_NAMES[refreshMonth]} ${refreshDay})` : '';
+        document.querySelectorAll('#page-cmp .cmp-period-note').forEach(el => el.textContent = `${t('labels.compareNote')} ${MONTH_NAMES[cutoffMonth]} ${cutoffDay}${refreshText}.`);
 
         selectedMonths.forEach(i => {
             let fd25 = 0, fd26 = 0, pd25 = 0, pd26 = 0;
@@ -797,12 +801,7 @@ export const PageCmp = {
 
     _buildHeader() {
         return `        <div class="header">
-            <div class="header-left">
-                <h1>${t('sections.guideComparison')}</h1>
-                <p><span class="ytd-range-label">Jan–Jun</span> 2025 vs. 2026</p>
-            </div>
             <div class="header-right">
-                <div id="date-pov-cmp" class="mb-6"></div>
                 <div class="header-badge">${t('sections.comparisonYtd')}</div>
             </div>
         </div>`;
@@ -842,6 +841,7 @@ export const PageCmp = {
                     </div>
                 </div>
             </div>
+            <p class="page-note cmp-period-note"></p>
 
             <div class="kpi-grid kpi-grid-3">
                 <div class="kpi hl-green">
@@ -1027,9 +1027,6 @@ export const PageCmp = {
             this._buildPaidTours() +
             '</div>';
 
-        const now = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-        const datePov = this._el('date-pov');
-        if (datePov) datePov.textContent = now;
     },
 
     _positionTourTypeSticky() {

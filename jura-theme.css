@@ -56,14 +56,8 @@ body.dark-mode {
 
 @media (min-width: 769px) {
   :root {
-    --nav-h: 56px;
     --pad: 24px;
     --max-w: 1440px;
-  }
-
-  .nav {
-    height: var(--nav-h);
-    padding: 0 var(--pad);
   }
 }
 
@@ -71,45 +65,21 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* ── NAV (desktop only: the phone layout is left as is) ── */
-@media (min-width: 769px) {
-  .nav-tabs { gap: 22px; margin-left: 12px; }
-  .nav-tabs .nav-tab {
-    padding: 6px 0 10px;
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 0;
-    text-transform: none;
-    color: var(--text3);
-  }
-  .nav-tabs .nav-tab:hover { color: var(--text); }
-  .nav-tabs .nav-tab.active {
-    color: var(--text);
-    font-weight: 600;
-    border-bottom-color: var(--text);
-  }
-}
-
-.nav img { height: 28px; }
-.nav-actions { gap: 8px; }
 .theme-toggle-icon { border: 1px solid var(--border); border-radius: var(--radius); }
-.print-btn {
-  background: transparent;
-  color: var(--text);
-  border: 1px solid var(--border);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: none;
-}
-.print-btn:hover,
-body.dark-mode .print-btn:hover { background: var(--smoke); }
-.date-picker-ui,
 .filter-select {
   background: var(--white);
   border: 1px solid var(--border);
   color: var(--text);
   border-radius: var(--radius);
 }
+
+.page-note { font-size: 13px; color: var(--text3); margin: -6px 0 16px; }
+
+/* Tours 2025, Tours 2026, Comparison and Guides have no title row; the header only held the badge. Management keeps its header. */
+#page-25 .header, #page-26 .header, #page-cmp .header, #page-gd .header { display: none; }
+
+/* Free / Paid buttons at jura's size. */
+.view-tabs .view-tab { flex: 0 0 auto; padding: 10px 24px; font-size: 15px; font-weight: 600; }
 
 /* Management sub-nav */
 .mgmt-subnav { background: var(--white); border-bottom: 1px solid var(--border); }
@@ -282,8 +252,6 @@ body.dark-mode .card:hover {
 
 /* Layout that must not touch the phone: desktop only */
 @media (min-width: 769px) {
-  .date-picker-label { font-size: 12px; }
-  .date-picker-ui,
   .filter-select { padding: 6px 10px; font-size: 13px; }
   .header { padding: 20px var(--pad) 14px; align-items: baseline; }
   .header-left h1 { font-size: 20px; }
@@ -294,7 +262,6 @@ body.dark-mode .card:hover {
   .kpi { padding: 14px 16px; }
   .card,
   .chart-card { padding: 16px; }
-  .print-btn { padding: 6px 12px; font-size: 13px; }
   .city-filter-pill,
   .pill { padding: 6px 10px; font-size: 12px; }
 }

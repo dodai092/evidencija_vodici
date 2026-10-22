@@ -1,6 +1,5 @@
 :root {
   --radius: 8px;
-  --nav-h: 60px;
 
   /* evidencija-specific colors */
   --teal: #0e7c7b;
@@ -75,27 +74,6 @@
   color: #fff;
 }
 
-.date-picker-ui {
-  background: var(--smoke);
-  border: 1px solid var(--border-dark);
-  color: var(--text2);
-  padding: 5px 10px;
-  border-radius: var(--radius-sm);
-  font-family: var(--font-sans);
-  font-size: 11px;
-  outline: none;
-  cursor: pointer;
-  transition: border-color 0.2s;
-}
-
-.date-picker-ui:hover {
-  border-color: var(--text3);
-}
-
-body.dark-mode .date-picker-ui {
-  color-scheme: dark;
-}
-
 .filter-select {
   background: var(--smoke);
   border: 1px solid var(--border-dark);
@@ -129,13 +107,6 @@ body.dark-mode .filter-select {
 @keyframes guide-card-pulse {
   0%   { box-shadow: 0 0 0 3px var(--teal); }
   100% { box-shadow: 0 0 0 0 transparent; }
-}
-
-.date-picker-label {
-  font-size: 11px;
-  color: var(--text3);
-  white-space: nowrap;
-  cursor: default;
 }
 
 .toggle-btn {
@@ -614,62 +585,6 @@ body.dark-mode .filter-select {
     --pad: 16px;
   }
 
-  /* Top nav: three-zone layout (logo | icon center | date) */
-  .nav {
-    flex-wrap: nowrap;
-    padding: 0 12px;
-    justify-content: space-between;
-  }
-
-  .nav > div:first-child {
-    display: flex;
-    align-items: center;
-    flex: 0 0 auto;
-    min-width: 0;
-  }
-
-  .nav > div:first-child img {
-    height: 20px;
-    margin-right: 0;
-  }
-
-  .nav-tabs {
-    display: none;
-  }
-
-  .nav-actions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    flex-shrink: 0;
-  }
-
-  .print-btn {
-    display: none;
-  }
-
-  .date-picker-ui {
-    font-size: 12px;
-    padding: 5px 8px;
-    font-weight: 500;
-    letter-spacing: 0;
-  }
-
-  /* Bottom tab bar */
-  .nav-tabs {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 200;
-    background: var(--nav-bg);
-    border-top: 1px solid var(--border-dark);
-    box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.12);
-    display: flex;
-    overflow: visible;
-  }
-
   .nav-tab {
     flex: 1;
     text-align: center;
@@ -683,18 +598,6 @@ body.dark-mode .filter-select {
   .nav-tab.active {
     border-bottom-color: transparent;
     border-top-color: var(--black);
-  }
-
-  .nav-tab.active.y25 {
-    border-top-color: var(--purple);
-  }
-
-  .nav-tab.active.y26 {
-    border-top-color: var(--teal);
-  }
-
-  .nav-tab.active.cmp {
-    border-top-color: var(--amber);
   }
 
   /* Push content above the bottom tab bar */
@@ -737,10 +640,6 @@ body.dark-mode .filter-select {
 }
 
 @media print {
-  .nav {
-    display: none;
-  }
-
   .guide-card {
     break-inside: avoid;
   }
@@ -750,11 +649,7 @@ body.dark-mode .filter-select {
   }
 }
 
-/* ── TAB NAVIGATION ─────────────────────────────── */
-.nav-tabs {
-  display: flex;
-}
-
+/* ── TAB NAVIGATION (also the Management sub-tabs) ── */
 .nav-tab {
   padding: 18px 22px;
   font-size: 12px;
@@ -776,21 +671,6 @@ body.dark-mode .filter-select {
 .nav-tab.active {
   color: var(--text);
   border-bottom-color: var(--black);
-}
-
-.nav-tab.active.y25 {
-  color: var(--purple);
-  border-bottom-color: var(--purple);
-}
-
-.nav-tab.active.y26 {
-  color: var(--teal);
-  border-bottom-color: var(--teal);
-}
-
-.nav-tab.active.cmp {
-  color: var(--amber);
-  border-bottom-color: var(--amber);
 }
 
 /* ── PAGE SHOW/HIDE & TRANSITIONS ───────────────── */
@@ -2028,7 +1908,7 @@ body.dark-mode .tt-gm-low  { background: color-mix(in srgb, var(--delta-neg) 18%
 }
 #page-cmp .filter-bar, #page-25 .filter-bar, #page-26 .filter-bar { top: calc(var(--nav-h) + var(--view-tabs-h, 0px)); }
 @media (max-width: 768px) {
-  .view-tabs { top: 33px; }
+  .view-tabs { top: var(--nav-h); }
   .view-tabs .view-tab { flex: 1; padding: 9px 12px; font-size: 14px; }
-  #page-cmp .filter-bar, #page-25 .filter-bar, #page-26 .filter-bar { top: calc(33px + var(--view-tabs-h, 0px)); }
+  #page-cmp .filter-bar, #page-25 .filter-bar, #page-26 .filter-bar { top: calc(var(--nav-h) + var(--view-tabs-h, 0px)); }
 }

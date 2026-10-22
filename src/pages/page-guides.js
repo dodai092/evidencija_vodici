@@ -220,7 +220,7 @@ export const PageGuides = {
         this.activeSort = 'default';
         this.guideView = 'cards';
         const wasInitialized = this._initialized;
-        showPage('page-gd', document.getElementById('tab-gd'));
+        showPage('page-gd');
         if (wasInitialized) { this.rebuildStructure(); this.renderAll(); }
         requestAnimationFrame(() => {
             const card = document.querySelector(`#page-gd .guide-card[data-name="${CSS.escape(safeName(name))}"]`);
@@ -255,12 +255,7 @@ export const PageGuides = {
 
     _buildHeader() {
         return `<div class="header">
-            <div class="header-left">
-                <h1>${t('labels.guides')} <span class="accent">25/26</span></h1>
-                <p><span class="ytd-range-label">${getRangeLabel()}</span> 2025 vs. 2026 &middot; ${t('sections.productionByGuide')}</p>
-            </div>
             <div class="header-right">
-                <div id="date-pov-gd" class="mb-6"></div>
                 <div class="header-badge">${t('sections.comparisonYtd')}</div>
             </div>
         </div>`;
@@ -334,10 +329,6 @@ export const PageGuides = {
 
         this._el('lang-filter').value = this.activeLang;
         this._el('guide-search').value = this.guideQuery;
-        const d = new Date(getGlobalDate());
-        const fmt = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-        const datePov = this._el('date-pov');
-        if (datePov) datePov.textContent = fmt;
     },
 
     init() {

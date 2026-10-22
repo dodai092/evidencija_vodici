@@ -365,15 +365,7 @@ export const Page25 = {
     filterMonth(m)   { this.activeMonths = m === 'all' ? [] : [parseInt(m)]; this.renderAll(); },
 
     _buildHeader() {
-        return `<div class="header">
-            <div class="header-left">
-                <h1>Tours <span class="accent">2025</span></h1>
-                <p><span class="ytd-range-label">${getRangeLabel()}</span></p>
-            </div>
-            <div class="header-right">
-                <div id="date-pov-25" class="mb-6"></div>
-            </div>
-        </div>`;
+        return '';
     },
 
     _buildFilters() {
@@ -520,11 +512,6 @@ export const Page25 = {
             this._buildFreeTours() +
             this._buildPaidTours() +
             '</div>';
-
-        const d = new Date(getGlobalDate());
-        const fmt = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-        const datePov = this._el('date-pov');
-        if (datePov) datePov.textContent = fmt;
     },
 
     init() {

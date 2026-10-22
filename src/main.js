@@ -53,6 +53,28 @@ registerLanguageChangeCallback(() => {
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
+// Sidebar open/closed is remembered. The phone top bar has no rail, so the state only matters on desktop.
+function syncSidebarToggle() {
+    const open = document.body.classList.contains('sidebar-open');
+    const toggle = document.getElementById('sidebar-toggle');
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Collapse sidebar' : 'Expand sidebar');
+}
+
+function toggleSidebar() {
+    const open = document.body.classList.toggle('sidebar-open');
+    try { localStorage.setItem('sidebar', open ? 'open' : 'closed'); } catch (e) {}
+    syncSidebarToggle();
+}
+
+// The closed rail shows only the calendar tile, so its hover tooltip carries the date.
+function renderAsOfText(value) {
+    const text = document.getElementById('as-of-text');
+    if (!text || !value) return;
+    text.textContent = new Date(value + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    text.closest('.date-field').dataset.tip = 'Data through ' + text.textContent;
+}
+
 const shortcutOverlay = () => document.getElementById('shortcut-overlay');
 
 let _overlayPreviousFocus = null;
@@ -85,20 +107,10 @@ function _overlayTrapFocus(e) {
 
 // ── Event wiring ──────────────────────────────────────────────────────────────
 
-const PAGE_MAP = {
-    'tab-25':   'page-25',
-    'tab-26':   'page-26',
-    'tab-cmp':  'page-cmp',
-    'tab-gd':   'page-gd',
-    'tab-mgmt': 'page-mgmt',
-};
-
 function initEventListeners() {
-    // Main navigation tabs
-    Object.entries(PAGE_MAP).forEach(([tabId, pageId]) => {
-        const el = document.getElementById(tabId);
-        if (el) el.addEventListener('click', () => showPage(pageId, el));
-    });
+    // Page navigation: the sidebar and the phone bottom bar both carry data-page buttons
+    document.querySelectorAll('[data-page]').forEach(el =>
+        el.addEventListener('click', () => showPage(el.dataset.page)));
 
     // Management sub-navigation tabs
     ['pl', 'guides', 'channels', 'ops', 'cities'].forEach(id => {
@@ -108,9 +120,12 @@ function initEventListeners() {
 
     // Controls
     document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
-    document.getElementById('cutoff-picker')?.addEventListener('change', e => updateDateAsOf(e.target.value));
-    document.getElementById('cutoff-picker')?.addEventListener('click', e => e.target.showPicker?.());
-    document.querySelector('.print-btn')?.addEventListener('click', () => window.print());
+    document.getElementById('sidebar-toggle')?.addEventListener('click', toggleSidebar);
+    document.getElementById('cutoff-picker')?.addEventListener('change', e => {
+        updateDateAsOf(e.target.value);
+        renderAsOfText(e.target.value);
+    });
+    document.getElementById('print-btn')?.addEventListener('click', () => window.print());
 
     // Management city filter pills (two static sets in index.html)
     document.querySelectorAll('.city-pill').forEach(el =>
@@ -127,8 +142,8 @@ function initEventListeners() {
     // Shortcut overlay close button
     document.querySelector('.overlay-close')?.addEventListener('click', toggleShortcutOverlay);
 
-    // Arrow-key navigation for main nav tabs
-    const mainTabs = Array.from(document.querySelectorAll('.nav-tabs .nav-tab'));
+    // Arrow-key navigation for the sidebar page tabs
+    const mainTabs = Array.from(document.querySelectorAll('.sidebar-nav .side-tab'));
     mainTabs.forEach((tab, i) => {
         tab.addEventListener('keydown', e => {
             let next;
@@ -158,11 +173,11 @@ function initEventListeners() {
 
 function initKeyboardShortcuts() {
     const shortcuts = {
-        '1': () => { const el = document.getElementById('tab-25');   if (el) showPage('page-25', el); },
-        '2': () => { const el = document.getElementById('tab-26');   if (el) showPage('page-26', el); },
-        '3': () => { const el = document.getElementById('tab-cmp');  if (el) showPage('page-cmp', el); },
-        '4': () => { const el = document.getElementById('tab-gd');   if (el) showPage('page-gd', el); },
-        '5': () => { const el = document.getElementById('tab-mgmt'); if (el) showPage('page-mgmt', el); },
+        '1': () => showPage('page-25'),
+        '2': () => showPage('page-26'),
+        '3': () => showPage('page-cmp'),
+        '4': () => showPage('page-gd'),
+        '5': () => showPage('page-mgmt'),
         't': () => toggleTheme(),
         'd': () => document.getElementById('cutoff-picker')?.focus(),
         '?': () => toggleShortcutOverlay(),
@@ -192,7 +207,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (picker) {
         picker.value = getGlobalDate();
         updateDateAsOf(picker.value);
+        renderAsOfText(picker.value);
+        // The input is transparent over the whole tile, but a native date input only opens the picker from
+        // its calendar indicator. Open the picker from any click on the tile.
+        picker.closest('.date-field').addEventListener('click', () => {
+            try { picker.showPicker(); } catch (err) { picker.focus(); }
+        });
     }
+
+    syncSidebarToggle();
 
     PageCmp.init();
 

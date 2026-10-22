@@ -101,6 +101,7 @@ export const PageCmp = {
     updateKPIs() {
         const citiesToSum = this.activeCity === 'all' ? CITIES : [this.activeCity];
         const paid = this.activeTab === 'paid';
+        document.getElementById('kpi-grid-cmp').classList.toggle('free-order', !paid);
         let p25 = 0, p26 = 0, t25 = 0, t26 = 0;
         citiesToSum.forEach(city => {
             const st25 = cityStats25[city]?.[this.activeLang];
@@ -843,7 +844,7 @@ export const PageCmp = {
             </div>
             <p class="page-note cmp-period-note"></p>
 
-            <div class="kpi-grid kpi-grid-3">
+            <div class="kpi-grid kpi-grid-3" id="kpi-grid-cmp">
                 <div class="kpi hl-green">
                     <div class="kpi-label">${t('labels.kpiTotalTours')}</div>
                     <div class="kpi-delta">

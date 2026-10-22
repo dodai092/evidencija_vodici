@@ -294,6 +294,7 @@ export const Page25 = {
     updateKPIs() {
         const citiesToSum = this.activeCity === 'all' ? CITIES : [this.activeCity];
         const paid = this.activeTab === 'paid';
+        document.getElementById('kpi-grid-25').classList.toggle('free-order', !paid);
         let pax = 0, tours = 0;
         citiesToSum.forEach(city => {
             const st = cityStats25[city]?.[this.activeLang];
@@ -403,7 +404,7 @@ export const Page25 = {
                 </div>
             </div>
 
-            <div class="kpi-grid kpi-grid-3">
+            <div class="kpi-grid kpi-grid-3" id="kpi-grid-25">
                 <div class="kpi hl-green">
                     <div class="kpi-label">${t('labels.kpiTotalTours')}</div>
                     <div class="kpi-2y">

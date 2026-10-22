@@ -225,6 +225,9 @@ body.dark-mode .filter-select {
 .kpi-grid-3 {
   grid-template-columns: repeat(3, 1fr);
 }
+/* Free Tours: PAX Count YTD first, Total Tours third. Paid keeps the DOM order. */
+.kpi-grid-3.free-order > :nth-child(1) { order: 1; }
+.kpi-grid-3.free-order > :nth-child(3) { order: -1; }
 .kpi-grid-4 {
   grid-template-columns: repeat(4, 1fr);
 }

@@ -29,6 +29,15 @@ as-of date from the data.
 
 Every command below runs from the repo root.
 
+## Fast path
+
+Two helpers in `.claude/skills/update-evidencija/scripts/` replace the fiddly parts:
+
+- `python3 .claude/skills/update-evidencija/scripts/decode_drive.py <tool-result-file> evidencija.csv` decodes the Drive download (use `1.1 Evidencija prodaje 26.xlsx` as the output name for the .xlsx fallback).
+- `.claude/skills/update-evidencija/scripts/refresh.sh` (add `--xlsx` for the .xlsx fallback) does the backup, regenerate, compare and replace of steps 1-2 in one go. It stops with the compare output if the guide count drops or a total is zero.
+
+Then continue at step 3. The manual commands below remain the reference.
+
 ## 1. Pull the latest
 
 ```
